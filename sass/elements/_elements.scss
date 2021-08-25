@@ -1,0 +1,67 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+	box-sizing: inherit;
+}
+
+body {
+	background: $color__background-body; /* Fallback for when there is no custom background color defined. */
+}
+
+hr {
+	background-color: $color__background-hr;
+	border: 0;
+	height: 1px;
+	margin-bottom: 1.5em;
+}
+
+@import "lists";
+
+img {
+	height: auto; /* Make sure images are scaled correctly. */
+	max-width: 100%; /* Adhere to container width. */
+}
+
+figure {
+	margin: 1em 0; /* Extra wide images within figure tags don't overflow the content area. */
+}
+
+a, a:hover {
+	text-decoration: none;
+}
+a:focus, button, input, select, password, textarea {
+    outline: none;
+}
+@import "tables";
+
+h1 {
+	font-size: 18px;
+	font-weight: 500; 
+}
+h2 {
+	font-size: 17px;
+	font-weight: 500; 
+}
+h3 {
+	font-size: 16px;
+	font-weight: 500; 
+}
+h4 {
+	font-size: 14px;
+	font-weight: 500; 
+}
+h5 {
+	font-size: 14px;
+	font-weight: 500; 
+}
+h6 {
+	font-size: 14px;
+	font-weight: 500; 
+}
+p {
+	font-size: 13px;
+}
