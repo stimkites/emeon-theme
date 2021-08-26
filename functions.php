@@ -169,13 +169,11 @@ function emeon_scripts() {
 
 	wp_enqueue_style( 'theme-style', get_template_directory_uri()  . '/sass/style.css' );
 
-	wp_enqueue_style( 'woocommerce', get_template_directory_uri()  . '/sass/woocommerce.css' );
-
-	wp_enqueue_style( 'emeon-font_awesome', get_template_directory_uri()  . '/fonts/fontawesome-pro/css/all.min.css' );
+	wp_enqueue_style( 'emeon-font-awesome', get_template_directory_uri()  . '/fonts/fontawesome-pro/css/all.min.css' );
 
 	wp_enqueue_style( 'emeon-icons', get_template_directory_uri()  . '/fonts/emeon/styles.css' );
 
-	//wp_enqueue_script( 'emeon-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+	wp_enqueue_script( 'emeon-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
 	wp_enqueue_script( 'emeon-theme', get_template_directory_uri() . '/js/theme.js');
 
@@ -215,13 +213,6 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 /**
- * Load WooCommerce compatibility file.
- */
-if ( class_exists( 'WooCommerce' ) ) {
-	require get_template_directory() . '/inc/woocommerce.php';
-}
-
-/**
  * Widgets.
  */
 require get_template_directory() . '/inc/widgets.php';
@@ -230,13 +221,3 @@ require get_template_directory() . '/inc/widgets.php';
  * Shortcodes in widgets.
  */
 add_filter( 'widget_text', 'do_shortcode' );
-
-/**
- * Send "New User Registration" email to admins when new customer is created on WooCommerce.
- *
- * @param int $id New customer ID.
- */
-function my_wc_customer_created_notification( $id ) {
-	wp_new_user_notification( $id, null, 'admin' );
-}
-add_action( 'woocommerce_created_customer', 'my_wc_customer_created_notification' );
