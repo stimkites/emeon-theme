@@ -167,7 +167,7 @@ add_action( 'widgets_init', 'emeon_widgets_init' );
 function emeon_scripts() {
 	wp_enqueue_style( 'emeon-style', get_stylesheet_uri() );
 
-	wp_enqueue_style( 'theme-style', get_template_directory_uri()  . '/sass/style.css' );
+	wp_enqueue_style( 'theme-style', get_template_directory_uri()  . '/sass/style.css', [], filemtime( get_template_directory() . '/sass/style.css' ) );
 
 	wp_enqueue_style( 'emeon-font-awesome', get_template_directory_uri()  . '/fonts/fontawesome-pro/css/all.min.css' );
 

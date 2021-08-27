@@ -941,28 +941,6 @@ object {
   display: block;
 }
 
-.site-branding {
-  position: absolute;
-  z-index: 2;
-  background: #fff;
-  padding: 11px;
-  border-radius: 0 200px 200px;
-  top: 30px;
-  text-align: center;
-  font-style: italic;
-  font-size: 10px;
-  transform: rotate(17deg);
-  left: -23px;
-  border: 1px solid #ccc;
-  transition: all ease-in-out .3s;
-}
-
-@media screen and ( max-width: 1332px ) {
-  .site-branding {
-    left: 5px;
-  }
-}
-
-.site-branding img {
-  max-height: 205px;
+a {
+  cursor: pointer;
 }

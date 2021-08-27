@@ -1,45 +1,5 @@
-/*!
-Theme Name: olle
-Theme URI: http://underscores.me/
-Author: Wetail
-Author URI: http://Wetail.io
-Description: Description
-Version: 1.0.0
-License: GNU General Public License v2 or later
-License URI: LICENSE
-Text Domain: olle
-Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
-
-This theme, like WordPress, is licensed under the GPL.
-Use it to make something cool, have fun, and share what you've learned with others.
-
-olle is based on Underscores https://underscores.me/, (C) 2012-2017 Automattic, Inc.
-Underscores is distributed under the terms of the GNU GPL v2 or later.
-
-Normalizing styles have been helped along thanks to the fine work of
-Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
-*/
 /*--------------------------------------------------------------
->>> TABLE OF CONTENTS:
-----------------------------------------------------------------
-# Normalize
-# Typography
-# Elements
-# Forms
-# Navigation
-	## Links
-	## Menus
-# Accessibility
-# Alignments
-# Clearings
-# Widgets
-# Content
-	## Posts and pages
-	## Comments
-# Infinite scroll
-# Media
-	## Captions
-	## Galleries
+# Basics
 --------------------------------------------------------------*/
 /*--------------------------------------------------------------
 # Normalize
@@ -357,38 +317,59 @@ header.site-header {
   flex-wrap: wrap;
   border-bottom: 1px solid #ccc;
   max-width: 1282px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  height: 50px; }
   header.site-header div#content > * {
     height: 50px; }
   header.site-header div#content {
     width: 1440px;
     margin: 0 auto;
     padding: 0 20px; }
+  header.site-header .site-branding {
+    position: absolute;
+    z-index: 2;
+    background: #fff;
+    padding: 11px;
+    border-radius: 0 200px 200px;
+    top: 49px;
+    text-align: center;
+    font-style: italic;
+    font-size: 10px;
+    border: 1px solid #ccc;
+    transition: all ease-in-out .3s; }
+    header.site-header .site-branding a {
+      display: flex;
+      align-items: center;
+      height: 100%; }
+      header.site-header .site-branding a img {
+        height: 100%;
+        width: inherit;
+        max-height: 205px; }
   header.site-header .site-content {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; }
-    header.site-header .site-content .site-branding {
-      width: 15%;
+    flex-wrap: wrap;
+    width: 100%; }
+    header.site-header .site-content .inline-branding {
+      width: 35%;
       display: flex;
       justify-content: flex-start; }
-      header.site-header .site-content .site-branding a {
-        display: flex;
-        align-items: center;
-        height: 100%; }
-        header.site-header .site-content .site-branding a img {
-          height: 100%;
-          width: inherit;
-          padding: 10px 0; }
+      header.site-header .site-content .inline-branding .slogan {
+        font-family: "Liberation Sans Narrow", "Arial Narrow", sans-serif;
+        font-style: italic;
+        font-size: 18px;
+        font-weight: normal; }
+      header.site-header .site-content .inline-branding .logo-wrap {
+        display: none; }
     header.site-header .site-content .main-navigation {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: center;
       font-size: 14px;
-      width: 70%;
+      width: 40%;
       text-transform: uppercase; }
     header.site-header .site-content ul#primary-menu > li.menu-item-has-children:hover > ul.sub-menu {
       position: absolute;
@@ -2063,25 +2044,7 @@ object {
 .gallery-caption {
   display: block; }
 
-.site-branding {
-  position: absolute;
-  z-index: 2;
-  background: #fff;
-  padding: 11px;
-  border-radius: 0 200px 200px;
-  top: 30px;
-  text-align: center;
-  font-style: italic;
-  font-size: 10px;
-  transform: rotate(17deg);
-  left: -23px;
-  border: 1px solid #ccc;
-  transition: all ease-in-out .3s; }
-
-@media screen and (max-width: 1332px) {
-  .site-branding {
-    left: 5px; } }
-.site-branding img {
-  max-height: 205px; }
+a {
+  cursor: pointer; }
 
 /*# sourceMappingURL=style.css.map */

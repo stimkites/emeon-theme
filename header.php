@@ -20,27 +20,33 @@
 	<?php wp_head(); ?>
 </head>
 
+<?php
+$logo = '';
+if( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
+    ( $_logo = wp_get_attachment_image_src( $custom_logo_id , 'full' ) ) )
+        $logo = '<a href="'. get_home_url() .'"><img src="'. esc_url( $_logo[0] ) .'"></a>';
+?>
+
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<header id="masthead" class="site-header">
         <div class="site-branding">
             <div class="logo-wrap">
-				<?php $custom_logo_id = get_theme_mod( 'custom_logo' );
-				$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-				if ( has_custom_logo() ) {
-					echo '<a href="'. get_home_url() .'"><img src="'. esc_url( $logo[0] ) .'"></a>';
-				} elseif(is_user_logged_in()) {
-					echo '<a class="button is-outlined customize_items" href="'. admin_url( '/customize.php?autofocus[section]=title_tagline' ) .'">Add logo</a>';
-				} else {
-					echo '<h1>'.  '<a href="' . esc_url( home_url( '/' ) ) . '" class="nav-item is-brand" rel="home">' . get_bloginfo('name') . '</a></h1>';
-				} ?>
+				<?=$logo?>
             </div>
         </div><!-- .site-branding -->
-		<div id="content" class="site-content">
+		<div class="site-content">
+            <div class="inline-branding">
+                <div class="slogan">
+                    <?=get_bloginfo( 'description' )?>
+                </div>
+                <div class="logo-wrap">
+		            <?=$logo?>
+                </div>
+            </div>
 			<nav id="site-navigation" class="main-navigation">
 				<div class="mobile nav">
 					<button class="toggle-mobile-menu"></button>
-<!-- 					<i class="fal fa-bars toggle-mobile-menu"></i> -->
 					<i class="far fa-search toggle-search mobile"></i>
 				</div>
 				<?php
@@ -49,11 +55,14 @@
 					'menu_id'        => 'primary-menu',
 				) );
 				?>
+                <a class="button">JOIN US</a>
 			</nav><!-- #site-navigation -->
 			<div class="nav-shop">
 				<ul>
 					<li class="menu-item search desktop">
-						<i class="far fa-search toggle-search"></i>
+						<a href="#">
+                            <i class="far fa-search toggle-search"></i>
+                        </a>
 					</li>
 					<li class="menu-item account">
 						<a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>">
