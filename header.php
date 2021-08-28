@@ -55,7 +55,6 @@ if( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 					'menu_id'        => 'primary-menu',
 				) );
 				?>
-                <a class="button">JOIN US</a>
 			</nav><!-- #site-navigation -->
 			<div class="nav-shop">
 				<ul>
