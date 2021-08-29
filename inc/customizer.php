@@ -75,7 +75,7 @@ final class Customizer {
 	public static function enqueue(){
 		$no_cache = time();
 		if( ! defined( 'CUSTOMIZING' ) ) define( 'CUSTOMIZING', 1 );
-		$url = get_template_directory_uri();
+		$url = EMEON_URL;
 		wp_register_script( 'emeon_preview',  $url . '/js/customizer.js', ['jquery', 'customize-preview'], $no_cache );
 		wp_enqueue_script(  'emeon_preview',  $url . '/js/customizer.js', ['jquery', 'customize-preview'], $no_cache );
 	}

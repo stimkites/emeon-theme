@@ -1,12 +1,22 @@
 <?php
 /**
- * emeon functions and definitions
- *
- * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ * Emeon functions and definitions
  *
  * @package emeon
  */
 
+/**
+ * Constants
+ */
+define( 'EMEON_PATH', get_template_directory()      );
+define( 'EMEON_URL',  get_template_directory_uri()  );
+
+const EMEON_TPL = EMEON_PATH . '/templates';
+
+
+/**
+ * Setup
+ */
 if ( ! function_exists( 'emeon_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -22,7 +32,7 @@ if ( ! function_exists( 'emeon_setup' ) ) :
 		 * If you're building a theme based on emeon, use a find and replace
 		 * to change 'emeon' to the name of your theme in all the template files.
 		 */
-		load_theme_textdomain( 'emeon', get_template_directory() . '/languages' );
+		load_theme_textdomain( 'emeon', EMEON_PATH . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
@@ -167,17 +177,17 @@ add_action( 'widgets_init', 'emeon_widgets_init' );
 function emeon_scripts() {
 	wp_enqueue_style( 'emeon-style', get_stylesheet_uri() );
 
-	wp_enqueue_style( 'theme-style', get_template_directory_uri()  . '/sass/style.css', [], filemtime( get_template_directory() . '/sass/style.css' ) );
+	wp_enqueue_style( 'theme-style', EMEON_URL  . '/sass/style.css', [], filemtime( EMEON_PATH . '/sass/style.css' ) );
 
-	wp_enqueue_style( 'emeon-font-awesome', get_template_directory_uri()  . '/fonts/fontawesome-pro/css/all.min.css' );
+	wp_enqueue_style( 'emeon-font-awesome', EMEON_URL  . '/fonts/fontawesome-pro/css/all.min.css' );
 
-	wp_enqueue_style( 'emeon-icons', get_template_directory_uri()  . '/fonts/emeon/styles.css' );
+	wp_enqueue_style( 'emeon-icons', EMEON_URL  . '/fonts/emeon/styles.css' );
 
-	wp_enqueue_script( 'emeon-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+	wp_enqueue_script( 'emeon-navigation', EMEON_URL . '/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'emeon-theme', get_template_directory_uri() . '/js/theme.js');
+	wp_enqueue_script( 'emeon-theme', EMEON_URL . '/js/theme.js');
 
-	wp_enqueue_script( 'emeon-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+	wp_enqueue_script( 'emeon-skip-link-focus-fix', EMEON_URL . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -188,36 +198,34 @@ add_action( 'wp_enqueue_scripts', 'emeon_scripts' );
 /**
  * Implement the Custom Header feature.
  */
-require get_template_directory() . '/inc/custom-header.php';
+require_once "inc/custom-header.php";
 
 /**
  * Custom template tags for this theme.
  */
-require get_template_directory() . '/inc/template-tags.php';
+require_once "inc/template-tags.php";
 
 /**
  * Functions which enhance the theme by hooking into WordPress.
  */
-require get_template_directory() . '/inc/template-functions.php';
+require_once "inc/template-functions.php";
 
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
-}
+require_once "inc/customizer.php";
 
 /**
  * Widgets.
  */
-require get_template_directory() . '/inc/widgets.php';
+require_once "inc/widgets.php";
 
 /**
  * Shortcodes in widgets.
  */
 add_filter( 'widget_text', 'do_shortcode' );
+
+/**
+ * Front-forms
+ */
+require_once "inc/front-forms.php";
