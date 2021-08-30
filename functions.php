@@ -13,6 +13,8 @@ define( 'EMEON_URL',  get_template_directory_uri()  );
 
 const EMEON_TPL = EMEON_PATH . '/templates';
 
+const EMEON_SLUG = 'emeon-theme';
+
 
 /**
  * Setup
@@ -106,7 +108,7 @@ function emeon_content_width() {
 	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	$GLOBALS['content_width'] = apply_filters( 'emeon_content_width', 640 );
 }
-add_action( 'after_setup_theme', 'emeon_content_width', 0 );
+add_action( 'after_setup_theme', __NAMESPACE__ . '\emeon_content_width', 0 );
 
 /**
  * Register widget area.

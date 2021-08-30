@@ -1,26 +1,16 @@
 <?php
 /**
- * emeon Theme Customizer
- *
- * @by Stim rework, v.0.0.2
- *
- * @wrike https://www.wrike.com/open.htm?id=361047162
+ * Emeon Theme Customizer
  *
  * @package emeon
  */
 
-namespace Wetail\emeon;
-
-Customizer::load();
-
-if( class_exists( __NAMESPACE__ . '\Customizer' ) ) return;
-
-final class Customizer {
+new class {
 
 	/**
 	 * Initialization for the base class
 	 */
-	public static function load(){
+	function __construct(){
 		add_action( 'customize_register',     __CLASS__ . '::register' );
 		add_action( 'customize_preview_init', __CLASS__ . '::enqueue'  );
 	}
@@ -80,4 +70,4 @@ final class Customizer {
 		wp_enqueue_script(  'emeon_preview',  $url . '/js/customizer.js', ['jquery', 'customize-preview'], $no_cache );
 	}
 
-}
+};

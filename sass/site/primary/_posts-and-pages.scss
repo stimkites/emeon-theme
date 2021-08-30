@@ -30,7 +30,7 @@ div#content {
 body.page-template-default.fl-builder div#content.page {
     min-width: 100%;
     margin: 0 auto;
-    padding: 0;	
+    padding: 0;
 }
 
 
@@ -40,16 +40,16 @@ body.page-template-default.fl-builder div#content.page {
 
 }
 article.post {
-	
+
 	.entry-meta {
 	    font-size: 12px;
 	}
-	
+
 	h1.entry-title,
 	h2.entry-title {
 	    margin-bottom: 0;
 	}
-	
+
 	footer.entry-footer {
 	    font-size: 12px;
 	    border-top: 1px solid rgba(136, 136, 136, 0.3);
@@ -58,4 +58,8 @@ article.post {
 	    display: flex;
 	    justify-content: space-between;
 	}
+}
+
+article.page {
+	text-align: center;
 }

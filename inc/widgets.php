@@ -1,5 +1,7 @@
 <?php
+
 add_action( 'widgets_init', 'emeon_woocommerce_widgets_init' );
+
 function emeon_woocommerce_widgets_init() {
     register_sidebar( array(
     	'name' => __( 'WooCommerce product filters', 'emeon' ),

@@ -12,6 +12,14 @@
 
 }
 
+@font-face {
+  font-family: "indie";
+  src:url("fonts/IndieFlower-Regular.ttf");
+  url("IndieFlower-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 [data-icon]:before {
   font-family: "emeon" !important;
   content: attr(data-icon);
