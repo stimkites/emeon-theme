@@ -24,18 +24,18 @@
 $logo = '';
 if( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
     ( $_logo = wp_get_attachment_image_src( $custom_logo_id , 'full' ) ) )
-        $logo = '<a href="'. get_home_url() .'"><img src="'. esc_url( $_logo[0] ) .'"></a>';
+        $logo = '<a class="home-link" href="'. get_home_url() .'"><img class="logo-image" src="'. esc_url( $_logo[0] ) .'" alt="emeon"></a>';
 ?>
 
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<header id="masthead" class="site-header">
-        <div class="site-branding">
-            <div class="logo-wrap">
-				<?=$logo?>
-            </div>
-        </div><!-- .site-branding -->
 		<div class="site-content">
+			<div class="site-branding">
+				<div class="logo-wrap">
+					<?=$logo?>
+				</div>
+			</div><!-- .site-branding -->
             <div class="inline-branding">
                 <div class="slogan">
                     <?=get_bloginfo( 'description' )?>

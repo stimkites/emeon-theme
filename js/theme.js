@@ -40,3 +40,16 @@ jQuery(document).ready(function($){
 		jQuery('.main-search').toggleClass('open');
     });
 });
+
+jQuery(document).ready(function($){
+	jQuery( window ).on( 'scroll', function () {
+		console.log(window.pageYOffset);
+		if ( window.pageYOffset > 0 ) {
+			jQuery('.site-branding, .inline-branding .slogan').hide();
+			jQuery('.inline-branding .logo-wrap').show();
+		} else {
+			jQuery('.site-branding, .inline-branding .slogan').show();
+			jQuery('.inline-branding .logo-wrap').hide();
+		}
+	});
+});
