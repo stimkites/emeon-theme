@@ -8,7 +8,7 @@
 /**
  * Constants
  */
-define( 'EMEON_PATH', get_template_directory()      );
+define( 'EMEON_PATH', __DIR__                       );
 define( 'EMEON_URL',  get_template_directory_uri()  );
 
 const EMEON_TPL = EMEON_PATH . '/templates';

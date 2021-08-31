@@ -1,22 +1,37 @@
 <?php
 /**
- * Human detection (AND union):
- *  -   .htaccess bot block to /join endpoint (20%)
- *  -   honeypot link in the top (10%)
- *  -   mouse activity, mouse hover event detection on email entering (20%)
- *  -   if email is typed symbol by symbol (40%)
- *  -   if browser ('USER_AGENT') is familiar (5%)
- *  -   if "JOIN" button is actually pressed (not the submit attempt performed) (5%)
- *
- *  If less than 50% covered, we ask to enter captcha before we send password email (and register)
+ * Forms rendering and processing
  */
 
 new class {
 
     function __construct() {
+
+        // Render forms
         add_shortcode( 'emeon_forms',       [ $this, 'render'   ]    );
+
+        // Process forms
         add_action   ( 'template_redirect', [ $this, 'process'  ]    );
+
+        // Contact fields in admin
+        add_action   ( 'add_meta_boxes_post',   [ $this, 'add_fields'  ] );
+        add_action   ( 'admin_init',            [ $this, 'save_fields' ] );
     }
+
+	/**
+	 * Add meta box with the contact info to posts
+	 */
+	function add_fields() {
+		add_meta_box(
+			'emeon-contact-box',
+			'Contact info',
+			function( $post ){ include EMEON_TPL . '/forms/adminbox.php'; },
+			"product",
+			"side"
+		);
+	}
+
+
 
 	/**
 	 * Process POST request
