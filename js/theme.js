@@ -17,6 +17,40 @@ window.onload = ( function( $ ) {
 		}
 	}
 
+	/**
+	 * Initialize Swiper slider
+	 *
+	 * @private
+	 */
+	function __swiper_init() {
+		const swiper = new Swiper('.vacancies--swiper', {
+			// Optional parameters
+			loop: true,
+			slidesPerView: 4,
+			spaceBetween: 20,
+			autoHeight: true,
+			autoplay: {
+				disableOnInteraction: false
+			},
+
+			// If we need pagination
+			pagination: {
+				el: '.swiper-pagination',
+			},
+
+			// Navigation arrows
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			},
+
+			// And if we need scrollbar
+			scrollbar: {
+				el: '.swiper-scrollbar',
+			},
+		});
+	}
+
 
 	/**
 	 * Assign events handlers
@@ -36,6 +70,7 @@ window.onload = ( function( $ ) {
 	function __init() {
 		console.info( '[theme] Theme JS initiated!' );
 		__display_logo_handler();
+		__swiper_init();
 		__assign();
 	}
 
