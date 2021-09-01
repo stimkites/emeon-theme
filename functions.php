@@ -200,9 +200,9 @@ function emeon_scripts() {
 
 	wp_enqueue_style( 'emeon-icons', EMEON_URL  . '/fonts/emeon/styles.css' );
 
-	wp_enqueue_script( 'emeon-navigation', EMEON_URL . '/js/navigation.js', array(), '20151215', true );
+//	wp_enqueue_script( 'emeon-navigation', EMEON_URL . '/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'emeon-theme', EMEON_URL . '/js/theme.js');
+	wp_enqueue_script( 'emeon-theme', EMEON_URL . '/js/theme.js', [ 'jquery' ], filemtime( EMEON_PATH . '/js/theme.js' ), true );
 
 	wp_enqueue_script( 'emeon-skip-link-focus-fix', EMEON_URL . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 

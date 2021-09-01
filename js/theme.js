@@ -1,3 +1,7 @@
+(function(){
+
+})()
+
 jQuery(document).ready(function($){
 	$("li.gallery-image").click(function(){
 		$("li.gallery-image").toggleClass("zoom-image");
@@ -42,14 +46,17 @@ jQuery(document).ready(function($){
 });
 
 jQuery(document).ready(function($){
-	jQuery( window ).on( 'scroll', function () {
-		console.log(window.pageYOffset);
+	function display_logo_handler() {
 		if ( window.pageYOffset > 0 ) {
 			jQuery('.site-branding, .inline-branding .slogan').hide();
-			jQuery('.inline-branding .logo-wrap').show();
+			jQuery('.inline-branding .logo-wrap').fadeIn(200);
 		} else {
-			jQuery('.site-branding, .inline-branding .slogan').show();
+			jQuery('.site-branding, .inline-branding .slogan').fadeIn(200);
 			jQuery('.inline-branding .logo-wrap').hide();
 		}
-	});
+	}
+
+	display_logo_handler();
+
+	jQuery( window ).on( 'scroll', display_logo_handler );
 });

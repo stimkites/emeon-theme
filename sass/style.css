@@ -488,6 +488,7 @@ header.site-header .site-content .nav-shop {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  min-width: 250px;
 }
 header.site-header .site-content .nav-shop > ul {
   list-style: none;

@@ -22,28 +22,33 @@
 
 <?php
 $logo = '';
-if( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
-    ( $_logo = wp_get_attachment_image_src( $custom_logo_id , 'full' ) ) )
-        $logo = '<a class="home-link" href="'. get_home_url() .'"><img class="logo-image" src="'. esc_url( $_logo[0] ) .'" alt="emeon"></a>';
+if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
+	 ( $_logo = wp_get_attachment_image_src( $custom_logo_id, 'full' ) ) ) {
+	$logo = '<a class="home-link" href="' . get_home_url() . '"><img class="logo-image" src="' . esc_url( $_logo[ 0 ] ) . '" alt="emeon"></a>';
+}
 ?>
 
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<header id="masthead" class="site-header">
 		<div class="site-content">
-			<div class="site-branding">
-				<div class="logo-wrap">
-					<?=$logo?>
+			<?php if ( is_front_page() ) : ?>
+				<div class="site-branding">
+					<div class="logo-wrap">
+						<?= $logo ?>
+					</div>
+				</div><!-- .site-branding -->
+			<?php endif ?>
+			<div class="inline-branding">
+				<div class="slogan">
+					<a class="home-link" href="<?= get_home_url() ?>">
+					<?= get_bloginfo( 'description' ) ?>
+					</a>
 				</div>
-			</div><!-- .site-branding -->
-            <div class="inline-branding">
-                <div class="slogan">
-                    <?=get_bloginfo( 'description' )?>
-                </div>
-                <div class="logo-wrap">
-		            <?=$logo?>
-                </div>
-            </div>
+				<div class="logo-wrap">
+					<?= $logo ?>
+				</div>
+			</div>
 			<nav id="site-navigation" class="main-navigation">
 				<div class="mobile nav">
 					<button class="toggle-mobile-menu"></button>
@@ -60,12 +65,12 @@ if( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 				<ul>
 					<li class="menu-item search desktop">
 						<a href="#">
-                            <i class="far fa-search toggle-search"></i>
-                        </a>
+							<i class="far fa-search toggle-search"></i>
+						</a>
 					</li>
 					<li class="menu-item account">
 						<a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>">
-						<i class="far fa-user"></i>
+							<i class="far fa-user"></i>
 						</a>
 					</li>
 				</ul>

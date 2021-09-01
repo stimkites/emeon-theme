@@ -161,6 +161,8 @@ header.site-header {
 		    display: flex;
 		    flex-direction: row;
 		    justify-content: flex-end;
+			min-width: 250px;
+
 		    > ul {
 			    list-style: none;
 			    padding: 0;
