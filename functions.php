@@ -95,6 +95,21 @@ if ( ! function_exists( 'emeon_setup' ) ) :
 endif;
 add_action( 'after_setup_theme', 'emeon_setup' );
 
+
+/**
+ * Add svg support
+ *
+ * @param $mimes
+ *
+ * @return mixed
+ */
+function emeon_mime_types($mimes) {
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
+}
+add_filter('upload_mimes', 'emeon_mime_types');
+
+
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
