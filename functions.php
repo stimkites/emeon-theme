@@ -15,6 +15,43 @@ const EMEON_TPL = EMEON_PATH . '/templates';
 
 const EMEON_SLUG = 'emeon-theme';
 
+/**
+ * Replace "https://blabla.com" to '<a href="https://blabla.com" target="_blank">https://blabla.com</a>'
+ * in the text
+ *
+ * @param string $str
+ *
+ * @return string
+ */
+function make_hrefs( $str ){
+	$reg_exUrl = "/(http|https|ftp|ftps)\\:\\/\\/[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(\\/\\S*)?/";
+	$urls = array();
+	$urlsToReplace = array();
+	if ( ! preg_match_all( $reg_exUrl, $str, $urls ) ) return $str;
+	$numOfMatches = count($urls[0]);
+	for ($i = 0;$i < $numOfMatches;$i++) {
+		$alreadyAdded = false;
+		$numOfUrlsToReplace = count($urlsToReplace);
+		for ($j = 0;$j < $numOfUrlsToReplace;$j++) {
+			if ($urlsToReplace[$j] == $urls[0][$i]) {
+				$alreadyAdded = true;
+			}
+		}
+		if (!$alreadyAdded) {
+			array_push($urlsToReplace, $urls[0][$i]);
+		}
+	}
+	$numOfUrlsToReplace = count($urlsToReplace);
+	for ($i = 0;$i < $numOfUrlsToReplace;$i++) {
+		$str = str_replace(
+			$urlsToReplace[$i],
+			'<a href="' . $urlsToReplace[$i] . '" target="_blank">' . $urlsToReplace[$i] . '</a>',
+			$str
+		);
+    }
+	return $str;
+}
+
 
 /**
  * Setup

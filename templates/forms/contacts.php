@@ -8,6 +8,7 @@
  */
 
 $info = get_post_meta( $post->ID, 'emeon_contacts', true );
+
 ?>
 <p class="description">
 	This info will be hidden to non-registered users.

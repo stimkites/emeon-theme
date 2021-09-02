@@ -15,7 +15,7 @@ new class {
 
         // Contact fields in admin
         add_action   ( 'add_meta_boxes_post',   [ $this, 'add_fields'  ] );
-        add_action   ( 'admin_init',            [ $this, 'save_fields' ] );
+        add_action   ( 'save_post_post',        [ $this, 'save_fields' ] );
     }
 
 	/**
@@ -25,19 +25,30 @@ new class {
 		add_meta_box(
 			'emeon-contact-box',
 			'Contact info',
-			function( $post ){ include EMEON_TPL . '/forms/adminbox.php'; },
+			function( $post ){ include EMEON_TPL . '/forms/contacts.php'; },
 			"product",
 			"side"
 		);
 	}
 
-
+	/**
+     * Update emeon contacts
+     *
+	 * @param WP_Post $post
+	 */
+    function save_fields( $post ){
+	    update_post_meta( $post->ID, 'emeon_contacts', $_POST['emeon_contacts'] ?? [] );
+    }
 
 	/**
 	 * Process POST request
 	 */
     function process(){
     	if( ! ( $action = ( $_POST['emeon_form_action'] ?? false ) ) ) return;
+	    if( ! wp_verify_nonce( $_POST['__nonce'] ?? false, EMEON_SLUG ) ) {
+		    $_POST['emeon_error'][] = 'Session expired. Please, try again...';
+		    return;
+	    }
     	if( ! method_exists( $this, $action ) ) {
     		$_POST['emeon_error'][] = '[ERR1586] Action not found!';
     		return;
@@ -46,7 +57,7 @@ new class {
     }
 
     /**
-     * Safely render Emeon form
+     * Safely render Emeon form and errors if any
      *
      * @param array $attributes
      * @return false|string|null
@@ -76,10 +87,6 @@ new class {
 	 * Join action
 	 */
     protected function join(){
-    	if( ! wp_verify_nonce( $_POST['__nonce'] ?? false, EMEON_SLUG ) ) {
-    		$_POST['emeon_error'][] = 'Session expired. Please, try again...';
-    		return;
-	    }
 	    if( ! ( $email = $_POST['email'] ) ||
 	        ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ){
 		    $_POST['emeon_error'][] = 'The email you entered is invalid. Please, try again.';
@@ -104,10 +111,6 @@ new class {
      * Login action
      */
     protected function login(){
-	    if( ! wp_verify_nonce( $_POST['__nonce'] ?? false, EMEON_SLUG ) ) {
-		    $_POST['emeon_error'][] = 'Session expired. Please, try again...';
-		    return;
-	    }
 	    if( ! ( $email = $_POST['email'] ) ||
 	        ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ){
 		    $_POST['emeon_error'][] = 'The email you entered is invalid. Please, try again.';
@@ -135,6 +138,10 @@ new class {
 	    wp_set_auth_cookie( $auth->ID, $_POST['remember'] ?? false );
 	    wp_safe_redirect( '/account/' );
 	    exit;
+    }
+
+    protected function captcha(){
+
     }
 
 };

@@ -7,12 +7,25 @@
  * @package emeon
  */
 
+$contact_info = '';
+if( $contacts = get_post_meta( get_the_ID(), 'emeon_contacts', true ) ){
+    $contact_info = '<div class="emeon-contact-info">';
+    foreach( $contacts as $key=>$value )
+        if( $key === 'email' )
+            $contact_info .= '<p class="contact-email"><a href="mailto:' . $value . '">' . $value . '</a></p>';
+        elseif( $key === 'phone' )
+	        $contact_info .= '<p class="contact-phone"><a href="tel:' . $value . '">' . $value . '</a></p>';
+        else
+            $contact_info .= '<div class="contact-additional">' . make_hrefs( $value ) . '</div>';
+    $contact_info .= '</div>';
+}
+
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	
+
 	<?php emeon_post_thumbnail(); ?>
-	
+
 	<header class="entry-header">
 		<?php
 		if ( is_singular() ) :
@@ -31,6 +44,9 @@
 			</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
+
+    <!--Contact info-->
+
 
 	<div class="entry-content">
 		<?php
