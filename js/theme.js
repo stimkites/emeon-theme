@@ -29,13 +29,14 @@ window.onload = ( function( $ ) {
 			slidesPerView: 4,
 			spaceBetween: 20,
 			autoHeight: true,
-			autoplay: {
-				disableOnInteraction: false
-			},
+			// autoplay: {
+			// 	disableOnInteraction: false
+			// },
 
 			// If we need pagination
 			pagination: {
 				el: '.swiper-pagination',
+				clickable: true
 			},
 
 			// Navigation arrows
