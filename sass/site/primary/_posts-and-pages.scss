@@ -25,7 +25,11 @@
 .site-content {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 50px 20px 0;
+    padding: 0 20px;
+
+	&.page {
+		padding-top: 120px;
+	}
 }
 body.page-template-default.fl-builder div#content.page {
     min-width: 100%;

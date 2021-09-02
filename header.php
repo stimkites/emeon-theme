@@ -24,31 +24,26 @@
 $logo = '';
 if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 	 ( $_logo = wp_get_attachment_image_src( $custom_logo_id, 'full' ) ) ) {
-	$logo = '<a class="home-link" href="' . get_home_url() . '"><img class="logo-image" src="' . esc_url( $_logo[ 0 ] ) . '" alt="emeon"></a>';
+	$logo = '<img class="logo-image" src="' . esc_url( $_logo[ 0 ] ) . '" alt="emeon" />';
 }
 ?>
 
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<header id="masthead" class="site-header">
-		<div class="site-content">
-			<?php if ( is_front_page() ) : ?>
-				<div class="site-branding">
-					<div class="logo-wrap">
+		<div class="site-content site-header__content">
+
+			<div class="site-branding">
+				<a class="home-link" href="<?= get_home_url() ?>">
+					<span class="logo-wrap">
 						<?= $logo ?>
-					</div>
-				</div><!-- .site-branding -->
-			<?php endif ?>
-			<div class="inline-branding">
-				<div class="slogan">
-					<a class="home-link" href="<?= get_home_url() ?>">
-					<?= get_bloginfo( 'description' ) ?>
-					</a>
-				</div>
-				<div class="logo-wrap">
-					<?= $logo ?>
-				</div>
-			</div>
+					</span>
+					<span class="slogan">
+						<?= get_bloginfo( 'description' ) ?>
+					</span>
+				</a>
+			</div><!-- .site-branding -->
+
 			<nav id="site-navigation" class="main-navigation">
 				<div class="mobile nav">
 					<button class="toggle-mobile-menu"></button>
@@ -61,9 +56,10 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 				) );
 				?>
 			</nav><!-- #site-navigation -->
-			<div class="nav-shop">
-				<ul>
-					<li class="menu-item search desktop">
+
+			<nav class="nav-shop">
+				<ul class="menu">
+					<li class="menu-item search">
 						<a href="#">
 							<i class="far fa-search toggle-search"></i>
 						</a>
@@ -74,13 +70,10 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 						</a>
 					</li>
 				</ul>
-			</div>
+			</nav>
+
 		</div><!-- #content -->
-		<div class="main-search">
-			<div id="content">
-				<?php get_search_form(); ?>
-			</div>
-		</div>
+
 	</header><!-- #masthead -->
 
 	<div id="content" class="site-content page">

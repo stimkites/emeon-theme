@@ -8,12 +8,10 @@ window.onload = ( function( $ ) {
 	 * @private
 	 */
 	function __display_logo_handler() {
-		if ( window.pageYOffset > 0 ) {
-			$( '.site-branding, .inline-branding .slogan' ).hide();
-			$( '.inline-branding .logo-wrap' ).fadeIn( 200 );
+		if ( window.pageYOffset > 50 ) {
+			$( '.site-header, .site-content.page' ).addClass( 'scrolled' );
 		} else {
-			$( '.site-branding, .inline-branding .slogan' ).fadeIn( 200 );
-			$( '.inline-branding .logo-wrap' ).hide();
+			$( '.site-header, .site-content.page' ).removeClass( 'scrolled' );
 		}
 	}
 
