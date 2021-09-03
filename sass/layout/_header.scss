@@ -33,9 +33,7 @@
 		display: block;
 		height: 100px;
 		width: 100px;
-		opacity: 1;
-		visibility: visible;
-		transition: opacity 0.2s, visibility 0.2s;
+		overflow: hidden;
 	}
 
 	.logo-image {

@@ -194,7 +194,11 @@ add_action( 'widgets_init', 'emeon_widgets_init' );
 function emeon_scripts() {
 	wp_enqueue_style( 'emeon-style', get_stylesheet_uri() );
 
-	wp_enqueue_style( 'theme-style', EMEON_URL  . '/sass/style.css', [], filemtime( EMEON_PATH . '/sass/style.css' ) );
+	// Swiper slider
+	wp_enqueue_style( 'swiper', EMEON_URL . '/css/swiper-bundle.min.css' );
+	wp_enqueue_script( 'swiper', EMEON_URL . '/js/libs/swiper-bundle.min.js', [], '7.0.2', true );
+
+	wp_enqueue_style( 'theme-style', EMEON_URL  . '/sass/style.css', [ 'swiper' ], filemtime( EMEON_PATH . '/sass/style.css' ) );
 
 	wp_enqueue_style( 'emeon-font-awesome', EMEON_URL  . '/fonts/fontawesome-pro/css/all.min.css' );
 
@@ -209,10 +213,6 @@ function emeon_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
-
-	// Swiper slider
-	wp_enqueue_style( 'swiper', EMEON_URL . '/css/swiper-bundle.min.css' );
-	wp_enqueue_script( 'swiper', EMEON_URL . '/js/libs/swiper-bundle.min.js', [], '7.0.2', true );
 }
 add_action( 'wp_enqueue_scripts', 'emeon_scripts' );
 

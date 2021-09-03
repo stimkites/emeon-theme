@@ -21,7 +21,24 @@ window.onload = ( function( $ ) {
 	 * @private
 	 */
 	function __swiper_init() {
-		const swiper = new Swiper('.vacancies--swiper', {
+		const about_swiper = new Swiper('.about--swiper', {
+			// Optional parameters
+			loop: true,
+			slidesPerView: 1,
+			spaceBetween: 20,
+			autoHeight: true,
+			// autoplay: {
+			// 	disableOnInteraction: false
+			// },
+
+			// If we need pagination
+			pagination: {
+				el: '.swiper-pagination--about',
+				clickable: true
+			},
+		});
+
+		const vacancies_swiper = new Swiper('.vacancies--swiper', {
 			// Optional parameters
 			loop: true,
 			slidesPerView: 4,
@@ -33,19 +50,14 @@ window.onload = ( function( $ ) {
 
 			// If we need pagination
 			pagination: {
-				el: '.swiper-pagination',
+				el: '.swiper-pagination--vacancies',
 				clickable: true
 			},
 
 			// Navigation arrows
 			navigation: {
-				nextEl: '.swiper-button-next',
-				prevEl: '.swiper-button-prev',
-			},
-
-			// And if we need scrollbar
-			scrollbar: {
-				el: '.swiper-scrollbar',
+				nextEl: '.swiper-button-next--vacancies',
+				prevEl: '.swiper-button-prev--vacancies',
 			},
 		});
 	}

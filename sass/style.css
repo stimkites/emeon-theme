@@ -378,9 +378,7 @@ template {
   display: block;
   height: 100px;
   width: 100px;
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.2s, visibility 0.2s;
+  overflow: hidden;
 }
 .site-header .logo-image {
   width: 100%;
@@ -991,6 +989,7 @@ a:hover, a:active {
 /*--------------------------------------------------------------
 # Swiper customizations
 --------------------------------------------------------------*/
+.about--swiper,
 .vacancies--swiper {
   overflow: hidden;
 }
@@ -999,6 +998,10 @@ a:hover, a:active {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: -10px;
 }
 
 /*--------------------------------------------------------------
