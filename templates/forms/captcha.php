@@ -3,6 +3,8 @@
  * If non-human detected - we ask to enter captcha code in this form
  */
 
+defined( 'ABSPATH' ) or exit;
+
 require_once EMEON_PATH . '/inc/captcha-gen.php';
 
 $captcha = \SVG\Captcha\get( 'hard', $_SESSION['captcha_answer'] );

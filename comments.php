@@ -10,6 +10,8 @@
  * @package emeon
  */
 
+defined( 'ABSPATH' ) or exit;
+
 if ( post_password_required() ) {
 	return;
 }

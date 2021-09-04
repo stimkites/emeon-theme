@@ -9,6 +9,8 @@
  * @package emeon
  */
 
+defined( 'ABSPATH' ) or exit;
+
 ?>
 
 	</div><!-- #content -->

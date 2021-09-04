@@ -5,6 +5,8 @@
  * @package emeon
  */
 
+defined( 'ABSPATH' ) or exit;
+
 /**
  * Constants
  */

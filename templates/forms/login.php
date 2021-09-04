@@ -4,6 +4,8 @@
  * Template for simple login form
  */
 
+defined( 'ABSPATH' ) or exit;
+
 $email = $_POST['email'] ?? '';
 $nonce = wp_create_nonce( EMEON_SLUG );
 

@@ -9,6 +9,8 @@
  * @package emeon
  */
 
+defined( 'ABSPATH' ) or exit;
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>

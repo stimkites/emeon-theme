@@ -7,6 +7,8 @@
  * @global WP_Post $post
  */
 
+defined( 'ABSPATH' ) or exit;
+
 $info = get_post_meta( $post->ID, 'emeon_contacts', true );
 
 ?>

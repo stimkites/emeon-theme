@@ -12,6 +12,8 @@
  * @package emeon
  */
 
+defined( 'ABSPATH' ) or exit;
+
 get_header();
 ?>
 
