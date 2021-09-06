@@ -7,6 +7,8 @@
 defined( 'ABSPATH' ) or exit;
 
 $post = null;
+$contacts = [];
+$uimage = $defimage = EMEON_URL . '/img/user-icon.png';
 
 if( ! is_user_logged_in() ) return;
 
@@ -17,50 +19,74 @@ if( isset( $_GET['edit'] ) ) {
     if( $post->post_author !== get_current_user_id() )
         return '<p class="error">Insufficient access level!</p>';
     $contacts = get_post_meta( $post->ID, 'emeon_contacts', true );
+    $uimage   = ( ( $image = wp_get_attachment_image_src( $post->ID ) ) ? $image : $uimage );
 }
 
 $nonce = wp_create_nonce( EMEON_SLUG );
+
+$tags  = wp_dropdown_categories( [
+	'taxonomy'   => 'post_tag',
+	'hide_empty' => 0,
+    'echo'       => false
+] );
+
+$cats  = wp_dropdown_categories( [
+	'taxonomy'   => 'category',
+	'hide_empty' => 0,
+	'echo'       => false
+] );
 
 ?>
 
 <form action=" " method="post" class="emeon-form form-adedit" enctype="multipart/form-data" name="emeon-form">
     <fieldset>
+        <div class="ad-type">
+            Ad type<br/>
+            <div class="ad-type-selectors">
+                <input id="type-cv" type="radio" checked name="ad[type]" value="candidates" />
+                <label for="type-cv">Candidate</label>
+                <input id="type-vc" type="radio" checked name="ad[type]" value="vacancies" />
+                <label for="type-vc">Vacancy</label>
+            </div>
+        </div>
         <div class="logo-wrap">
+            <label class="logo-label">Photo/logo</label>
             <div class="logo-area">
                 <span class="logo-remove"></span>
-                <img class="logo" src="" alt="image"/>
+                <img class="logo" src="<?=$uimage?>" data-default="<?=$defimage?>" alt="image"/>
             </div>
-            <input type="file" accept="image/*" name="adimage" value="" />
+            <input type="file" id="photo-file" accept="image/*" name="adimage" value="" />
         </div>
         <div class="general-info">
-            <p class="ad-type">
-                Ad type
-                <span class="type">
-                    <label for="type-cv">Candidate</label>
-                    <input id="type-cv" type="radio" checked name="ad[type]" value="candidates" />
-                </span>
-                <span class="type">
-                    <label for="type-vc">Vacancy</label>
-                    <input id="type-vc" type="radio" checked name="ad[type]" value="vacancies" />
-                </span>
-            </p>
             <p>
                 <label>
-                    Name<br/>
+                    Name/title<br/>
                     <input type="text" name="ad[title]" value="<?=$post->post_title??''?>" />
                 </label>
             </p>
             <p>
                 <label>
                     Excerpt<br/>
-                    <textarea name="ad[excerpt]" rows="5" placeholder="A few lines in short...">
-                        <?=$post->post_excerpt??''?>
-                    </textarea>
+                    <textarea name="ad[excerpt]"
+                              rows="5"
+                              placeholder="A few lines in short..."><?=$post->post_excerpt??''?></textarea>
                 </label>
             </p>
+            <div class="categories-tags-select">
+                <p class="description">
+                    Add new or use existing categories and tags
+                </p>
+                <div class="categories-selector">
+                    <?=$cats?>
+                </div>
+                <div class="tags-select">
+		            <?=$tags?>
+                </div>
+            </div>
         </div>
         <div class="contact-info">
-            <h4>This info will be hidden to bots and non-registered visitors</h4>
+            <h3>Contact info</h3>
+            <p class="description">This info will be hidden to bots and non-registered visitors</p>
             <p>
                 <label>
                     Email<br/>
@@ -76,18 +102,20 @@ $nonce = wp_create_nonce( EMEON_SLUG );
             <p>
                 <label>
                     Additional<br/>
-                    <textarea name="contacts[urls]" rows="5" placeholder="Website, portfolio etc.">
-                        <?=$contacts['urls']??''?>
-                    </textarea>
+                    <textarea name="contacts[urls]"
+                              rows="5"
+                              placeholder="Website, portfolio etc."><?=$contacts['urls']??''?></textarea>
                 </label>
             </p>
         </div>
         <div class="ad-text">
             <label>
                 Content
-                <textarea name="ad[content]" rows="50">
-                    <?=$post->post_content??''?>
-                </textarea>
+                <p class="description">
+                    Use official language communication only here. Any impolite phrases and words will cause moderation
+                    delay automatically.
+                </p>
+                <?php wp_editor( $post->post_content??'', "ad[content]", [ 'media_buttons' => false ] ); ?>
             </label>
         </div>
         <p>

@@ -16,6 +16,26 @@ new class {
         // Contact fields in admin
         add_action   ( 'add_meta_boxes_post',   [ $this, 'add_fields'  ] );
         add_action   ( 'save_post_post',        [ $this, 'save_fields' ] );
+
+        // Enqueue form scripts
+        add_action   ( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+    }
+
+	/**
+	 * Forms JS
+	 */
+    function enqueue(){
+        global $post;
+        if( false === strpos( $post->post_content ?? '', '[emeon_forms' ) ) return;
+        if( ! wp_script_is( 'jquery-core' ) )
+	        wp_enqueue_script( 'jquery-core',    "/wp-includes/js/jquery/jquery.min.js", [], '3.6.0' );
+        wp_enqueue_script(
+            EMEON_SLUG . '-form-scripts',
+            EMEON_URL . '/js/front-forms.js',
+            [ 'jquery-core' ],
+            filemtime( EMEON_PATH . '/js/front-forms.js' ),
+            true
+        );
     }
 
 	/**

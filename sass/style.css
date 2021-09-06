@@ -916,15 +916,72 @@ textarea {
   width: 100%; }
 
 .emeon-form {
+  max-width: 700px;
+  width: 100%;
   margin: 20px auto;
   padding: 10px;
-  width: 100%;
-  border: none; }
+  border: none;
+  /* fieldset */ }
   .emeon-form fieldset {
     border: none;
     padding: 0;
-    margin: 5px auto; }
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between; }
+    .emeon-form fieldset .ad-type {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 20px; }
+      .emeon-form fieldset .ad-type .ad-type-selectors {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row; }
+        .emeon-form fieldset .ad-type .ad-type-selectors label {
+          border: 1px solid #ccc;
+          width: 50%;
+          padding: 10px;
+          text-align: center;
+          cursor: pointer; }
+        .emeon-form fieldset .ad-type .ad-type-selectors input[type=radio]:checked + label {
+          background: #efefef;
+          font-weight: bold; }
+        .emeon-form fieldset .ad-type .ad-type-selectors input[type=radio] {
+          display: none; }
+    .emeon-form fieldset .logo-wrap {
+      width: 256px;
+      height: auto;
+      text-align: center; }
+      .emeon-form fieldset .logo-wrap label {
+        font-size: 11px; }
+      .emeon-form fieldset .logo-wrap .logo-area {
+        height: 256px;
+        width: 256px;
+        border: 1px solid #ccc;
+        cursor: pointer; }
+        .emeon-form fieldset .logo-wrap .logo-area img {
+          max-width: 256px;
+          max-height: 256px; }
+    .emeon-form fieldset .general-info {
+      width: 300px; }
+    .emeon-form fieldset .contact-info {
+      width: 100%; }
+    .emeon-form fieldset .ad-text {
+      width: 100%; }
+    .emeon-form fieldset input[type=text], .emeon-form fieldset input[type=email], .emeon-form fieldset textarea, .emeon-form fieldset select {
+      width: 100%;
+      padding: 7px; }
+    .emeon-form fieldset input[type=file] {
+      display: none !important;
+      visibility: hidden;
+      opacity: 0; }
+    .emeon-form fieldset textarea {
+      font-size: 12px; }
 
+/* emeon-form */
 /*--------------------------------------------------------------
 # Navigation
 --------------------------------------------------------------*/
