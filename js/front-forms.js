@@ -12,7 +12,7 @@
 ( $ => {
 
   const __photo = function( e ){
-    let f = e.target.filename;
+    let f = e.target.files;
     console.log( f );
   };
 
