@@ -41,6 +41,9 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 					<span class="slogan">
 						<?= get_bloginfo( 'description' ) ?>
 					</span>
+					<span class="logo-scrolled">
+						<img class="logo-image" src="<?php echo get_template_directory_uri() . '/img/emeon-logo-2-cr.png' ?>" alt="emeon" />
+					</span>
 				</a>
 			</div><!-- .site-branding -->
 

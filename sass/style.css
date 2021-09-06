@@ -368,11 +368,12 @@ template {
   transition: height 0.2s;
 }
 .site-header .home-link {
-  display: block;
+  display: flex;
+  align-items: center;
 }
 .site-header .site-branding,
 .site-header .nav-shop {
-  min-width: 250px;
+  min-width: 360px;
 }
 .site-header .logo-wrap {
   display: block;
@@ -380,18 +381,23 @@ template {
   width: 100px;
   overflow: hidden;
 }
+.site-header .logo-scrolled {
+  display: none;
+  width: 100px;
+}
 .site-header .logo-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 .site-header .slogan {
-  display: none;
+  display: block;
   font-family: "indie", "Liberation Sans Narrow", "Arial Narrow", sans-serif;
   font-style: normal;
   font-size: 18px;
   font-weight: normal;
   white-space: nowrap;
+  margin-left: 20px;
 }
 .site-header .menu {
   display: flex;
@@ -419,10 +425,13 @@ template {
 .site-header.scrolled .site-header__content {
   height: 50px;
 }
-.site-header.scrolled .slogan {
-  display: block;
+.site-header.scrolled .logo-scrolled {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.site-header.scrolled .logo-wrap {
+.site-header.scrolled .logo-wrap,
+.site-header.scrolled .slogan {
   display: none;
 }
 
