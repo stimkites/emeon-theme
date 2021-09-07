@@ -7,7 +7,7 @@ window.onload = ( function( $ ) {
 	 *
 	 * @private
 	 */
-	function __display_logo_handler() {
+	function __page_scroll_handler() {
 		if ( window.pageYOffset > 50 ) {
 			$( '.site-header, .site-content.page' ).addClass( 'scrolled' );
 		} else {
@@ -69,7 +69,7 @@ window.onload = ( function( $ ) {
 	 * @private
 	 */
 	function __assign() {
-		$( window ).on( 'scroll', __display_logo_handler );
+		$( window ).on( 'scroll', __page_scroll_handler );
 	}
 
 
@@ -80,7 +80,7 @@ window.onload = ( function( $ ) {
 	 */
 	function __init() {
 		console.info( '[theme] Theme JS initiated!' );
-		__display_logo_handler();
+		__page_scroll_handler();
 		__swiper_init();
 		__assign();
 	}
