@@ -353,7 +353,7 @@ template {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 100;
   transition: box-shadow 0.2s;
 }
 .site-header__content.site-content {
@@ -495,6 +495,14 @@ body.page-template-default.fl-builder div#content.page {
   min-width: 100%;
   margin: 0 auto;
   padding: 50px 0 0;
+}
+
+.section {
+  margin-bottom: 100px;
+}
+.section__header {
+  font-size: 2rem;
+  font-weight: 900;
 }
 
 article.post .entry-meta {
@@ -1066,6 +1074,14 @@ body.page-template-default.fl-builder div#content.page {
   min-width: 100%;
   margin: 0 auto;
   padding: 50px 0 0;
+}
+
+.section {
+  margin-bottom: 100px;
+}
+.section__header {
+  font-size: 2rem;
+  font-weight: 900;
 }
 
 article.post .entry-meta {

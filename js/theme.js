@@ -3,7 +3,7 @@
 window.onload = ( function( $ ) {
 
 	/**
-	 * Change logo on scroll
+	 * Add css class on scroll
 	 *
 	 * @private
 	 */
@@ -25,9 +25,9 @@ window.onload = ( function( $ ) {
 			loop: true,
 			slidesPerView: 1,
 			autoHeight: true,
-			// autoplay: {
-			// 	disableOnInteraction: false
-			// },
+			autoplay: {
+				disableOnInteraction: false
+			},
 			pagination: {
 				el: '.swiper-pagination--about',
 				clickable: true
@@ -39,9 +39,9 @@ window.onload = ( function( $ ) {
 			slidesPerView: 4,
 			spaceBetween: 20,
 			autoHeight: true,
-			// autoplay: {
-			// 	disableOnInteraction: false
-			// },
+			autoplay: {
+				disableOnInteraction: false
+			},
 			pagination: {
 				el: '.swiper-pagination--vacancies',
 				clickable: true
@@ -57,9 +57,9 @@ window.onload = ( function( $ ) {
 			slidesPerView: 4,
 			spaceBetween: 20,
 			autoHeight: true,
-			// autoplay: {
-			// 	disableOnInteraction: false
-			// },
+			autoplay: {
+				disableOnInteraction: false
+			},
 			pagination: {
 				el: '.swiper-pagination--candidates',
 				clickable: true
@@ -74,9 +74,9 @@ window.onload = ( function( $ ) {
 			loop: true,
 			slidesPerView: 1,
 			autoHeight: true,
-			// autoplay: {
-			// 	disableOnInteraction: false
-			// },
+			autoplay: {
+				disableOnInteraction: false
+			},
 			pagination: {
 				el: '.swiper-pagination--stories',
 				clickable: true

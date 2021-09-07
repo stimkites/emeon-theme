@@ -37,7 +37,14 @@ body.page-template-default.fl-builder div#content.page {
     padding: 50px 0 0;
 }
 
+.section {
+	margin-bottom: 100px;
 
+	&__header {
+		font-size: 2rem;
+		font-weight: 900;
+	}
+}
 
 
 @media screen and (max-width: 1280px) {
