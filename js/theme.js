@@ -3,6 +3,7 @@ jQuery(document).ready(function($){
 		$("li.gallery-image").toggleClass("zoom-image");
 	});
 });
+
 jQuery(document).ready(function($){
 	jQuery('.menu-item.cart').click(function () {
     	jQuery('.woocommerce.widget_shopping_cart').toggleClass('open');

@@ -32,6 +32,10 @@ $tags  = wp_dropdown_categories( [
 
 $cats  = wp_dropdown_categories( [
 	'taxonomy'   => 'category',
+	'exclude'    => array_map(
+		function( $a ){ return $a->term_id; },
+		get_terms( [ 'slug' => [ 'uncategorized', 'vacancies', 'candidates' ] ] )
+	),
 	'hide_empty' => 0,
 	'echo'       => false
 ] );
@@ -90,21 +94,28 @@ $cats  = wp_dropdown_categories( [
             <p>
                 <label>
                     Email<br/>
-                    <input type="email" name="contacts[email]" value="<?=$contacts['email']??''?>" />
+                    <input type="email"
+                           name="contacts[email]"
+                           value="<?=$contacts['email']??''?>"
+                           placeholder="your@email.here"
+                    />
                 </label>
             </p>
             <p>
                 <label>
                     Phone<br/>
-                    <input type="text" name="contacts[phone]" value="<?=$contacts['phone']??''?>" />
+                    <input type="text"
+                           name="contacts[phone]"
+                           placeholder="+1 233 456 789"
+                           value="<?=$contacts['phone']??''?>" />
                 </label>
             </p>
             <p>
                 <label>
                     Additional<br/>
                     <textarea name="contacts[urls]"
-                              rows="5"
-                              placeholder="Website, portfolio etc."><?=$contacts['urls']??''?></textarea>
+                              rows="4"
+                              placeholder=" - Website URL <?="\n"?> - Portfolio URL..."><?=$contacts['urls']??''?></textarea>
                 </label>
             </p>
         </div>
@@ -115,7 +126,20 @@ $cats  = wp_dropdown_categories( [
                     Use official language communication only here. Any impolite phrases and words will cause moderation
                     delay automatically.
                 </p>
-                <?php wp_editor( $post->post_content??'', "ad[content]", [ 'media_buttons' => false ] ); ?>
+                <?php wp_editor(
+                        $post->post_content??'',
+                        "ad[content]",
+                        [
+	                        'tinymce' => array(
+		                        'toolbar1' => 'bold, italic',
+		                        'toolbar2' => '',
+	                        ),
+	                        'wpautop' => false,
+	                        'media_buttons' => false,
+	                        'quicktags' => true,
+                            'teeny' => treu
+                        ]
+                ); ?>
             </label>
         </div>
         <p>
