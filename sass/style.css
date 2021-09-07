@@ -795,6 +795,10 @@ body {
   background: #fff;
   /* Fallback for when there is no custom background color defined. */
 }
+body.disable-scroll {
+  height: 100vh;
+  overflow: hidden;
+}
 
 hr {
   background-color: #ccc;

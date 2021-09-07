@@ -4,7 +4,31 @@ window.onload = ( function( $ ) {
 
 	const _body = $( 'body' ),
 		_window = $( window ),
+		_header_elem = $( '.site-header' ),
 		_sandwich_button_elem = $( '.toggle-mobile-menu' );
+
+
+	/**
+	 * Disable page scroll
+	 *
+	 * @private
+	 */
+	function __disable_scroll() {
+		let padding_offset = window.innerWidth - document.body.offsetWidth + 'px';
+		_body.addClass( 'disable-scroll' ).css( 'padding-right', padding_offset );
+		_header_elem.css( 'padding-right', padding_offset );
+	}
+
+
+	/**
+	 * Enable page scroll
+	 *
+	 * @private
+	 */
+	function __enable_scroll() {
+		_body.removeClass( 'disable-scroll' ).removeAttr( 'style' );
+		_header_elem.removeAttr( 'style' );
+	}
 
 
 	/**
@@ -22,7 +46,6 @@ window.onload = ( function( $ ) {
 	}
 
 
-
 	/**
 	 * Window resize handler
 	 *
@@ -33,11 +56,13 @@ window.onload = ( function( $ ) {
 		if ( window.innerWidth < 768 ) {
 			_target_elems.removeClass( 'active' );
 			_body.removeClass( 'mobile-menu-opened' );
+			__enable_scroll();
 		}
 	}
 
 
 	/**
+	 * Open/close mobile menu
 	 *
 	 * @param e
 	 * @private
@@ -49,7 +74,9 @@ window.onload = ( function( $ ) {
 			_this.removeClass( 'active' );
 			_main_nav_elem.removeClass( 'active' );
 			_body.removeClass( 'mobile-menu-opened' );
+			__enable_scroll();
 		} else {
+			__disable_scroll();
 			_this.addClass( 'active' );
 			_main_nav_elem.addClass( 'active' );
 			_body.addClass( 'mobile-menu-opened' );
@@ -188,6 +215,6 @@ window.onload = ( function( $ ) {
 	}
 } )( jQuery.noConflict() ).init();
 
-window.onbeforeunload = function(  ) {
+window.onbeforeunload = function() {
 
 }
