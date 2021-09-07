@@ -22,16 +22,12 @@ window.onload = ( function( $ ) {
 	 */
 	function __swiper_init() {
 		const about_swiper = new Swiper('.about--swiper', {
-			// Optional parameters
 			loop: true,
 			slidesPerView: 1,
-			spaceBetween: 20,
 			autoHeight: true,
 			// autoplay: {
 			// 	disableOnInteraction: false
 			// },
-
-			// If we need pagination
 			pagination: {
 				el: '.swiper-pagination--about',
 				clickable: true
@@ -39,7 +35,6 @@ window.onload = ( function( $ ) {
 		});
 
 		const vacancies_swiper = new Swiper('.vacancies--swiper', {
-			// Optional parameters
 			loop: true,
 			slidesPerView: 4,
 			spaceBetween: 20,
@@ -47,18 +42,45 @@ window.onload = ( function( $ ) {
 			// autoplay: {
 			// 	disableOnInteraction: false
 			// },
-
-			// If we need pagination
 			pagination: {
 				el: '.swiper-pagination--vacancies',
 				clickable: true
 			},
-
-			// Navigation arrows
 			navigation: {
 				nextEl: '.swiper-button-next--vacancies',
 				prevEl: '.swiper-button-prev--vacancies',
 			},
+		});
+
+		const candidates_swiper = new Swiper('.candidates--swiper', {
+			loop: true,
+			slidesPerView: 4,
+			spaceBetween: 20,
+			autoHeight: true,
+			// autoplay: {
+			// 	disableOnInteraction: false
+			// },
+			pagination: {
+				el: '.swiper-pagination--candidates',
+				clickable: true
+			},
+			navigation: {
+				nextEl: '.swiper-button-next--candidates',
+				prevEl: '.swiper-button-prev--candidates',
+			},
+		});
+
+		const stories_swiper = new Swiper('.stories--swiper', {
+			loop: true,
+			slidesPerView: 1,
+			autoHeight: true,
+			// autoplay: {
+			// 	disableOnInteraction: false
+			// },
+			pagination: {
+				el: '.swiper-pagination--stories',
+				clickable: true
+			}
 		});
 	}
 

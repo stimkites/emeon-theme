@@ -998,8 +998,7 @@ a:hover, a:active {
 /*--------------------------------------------------------------
 # Swiper customizations
 --------------------------------------------------------------*/
-.about--swiper,
-.vacancies--swiper {
+.swiper-slider {
   overflow: hidden;
 }
 
