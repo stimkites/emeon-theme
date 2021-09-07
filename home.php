@@ -98,18 +98,9 @@ get_header();
 							'emeon-team'
 						];
 
-						function get_categories_ids( $arr ) {
-							$result = [];
-							foreach ( $arr as $item ) {
-								$result[] = get_category_by_slug( $item )->term_id;
-							}
-
-							return $result;
-						}
-
 						$candidates = get_posts( [
 							'numberposts' => 8,
-							'category'    => get_categories_ids( $candidates_categories ),
+							'category'    => emeon_get_categories_ids( $candidates_categories ),
 							'orderby'     => 'modified',
 							'post_status' => 'publish'
 						] );

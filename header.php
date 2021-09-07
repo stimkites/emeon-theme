@@ -48,10 +48,7 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 			</div><!-- .site-branding -->
 
 			<nav id="site-navigation" class="main-navigation">
-				<div class="mobile nav">
-					<button class="toggle-mobile-menu"></button>
-					<i class="far fa-search toggle-search mobile"></i>
-				</div>
+				<button class="toggle-mobile-menu"></button>
 				<?php
 				wp_nav_menu( array(
 					'theme_location' => 'menu-1',

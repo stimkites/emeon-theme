@@ -250,3 +250,20 @@ add_filter( 'widget_text', 'do_shortcode' );
  * Front-forms
  */
 require_once "inc/front-forms.php";
+
+
+/**
+ * Get the categories ids
+ *
+ * @param $arr Array of categories slugs
+ *
+ * @return array Array of categories ids
+ */
+function emeon_get_categories_ids( array $arr ): array {
+	$result = [];
+	foreach ( $arr as $item ) {
+		$result[] = get_category_by_slug( $item )->term_id;
+	}
+
+	return $result;
+}
