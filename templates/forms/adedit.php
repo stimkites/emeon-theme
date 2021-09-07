@@ -42,7 +42,7 @@ $cats  = wp_dropdown_categories( [
 
 ?>
 
-<form action=" " method="post" class="emeon-form form-adedit" enctype="multipart/form-data" name="emeon-form">
+<form action=" " method="post" class="emeon-form form-adedit" id="form-adedit" enctype="multipart/form-data" name="emeon-form">
     <fieldset>
         <div class="ad-type">
             Ad type<br/>
