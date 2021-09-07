@@ -11,9 +11,10 @@
  */
 ( $ => {
 
+
+
   const __photo = function( e ){
-    let f = e.target.files;
-    console.log( f );
+    $( 'img.logo' ).prop( 'src', window.URL.createObjectURL( e.target.files[0] ) ).parent().addClass( 'added' );
   };
 
   const __assign = function(){

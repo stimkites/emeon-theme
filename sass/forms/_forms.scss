@@ -61,10 +61,47 @@
         width: 256px;
         border: 1px solid #ccc;
         cursor: pointer;
-        img {
-          max-width: 256px;
-          max-height: 256px;
+        position: relative;
+
+        .logo-remove{
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 999;
+          width: 30px;
+          height: 30px;
+          display: none;
+          &::before,
+          &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            display: block;
+            height: 1px;
+            width: 50%;
+            background-color: #000;
+          }
+          &::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+          }
+          &::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+          }
         }
+
+        &.added {
+          .logo-remove {
+            display: block;
+          }
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+
       }
     }
 
