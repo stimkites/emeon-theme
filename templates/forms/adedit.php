@@ -7,10 +7,15 @@
 defined( 'ABSPATH' ) or exit;
 
 $post = null;
-$contacts = [];
+$contacts = $_POST['contacts'] ?? [];
 $uimage = $defimage = EMEON_URL . '/img/user-icon.png';
 
-if( ! is_user_logged_in() ) return;
+if( ! is_user_logged_in() ) {
+    ?>
+    <div class="error">Unauthorized access is prohibited!</div>
+    <?php
+    return;
+}
 
 if( isset( $_GET['edit'] ) ) {
     $post = get_post( $_GET['edit'] );
@@ -18,7 +23,7 @@ if( isset( $_GET['edit'] ) ) {
         return '<p class="error">Ad not found!</p>';
     if( $post->post_author !== get_current_user_id() )
         return '<p class="error">Insufficient access level!</p>';
-    $contacts = get_post_meta( $post->ID, 'emeon_contacts', true );
+    $contacts = $_POST['contacts'] ?? get_post_meta( $post->ID, 'emeon_contacts', true );
     $uimage   = ( ( $image = wp_get_attachment_image_src( $post->ID ) ) ? $image : $uimage );
 }
 
@@ -56,7 +61,7 @@ $cats  = wp_dropdown_categories( [
         <div class="logo-wrap">
             <label class="logo-label">Photo/logo</label>
             <div class="logo-area">
-                <span class="logo-remove"></span>
+                <span class="remove-icon logo-remove"></span>
                 <img class="logo" src="<?=$uimage?>" data-default="<?=$defimage?>" alt="image"/>
             </div>
             <input type="file" id="photo-file" accept="image/*" name="adimage" value="" />
@@ -115,36 +120,54 @@ $cats  = wp_dropdown_categories( [
                     Additional<br/>
                     <textarea name="contacts[urls]"
                               rows="4"
-                              placeholder=" - Website URL <?="\n"?> - Portfolio URL..."><?=$contacts['urls']??''?></textarea>
+                              placeholder=" - Website URL <?="\n"?> - Portfolio URL<?="\n"?> - Another phone number<?="\n"?> ..."><?=$contacts['urls']??''?></textarea>
                 </label>
             </p>
         </div>
         <div class="ad-text">
-            <label>
+            <h3>
                 Content
-                <p class="description">
-                    Use official language communication only here. Any impolite phrases and words will cause moderation
-                    delay automatically.
-                </p>
-                <?php wp_editor(
-                        $post->post_content??'',
-                        "ad[content]",
-                        [
-	                        'tinymce' => array(
-		                        'toolbar1' => 'bold, italic',
-		                        'toolbar2' => '',
-	                        ),
-	                        'wpautop' => false,
-	                        'media_buttons' => false,
-	                        'quicktags' => true,
-                            'teeny' => treu
-                        ]
-                ); ?>
-            </label>
+            </h3>
+            <p class="description">
+                Use official language communication only here. Any impolite phrases and words will cause moderation
+                delay automatically.
+            </p>
+            <?php wp_editor(
+                    $post->post_content??'',
+                    "ad[content]",
+                    [
+                        'tinymce' => array(
+                            'toolbar1' => 'bold, italic',
+                            'toolbar2' => '',
+                        ),
+                        'wpautop' => false,
+                        'media_buttons' => false,
+                        'quicktags' => true,
+                        'teeny' => true
+                    ]
+            ); ?>
         </div>
-        <p>
+        <div class="attachment-area">
+            <h3>
+                Attachment PDF
+            </h3>
+            <p class="description">
+                This document will be available for downloading to registered users.<br/>
+                Maximum size is 5 mb. Click to add/replace the attachment below:
+            </p>
+            <div id="attachment-info">
+                <span class="remove-icon attachment-remove"></span>
+                <iframe id="attachment-preview" src=""></iframe>
+                <span id="no-attachment">No file selected...</span>
+            </div>
+            <input type="file" id="attachment-file" name="ad[attachment]" accept=".pdf" />
+        </div>
+
+        <div class="cta-controls">
             <button type="submit" class="button button-cta">Save</button>
-        </p>
+        </div>
+
+
         <input type="hidden" name="emeon_form_action" value="adedit" />
         <input type="hidden" name="__nonce" value="<?=$nonce?>" />
     </fieldset>

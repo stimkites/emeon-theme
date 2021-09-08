@@ -49,6 +49,39 @@
       }
     }
 
+    .remove-icon{
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 999;
+      width: 30px;
+      height: 30px;
+      display: none;
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        height: 1px;
+        width: 50%;
+        background-color: #000;
+      }
+      &::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      &::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
+
+    .added {
+      .remove-icon {
+        display: block;
+      }
+    }
+
     .logo-wrap {
       width: 256px;
       height: auto;
@@ -62,39 +95,6 @@
         border: 1px solid #ccc;
         cursor: pointer;
         position: relative;
-
-        .logo-remove{
-          position: absolute;
-          top: 0;
-          right: 0;
-          z-index: 999;
-          width: 30px;
-          height: 30px;
-          display: none;
-          &::before,
-          &::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            display: block;
-            height: 1px;
-            width: 50%;
-            background-color: #000;
-          }
-          &::before {
-            transform: translate(-50%, -50%) rotate(45deg);
-          }
-          &::after {
-            transform: translate(-50%, -50%) rotate(-45deg);
-          }
-        }
-
-        &.added {
-          .logo-remove {
-            display: block;
-          }
-        }
 
         img {
           width: 100%;
@@ -111,6 +111,57 @@
 
     .contact-info {
       width: 100%;
+    }
+
+    .attachment-area {
+      width: 100%;
+
+      #attachment-info{
+        margin: 20px auto;
+        padding: 0;
+        text-align: center;
+        border: 3px dotted #ccc;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        position: relative;
+
+        &.added {
+          border: 1px solid #000;
+        }
+
+        .remove-icon {
+          top: -30px;
+        }
+
+        #attachment-preview {
+          border: none;
+          width: 100%;
+          height: 500px;
+          cursor: pointer;
+          display: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        #no-attachment {
+          padding: 20px;
+          display: block;
+          font-size: 11px;
+        }
+
+        &.added #no-attachment {
+          display: none;
+        }
+      }
+    }
+
+    .cta-controls {
+      width: 100%;
+      text-align: center;
+      button {
+        cursor: pointer;
+      }
     }
 
     .ad-text {
@@ -135,3 +186,26 @@
   } /* fieldset */
 
 } /* emeon-form */
+
+
+/* Emeon form error */
+#emeon-error-popup {
+  z-index: 992992;
+  position: fixed;
+  top: 100px;
+  right: -450px;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-left: 5px solid orangered;
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  transition: all ease-in-out .3s;
+  &.visible {
+    right: 35px;
+  }
+}
