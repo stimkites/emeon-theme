@@ -31,16 +31,17 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 
 $tags  = wp_dropdown_categories( [
 	'taxonomy'   => 'post_tag',
+	'id'         => 'ad_tags',
+	'class'      => 'sel2',
 	'hide_empty' => 0,
     'echo'       => false
 ] );
 
 $cats  = wp_dropdown_categories( [
 	'taxonomy'   => 'category',
-	'exclude'    => array_map(
-		function( $a ){ return $a->term_id; },
-		get_terms( [ 'slug' => [ 'uncategorized', 'vacancies', 'candidates' ] ] )
-	),
+    'id'         => 'ad_categories',
+	'exclude'    => [ 1, 17, 18 ],
+    'class'      => 'sel2',
 	'hide_empty' => 0,
 	'echo'       => false
 ] );
@@ -50,16 +51,14 @@ $cats  = wp_dropdown_categories( [
 <form action=" " method="post" class="emeon-form form-adedit" id="form-adedit" enctype="multipart/form-data" name="emeon-form">
     <fieldset>
         <div class="ad-type">
-            Ad type<br/>
             <div class="ad-type-selectors">
                 <input id="type-cv" type="radio" checked name="ad[type]" value="candidates" />
                 <label for="type-cv">Candidate</label>
-                <input id="type-vc" type="radio" checked name="ad[type]" value="vacancies" />
+                <input id="type-vc" type="radio" name="ad[type]" value="vacancies" />
                 <label for="type-vc">Vacancy</label>
             </div>
         </div>
         <div class="logo-wrap">
-            <label class="logo-label">Photo/logo</label>
             <div class="logo-area">
                 <span class="remove-icon logo-remove"></span>
                 <img class="logo" src="<?=$uimage?>" data-default="<?=$defimage?>" alt="image"/>
@@ -67,62 +66,52 @@ $cats  = wp_dropdown_categories( [
             <input type="file" id="photo-file" accept="image/*" name="adimage" value="" />
         </div>
         <div class="general-info">
-            <p>
+            <div class="no-pads">
                 <label>
-                    Name/title<br/>
-                    <input type="text" name="ad[title]" value="<?=$post->post_title??''?>" />
+                    <input type="text" name="ad[title]" placeholder="Title/name" value="<?=$post->post_title??''?>" />
                 </label>
-            </p>
-            <p>
                 <label>
-                    Excerpt<br/>
                     <textarea name="ad[excerpt]"
+                              class="ad-excerpt"
                               rows="5"
                               placeholder="A few lines in short..."><?=$post->post_excerpt??''?></textarea>
                 </label>
-            </p>
-            <div class="categories-tags-select">
-                <p class="description">
-                    Add new or use existing categories and tags
-                </p>
-                <div class="categories-selector">
-                    <?=$cats?>
-                </div>
-                <div class="tags-select">
-		            <?=$tags?>
-                </div>
             </div>
+        </div>
+        <div class="categories-tags-select">
+            <h3>Categories and tags</h3>
+            <p class="description">
+                These are very important things on how ad will be found on site. Add new or use existing ones.
+            </p>
+            <label for="ad_categories">Categories</label>
+            <?=$cats?>
+            <label for="ad_tags">Tags</label>
+            <?=$tags?>
         </div>
         <div class="contact-info">
             <h3>Contact info</h3>
             <p class="description">This info will be hidden to bots and non-registered visitors</p>
-            <p>
+            <div class="no-pads">
                 <label>
-                    Email<br/>
                     <input type="email"
                            name="contacts[email]"
                            value="<?=$contacts['email']??''?>"
                            placeholder="your@email.here"
                     />
                 </label>
-            </p>
-            <p>
                 <label>
-                    Phone<br/>
                     <input type="text"
                            name="contacts[phone]"
                            placeholder="+1 233 456 789"
                            value="<?=$contacts['phone']??''?>" />
                 </label>
-            </p>
-            <p>
                 <label>
-                    Additional<br/>
                     <textarea name="contacts[urls]"
                               rows="4"
+                              class="ad-urls"
                               placeholder=" - Website URL <?="\n"?> - Portfolio URL<?="\n"?> - Another phone number<?="\n"?> ..."><?=$contacts['urls']??''?></textarea>
                 </label>
-            </p>
+            </div>
         </div>
         <div class="ad-text">
             <h3>
@@ -132,20 +121,9 @@ $cats  = wp_dropdown_categories( [
                 Use official language communication only here. Any impolite phrases and words will cause moderation
                 delay automatically.
             </p>
-            <?php wp_editor(
-                    $post->post_content??'',
-                    "ad[content]",
-                    [
-                        'tinymce' => array(
-                            'toolbar1' => 'bold, italic',
-                            'toolbar2' => '',
-                        ),
-                        'wpautop' => false,
-                        'media_buttons' => false,
-                        'quicktags' => true,
-                        'teeny' => true
-                    ]
-            ); ?>
+            <?php
+			wp_editor( $post->post_content ?? '', "ad_content", [ 'media_buttons' => false, 'quicktags' => false ] );
+			?>
         </div>
         <div class="attachment-area">
             <h3>

@@ -29,6 +29,10 @@ new class {
         if( false === strpos( $post->post_content ?? '', '[emeon_forms' ) ) return;
         if( ! wp_script_is( 'jquery-core' ) )
 	        wp_enqueue_script( 'jquery-core',    "/wp-includes/js/jquery/jquery.min.js", [], '3.6.0' );
+        if( ! wp_script_is( 'select2' ) ){
+            wp_enqueue_style(  'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css' );
+            wp_enqueue_script( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', [ 'jquery' ], '1.0', true );
+        }
         wp_enqueue_script(
             EMEON_SLUG . '-form-scripts',
             EMEON_URL . '/js/front-forms.js',

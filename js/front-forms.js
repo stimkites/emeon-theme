@@ -89,8 +89,7 @@
     let src = URL.createObjectURL( f );
     if( ! src ) return;
     console.log( src );
-    $( 'img.logo' ).prop( 'src', src ).parent().addClass( 'added' );
-    URL.revokeObjectURL( src );
+    $( 'img.logo' ).prop( 'src', src ).parent().addClass( 'added' ).on( 'load', () => { URL.revokeObjectURL( src ) } );
   };
 
   /**
@@ -110,8 +109,14 @@
       return;
     }
     const obj_url = URL.createObjectURL( f );
-    $( '#attachment-preview' ).prop( 'src', obj_url ).show().parent().addClass( 'added' );
-    URL.revokeObjectURL(obj_url);
+    $( '#attachment-preview' ).prop( 'src', obj_url ).show().parent().addClass( 'added' ).on( 'load', () => { URL.revokeObjectURL( obj_url ) } );
+  };
+
+  const __init_selects = function(){
+    $( 'select.sel2:not(.select2-offscreen)' ).attr( 'multiple', true ).select2({
+      width: '100%',
+      tags: true
+    });
   };
 
   /**
@@ -126,7 +131,7 @@
     $( '.logo-remove' ).off().click( __reset_photo );
     $( '#attachment-file' ).off().change( __set_attachment_info );
     $( '.attachment-remove' ).off().click( __reset_attachment );
-
+    __init_selects();
   };
 
   return {

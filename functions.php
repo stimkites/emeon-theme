@@ -10,12 +10,13 @@ defined( 'ABSPATH' ) or exit;
 /**
  * Constants
  */
-define( 'EMEON_PATH', __DIR__                       );
+const
+    EMEON_PATH = __DIR__,
+    EMEON_TPL = EMEON_PATH . '/templates',
+    EMEON_SLUG = 'emeon-theme';
+
 define( 'EMEON_URL',  get_template_directory_uri()  );
 
-const EMEON_TPL = EMEON_PATH . '/templates';
-
-const EMEON_SLUG = 'emeon-theme';
 
 /**
  * Replace "https://blabla.com" to '<a href="https://blabla.com" target="_blank">https://blabla.com</a>'
