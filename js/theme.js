@@ -214,7 +214,3 @@ window.onload = ( function( $ ) {
 		}
 	}
 } )( jQuery.noConflict() ).init();
-
-window.onbeforeunload = function() {
-
-}
