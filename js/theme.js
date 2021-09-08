@@ -207,7 +207,7 @@ window.onload = ( function( $ ) {
 
 	return {
 		/**
-		 * Call to init ourselves only when we are on our archive page
+		 * Call to init ourselves
 		 */
 		init: function() {
 			return __init;
