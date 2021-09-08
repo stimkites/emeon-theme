@@ -1,6 +1,6 @@
 footer#colophon {
 	padding: 20px;
-	
+
 	ul {
 	    margin: 0;
 	    padding: 0;
@@ -25,14 +25,14 @@ footer#colophon {
 		.column.col-2 {
 		    width: 16.6%;
 		}
-		
+
 		.column.col-6 {
 		    width: 50%;
 		}
 		&.payments-logo .column {
 		    display: flex;
 		    flex-direction: row;
-			
+
 			.widget_media_image {
 				margin: 0 20px 0 0;
 				img {
@@ -49,10 +49,10 @@ footer#colophon {
 	}
 }
 
-@media screen and (max-width: 48em) {
+@media screen and (max-width: 767px) {
 	footer#colophon .columns {
 		flex-direction: column;
-		
+
 		.column.col-2,.column.col-6 {
 		    width: 100%;
 		}

@@ -24,33 +24,33 @@ defined( 'ABSPATH' ) or exit;
 
 <?php
 $logo = '';
-if( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
-    ( $_logo = wp_get_attachment_image_src( $custom_logo_id , 'full' ) ) )
-        $logo = '<a href="'. get_home_url() .'"><img src="'. esc_url( $_logo[0] ) .'"></a>';
+if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
+	 ( $_logo = wp_get_attachment_image_src( $custom_logo_id, 'full' ) ) ) {
+	$logo = '<img class="logo-image" src="' . esc_url( $_logo[ 0 ] ) . '" alt="emeon" />';
+}
 ?>
 
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<header id="masthead" class="site-header">
-        <div class="site-branding">
-            <div class="logo-wrap">
-				<?=$logo?>
-            </div>
-        </div><!-- .site-branding -->
-		<div class="site-content">
-            <div class="inline-branding">
-                <div class="slogan">
-                    <?=get_bloginfo( 'description' )?>
-                </div>
-                <div class="logo-wrap">
-		            <?=$logo?>
-                </div>
-            </div>
+		<div class="site-content site-header__content">
+
+			<div class="site-branding">
+				<a class="home-link" href="<?= get_home_url() ?>">
+					<span class="logo-wrap">
+						<?= $logo ?>
+					</span>
+					<span class="slogan">
+						<?= get_bloginfo( 'description' ) ?>
+					</span>
+					<span class="logo-scrolled">
+						<img class="logo-image" src="<?php echo get_template_directory_uri() . '/img/emeon-logo-2-cr.png' ?>" alt="emeon" />
+					</span>
+				</a>
+			</div><!-- .site-branding -->
+
 			<nav id="site-navigation" class="main-navigation">
-				<div class="mobile nav">
-					<button class="toggle-mobile-menu"></button>
-					<i class="far fa-search toggle-search mobile"></i>
-				</div>
+				<button class="toggle-mobile-menu"></button>
 				<?php
 				wp_nav_menu( array(
 					'theme_location' => 'menu-1',
@@ -58,26 +58,24 @@ if( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 				) );
 				?>
 			</nav><!-- #site-navigation -->
-			<div class="nav-shop">
-				<ul>
-					<li class="menu-item search desktop">
+
+			<nav class="nav-shop">
+				<ul class="menu">
+					<li class="menu-item search">
 						<a href="#">
-                            <i class="far fa-search toggle-search"></i>
-                        </a>
+							<i class="far fa-search toggle-search"></i>
+						</a>
 					</li>
 					<li class="menu-item account">
 						<a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>">
-						<i class="far fa-user"></i>
+							<i class="far fa-user"></i>
 						</a>
 					</li>
 				</ul>
-			</div>
+			</nav>
+
 		</div><!-- #content -->
-		<div class="main-search">
-			<div id="content">
-				<?php get_search_form(); ?>
-			</div>
-		</div>
+
 	</header><!-- #masthead -->
 
 	<div id="content" class="site-content page">

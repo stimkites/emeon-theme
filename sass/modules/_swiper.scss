@@ -1,0 +1,13 @@
+.swiper-slider {
+	overflow: hidden;
+}
+
+.swiper-slide.post {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+	bottom: -10px;
+}

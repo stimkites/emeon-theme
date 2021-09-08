@@ -134,6 +134,21 @@ if ( ! function_exists( 'emeon_setup' ) ) :
 endif;
 add_action( 'after_setup_theme', 'emeon_setup' );
 
+
+/**
+ * Add svg support
+ *
+ * @param $mimes
+ *
+ * @return mixed
+ */
+function emeon_mime_types($mimes) {
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
+}
+add_filter('upload_mimes', 'emeon_mime_types');
+
+
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
@@ -218,15 +233,19 @@ add_action( 'widgets_init', 'emeon_widgets_init' );
 function emeon_scripts() {
 	wp_enqueue_style( 'emeon-style', get_stylesheet_uri() );
 
-	wp_enqueue_style( 'theme-style', EMEON_URL  . '/sass/style.css', [], filemtime( EMEON_PATH . '/sass/style.css' ) );
+	// Swiper slider
+	wp_enqueue_style( 'swiper', EMEON_URL . '/css/swiper-bundle.min.css' );
+	wp_enqueue_script( 'swiper', EMEON_URL . '/js/libs/swiper-bundle.min.js', [], '7.0.2', true );
+
+	wp_enqueue_style( 'theme-style', EMEON_URL  . '/sass/style.css', [ 'swiper' ], filemtime( EMEON_PATH . '/sass/style.css' ) );
 
 	wp_enqueue_style( 'emeon-font-awesome', EMEON_URL  . '/fonts/fontawesome-pro/css/all.min.css' );
 
 	wp_enqueue_style( 'emeon-icons', EMEON_URL  . '/fonts/emeon/styles.css' );
 
-	wp_enqueue_script( 'emeon-navigation', EMEON_URL . '/js/navigation.js', array(), '20151215', true );
+//	wp_enqueue_script( 'emeon-navigation', EMEON_URL . '/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'emeon-theme', EMEON_URL . '/js/theme.js', [ 'jquery' ] );
+	wp_enqueue_script( 'emeon-theme', EMEON_URL . '/js/theme.js', [ 'jquery', 'swiper' ], filemtime( EMEON_PATH . '/js/theme.js' ), true );
 
 	wp_enqueue_script( 'emeon-skip-link-focus-fix', EMEON_URL . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
@@ -270,3 +289,20 @@ add_filter( 'widget_text', 'do_shortcode' );
  * Front-forms
  */
 require_once "inc/front-forms.php";
+
+
+/**
+ * Get the categories ids
+ *
+ * @param $arr Array of categories slugs
+ *
+ * @return array Array of categories ids
+ */
+function emeon_get_categories_ids( array $arr ): array {
+	$result = [];
+	foreach ( $arr as $item ) {
+		$result[] = get_category_by_slug( $item )->term_id;
+	}
+
+	return $result;
+}
