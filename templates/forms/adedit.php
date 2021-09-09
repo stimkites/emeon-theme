@@ -32,7 +32,8 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 $tags  = wp_dropdown_categories( [
 	'taxonomy'   => 'post_tag',
 	'id'         => 'ad_tags',
-	'class'      => 'sel2',
+	'name'       => 'ad_tags',
+	'class'      => 'sel2 invalidate',
 	'hide_empty' => 0,
     'echo'       => false
 ] );
@@ -40,8 +41,9 @@ $tags  = wp_dropdown_categories( [
 $cats  = wp_dropdown_categories( [
 	'taxonomy'   => 'category',
     'id'         => 'ad_categories',
+    'name'       => 'ad_categories',
 	'exclude'    => [ 1, 17, 18 ],
-    'class'      => 'sel2',
+    'class'      => 'sel2 invalidate',
 	'hide_empty' => 0,
 	'echo'       => false
 ] );
@@ -67,12 +69,12 @@ $cats  = wp_dropdown_categories( [
         </div>
         <div class="general-info">
             <div class="no-pads">
-                <label>
-                    <input type="text" name="ad[title]" placeholder="Title/name" value="<?=$post->post_title??''?>" />
+                <label class="control-wrap">
+                    <input type="text" class="invalidate" name="ad[title]" placeholder="Title/name" value="<?=$post->post_title??''?>" />
                 </label>
-                <label>
+                <label class="control-wrap">
                     <textarea name="ad[excerpt]"
-                              class="ad-excerpt"
+                              class="ad-excerpt invalidate"
                               rows="5"
                               placeholder="A few lines in short..."><?=$post->post_excerpt??''?></textarea>
                 </label>
@@ -84,31 +86,37 @@ $cats  = wp_dropdown_categories( [
                 These are very important things on how ad will be found on site. Add new or use existing ones.
             </p>
             <label for="ad_categories">Categories</label>
-            <?=$cats?>
+            <div class="control-wrap">
+                <?=$cats?>
+            </div>
             <label for="ad_tags">Tags</label>
-            <?=$tags?>
+            <div class="control-wrap">
+                <?=$tags?>
+            </div>
         </div>
         <div class="contact-info">
             <h3>Contact info</h3>
             <p class="description">This info will be hidden to bots and non-registered visitors</p>
             <div class="no-pads">
-                <label>
+                <label class="control-wrap">
                     <input type="email"
                            name="contacts[email]"
+                           class="invalidate"
                            value="<?=$contacts['email']??''?>"
                            placeholder="your@email.here"
                     />
                 </label>
-                <label>
+                <label class="control-wrap">
                     <input type="text"
                            name="contacts[phone]"
+                           class="invalidate"
                            placeholder="+1 233 456 789"
                            value="<?=$contacts['phone']??''?>" />
                 </label>
-                <label>
+                <label class="control-wrap">
                     <textarea name="contacts[urls]"
                               rows="4"
-                              class="ad-urls"
+                              class="ad-urls invalidate"
                               placeholder=" - Website URL <?="\n"?> - Portfolio URL<?="\n"?> - Another phone number<?="\n"?> ..."><?=$contacts['urls']??''?></textarea>
                 </label>
             </div>
@@ -121,9 +129,11 @@ $cats  = wp_dropdown_categories( [
                 Use official language communication only here. Any impolite phrases and words will cause moderation
                 delay automatically.
             </p>
-            <?php
-			wp_editor( $post->post_content ?? '', "ad_content", [ 'media_buttons' => false, 'quicktags' => false ] );
-			?>
+            <div class="control-wrap">
+                <?php
+                wp_editor( $post->post_content ?? '', "ad_content", [ 'editor_class' => 'invalidate', 'media_buttons' => false, 'quicktags' => false ] );
+                ?>
+            </div>
         </div>
         <div class="attachment-area">
             <h3>

@@ -833,6 +833,26 @@ textarea {
   padding: 10px;
   border: none;
   /* fieldset */ }
+  .emeon-form .control-wrap {
+    position: relative; }
+    .emeon-form .control-wrap.error-field:after {
+      position: absolute;
+      content: "\f534";
+      font-family: "dashicons", sans-serif;
+      font-size: 19px;
+      font-kerning: revert;
+      color: red;
+      border-radius: 100%;
+      margin: 0;
+      border: none;
+      padding: 0;
+      line-height: 1;
+      -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+      -moz-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+      box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+      display: block;
+      top: 5px;
+      right: -27px; }
   .emeon-form .description {
     line-height: 1.5em;
     font-size: 12px;
@@ -983,7 +1003,7 @@ textarea {
     .emeon-form fieldset input[type=text], .emeon-form fieldset input[type=email], .emeon-form fieldset textarea, .emeon-form fieldset select {
       width: 100%;
       padding: 7px;
-      margin: -1px;
+      margin: -1px 0 -3px 0;
       border: 1px solid #ccc;
       border-radius: 0;
       font-size: 13px;
@@ -1006,9 +1026,9 @@ textarea {
   right: -450px;
   width: 100%;
   max-width: 400px;
-  padding: 20px;
+  padding: 20px 20px 20px 30px;
   font-size: 14px;
-  text-align: center;
+  text-align: left;
   border: 1px solid #ccc;
   border-left: 5px solid orangered;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);

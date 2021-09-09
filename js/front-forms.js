@@ -12,15 +12,72 @@
 ( $ => {
 
   /**
-   * Validate email on the fly
+   * Stop current event
    *
    * @param e
    * @return {boolean}
    * @private
    */
-  const __validate_email = function( e ){
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test( e.target.value );
+  const __noreturn = function( e ){
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  };
+
+  /**
+   * Validate form fields
+   *
+   * @param name
+   * @param value
+   * @return {boolean | string}
+   * @private
+   */
+  const __invalid = function( name, value ){
+    switch ( name ) {
+      case 'ad[title]' :
+        return ( value.length > 3 ? false : 'Invalid title/name' );
+      case 'ad[excerpt]' :
+        return ( value.length < 4 ? 'Too short excerpt' : /<\/?[a-z][\s\S]*>/i.test( value ) ? 'Excerpt contains HTML tags' : false );
+      case 'ad_categories' :
+        return ( value.length ? false : 'Categories undefined' );
+      case 'ad_tags' :
+        return ( value.length ? false : 'No tags? Please add at least one' );
+      case 'contacts[email]' :
+        return ( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test( value ) ? false : 'Invalid email address' );
+      case 'contacts[phone]' :
+        return ( /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test( value ) ? false : 'Invalid phone number' );
+      case 'contacts[urls]' :
+        return ( /<\/?[a-z][\s\S]*>/i.test( value ) ? 'Additional contacts should not contain any HTML tags' : false );
+      case 'ad_content' :
+        return ( value.length < 4 ? 'No content at all? What do we publish then?' : false );
+      default :
+        return false;
+    }
+  };
+
+  /**
+   * Validate all form fields before sending it to the server
+   *
+   * @param e
+   * @return {*}
+   * @private
+   */
+  const __validate_form = function( e ){
+    let errors = [];
+    $( '.error-field' ).removeClass( 'error-field' );
+    if( 'undefined' !== typeof tinyMCE ) tinyMCE.get('ad_content').save();
+    $( 'form.emeon-form .invalidate' ).each( function(){
+      let current_error = __invalid( this.name, $( this ).val() );
+      if( current_error ){
+        errors.push( current_error );
+        $( this ).parents( '.control-wrap' ).addClass( 'error-field' );
+      }
+    } );
+    if( errors.length ) {
+      __error(errors.join("<br/>"), 10000);
+      return __noreturn( e );
+    }
+    return e;
   };
 
   /**
@@ -34,7 +91,7 @@
     let e = $( '#emeon-error-popup' );
     if( ! ( e.length ) )
       e = $( '<div id="emeon-error-popup"></div>' ).prependTo( 'body' );
-    e.html( msg || 'error' ).addClass( 'visible' );
+    setTimeout( () => { e.html( msg || 'error' ).addClass( 'visible' ) }, 200 );
     setTimeout( () => { e.removeClass( 'visible' ) }, delay || 5000 );
   };
 
@@ -49,9 +106,7 @@
     let _i = $( 'img.logo' );
     _i.prop( 'src', _i.data( 'default' ) ).parent().removeClass( 'added' );
     $( '#photo-file' ).val( '' );
-    e.stopPropagation();
-    e.preventDefault();
-    return false;
+    return __noreturn( e );
   };
 
   /**
@@ -62,12 +117,10 @@
    * @private
    */
   const __reset_attachment = function( e ){
-    e.stopPropagation();
-    e.preventDefault();
     let _i = $( '#attachment-preview' );
     _i.prop( 'src', '' ).hide().parent().removeClass( 'added' );
     $( '#attachment-file' ).val( '' );
-    return false;
+    return __noreturn( e );
   };
 
   /**
@@ -88,7 +141,6 @@
     }
     let src = URL.createObjectURL( f );
     if( ! src ) return;
-    console.log( src );
     $( 'img.logo' ).prop( 'src', src ).parent().addClass( 'added' ).on( 'load', () => { URL.revokeObjectURL( src ) } );
   };
 
@@ -112,6 +164,11 @@
     $( '#attachment-preview' ).prop( 'src', obj_url ).show().parent().addClass( 'added' ).on( 'load', () => { URL.revokeObjectURL( obj_url ) } );
   };
 
+  /**
+   * Initialize select2
+   *
+   * @private
+   */
   const __init_selects = function(){
     $( 'select.sel2:not(.select2-offscreen)' ).attr( 'multiple', true ).select2({
       width: '100%',
@@ -131,6 +188,14 @@
     $( '.logo-remove' ).off().click( __reset_photo );
     $( '#attachment-file' ).off().change( __set_attachment_info );
     $( '.attachment-remove' ).off().click( __reset_attachment );
+    $( 'button[type=submit]' ).off().click( __validate_form );
+    setTimeout( () => {
+      $( document ).on( 'mousedown click blur enter focus', '.error-field, #ad_content_ifr', ( e ) => {
+        let _e = $( e.target );
+        _e.parents().removeClass( 'error-field' );
+        _e.removeClass( 'error-field' );
+      } );
+    }, 300 );
     __init_selects();
   };
 
