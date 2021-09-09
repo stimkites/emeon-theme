@@ -1019,6 +1019,7 @@ textarea {
 /* emeon-form */
 /* Emeon form error */
 #emeon-error-popup {
+  cursor: pointer;
   z-index: 992992;
   position: fixed;
   top: 100px;
