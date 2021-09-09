@@ -89,10 +89,18 @@
    */
   const __error = function( msg, delay ){
     let e = $( '#emeon-error-popup' );
+    let t;
     if( ! ( e.length ) )
-      e = $( '<div id="emeon-error-popup"></div>' ).prependTo( 'body' );
+      e = $( '<div id="emeon-error-popup"></div>' )
+            .prependTo( 'body' )
+            .on( 'mouseenter', () => { clearTimeout( t ) } )
+            .on( 'mouseleave', () => { t = setTimeout( () => { e.removeClass( 'visible' ) }, 1000 ) } )
+            .on(
+                'click',
+                ( e ) => { $( e.target ).removeClass( 'visible' ) }
+            );
     setTimeout( () => { e.html( msg || 'error' ).addClass( 'visible' ) }, 200 );
-    setTimeout( () => { e.removeClass( 'visible' ) }, delay || 5000 );
+    t = setTimeout( () => { e.removeClass( 'visible' ) }, delay || 5000 );
   };
 
   /**
@@ -131,7 +139,8 @@
    */
   const __set_photo = function( e ){
     let f = e.target.files[0];
-    if( -1 === [ '.png', '.jpg', '.gif', 'jpeg', '.bmp' ].indexOf( f.name.substr( -4 ) ) ) {
+    let allowed_images = [ '.png', '.jpg', '.gif', 'jpeg', '.bmp' ];
+    if( -1 === allowed_images.indexOf( f.name.substr( -4 ) ) ) {
       __error( 'Improper image format!' );
       return;
     }
@@ -141,7 +150,14 @@
     }
     let src = URL.createObjectURL( f );
     if( ! src ) return;
-    $( 'img.logo' ).prop( 'src', src ).parent().addClass( 'added' ).on( 'load', () => { URL.revokeObjectURL( src ) } );
+    $( 'img.logo' )
+        .prop( 'src', src )
+        .parent()
+        .addClass( 'added' )
+        .on(
+            'load',
+            () => { URL.revokeObjectURL( src ) }
+        );
   };
 
   /**
@@ -161,7 +177,15 @@
       return;
     }
     const obj_url = URL.createObjectURL( f );
-    $( '#attachment-preview' ).prop( 'src', obj_url ).show().parent().addClass( 'added' ).on( 'load', () => { URL.revokeObjectURL( obj_url ) } );
+    $( '#attachment-preview' )
+        .prop( 'src', obj_url )
+        .show()
+        .parent()
+        .addClass( 'added' )
+        .on(
+            'load',
+            () => { URL.revokeObjectURL( obj_url ) }
+        );
   };
 
   /**
@@ -174,6 +198,21 @@
       width: '100%',
       tags: true
     });
+  };
+
+  const __error_flush = function(){
+    $( document ).on( // remove "error" icon on elements
+      'mousedown click blur enter focus', '.error-field',
+      ( e ) => {
+        $( e.target ).removeClass( 'error-field' ).parents().removeClass( 'error-field' );
+      }
+    );
+    setTimeout( () => {
+      tinymce.activeEditor.on(
+          'keydown mousedown paste enter focus',
+          () => { $( '#ad_content' ).parents().removeClass( 'error-field' ) }
+      )
+    }, 100 );
   };
 
   /**
@@ -189,13 +228,7 @@
     $( '#attachment-file' ).off().change( __set_attachment_info );
     $( '.attachment-remove' ).off().click( __reset_attachment );
     $( 'button[type=submit]' ).off().click( __validate_form );
-    setTimeout( () => {
-      $( document ).on( 'mousedown click blur enter focus', '.error-field, #ad_content_ifr', ( e ) => {
-        let _e = $( e.target );
-        _e.parents().removeClass( 'error-field' );
-        _e.removeClass( 'error-field' );
-      } );
-    }, 300 );
+    __error_flush();
     __init_selects();
   };
 
