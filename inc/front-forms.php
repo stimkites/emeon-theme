@@ -8,17 +8,17 @@ new class {
     function __construct() {
 
         // Render forms
-        add_shortcode( 'emeon_forms',       [ $this, 'render'   ]    );
+        add_shortcode( 'emeon_forms', [ $this, 'render' ] );
 
         // Process forms
-        add_action   ( 'template_redirect', [ $this, 'process'  ]    );
+        add_action( 'template_redirect', [ $this, 'process' ] );
 
         // Contact fields in admin
-        add_action   ( 'add_meta_boxes_post',   [ $this, 'add_fields'  ] );
-        add_action   ( 'save_post_post',        [ $this, 'save_fields' ] );
+        add_action( 'add_meta_boxes_post',   [ $this, 'add_fields'  ] );
+        add_action( 'save_post_post',        [ $this, 'save_fields' ] );
 
         // Enqueue form scripts
-        add_action   ( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
     }
 
 	/**
@@ -33,13 +33,16 @@ new class {
             wp_enqueue_style(  'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css' );
             wp_enqueue_script( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', [ 'jquery' ], '1.0', true );
         }
-        wp_enqueue_script(
-            EMEON_SLUG . '-form-scripts',
+        $slug = EMEON_SLUG . '-form-scripts';
+        wp_register_script(
+            $slug,
             EMEON_URL . '/js/front-forms.js',
             [ 'jquery-core' ],
             filemtime( EMEON_PATH . '/js/front-forms.js' ),
             true
         );
+        wp_localize_script( $slug, '__emeon', [ 'n' => wp_create_nonce( EMEON_SLUG ) ] );
+        wp_enqueue_script ( $slug );
     }
 
 	/**
@@ -165,6 +168,21 @@ new class {
     }
 
     protected function captcha(){
+
+    }
+
+	/**
+	 * Adedit action
+	 */
+    protected function adedit(){
+        if( ! isset( $_POST['ad_verified'] ) ){
+	        $_POST['emeon_error'][] = 'Invalid data. Please, try again.';
+	        echo '<pre>' . print_r( $_POST, true ) . '</pre>';
+	        return;
+        }
+        // Create post
+        // Move files
+        // Create attachments
 
     }
 

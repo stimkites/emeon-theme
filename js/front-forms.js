@@ -38,17 +38,18 @@
         return ( value.length > 3 ? false : 'Invalid title/name' );
       case 'ad[excerpt]' :
         return ( value.length < 4 ? 'Too short excerpt' : /<\/?[a-z][\s\S]*>/i.test( value ) ? 'Excerpt contains HTML tags' : false );
-      case 'ad_categories' :
+      case 'ad[categories]' :
+        console.log( value );
         return ( value.length ? false : 'Categories undefined' );
-      case 'ad_tags' :
+      case 'ad[tags]' :
         return ( value.length ? false : 'No tags? Please add at least one' );
-      case 'contacts[email]' :
+      case 'ad[email]' :
         return ( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test( value ) ? false : 'Invalid email address' );
-      case 'contacts[phone]' :
-        return ( /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test( value ) ? false : 'Invalid phone number' );
-      case 'contacts[urls]' :
+      case 'ad[phone]' :
+        return ( /^[\d +()]+$/im.test( value ) ? false : 'Invalid phone number' );
+      case 'ad[urls]' :
         return ( /<\/?[a-z][\s\S]*>/i.test( value ) ? 'Additional contacts should not contain any HTML tags' : false );
-      case 'ad_content' :
+      case 'ad[content]' :
         return ( value.length < 4 ? 'No content at all? What do we publish then?' : false );
       default :
         return false;
@@ -77,6 +78,8 @@
       __error(errors.join("<br/>"), 10000);
       return __noreturn( e );
     }
+    $( 'body' ).addClass( 'loading' );
+    $( '<input type="hidden" name="__nonce" value="' + __emeon.n + '" />' ).appendTo( 'form.emeon-form' );
     return e;
   };
 
@@ -221,13 +224,11 @@
    * @private
    */
   const __assign = function(){
-    $( 'img.logo' ).off().click( () => { $( '#photo-file' ).trigger( 'click' ) } );
-    $( '#attachment-info' ).off().click( () => { $( '#attachment-file' ).trigger( 'click' ) } );
     $( '#photo-file' ).off().change( __set_photo );
     $( '.logo-remove' ).off().click( __reset_photo );
     $( '#attachment-file' ).off().change( __set_attachment_info );
     $( '.attachment-remove' ).off().click( __reset_attachment );
-    $( 'button[type=submit]' ).off().click( __validate_form );
+    $( 'form.emeon-form' ).off().submit( __validate_form );
     __error_flush();
     __init_selects();
   };
