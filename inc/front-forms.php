@@ -151,7 +151,9 @@ new class {
 	    if( false === $remains )
 	    	$remains = 5;
 	    if( ! $remains ){
-		    $_POST['emeon_error'][] = 'Unfortunately you have missed all attempts for login. Please, try to <a href="/recover/">recover</a>.';
+		    $_POST['emeon_error'][] = 'Unfortunately you have missed all attempts for login. Please, try to ' .
+                '<a href="/recover/">recover</a>. If you still experience troubles with login in, drop us a ' .
+                'line to <a href="mailto:info@emeon.io">info@emeon.io</a>';
 		    return;
 	    }
 	    $auth = wp_authenticate( $user->user_login, $_POST['pass'] );
@@ -175,15 +177,56 @@ new class {
 	 * Adedit action
 	 */
     protected function adedit(){
-        if( ! isset( $_POST['ad_verified'] ) ){
-	        $_POST['emeon_error'][] = 'Invalid data. Please, try again.';
-	        echo '<pre>' . print_r( $_POST, true ) . '</pre>';
-	        return;
-        }
-        // Create post
-        // Move files
-        // Create attachments
+        $text_to_analyze =
+            $_POST['ad']['title'] . ' ' . $_POST['ad']['excerpt'] . ' ' . $_POST['ad']['content'] . ' ' .
+            $_POST['ad']['tags'] . ' ' . $_POST['ad']['categories'];
+        $user = get_user_by( 'ID', get_current_user_id() );
+        $post_status = wp_check_comment_disallowed_list(
+            $user->display_name, $user->user_email, '', $text_to_analyze, '', ''
+        ) ? 'moderation' : 'publish';
+        $tags = explode( ",", $_POST['ad']['tags'] );
+        $cats = explode( ",", $_POST['ad']['categories'] );
+        $post_id = (int)$_POST['ad']['id'];
+        $post_data = [
+            'post_title' => $_POST['ad']['title'],
+            'post_excerpt' => $_POST['ad']['excerpt'],
+            'post_content' => $_POST['ad']['content'],
+            'post_status' => $post_status,
+            'post_author' => $user->ID,
+            'ID' => $post_id
+        ];
+        if( $post_id )
+            wp_update_post( $post_data );
+        else
+            $post_id = wp_insert_post( $post_data );
+        if( ! $post_id || is_wp_error( $post_id ) )
+            return $_POST['emeon_error'][] =
+                'Unknown error occurred. Please, contact us asap: <a href="mailto:admin@emeon.io">admin@emeon.io</a>';
 
+        $_POST['ID'] = $post_id;
+        wp_set_post_tags( $post_id, $tags );
+        wp_set_post_categories( $post_id, $cats );
+
+        // Move files and make attachments
+        if( is_uploaded_file( $_FILES['ad_image'] ) ){
+            $file = wp_handle_upload( $_FILES[ 'ad_image' ] );
+            if ( isset( $file['error'] ) )
+                return $_POST['emeon_error'][] = $file['error'];
+            $name = $_FILES[ 'ad_image' ]['name'];
+            $ext  = pathinfo( $name, PATHINFO_EXTENSION );
+            $name = wp_basename( $name, ".$ext" );
+            $url     = $file['url'];
+            $type    = $file['type'];
+            $file    = $file['file'];
+            $title   = sanitize_text_field( $name );
+
+        }
+
+
+
+
+        wp_safe_redirect( '/account/' );
+        exit;
     }
 
 };

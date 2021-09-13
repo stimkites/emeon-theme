@@ -307,3 +307,17 @@ function emeon_get_categories_ids( array $arr ): array {
 
 	return $result;
 }
+
+/**
+ * Custom logging
+ *
+ * @param $data
+ * @return mixed
+ */
+function emeon_log( $data ){
+    if( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) return $data;
+    error_log( '' );
+    error_log( '[EMEON THEME] ' . var_export( $data, true ) );
+    error_log( '' );
+    return $data;
+}

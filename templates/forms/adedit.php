@@ -26,8 +26,8 @@ if( ! is_user_logged_in() ) {
 
 if( isset( $_POST['ad'] ) ) { // we already posted data, but something went wrong and we were not redirected
     $ad = $_POST['ad'];
-} elseif( isset( $_GET['ad'] ) ) { // we start editing existing post
-    $post = get_post( $_GET['ad'] );
+} elseif( isset( $_GET['ad'] ) || isset( $_POST['ID'] ) ) { // we start editing existing post
+    $post = get_post( $_GET['ad'] ?? $_POST['ID'] );
     if( ! $post || is_wp_error( $post ) )
         return '<p class="error">Ad not found!</p>';
     if( $post->post_author !== get_current_user_id() )
@@ -105,7 +105,7 @@ $cats  = wp_dropdown_categories( [
                 <span class="remove-icon logo-remove"></span>
                 <img class="logo" src="<?=$ad['image']??$def_image?>" data-default="<?=$def_image?>" alt="image"/>
             </label>
-            <input type="file" id="photo-file" accept="image/*" name="ad[image]" value="" />
+            <input type="file" id="photo-file" accept="image/*" name="ad_image" value="" />
         </div>
 
         <div class="general-info">
@@ -151,7 +151,7 @@ $cats  = wp_dropdown_categories( [
         <div class="contact-info">
 
             <h3>Contact info</h3>
-            <p class="description">This info will be hidden to bots and non-registered visitors</p>
+            <p class="description">This info will be visible to authorized users only</p>
 
             <div class="no-pads">
 
@@ -226,7 +226,7 @@ $cats  = wp_dropdown_categories( [
                 <span id="no-attachment">No file selected...</span>
             </label>
 
-            <input type="file" id="attachment-file" name="ad[attachment]" accept=".pdf" />
+            <input type="file" id="attachment-file" name="ad_attachment" accept=".pdf" />
 
         </div>
 
