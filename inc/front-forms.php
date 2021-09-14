@@ -203,11 +203,12 @@ new class {
             return $_POST['emeon_error'][] =
                 'Unknown error occurred. Please, contact us asap: <a href="mailto:admin@emeon.io">admin@emeon.io</a>';
 
+        // Cats and tags
         $_POST['ID'] = $post_id;
         wp_set_post_tags( $post_id, $tags );
         wp_set_post_categories( $post_id, $cats );
 
-        // Move files and make attachments
+        // Image
         if( is_uploaded_file( $_FILES['ad_image'] ) ){
             $file = wp_handle_upload( $_FILES[ 'ad_image' ] );
             if ( isset( $file['error'] ) )
@@ -219,7 +220,19 @@ new class {
             $type    = $file['type'];
             $file    = $file['file'];
             $title   = sanitize_text_field( $name );
-
+            $attachment = [
+	            'post_mime_type' => $type,
+	            'guid'           => $url,
+	            'post_parent'    => $post_id,
+	            'post_title'     => $title,
+	            'post_content'   => '',
+            ];
+	        // Save the attachment metadata.
+	        $attachment_id = wp_insert_attachment( $attachment, $file, $post_id, true );
+	        if ( ! is_wp_error( $attachment_id ) ) {
+		        wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $file ) );
+		        set_post_thumbnail( $post_id, $attachment_id );
+	        }
         }
 
 
