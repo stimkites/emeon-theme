@@ -51,9 +51,9 @@ new class {
 	function add_fields() {
 		add_meta_box(
 			'emeon-contact-box',
-			'Contact info',
-			function( $post ){ include EMEON_TPL . '/forms/contacts.php'; },
-			"product",
+			'Contacts and attachment',
+			function( $post ){ include EMEON_TPL . '/forms/metabox-info.php'; },
+			"post",
 			"side"
 		);
 	}
@@ -208,34 +208,44 @@ new class {
         wp_set_post_tags( $post_id, $tags );
         wp_set_post_categories( $post_id, $cats );
 
-        // Image
-        if( is_uploaded_file( $_FILES['ad_image'] ) ){
-            $file = wp_handle_upload( $_FILES[ 'ad_image' ] );
-            if ( isset( $file['error'] ) )
-                return $_POST['emeon_error'][] = $file['error'];
-            $name = $_FILES[ 'ad_image' ]['name'];
-            $ext  = pathinfo( $name, PATHINFO_EXTENSION );
-            $name = wp_basename( $name, ".$ext" );
-            $url     = $file['url'];
-            $type    = $file['type'];
-            $file    = $file['file'];
-            $title   = sanitize_text_field( $name );
-            $attachment = [
-	            'post_mime_type' => $type,
-	            'guid'           => $url,
-	            'post_parent'    => $post_id,
-	            'post_title'     => $title,
-	            'post_content'   => '',
-            ];
-	        // Save the attachment metadata.
-	        $attachment_id = wp_insert_attachment( $attachment, $file, $post_id, true );
-	        if ( ! is_wp_error( $attachment_id ) ) {
-		        wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $file ) );
-		        set_post_thumbnail( $post_id, $attachment_id );
-	        }
-        }
+        // Contacts
+        $contacts = [];
+        foreach( [ 'email', 'phone', 'urls' ] as $contact )
+            $contacts[ $contact ] = $_POST[ $contact ] ?? '';
+        update_post_meta( $post_id, 'emeon_contacts', $contacts );
 
-
+        // Image and attachment
+        foreach( [ 'ad_image', 'ad_attachment' ] as $file_id )
+            if( is_uploaded_file( $_FILES[ $file_id ] ) ){
+                $file = wp_handle_upload( $_FILES[ $file_id ] );
+                if ( isset( $file['error'] ) )
+                    return $_POST['emeon_error'][] = $file['error'];
+                $name = $_FILES[ $file_id ]['name'];
+                $ext  = pathinfo( $name, PATHINFO_EXTENSION );
+                $name = wp_basename( $name, ".$ext" );
+                $url     = $file['url'];
+                $type    = $file['type'];
+                $file    = $file['file'];
+                $title   = sanitize_text_field( $name );
+                $attachment = [
+                    'post_mime_type' => $type,
+                    'guid'           => $url,
+                    'post_parent'    => $post_id,
+                    'post_title'     => $title,
+                    'post_content'   => '',
+                ];
+                // Save the attachment metadata.
+                $attachment_id = wp_insert_attachment( $attachment, $file, $post_id, true );
+                if ( ! is_wp_error( $attachment_id ) ) {
+                    wp_update_attachment_metadata(
+                        $attachment_id, wp_generate_attachment_metadata( $attachment_id, $file )
+                    );
+                    if( 'ad_image' === $file_id )
+                        set_post_thumbnail( $post_id, $attachment_id );
+                    else
+                        update_post_meta( $post_id, 'emeon_attachment', $attachment_id );
+                }
+            }
 
 
         wp_safe_redirect( '/account/' );
