@@ -15,10 +15,24 @@ new class {
 
         // Contact fields in admin
         add_action( 'add_meta_boxes_post',   [ $this, 'add_fields'  ] );
-        add_action( 'save_post_post',        [ $this, 'save_fields' ] );
+        add_action( 'save_post',             [ $this, 'save_fields' ] );
 
         // Enqueue form scripts
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+
+        // Admin scripts and styles
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin' ] );
+    }
+
+	/**
+	 * Enqueue custom admin styles and scripts for POST edit pages
+	 */
+    function enqueue_admin(){
+        if ( false === strpos( $_SERVER['REQUEST_URI'], '/post.php?post=' ) &&
+             false === strpos( $_SERVER['REQUEST_URI'], '/post-new.php'   ) )
+                return;
+        wp_enqueue_style(  EMEON_SLUG, EMEON_URL . '/css/admin/admin.css', [],   time() );
+        wp_enqueue_script( EMEON_SLUG, EMEON_URL . '/js/admin.js', [ 'jquery' ], time() );
     }
 
 	/**
@@ -59,12 +73,14 @@ new class {
 	}
 
 	/**
-     * Update emeon contacts
+     * Update emeon contacts and attachment
      *
-	 * @param WP_Post $post
+	 * @param int $post_id
 	 */
-    function save_fields( $post ){
-	    update_post_meta( $post->ID, 'emeon_contacts', $_POST['emeon_contacts'] ?? [] );
+    function save_fields( $post_id ){
+        if( ! isset( $_POST['emeon_contacts'] ) ) return;
+	    update_post_meta( $post_id, 'emeon_contacts',   $_POST['emeon_contacts'] ?? [] );
+	    update_post_meta( $post_id, 'emeon_attachment', $_POST['ad_attachment' ] ?? '' );
     }
 
 	/**
@@ -192,12 +208,12 @@ new class {
             'post_excerpt' => $_POST['ad']['excerpt'],
             'post_content' => $_POST['ad']['content'],
             'post_status' => $post_status,
-            'post_author' => $user->ID,
-            'ID' => $post_id
+            'post_author' => $user->ID
         ];
-        if( $post_id )
-            wp_update_post( $post_data );
-        else
+        if( $post_id ) {
+            $post_data[ 'ID' ] = $post_id;
+	        wp_update_post( $post_data );
+        } else
             $post_id = wp_insert_post( $post_data );
         if( ! $post_id || is_wp_error( $post_id ) )
             return $_POST['emeon_error'][] =

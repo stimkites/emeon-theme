@@ -13,52 +13,6 @@ $info = get_post_meta( $post->ID, 'emeon_contacts', true );
 $pdf  = ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '';
 
 ?>
-<style>
-    .emeon-box-contacts {
-        width: 100%;
-    }
-    .emeon-box-contacts h4 {
-        font-weight: normal;
-        font-size: 14px;
-    }
-    .emeon-box-contacts input,
-    .emeon-box-contacts textarea {
-        width: 100%;
-    }
-    #attachment-info {
-        margin: 20px auto;
-        padding: 0;
-        text-align: center;
-        border: 3px dotted #ccc;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        position: relative;
-    }
-    #attachment-info.added {
-        border: 1px solid #000;
-    }
-    #attachment-info .remove-icon {
-        top: -30px;
-    }
-    #attachment-info #attachment-preview {
-        border: none;
-        width: 100%;
-        height: 500px;
-        cursor: pointer;
-        display: none;
-        margin: 0;
-        padding: 0;
-    }
-    #attachment-info #no-attachment {
-        padding: 20px;
-        display: block;
-        font-size: 11px;
-    }
-    #attachment-info.added #no-attachment {
-        display: none;
-    }
-</style>
 <div class="admin-info info-box emeon-box-contacts">
     <h4>Contacts</h4>
     <p class="description">
@@ -95,6 +49,7 @@ $pdf  = ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_
                 <span class="remove-icon attachment-remove"></span>
                 <iframe id="attachment-preview" src="<?=$pdf?>"></iframe>
                 <span id="no-attachment">No file selected...</span>
+                <input type="hidden" id="attachment-file" name="ad_attachment" value="<?=$pdf_id??''?>" />
             </label>
         </p>
     </fieldset>
