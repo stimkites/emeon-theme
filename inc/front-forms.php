@@ -7,6 +7,9 @@ new class {
 
     function __construct() {
 
+        // Register custom post statuses and primary categories
+        add_action( 'plugins_loaded', [ $this, 'register' ] );
+
         // Render forms
         add_shortcode( 'emeon_forms', [ $this, 'render' ] );
 
@@ -22,6 +25,51 @@ new class {
 
         // Admin scripts and styles
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin' ] );
+
+        // Adedit form permalink
+        add_filter( 'emeon_adedit_url', [ $this, 'get_adedit_url' ] );
+    }
+
+	/**
+     * Permalink to the adedit form
+     *
+	 * @param string $value
+	 *
+	 * @return false|string
+	 */
+    function get_adedit_url( $value = '' ){
+        global $wpdb;
+        if( ! ( $post_id = $wpdb->get_var(
+            "SELECT ID FROM {$wpdb->posts} " .
+            "WHERE post_type = 'page' " .
+            "AND post_content LIKE '%[emeon_forms%form=%adedit%]%'"
+        ) ) )
+            return $value;
+
+        return get_permalink( $post_id );
+    }
+
+	/**
+	 * Our custom post statuses and primary categories
+	 */
+    function register_statuses(){
+        foreach( EMEON_STATUSES as $status )
+            register_post_status(
+                $status,
+                [
+                    'label'                     => ucfirst( $status ),
+                    'internal'                  => true,
+                    'protected'                 => true,
+                    'label_count'               => _n_noop(
+                        ucfirst( $status ) . ' <span class="count">(%s)</span>',
+                        ucfirst( $status ) . ' <span class="count">(%s)</span>'
+                    ),
+                    'show_in_admin_status_list' => true,
+	            ]
+            );
+        foreach( EMEON_TYPES as $type )
+            if( ! term_exists( $type, 'category' ) )
+                wp_insert_term( ucfirst( $type ), 'category' );
     }
 
 	/**
@@ -120,7 +168,7 @@ new class {
 	        </div>
 	        <button class="error-dismiss"></button>
         </div>
-		<?php endif;
+		<?php emeon_log( implode( PHP_EOL, $errors ) ); endif;
         return ob_get_clean();
     }
 
@@ -204,20 +252,22 @@ new class {
         $cats = explode( ",", $_POST['ad']['categories'] );
         $post_id = (int)$_POST['ad']['id'];
         $post_data = [
-            'post_title' => $_POST['ad']['title'],
-            'post_excerpt' => $_POST['ad']['excerpt'],
-            'post_content' => $_POST['ad']['content'],
-            'post_status' => $post_status,
-            'post_author' => $user->ID
+            'post_title'    => $_POST['ad']['title'],
+            'post_excerpt'  => $_POST['ad']['excerpt'],
+            'post_content'  => $_POST['ad']['content'],
+            'post_status'   => $post_status,
+            'post_author'   => $user->ID
         ];
         if( $post_id ) {
             $post_data[ 'ID' ] = $post_id;
 	        wp_update_post( $post_data );
         } else
             $post_id = wp_insert_post( $post_data );
-        if( ! $post_id || is_wp_error( $post_id ) )
-            return $_POST['emeon_error'][] =
-                'Unknown error occurred. Please, contact us asap: <a href="mailto:admin@emeon.io">admin@emeon.io</a>';
+        if( ! $post_id || is_wp_error( $post_id ) ) {
+            $error = ( is_wp_error( $post_id ) ? $post_id->get_error_message() : 'Unknown error occurred.' );
+	        return $_POST['emeon_error'][] =
+		        $error . ' Please, contact us asap: <a href="mailto:admin@emeon.io">admin@emeon.io</a>';
+        }
 
         // Cats and tags
         $_POST['ID'] = $post_id;
@@ -227,7 +277,7 @@ new class {
         // Contacts
         $contacts = [];
         foreach( [ 'email', 'phone', 'urls' ] as $contact )
-            $contacts[ $contact ] = $_POST[ $contact ] ?? '';
+            $contacts[ $contact ] = $_POST['ad'][ $contact ] ?? '';
         update_post_meta( $post_id, 'emeon_contacts', $contacts );
 
         // Image and attachment

@@ -11,9 +11,11 @@ defined( 'ABSPATH' ) or exit;
  * Constants
  */
 const
-    EMEON_PATH = __DIR__,
-    EMEON_TPL = EMEON_PATH . '/templates',
-    EMEON_SLUG = 'emeon-theme';
+    EMEON_PATH      = __DIR__,
+    EMEON_TPL       = EMEON_PATH . '/templates',
+    EMEON_SLUG      = 'emeon-theme',
+	EMEON_STATUSES  = [ 'active', 'moderation', 'archive' ],
+	EMEON_TYPES     = [ 'vacancies', 'candidates' ];
 
 define( 'EMEON_URL',  get_template_directory_uri()  );
 
@@ -316,8 +318,7 @@ function emeon_get_categories_ids( array $arr ): array {
  */
 function emeon_log( $data ){
     if( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) return $data;
-    error_log( '' );
-    error_log( '[EMEON THEME] ' . var_export( $data, true ) );
-    error_log( '' );
+    $mem = memory_get_usage( true ) / 1024 / 1024 . 'MB';
+    error_log( "[$mem][EMEON] " . var_export( $data, true ) . PHP_EOL );
     return $data;
 }

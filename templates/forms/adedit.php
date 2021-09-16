@@ -6,8 +6,9 @@
 
 defined( 'ABSPATH' ) or exit;
 
-$post      = null;
-$def_image = EMEON_URL . '/img/user-icon.png';
+$post       = null;
+$pid        = $_GET['ad'] ?? $_POST['ID']; // in case we edit
+$def_image  = EMEON_URL . '/img/user-icon.png';
 
 /**
  * Advertisement data to fulfill
@@ -17,21 +18,17 @@ $ad = [ 'type' => 'candidates' ];
 /**
  * Prevent unauthorized access
  */
-if( ! is_user_logged_in() ) {
-    ?>
-    <div class="error">Unauthorized access is prohibited!</div>
-    <?php
-    return;
-}
+if( ! is_user_logged_in() )
+    return $_POST['emeon_erros'][] = 'Unauthorized access is prohibited!';
 
 if( isset( $_POST['ad'] ) ) { // we already posted data, but something went wrong and we were not redirected
     $ad = $_POST['ad'];
-} elseif( isset( $_GET['ad'] ) || isset( $_POST['ID'] ) ) { // we start editing existing post
-    $post = get_post( $_GET['ad'] ?? $_POST['ID'] );
+} elseif( $pid ) { // we start editing existing post
+    $post = get_post( $pid );
     if( ! $post || is_wp_error( $post ) )
-        return '<p class="error">Ad not found!</p>';
-    if( $post->post_author !== get_current_user_id() )
-        return '<p class="error">Insufficient access level!</p>';
+        return $_POST['emeon_error'][] = 'Ad #' . $pid . ' not found!';
+    if( $post->post_author != get_current_user_id() )
+        return $_POST['emeon_error'][] = 'Insufficient access level for editing ad #' . $pid;
     $post_cats = wp_get_post_categories( $post->ID, [ 'taxonomy' => 'category', 'fields' => 'ids' ] );
     $post_tags = wp_get_post_categories( $post->ID, [ 'taxonomy' => 'post_tag', 'fields' => 'ids' ] );
     $contacts  = get_post_meta( $post->ID, 'emeon_contacts', true );
@@ -61,11 +58,16 @@ $tags  = wp_dropdown_categories( [
     'selected'   => $post_tags ?? []
 ] );
 
+$ex_cats = [ 1 ];
+foreach ( EMEON_TYPES as $type )
+    if( $term = get_term_by( 'slug', $type, 'category' ) )
+        $ex_cats[] = $term->term_id;
+
 $cats  = wp_dropdown_categories( [
 	'taxonomy'   => 'category',
     'id'         => 'ad_categories',
     'name'       => "ad[categories]",
-	'exclude'    => [ 1, 17, 18 ],
+	'exclude'    => $ex_cats,
     'class'      => 'sel2 invalidate',
 	'hide_empty' => 0,
 	'echo'       => false,
@@ -200,7 +202,7 @@ $cats  = wp_dropdown_categories( [
                     $ad['content'] ?? '',
                     "ad_content",
                     [
-                        'textarea_name' => "ad['content']",
+                        'textarea_name' => "ad[content]",
                         'editor_class'  => 'invalidate',
                         'media_buttons' => false,
                         'quicktags'     => false
