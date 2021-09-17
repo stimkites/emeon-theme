@@ -913,8 +913,6 @@ textarea {
         transform: translate(-50%, -50%) rotate(45deg); }
       .emeon-form fieldset .remove-icon::after {
         transform: translate(-50%, -50%) rotate(-45deg); }
-    .emeon-form fieldset .added .remove-icon {
-      display: block; }
     .emeon-form fieldset .logo-wrap {
       width: 330px;
       height: auto;
@@ -968,22 +966,24 @@ textarea {
         position: relative; }
         .emeon-form fieldset .attachment-area #attachment-info.added {
           border: 1px solid #000; }
+          .emeon-form fieldset .attachment-area #attachment-info.added .remove-icon, .emeon-form fieldset .attachment-area #attachment-info.added #attachment-preview {
+            display: block; }
+          .emeon-form fieldset .attachment-area #attachment-info.added #no-attachment {
+            display: none; }
         .emeon-form fieldset .attachment-area #attachment-info .remove-icon {
           top: -30px; }
-        .emeon-form fieldset .attachment-area #attachment-info #attachment-preview {
-          border: none;
-          width: 100%;
-          height: 500px;
-          cursor: pointer;
-          display: none;
-          margin: 0;
-          padding: 0; }
         .emeon-form fieldset .attachment-area #attachment-info #no-attachment {
           padding: 20px;
           display: block;
           font-size: 11px; }
-        .emeon-form fieldset .attachment-area #attachment-info.added #no-attachment {
-          display: none; }
+      .emeon-form fieldset .attachment-area #attachment-preview {
+        border: none;
+        width: 100%;
+        height: 500px;
+        cursor: pointer;
+        display: none;
+        margin: 0;
+        padding: 0; }
     .emeon-form fieldset .cta-controls {
       width: 100%;
       text-align: center; }

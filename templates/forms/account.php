@@ -59,11 +59,13 @@ $adedit_url = apply_filters( 'emeon_adedit_url', site_url() );
                 foreach( EMEON_TYPES as $type ) {
                     $none = true;
 	                echo '<div id="' . $type . '-' . $status . '" class="content-area">';
+                    global $post;
+                    $keep = $post;
 	                foreach ( $dat[ $status ][ $type ] as $post ){
 	                    $none = false;
-		                setup_postdata( $post );
 		                get_template_part( 'template-parts/content', 'account-ad' );
                     }
+                    $post = $keep;
                 }
 
         ?>

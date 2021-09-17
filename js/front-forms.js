@@ -129,7 +129,7 @@
    */
   const __reset_attachment = function( e ){
     let _i = $( '#attachment-preview' );
-    _i.prop( 'src', '' ).hide().parent().removeClass( 'added' );
+    _i.prop( 'src', '' ).parent().removeClass( 'added' );
     $( '#attachment-file' ).val( '' );
     return __noreturn( e );
   };
@@ -182,7 +182,6 @@
     const obj_url = URL.createObjectURL( f );
     $( '#attachment-preview' )
         .prop( 'src', obj_url )
-        .show()
         .parent()
         .addClass( 'added' )
         .on(

@@ -116,12 +116,6 @@
       }
     }
 
-    .added {
-      .remove-icon {
-        display: block;
-      }
-    }
-
     .logo-wrap {
       width: 330px;
       height: auto;
@@ -200,20 +194,19 @@
 
         &.added {
           border: 1px solid #000;
+
+          .remove-icon, #attachment-preview {
+            display: block;
+          }
+
+          #no-attachment {
+            display: none;
+          }
+
         }
 
         .remove-icon {
           top: -30px;
-        }
-
-        #attachment-preview {
-          border: none;
-          width: 100%;
-          height: 500px;
-          cursor: pointer;
-          display: none;
-          margin: 0;
-          padding: 0;
         }
 
         #no-attachment {
@@ -221,11 +214,18 @@
           display: block;
           font-size: 11px;
         }
-
-        &.added #no-attachment {
-          display: none;
-        }
       }
+
+      #attachment-preview {
+        border: none;
+        width: 100%;
+        height: 500px;
+        cursor: pointer;
+        display: none;
+        margin: 0;
+        padding: 0;
+      }
+
     }
 
     .cta-controls {

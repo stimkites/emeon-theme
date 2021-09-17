@@ -322,3 +322,12 @@ function emeon_log( $data ){
     error_log( "[$mem][EMEON] " . var_export( $data, true ) . PHP_EOL );
     return $data;
 }
+
+/**
+ * Force all urls to be HTTPS if active
+ */
+add_filter( 'wp_get_attachment_url', function( $url ){
+    if( is_ssl() )
+        return str_replace( 'http:', 'https:', $url );
+    return $url;
+}, 999 );

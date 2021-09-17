@@ -7,8 +7,10 @@
 defined( 'ABSPATH' ) or exit;
 
 $post       = null;
-$pid        = $_GET['ad'] ?? $_POST['ID']; // in case we edit
+$pid        = $_GET['ad'] ?? $_POST['ID'] ?? 0; // in case we edit
 $def_image  = EMEON_URL . '/img/user-icon.png';
+$vacancies_cat_id  = get_term_by( 'slug', 'vacancies',  'category' )->term_id ?? 0;
+$candidates_cat_id = get_term_by( 'slug', 'candidates', 'category' )->term_id ?? 0;
 
 /**
  * Advertisement data to fulfill
@@ -29,50 +31,40 @@ if( isset( $_POST['ad'] ) ) { // we already posted data, but something went wron
         return $_POST['emeon_error'][] = 'Ad #' . $pid . ' not found!';
     if( $post->post_author != get_current_user_id() )
         return $_POST['emeon_error'][] = 'Insufficient access level for editing ad #' . $pid;
-    $post_cats = wp_get_post_categories( $post->ID, [ 'taxonomy' => 'category', 'fields' => 'ids' ] );
-    $post_tags = wp_get_post_categories( $post->ID, [ 'taxonomy' => 'post_tag', 'fields' => 'ids' ] );
+    $post_cats = wp_get_post_categories( $post->ID );
+    $post_tags = wp_get_post_tags( $post->ID, [ 'fields' => 'ids' ] );
     $contacts  = get_post_meta( $post->ID, 'emeon_contacts', true );
-    $attachment= get_post_meta( $post->ID, 'emeon_attachment', true );
+    $attachment= ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '';
     $ad = [
-        'type'      => in_array( 17, $post_cats ) ? 'candidates' : 'vacancies',
+        'type'      => in_array( $vacancies_cat_id, $post_cats ) ? 'vacancies' : 'candidates',
         'title'     => $post->post_title,
-        'image'     => ( ( $image = wp_get_attachment_image_src( $post->ID ) ) ? $image : $def_image ),
+        'image'     => ( ( $image = get_the_post_thumbnail_url( $post->ID ) ) ? $image : $def_image ),
         'excerpt'   => $post->post_excerpt,
         'categories'=> $post_cats,
         'tags'      => $post_tags,
-        'email'     => $contacts[ 'email' ],
-        'phone'     => $contacts[ 'phone' ],
-        'urls'      => $contacts[ 'urls'  ],
+        'email'     => $contacts[ 'email' ] ?? '',
+        'phone'     => $contacts[ 'phone' ] ?? '',
+        'urls'      => $contacts[ 'urls'  ] ?? '',
         'content'   => $post->post_content,
-        'attachment'=> $attachment['url'] ?? ''
+        'attachment'=> $attachment
     ];
 }
 
-$tags  = wp_dropdown_categories( [
+$tags_args  = [
 	'taxonomy'   => 'post_tag',
-	'id'         => 'ad_tags',
-	'name'       => "ad[tags]",
-	'class'      => 'sel2 invalidate',
-	'hide_empty' => 0,
-    'echo'       => false,
-    'selected'   => $post_tags ?? []
-] );
+	'hide_empty' => 0
+];
 
 $ex_cats = [ 1 ];
 foreach ( EMEON_TYPES as $type )
     if( $term = get_term_by( 'slug', $type, 'category' ) )
         $ex_cats[] = $term->term_id;
 
-$cats  = wp_dropdown_categories( [
+$cats_args  = [
 	'taxonomy'   => 'category',
-    'id'         => 'ad_categories',
-    'name'       => "ad[categories]",
-	'exclude'    => $ex_cats,
-    'class'      => 'sel2 invalidate',
-	'hide_empty' => 0,
-	'echo'       => false,
-	'selected'   => $post_cats ?? []
-] );
+    'exclude'    => $ex_cats,
+    'hide_empty' => 0
+];
 
 ?>
 
@@ -140,12 +132,34 @@ $cats  = wp_dropdown_categories( [
 
             <label for="ad_categories">Categories</label>
             <div class="control-wrap">
-                <?=$cats?>
+                <select id="ad_categories" name="ad[categories]" multiple class="sel2 invalidate">
+                    <?php
+                    if( $cats = get_terms( $cats_args ) )
+                        foreach ( $cats as $cat )
+                            echo '<option value="' . $cat->term_id . '" ' .
+                                    ( in_array( $cat->term_id, $post_cats ?? [] ) ? 'selected' : '' ) . '>' .
+                                        $cat->name .
+                                '</option>';
+                    else
+                        echo '<option value="-1" selected disabled>No categories</option>';
+                    ?>
+                </select>
             </div>
 
             <label for="ad_tags">Tags</label>
             <div class="control-wrap">
-                <?=$tags?>
+                <select id="ad_tags" name="ad[tags]" multiple class="sel2 invalidate">
+                    <?php
+                    if( $tags = get_terms( $tags_args ) )
+                        foreach ( $tags as $tag )
+                            echo '<option value="' . $tag->term_id . '" ' .
+                                ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
+                                $tag->name .
+                                '</option>';
+                    else
+                        echo '<option value="-1" selected disabled>No tags</option>';
+                    ?>
+                </select>
             </div>
 
         </div>
