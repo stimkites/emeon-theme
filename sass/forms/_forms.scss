@@ -56,12 +56,12 @@
     flex-wrap: wrap;
     justify-content: space-between;
 
-    .ad-type{
+    .article-type{
       width: 100%;
       text-align: left;
       margin-bottom: 20px;
 
-      .ad-type-selectors{
+      .article-type-selectors{
         width: 100%;
         padding: 0;
         margin: 0;
@@ -141,7 +141,7 @@
     .general-info {
       width: 340px;
 
-      .ad-excerpt {
+      .article-excerpt {
         resize: none;
         height: 232px;
       }
@@ -173,7 +173,7 @@
     .contact-info {
       width: 100%;
 
-      .ad-urls {
+      .article-urls {
         resize: vertical;
         height: 110px;
       }
@@ -236,7 +236,7 @@
       }
     }
 
-    .ad-text {
+    .article-text {
       width: 100%;
     }
 

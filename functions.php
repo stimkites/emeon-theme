@@ -15,7 +15,7 @@ const
     EMEON_TPL       = EMEON_PATH . '/templates',
     EMEON_SLUG      = 'emeon-theme',
 	EMEON_STATUSES  = [ 'active', 'moderation', 'archive' ],
-	EMEON_TYPES     = [ 'vacancies', 'candidates' ];
+	EMEON_TYPES     = [ 'vacancies', 'candidates', 'emeon-team' ];
 
 define( 'EMEON_URL',  get_template_directory_uri()  );
 

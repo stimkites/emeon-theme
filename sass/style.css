@@ -869,17 +869,17 @@ textarea {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between; }
-    .emeon-form fieldset .ad-type {
+    .emeon-form fieldset .article-type {
       width: 100%;
       text-align: left;
       margin-bottom: 20px; }
-      .emeon-form fieldset .ad-type .ad-type-selectors {
+      .emeon-form fieldset .article-type .article-type-selectors {
         width: 100%;
         padding: 0;
         margin: 0;
         display: flex;
         flex-direction: row; }
-        .emeon-form fieldset .ad-type .ad-type-selectors label {
+        .emeon-form fieldset .article-type .article-type-selectors label {
           border: 1px solid #ccc;
           width: 50%;
           padding: 10px;
@@ -887,10 +887,10 @@ textarea {
           cursor: pointer;
           color: #999;
           margin-right: -1px; }
-        .emeon-form fieldset .ad-type .ad-type-selectors input[type=radio]:checked + label {
+        .emeon-form fieldset .article-type .article-type-selectors input[type=radio]:checked + label {
           background: #efefef;
           color: black; }
-        .emeon-form fieldset .ad-type .ad-type-selectors input[type=radio] {
+        .emeon-form fieldset .article-type .article-type-selectors input[type=radio] {
           display: none; }
     .emeon-form fieldset .remove-icon {
       position: absolute;
@@ -930,7 +930,7 @@ textarea {
           object-fit: contain; }
     .emeon-form fieldset .general-info {
       width: 340px; }
-      .emeon-form fieldset .general-info .ad-excerpt {
+      .emeon-form fieldset .general-info .article-excerpt {
         resize: none;
         height: 232px; }
     .emeon-form fieldset .categories-tags-select {
@@ -950,7 +950,7 @@ textarea {
           top: 3px; }
     .emeon-form fieldset .contact-info {
       width: 100%; }
-      .emeon-form fieldset .contact-info .ad-urls {
+      .emeon-form fieldset .contact-info .article-urls {
         resize: vertical;
         height: 110px; }
     .emeon-form fieldset .attachment-area {
@@ -989,7 +989,7 @@ textarea {
       text-align: center; }
       .emeon-form fieldset .cta-controls button {
         cursor: pointer; }
-    .emeon-form fieldset .ad-text {
+    .emeon-form fieldset .article-text {
       width: 100%; }
     .emeon-form fieldset label {
       width: 100%;

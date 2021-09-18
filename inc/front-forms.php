@@ -69,7 +69,7 @@ new class {
             );
         foreach( EMEON_TYPES as $type )
             if( ! term_exists( $type, 'category' ) )
-                wp_insert_term( ucfirst( $type ), 'category' );
+                wp_insert_term( ucfirst( str_replace( '-', ' ', $type ) ), 'category' );
     }
 
 	/**
@@ -243,13 +243,13 @@ new class {
     protected function adedit(){
         $text_to_analyze =
             $_POST['ad']['title'] . ' ' . $_POST['ad']['excerpt'] . ' ' . $_POST['ad']['content'] . ' ' .
-            $_POST['ad']['tags'] . ' ' . $_POST['ad']['categories'];
+            implode( " ", $_POST['ad']['tags'] ) . ' ' . implode( " ", $_POST['ad']['categories'] );
         $user = get_user_by( 'ID', get_current_user_id() );
         $post_status = wp_check_comment_disallowed_list(
             $user->display_name, $user->user_email, '', $text_to_analyze, '', ''
         ) ? 'moderation' : 'publish';
-        $tags = explode( ",", $_POST['ad']['tags'] );
-        $cats = explode( ",", $_POST['ad']['categories'] );
+        $tags = $_POST['ad']['tags'];
+        $cats = $_POST['ad']['categories'];
         $post_id = (int)$_POST['ad']['id'];
         $post_data = [
             'post_title'    => $_POST['ad']['title'],
@@ -271,7 +271,7 @@ new class {
 
         // Cats and tags
         $_POST['ID'] = $post_id;
-        wp_set_post_tags( $post_id, $tags );
+	    wp_set_post_terms( $post_id, $tags, 'post_tag' );
         wp_set_post_categories( $post_id, $cats );
 
         // Contacts
@@ -282,8 +282,12 @@ new class {
 
         // Image and attachment
         foreach( [ 'ad_image', 'ad_attachment' ] as $file_id )
-            if( is_uploaded_file( $_FILES[ $file_id ] ) ){
-                $file = wp_handle_upload( $_FILES[ $file_id ] );
+            if( is_uploaded_file( $_FILES[ $file_id ]['tmp_name'] ) ){
+                if( ! function_exists( 'wp_handle_upload' ) ){
+                    include ABSPATH . '/wp-admin/includes/file.php';
+                    include ABSPATH . '/wp-admin/includes/image.php';
+                }
+                $file = wp_handle_upload( $_FILES[ $file_id ], [ 'test_form' => false ] );
                 if ( isset( $file['error'] ) )
                     return $_POST['emeon_error'][] = $file['error'];
                 $name = $_FILES[ $file_id ]['name'];

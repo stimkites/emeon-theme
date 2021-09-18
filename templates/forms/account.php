@@ -39,7 +39,7 @@ $adedit_url = apply_filters( 'emeon_adedit_url', site_url() );
                 foreach( EMEON_TYPES as $type ) {
                     echo '<h5>' . ucfirst( $type ) . '</h5>';
 	                foreach ( EMEON_STATUSES as $status ) {
-		                echo '<li><a class="ad-link" href="#' . $type . '-' . $status . '">' .
+		                echo '<li><a class="article-link" href="#' . $type . '-' . $status . '">' .
                                 ucfirst( $status ) .
                              '</a></li>';
 	                }

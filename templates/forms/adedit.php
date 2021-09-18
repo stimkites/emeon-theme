@@ -76,8 +76,8 @@ $cats_args  = [
       name="emeon-form" >
     <fieldset>
 
-        <div class="ad-type">
-            <div class="ad-type-selectors">
+        <div class="article-type">
+            <div class="article-type-selectors">
 
                 <input id="type-cv"
                        type="radio" <?=($ad['type'] === 'candidates'?'checked':'')?>
@@ -115,7 +115,7 @@ $cats_args  = [
 
                 <label class="control-wrap">
                     <textarea name="ad[excerpt]"
-                              class="ad-excerpt invalidate"
+                              class="article-excerpt invalidate"
                               rows="5"
                               placeholder="A few lines in short..."><?=$ad['excerpt']??''?></textarea>
                 </label>
@@ -132,7 +132,7 @@ $cats_args  = [
 
             <label for="ad_categories">Categories</label>
             <div class="control-wrap">
-                <select id="ad_categories" name="ad[categories]" multiple class="sel2 invalidate">
+                <select id="ad_categories" name="ad[categories][]" multiple class="sel2 invalidate">
                     <?php
                     if( $cats = get_terms( $cats_args ) )
                         foreach ( $cats as $cat )
@@ -148,7 +148,7 @@ $cats_args  = [
 
             <label for="ad_tags">Tags</label>
             <div class="control-wrap">
-                <select id="ad_tags" name="ad[tags]" multiple class="sel2 invalidate">
+                <select id="ad_tags" name="ad[tags][]" multiple class="sel2 invalidate">
                     <?php
                     if( $tags = get_terms( $tags_args ) )
                         foreach ( $tags as $tag )
@@ -191,7 +191,7 @@ $cats_args  = [
                 <label class="control-wrap">
                     <textarea name="ad[urls]"
                               rows="4"
-                              class="ad-urls invalidate"
+                              class="article-urls invalidate"
                               placeholder =
                               " - Website URL <?="\n"?> - Portfolio URL<?="\n"?> - Another phone number<?="\n"?> ..."
                     ><?=$ad['urls']??''?></textarea>
@@ -200,7 +200,7 @@ $cats_args  = [
             </div>
         </div>
 
-        <div class="ad-text">
+        <div class="article-text">
 
             <h3>
                 Content
