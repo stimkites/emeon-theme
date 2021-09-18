@@ -34,22 +34,22 @@
    */
   const __invalid = function( name, value ){
     switch ( name ) {
-      case 'ad[title]' :
+      case 'article[title]' :
         return ( value.length > 3 ? false : 'Invalid title/name' );
-      case 'ad[excerpt]' :
+      case 'article[excerpt]' :
         return ( value.length < 4 ? 'Too short excerpt' : /<\/?[a-z][\s\S]*>/i.test( value ) ? 'Excerpt contains HTML tags' : false );
-      case 'ad[categories]' :
+      case 'article[categories]' :
         console.log( value );
         return ( value.length ? false : 'Categories undefined' );
-      case 'ad[tags]' :
+      case 'article[tags]' :
         return ( value.length ? false : 'No tags? Please add at least one' );
-      case 'ad[email]' :
+      case 'article[email]' :
         return ( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test( value ) ? false : 'Invalid email address' );
-      case 'ad[phone]' :
+      case 'article[phone]' :
         return ( /^[\d +()]+$/im.test( value ) ? false : 'Invalid phone number' );
-      case 'ad[urls]' :
+      case 'article[urls]' :
         return ( /<\/?[a-z][\s\S]*>/i.test( value ) ? 'Additional contacts should not contain any HTML tags' : false );
-      case 'ad[content]' :
+      case 'article[content]' :
         return ( value.length < 4 ? 'No content at all? What do we publish then?' : false );
       default :
         return false;
@@ -66,7 +66,7 @@
   const __validate_form = function( e ){
     let errors = [];
     $( '.error-field' ).removeClass( 'error-field' );
-    if( 'undefined' !== typeof tinyMCE ) tinyMCE.get('ad_content').save();
+    if( 'undefined' !== typeof tinyMCE ) tinyMCE.get('article_content').save();
     $( 'form.emeon-form .invalidate' ).each( function(){
       let current_error = __invalid( this.name, $( this ).val() );
       if( current_error ){
@@ -196,7 +196,7 @@
    * @private
    */
   const __init_selects = function(){
-    $( 'select.sel2:not(.select2-offscreen)' ).attr( 'multiple', true ).select2({
+    $( 'select.sel2:not(.select2-offscreen)' ).select2({
       width: '100%',
       tags: true
     });
@@ -212,7 +212,7 @@
     setTimeout( () => {
       tinymce.activeEditor.on(
           'keydown mousedown paste enter focus',
-          () => { $( '#ad_content' ).parents().removeClass( 'error-field' ) }
+          () => { $( '#article_content' ).parents().removeClass( 'error-field' ) }
       )
     }, 100 );
   };
@@ -238,7 +238,7 @@
      * Initialize ad editor
      */
     init : function() {
-      if( ! document.getElementById( 'form-adedit' ).length ) return;
+      if( ! document.getElementById( 'form-article-edit' ) ) return;
       $( document ).ready( __assign );
     }
 

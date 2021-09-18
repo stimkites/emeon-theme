@@ -242,19 +242,19 @@ new class {
 	 */
     protected function adedit(){
         $text_to_analyze =
-            $_POST['ad']['title'] . ' ' . $_POST['ad']['excerpt'] . ' ' . $_POST['ad']['content'] . ' ' .
-            implode( " ", $_POST['ad']['tags'] ) . ' ' . implode( " ", $_POST['ad']['categories'] );
+            $_POST['article']['title'] . ' ' . $_POST['article']['excerpt'] . ' ' . $_POST['article']['content'] . ' ' .
+            implode( " ", $_POST['article']['tags'] ) . ' ' . implode( " ", $_POST['article']['categories'] );
         $user = get_user_by( 'ID', get_current_user_id() );
         $post_status = wp_check_comment_disallowed_list(
             $user->display_name, $user->user_email, '', $text_to_analyze, '', ''
         ) ? 'moderation' : 'publish';
-        $tags = $_POST['ad']['tags'];
-        $cats = $_POST['ad']['categories'];
-        $post_id = (int)$_POST['ad']['id'];
+        $tags = $_POST['article']['tags'];
+        $cats = $_POST['article']['categories'];
+        $post_id = (int)$_POST['article']['id'];
         $post_data = [
-            'post_title'    => $_POST['ad']['title'],
-            'post_excerpt'  => $_POST['ad']['excerpt'],
-            'post_content'  => $_POST['ad']['content'],
+            'post_title'    => $_POST['article']['title'],
+            'post_excerpt'  => $_POST['article']['excerpt'],
+            'post_content'  => $_POST['article']['content'],
             'post_status'   => $post_status,
             'post_author'   => $user->ID
         ];
@@ -271,17 +271,17 @@ new class {
 
         // Cats and tags
         $_POST['ID'] = $post_id;
-	    wp_set_post_terms( $post_id, $tags, 'post_tag' );
+	    wp_set_post_tags( $post_id, $tags, 'post_tag' );
         wp_set_post_categories( $post_id, $cats );
 
         // Contacts
         $contacts = [];
         foreach( [ 'email', 'phone', 'urls' ] as $contact )
-            $contacts[ $contact ] = $_POST['ad'][ $contact ] ?? '';
+            $contacts[ $contact ] = $_POST['article'][ $contact ] ?? '';
         update_post_meta( $post_id, 'emeon_contacts', $contacts );
 
         // Image and attachment
-        foreach( [ 'ad_image', 'ad_attachment' ] as $file_id )
+        foreach( [ 'article_image', 'article_attachment' ] as $file_id )
             if( is_uploaded_file( $_FILES[ $file_id ]['tmp_name'] ) ){
                 if( ! function_exists( 'wp_handle_upload' ) ){
                     include ABSPATH . '/wp-admin/includes/file.php';

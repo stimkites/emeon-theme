@@ -15,7 +15,7 @@ $candidates_cat_id = get_term_by( 'slug', 'candidates', 'category' )->term_id ??
 /**
  * Advertisement data to fulfill
  */
-$ad = [ 'type' => 'candidates' ];
+$article = [ 'type' => 'candidates' ];
 
 /**
  * Prevent unauthorized access
@@ -23,19 +23,19 @@ $ad = [ 'type' => 'candidates' ];
 if( ! is_user_logged_in() )
     return $_POST['emeon_erros'][] = 'Unauthorized access is prohibited!';
 
-if( isset( $_POST['ad'] ) ) { // we already posted data, but something went wrong and we were not redirected
-    $ad = $_POST['ad'];
+if( isset( $_POST['article'] ) ) { // we already posted data, but something went wrong and we were not redirected
+    $article = $_POST['article'];
 } elseif( $pid ) { // we start editing existing post
     $post = get_post( $pid );
     if( ! $post || is_wp_error( $post ) )
-        return $_POST['emeon_error'][] = 'Ad #' . $pid . ' not found!';
+        return $_POST['emeon_error'][] = 'Article #' . $pid . ' not found!';
     if( $post->post_author != get_current_user_id() )
-        return $_POST['emeon_error'][] = 'Insufficient access level for editing ad #' . $pid;
+        return $_POST['emeon_error'][] = 'Insufficient access level for editing article #' . $pid;
     $post_cats = wp_get_post_categories( $post->ID );
     $post_tags = wp_get_post_tags( $post->ID, [ 'fields' => 'ids' ] );
     $contacts  = get_post_meta( $post->ID, 'emeon_contacts', true );
     $attachment= ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '';
-    $ad = [
+    $article = [
         'type'      => in_array( $vacancies_cat_id, $post_cats ) ? 'vacancies' : 'candidates',
         'title'     => $post->post_title,
         'image'     => ( ( $image = get_the_post_thumbnail_url( $post->ID ) ) ? $image : $def_image ),
@@ -70,8 +70,8 @@ $cats_args  = [
 
 <form action=" "
       method="post"
-      class="emeon-form form-adedit"
-      id="form-adedit"
+      class="emeon-form form-article-edit"
+      id="form-article-edit"
       enctype="multipart/form-data"
       name="emeon-form" >
     <fieldset>
@@ -80,14 +80,14 @@ $cats_args  = [
             <div class="article-type-selectors">
 
                 <input id="type-cv"
-                       type="radio" <?=($ad['type'] === 'candidates'?'checked':'')?>
-                       name="ad[type]"
+                       type="radio" <?=($article['type'] === 'candidates'?'checked':'')?>
+                       name="article[type]"
                        value="candidates" />
                 <label for="type-cv">Candidate</label>
 
                 <input id="type-vc"
-                       type="radio" <?=($ad['type'] === 'vacancies' ?'checked':'')?>
-                       name="ad[type]"
+                       type="radio" <?=($article['type'] === 'vacancies' ?'checked':'')?>
+                       name="article[type]"
                        value="vacancies" />
                 <label for="type-vc">Vacancy</label>
 
@@ -95,11 +95,11 @@ $cats_args  = [
         </div>
 
         <div class="logo-wrap">
-            <label for="photo-file" class="logo-area <?=($ad['image']?'added':'')?>">
+            <label for="photo-file" class="logo-area <?=($article['image']?'added':'')?>">
                 <span class="remove-icon logo-remove"></span>
-                <img class="logo" src="<?=$ad['image']??$def_image?>" data-default="<?=$def_image?>" alt="image"/>
+                <img class="logo" src="<?=$article['image']??$def_image?>" data-default="<?=$def_image?>" alt="image"/>
             </label>
-            <input type="file" id="photo-file" accept="image/*" name="ad_image" value="" />
+            <input type="file" id="photo-file" accept="image/*" name="article_image" value="" />
         </div>
 
         <div class="general-info">
@@ -108,16 +108,16 @@ $cats_args  = [
                 <label class="control-wrap">
                     <input type="text"
                            class="invalidate"
-                           name="ad[title]"
+                           name="article[title]"
                            placeholder="Title/name"
-                           value="<?=$ad['title']??''?>" />
+                           value="<?=$article['title']??''?>" />
                 </label>
 
                 <label class="control-wrap">
-                    <textarea name="ad[excerpt]"
+                    <textarea name="article[excerpt]"
                               class="article-excerpt invalidate"
                               rows="5"
-                              placeholder="A few lines in short..."><?=$ad['excerpt']??''?></textarea>
+                              placeholder="A few lines in short..."><?=$article['excerpt']??''?></textarea>
                 </label>
 
             </div>
@@ -127,12 +127,12 @@ $cats_args  = [
 
             <h3>Categories and tags</h3>
             <p class="description">
-                These are very important things on how ad will be found on site. Add new or use existing ones.
+                This will help to find your ad. Add new or use existing ones.
             </p>
 
-            <label for="ad_categories">Categories</label>
+            <label for="article_categories">Categories</label>
             <div class="control-wrap">
-                <select id="ad_categories" name="ad[categories][]" multiple class="sel2 invalidate">
+                <select id="article_categories" name="article[categories][]" multiple class="sel2 invalidate">
                     <?php
                     if( $cats = get_terms( $cats_args ) )
                         foreach ( $cats as $cat )
@@ -146,13 +146,13 @@ $cats_args  = [
                 </select>
             </div>
 
-            <label for="ad_tags">Tags</label>
+            <label for="article_tags">Tags</label>
             <div class="control-wrap">
-                <select id="ad_tags" name="ad[tags][]" multiple class="sel2 invalidate">
+                <select id="article_tags" name="article[tags][]" multiple class="sel2 invalidate">
                     <?php
                     if( $tags = get_terms( $tags_args ) )
                         foreach ( $tags as $tag )
-                            echo '<option value="' . $tag->term_id . '" ' .
+                            echo '<option value="' . $tag->slug . '" ' .
                                 ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
                                 $tag->name .
                                 '</option>';
@@ -173,28 +173,28 @@ $cats_args  = [
 
                 <label class="control-wrap">
                     <input type="email"
-                           name="ad[email]"
+                           name="article[email]"
                            class="invalidate"
-                           value="<?=$ad['email']??''?>"
+                           value="<?=$article['email']??''?>"
                            placeholder="your@email.here"
                     />
                 </label>
 
                 <label class="control-wrap">
                     <input type="text"
-                           name="ad[phone]"
+                           name="article[phone]"
                            class="invalidate"
                            placeholder="+1 233 456 789"
-                           value="<?=$ad['phone']??''?>" />
+                           value="<?=$article['phone']??''?>" />
                 </label>
 
                 <label class="control-wrap">
-                    <textarea name="ad[urls]"
+                    <textarea name="article[urls]"
                               rows="4"
                               class="article-urls invalidate"
                               placeholder =
                               " - Website URL <?="\n"?> - Portfolio URL<?="\n"?> - Another phone number<?="\n"?> ..."
-                    ><?=$ad['urls']??''?></textarea>
+                    ><?=$article['urls']??''?></textarea>
                 </label>
 
             </div>
@@ -213,10 +213,10 @@ $cats_args  = [
             <div class="control-wrap">
                 <?php
                 wp_editor(
-                    $ad['content'] ?? '',
-                    "ad_content",
+                    $article['content'] ?? '',
+                    "article_content",
                     [
-                        'textarea_name' => "ad[content]",
+                        'textarea_name' => "article[content]",
                         'editor_class'  => 'invalidate',
                         'media_buttons' => false,
                         'quicktags'     => false
@@ -236,13 +236,13 @@ $cats_args  = [
                 Maximum size is 5 mb. Click to add/replace the attachment below:
             </p>
 
-            <label for="attachment-file" id="attachment-info" class="<?=($ad['attachment']?'added':'')?>">
+            <label for="attachment-file" id="attachment-info" class="<?=($article['attachment']?'added':'')?>">
                 <span class="remove-icon attachment-remove"></span>
-                <iframe id="attachment-preview" src="<?=$ad['attachment']??''?>"></iframe>
+                <iframe id="attachment-preview" src="<?=$article['attachment']??''?>"></iframe>
                 <span id="no-attachment">No file selected...</span>
             </label>
 
-            <input type="file" id="attachment-file" name="ad_attachment" accept=".pdf" />
+            <input type="file" id="attachment-file" name="article_attachment" accept=".pdf" />
 
         </div>
 
@@ -252,7 +252,7 @@ $cats_args  = [
 
 
         <input type="hidden" name="emeon_form_action" value="adedit" />
-        <input type="hidden" name="ad[id]" value="<?=$post->ID??0?>" />
+        <input type="hidden" name="article[id]" value="<?=$post->ID??0?>" />
 
     </fieldset>
 </form>
