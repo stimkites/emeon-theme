@@ -33,6 +33,8 @@
    * @private
    */
   const __invalid = function( name, value ){
+    if( /[^0-9a-zA-Z ,.&<>?^%$#@!~="\n\t/{}()+*_\-:;\[\]\|\\]$/gim.test( value ) )
+      return 'Invalid characters!';
     switch ( name ) {
       case 'article[title]' :
         return ( value.length > 3 ? false : 'Invalid title/name' );
@@ -52,7 +54,7 @@
       case 'article[content]' :
         return ( value.length < 4 ? 'No content at all? What do we publish then?' : false );
       default :
-        return false;
+        return ( value.length > 0 ? false : 'Empty value is not allowed.' );
     }
   };
 
@@ -75,7 +77,7 @@
       }
     } );
     if( errors.length ) {
-      __error(errors.join("<br/>"), 10000);
+      __error( errors[0] );
       return __noreturn( e );
     }
     $( 'body' ).addClass( 'loading' );
@@ -245,3 +247,45 @@
   }
 
 } )( jQuery.noConflict() ).init(); /** Ad edit form **/
+
+/**
+ * Account menus
+ */
+( $ => {
+
+  /**
+   * Assign all events
+   *
+   * @private
+   */
+  const __assign = function(){
+    $( '#account-primary-menu li a' ).off().click( ( e ) => {
+      let l = $( $( e.target ).attr( 'href' ) );
+      if( ! l.length ) return;
+      $( '.account-content' ).removeClass( 'viz' );
+      l.addClass( 'viz' );
+    } );
+    $( '.delete-item' ).off().on( 'click', function( e ){
+      if( ! confirm( 'Proceed to delete item?' ) ) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }
+    } );
+  };
+
+  return {
+
+    /**
+     * Initialize account menus
+     */
+    init : function() {
+      if( ! document.getElementById( 'account-primary-menu' ) ) return;
+      $( document ).ready( __assign );
+    }
+
+  }
+
+} )( jQuery.noConflict() ).init(); /** Account menus **/
+
+

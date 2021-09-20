@@ -8,7 +8,7 @@ new class {
     function __construct() {
 
         // Register custom post statuses and primary categories
-        add_action( 'plugins_loaded', [ $this, 'register' ] );
+        add_action( 'init', [ $this, 'register' ] );
 
         // Render forms
         add_shortcode( 'emeon_forms', [ $this, 'render' ] );
@@ -52,7 +52,7 @@ new class {
 	/**
 	 * Our custom post statuses and primary categories
 	 */
-    function register_statuses(){
+    function register(){
         foreach( EMEON_STATUSES as $status )
             register_post_status(
                 $status,
@@ -127,8 +127,10 @@ new class {
 	 */
     function save_fields( $post_id ){
         if( ! isset( $_POST['emeon_contacts'] ) ) return;
-	    update_post_meta( $post_id, 'emeon_contacts',   $_POST['emeon_contacts'] ?? [] );
-	    update_post_meta( $post_id, 'emeon_attachment', $_POST['ad_attachment' ] ?? '' );
+	    update_post_meta( $post_id, 'emeon_contacts',   $_POST['emeon_contacts'  ]  ?? [] );
+	    update_post_meta( $post_id, 'emeon_attachment', $_POST['ad_attachment'   ]  ?? '' );
+	    update_post_meta( $post_id, 'emeon_salary',     $_POST['emeon_salary'    ]  ?? '' );
+	    update_post_meta( $post_id, 'emeon_experience', $_POST['emeon_experience']  ?? '' );
     }
 
 	/**
@@ -280,6 +282,10 @@ new class {
             $contacts[ $contact ] = $_POST['article'][ $contact ] ?? '';
         update_post_meta( $post_id, 'emeon_contacts', $contacts );
 
+        // Salary and experience
+        update_post_meta( $post_id, 'emeon_salary',     $_POST['article']['salary'      ] );
+        update_post_meta( $post_id, 'emeon_experience', $_POST['article']['experience'  ] );
+
         // Image and attachment
         foreach( [ 'article_image', 'article_attachment' ] as $file_id )
             if( is_uploaded_file( $_FILES[ $file_id ]['tmp_name'] ) ){
@@ -310,7 +316,7 @@ new class {
                     wp_update_attachment_metadata(
                         $attachment_id, wp_generate_attachment_metadata( $attachment_id, $file )
                     );
-                    if( 'ad_image' === $file_id )
+                    if( 'article_image' === $file_id )
                         set_post_thumbnail( $post_id, $attachment_id );
                     else
                         update_post_meta( $post_id, 'emeon_attachment', $attachment_id );

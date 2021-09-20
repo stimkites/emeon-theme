@@ -4,8 +4,10 @@
     font-weight: normal;
     font-size: 14px; }
   .emeon-box-contacts input,
-  .emeon-box-contacts textarea {
-    width: 100%; }
+  .emeon-box-contacts textarea,
+  .emeon-box-contacts select {
+    width: 100%;
+    box-sizing: border-box; }
   .emeon-box-contacts #attachment-info {
     margin: 20px auto;
     padding: 0;

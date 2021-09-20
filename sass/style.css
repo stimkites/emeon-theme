@@ -559,6 +559,136 @@ article.page {
   display: block; }
 
 /*--------------------------------------------------------------
+## Account styles
+--------------------------------------------------------------*/
+header.entry-header {
+  display: none; }
+
+.emeon-account {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-content: space-between; }
+  .emeon-account h2 {
+    font-size: 18px;
+    line-height: 1; }
+  .emeon-account .emeon-account-menu {
+    width: 100%;
+    max-width: 300px; }
+    .emeon-account .emeon-account-menu ul {
+      list-style: none;
+      text-align: left; }
+      .emeon-account .emeon-account-menu ul li a {
+        display: block;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+        padding: 12px; }
+        .emeon-account .emeon-account-menu ul li a:hover {
+          background: #eee; }
+  .emeon-account .emeon-account-content {
+    width: 100%;
+    max-width: calc( 100% - 306px );
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column; }
+    .emeon-account .emeon-account-content .account-content {
+      display: none; }
+      .emeon-account .emeon-account-content .account-content.viz {
+        display: block; }
+      .emeon-account .emeon-account-content .account-content .my-articles {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: space-between;
+        /* Single card */ }
+        .emeon-account .emeon-account-content .account-content .my-articles .account-article {
+          width: 100%;
+          margin: 0 5px 10px;
+          max-width: 200px;
+          border: 1px solid #ccc;
+          padding: 10px 10px 40px;
+          position: relative; }
+          .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu {
+            display: block;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            z-index: 1;
+            opacity: .8;
+            cursor: pointer;
+            transition: all .2s linear; }
+            .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:before {
+              content: "...";
+              font-family: sans-serif;
+              font-size: 18px;
+              color: #999;
+              font-weight: bolder;
+              width: 20px;
+              height: 20px;
+              border: 1px solid #ccc;
+              background: #fff;
+              display: block;
+              border-radius: 100%;
+              line-height: 10px;
+              padding: 0; }
+            .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu {
+              position: absolute;
+              display: none;
+              background: #fff;
+              border: 1px solid #999;
+              padding: 5px;
+              top: 5px;
+              right: 5px;
+              width: 100px;
+              border-radius: 0 6px 0 0; }
+              .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li {
+                list-style: none;
+                line-height: 1;
+                padding: 0; }
+                .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a {
+                  display: block;
+                  width: 100%;
+                  cursor: pointer;
+                  font-size: 12px;
+                  line-height: 1;
+                  padding: 7px; }
+                  .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a:hover {
+                    background: #ccc; }
+            .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover {
+              opacity: 1; }
+              .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover:before {
+                background: #999; }
+              .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover .article-menu__menu {
+                display: block; }
+          .emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border: none;
+            border-radius: 0;
+            padding: 12px;
+            position: absolute;
+            cursor: pointer;
+            opacity: .8;
+            transition: opacity .3s ease-in-out; }
+            .emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article:hover {
+              opacity: 1; }
+        .emeon-account .emeon-account-content .account-content .my-articles .add-link {
+          font-size: 24px;
+          color: #555;
+          opacity: .4;
+          transition: opacity ease-in-out .2s;
+          display: block;
+          padding: 9px;
+          height: 54px; }
+          .emeon-account .emeon-account-content .account-content .my-articles .add-link:hover {
+            opacity: 1; }
+
+/*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
 footer#colophon {
@@ -1000,7 +1130,7 @@ textarea {
     .emeon-form fieldset .no-pads {
       padding: 0;
       line-height: 1; }
-    .emeon-form fieldset input[type=text], .emeon-form fieldset input[type=email], .emeon-form fieldset textarea, .emeon-form fieldset select {
+    .emeon-form fieldset input[type=text], .emeon-form fieldset input[type=email], .emeon-form fieldset input[type=number], .emeon-form fieldset textarea, .emeon-form fieldset select {
       width: 100%;
       padding: 7px;
       margin: -1px 0 -3px 0;
@@ -1009,6 +1139,15 @@ textarea {
       font-size: 13px;
       cursor: pointer;
       background: #ffffff; }
+    .emeon-form fieldset input.emeon-salary {
+      padding-right: 30px; }
+    .emeon-form fieldset .emeon-currency-label {
+      position: absolute;
+      right: 10px;
+      font-size: 21px;
+      font-weight: bolder;
+      top: 4px;
+      color: #777; }
     .emeon-form fieldset input[type=file] {
       display: none !important;
       visibility: hidden;
@@ -1083,6 +1222,26 @@ html body .select2-dropdown {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+/* Join form */
+.emeon-form.form-join {
+  position: relative; }
+  .emeon-form.form-join input[type=email] {
+    padding: 9px;
+    width: calc( 100% - 40px );
+    margin: -1px -1px -1px 0; }
+  .emeon-form.form-join button.button-cta {
+    width: 40px;
+    margin: -1px 0 -1px -1px;
+    text-align: center;
+    border-radius: 0;
+    font-weight: bold;
+    padding: 0; }
+  @media screen and (max-width: 991px) {
+    .emeon-form.form-join input[type=email] {
+      width: 100%; }
+    .emeon-form.form-join button.button-cta {
+      width: 100%; } }
+
 /*--------------------------------------------------------------
 # Navigation
 --------------------------------------------------------------*/
@@ -1310,6 +1469,136 @@ article.page {
 
 .bypostauthor {
   display: block; }
+
+/*--------------------------------------------------------------
+## Account styles
+--------------------------------------------------------------*/
+header.entry-header {
+  display: none; }
+
+.emeon-account {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-content: space-between; }
+  .emeon-account h2 {
+    font-size: 18px;
+    line-height: 1; }
+  .emeon-account .emeon-account-menu {
+    width: 100%;
+    max-width: 300px; }
+    .emeon-account .emeon-account-menu ul {
+      list-style: none;
+      text-align: left; }
+      .emeon-account .emeon-account-menu ul li a {
+        display: block;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+        padding: 12px; }
+        .emeon-account .emeon-account-menu ul li a:hover {
+          background: #eee; }
+  .emeon-account .emeon-account-content {
+    width: 100%;
+    max-width: calc( 100% - 306px );
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column; }
+    .emeon-account .emeon-account-content .account-content {
+      display: none; }
+      .emeon-account .emeon-account-content .account-content.viz {
+        display: block; }
+      .emeon-account .emeon-account-content .account-content .my-articles {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: space-between;
+        /* Single card */ }
+        .emeon-account .emeon-account-content .account-content .my-articles .account-article {
+          width: 100%;
+          margin: 0 5px 10px;
+          max-width: 200px;
+          border: 1px solid #ccc;
+          padding: 10px 10px 40px;
+          position: relative; }
+          .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu {
+            display: block;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            z-index: 1;
+            opacity: .8;
+            cursor: pointer;
+            transition: all .2s linear; }
+            .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:before {
+              content: "...";
+              font-family: sans-serif;
+              font-size: 18px;
+              color: #999;
+              font-weight: bolder;
+              width: 20px;
+              height: 20px;
+              border: 1px solid #ccc;
+              background: #fff;
+              display: block;
+              border-radius: 100%;
+              line-height: 10px;
+              padding: 0; }
+            .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu {
+              position: absolute;
+              display: none;
+              background: #fff;
+              border: 1px solid #999;
+              padding: 5px;
+              top: 5px;
+              right: 5px;
+              width: 100px;
+              border-radius: 0 6px 0 0; }
+              .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li {
+                list-style: none;
+                line-height: 1;
+                padding: 0; }
+                .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a {
+                  display: block;
+                  width: 100%;
+                  cursor: pointer;
+                  font-size: 12px;
+                  line-height: 1;
+                  padding: 7px; }
+                  .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a:hover {
+                    background: #ccc; }
+            .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover {
+              opacity: 1; }
+              .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover:before {
+                background: #999; }
+              .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover .article-menu__menu {
+                display: block; }
+          .emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border: none;
+            border-radius: 0;
+            padding: 12px;
+            position: absolute;
+            cursor: pointer;
+            opacity: .8;
+            transition: opacity .3s ease-in-out; }
+            .emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article:hover {
+              opacity: 1; }
+        .emeon-account .emeon-account-content .account-content .my-articles .add-link {
+          font-size: 24px;
+          color: #555;
+          opacity: .4;
+          transition: opacity ease-in-out .2s;
+          display: block;
+          padding: 9px;
+          height: 54px; }
+          .emeon-account .emeon-account-content .account-content .my-articles .add-link:hover {
+            opacity: 1; }
 
 /*--------------------------------------------------------------
 # Infinite scroll

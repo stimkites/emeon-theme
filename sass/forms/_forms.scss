@@ -253,7 +253,7 @@
       line-height: 1;
     }
 
-    input[type=text], input[type=email], textarea, select {
+    input[type=text], input[type=email], input[type=number], textarea, select {
       width: 100%;
       padding: 7px;
       margin: -1px 0 -3px 0;
@@ -262,6 +262,19 @@
       font-size: 13px;
       cursor: pointer;
       background: #ffffff;
+    }
+
+    input.emeon-salary {
+      padding-right: 30px;
+    }
+
+    .emeon-currency-label {
+      position: absolute;
+      right: 10px;
+      font-size: 21px;
+      font-weight: bolder;
+      top: 4px;
+      color: #777;
     }
 
     input[type=file]{
@@ -344,3 +357,30 @@ html body .select2-dropdown {
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+
+/* Join form */
+.emeon-form.form-join {
+  position: relative;
+  input[type=email] {
+    padding: 9px;
+    width: calc( 100% - 40px );
+    margin: -1px -1px -1px 0;
+  }
+  button.button-cta {
+    width: 40px;
+    margin: -1px 0 -1px -1px;
+    text-align: center;
+    border-radius: 0;
+    font-weight: bold;
+    padding: 0;
+  }
+  @media  screen and (max-width: 991px ){
+    input[type=email] {
+      width: 100%;
+    }
+    button.button-cta {
+      width: 100%;
+    }
+  }
+}

@@ -6,7 +6,7 @@
 
 defined( 'ABSPATH' ) or exit;
 
-$email = $_POST['email'] ?? '';
+$email = $_POST['email'] ?? $_GET['email'] ?? '';
 $nonce = wp_create_nonce( EMEON_SLUG );
 
 ?>

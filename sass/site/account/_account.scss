@@ -1,0 +1,178 @@
+header.entry-header {
+	display: none;
+}
+
+.emeon-account {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	justify-content: space-between;
+	align-content: space-between;
+
+	h2 {
+		font-size: 18px;
+		line-height: 1;
+	}
+
+	.emeon-account-menu {
+		width: 100%;
+		max-width: 300px;
+
+		ul {
+			list-style: none;
+			text-align: left;
+			li a {
+				display: block;
+				border-bottom: 1px solid #ccc;
+				cursor: pointer;
+				padding: 12px;
+
+				&:hover{
+					background: #eee;
+				}
+			}
+		}
+	}
+
+	.emeon-account-content {
+		width: 100%;
+		max-width: calc( 100% - 306px );
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+
+		.account-content {
+			display: none;
+
+			&.viz {
+				display: block;
+			}
+
+			.my-articles {
+				display: flex;
+				flex-wrap: wrap;
+				flex-direction: row;
+				justify-content: space-between;
+				align-content: space-between;
+
+				/* Single card */
+				.account-article {
+					width: 100%;
+					margin: 0 5px 10px;
+					max-width: 200px;
+					border: 1px solid #ccc;
+					padding: 10px 10px 40px;
+					position: relative;
+
+					.article-menu {
+						display: block;
+						position: absolute;
+						top: 4px;
+						right: 4px;
+						z-index: 1;
+						opacity: .8;
+						cursor: pointer;
+						transition: all .2s linear;
+
+						&:before {
+							content: "...";
+							font-family: sans-serif;
+							font-size: 18px;
+							color: #999;
+							font-weight: bolder;
+							width: 20px;
+							height: 20px;
+							border: 1px solid #ccc;
+							background: #fff;
+							display: block;
+							border-radius: 100%;
+							line-height: 10px;
+							padding: 0;
+						}
+
+						.article-menu__menu {
+							position: absolute;
+							display: none;
+							background: #fff;
+							border: 1px solid #999;
+							padding: 5px;
+							top: 5px;
+							right: 5px;
+							width: 100px;
+							border-radius: 0 6px 0 0;
+
+							li {
+								list-style: none;
+								line-height: 1;
+								padding: 0;
+
+								a {
+									display: block;
+									width: 100%;
+									cursor: pointer;
+									font-size: 12px;
+									line-height: 1;
+									padding: 7px;
+
+									&:hover{
+										background: #ccc;
+									}
+								}
+
+
+							}
+						}
+
+						&:hover {
+							opacity: 1;
+							&:before {
+								background: #999;
+							}
+							.article-menu__menu {
+								display: block;
+							}
+						}
+					}
+
+					.actualize-article {
+						bottom: 0;
+						left: 0;
+						width: 100%;
+						border: none;
+						border-radius: 0;
+						padding: 12px;
+						position: absolute;
+						cursor: pointer;
+						opacity: .8;
+						transition: opacity .3s ease-in-out;
+						&:hover {
+							opacity: 1;
+						}
+					}
+				}
+
+				.add-link {
+					font-size: 24px;
+					color: #555;
+					opacity: .4;
+					transition: opacity ease-in-out .2s;
+					display: block;
+					padding: 9px;
+					height: 54px;
+
+					&:hover {
+						opacity: 1;
+					}
+				}
+			}
+
+
+
+		}
+
+
+	}
+
+}

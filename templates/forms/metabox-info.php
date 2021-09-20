@@ -12,12 +12,16 @@ defined( 'ABSPATH' ) or exit;
 $info = get_post_meta( $post->ID, 'emeon_contacts', true );
 $pdf  = ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '';
 
+// Salary and experience
+$salary     = get_post_meta( $post->ID, 'emeon_salary',     true );
+$experience = get_post_meta( $post->ID, 'emeon_experience', true );
+
 ?>
 <div class="admin-info info-box emeon-box-contacts">
-    <h4>Contacts</h4>
     <p class="description">
         This info will be hidden to non-registered users.
     </p>
+    <h4>Contacts</h4>
     <fieldset>
         <p>
             <label>
@@ -39,10 +43,31 @@ $pdf  = ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_
         </p>
     </fieldset>
     <hr/>
+    <h4>Salary and experience</h4>
+    <fieldset>
+        <p>
+            <label>
+                Salary, from (<?=EMEON_CURRENCY?>):
+                <input type="number" pattern="[0-9]" name="emeon_salary" value="<?=$salary??''?>" />
+            </label>
+        </p>
+        <p>
+            <label>
+                Experience:
+                <select name="emeon_experience" >
+                    <?php
+                    foreach( EMEON_EXP_LVL as $index=>$lvl )
+                        echo '<option ' .
+                                ( (int)$experience === $index ? 'selected' : '' ) .' 
+                                value="'. $index .'">' . $lvl .
+                             '</option>';
+                    ?>
+                </select>
+            </label>
+        </p>
+    </fieldset>
+    <hr/>
     <h4>Attachment</h4>
-    <p class="description">
-        This is an attachment to the advertisement (PDF)
-    </p>
     <fieldset>
         <p class="attachment-area">
             <label for="attachment-file" id="attachment-info" class="<?=($pdf?'added':'')?>">

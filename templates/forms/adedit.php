@@ -33,7 +33,9 @@ if( isset( $_POST['article'] ) ) { // we already posted data, but something went
         return $_POST['emeon_error'][] = 'Insufficient access level for editing article #' . $pid;
     $post_cats = wp_get_post_categories( $post->ID );
     $post_tags = wp_get_post_tags( $post->ID, [ 'fields' => 'ids' ] );
-    $contacts  = get_post_meta( $post->ID, 'emeon_contacts', true );
+    $contacts  = get_post_meta( $post->ID, 'emeon_contacts',    true );
+    $salary    = get_post_meta( $post->ID, 'emeon_salary',      true );
+    $experience= get_post_meta( $post->ID, 'emeon_experience',  true );
     $attachment= ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '';
     $article = [
         'type'      => in_array( $vacancies_cat_id, $post_cats ) ? 'vacancies' : 'candidates',
@@ -45,6 +47,8 @@ if( isset( $_POST['article'] ) ) { // we already posted data, but something went
         'email'     => $contacts[ 'email' ] ?? '',
         'phone'     => $contacts[ 'phone' ] ?? '',
         'urls'      => $contacts[ 'urls'  ] ?? '',
+        'salary'    => $salary,
+        'experience'=> $experience,
         'content'   => $post->post_content,
         'attachment'=> $attachment
     ];
@@ -127,7 +131,7 @@ $cats_args  = [
 
             <h3>Categories and tags</h3>
             <p class="description">
-                This will help to find your ad. Add new or use existing ones.
+                This will help searching. Add new or use existing ones.
             </p>
 
             <label for="article_categories">Categories</label>
@@ -166,7 +170,8 @@ $cats_args  = [
 
         <div class="contact-info">
 
-            <h3>Contact info</h3>
+            <h3>Contacts, salary and experience</h3>
+
             <p class="description">This info will be visible to authorized users only</p>
 
             <div class="no-pads">
@@ -195,6 +200,27 @@ $cats_args  = [
                               placeholder =
                               " - Website URL <?="\n"?> - Portfolio URL<?="\n"?> - Another phone number<?="\n"?> ..."
                     ><?=$article['urls']??''?></textarea>
+                </label>
+
+                <label class="control-wrap">
+                    <input type="number" class="invalidate emeon-salary"
+                           name="article[salary]"
+                           pattern="[0-9]" step="1" min="0"
+                           value="<?=$article['salary']??''?>"
+                           placeholder="Salary from (EUR)" />
+                    <span class="emeon-currency-label"><?=EMEON_CUR_SYMB?></span>
+                </label>
+
+                <label class="control-wrap">
+                    <select name="article[experience]" class="invalidate">
+		                <?php
+		                foreach( EMEON_EXP_LVL as $index=>$lvl )
+			                echo '<option ' .
+			                     ( (int)$article['experience'] === $index ? 'selected' : '' ) .' 
+                                value="'. $index .'">' . $lvl .
+			                     '</option>';
+		                ?>
+                    </select>
                 </label>
 
             </div>
@@ -226,6 +252,7 @@ $cats_args  = [
             </div>
 
         </div>
+
         <div class="attachment-area">
 
             <h3>
