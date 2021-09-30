@@ -63,7 +63,7 @@ header.entry-header {
 					margin: 0 5px 10px;
 					max-width: 200px;
 					border: 1px solid #ccc;
-					padding: 10px 10px 40px;
+					padding: 10px;
 					position: relative;
 
 					.article-menu {
@@ -74,12 +74,12 @@ header.entry-header {
 						z-index: 1;
 						opacity: .8;
 						cursor: pointer;
-						transition: all .2s linear;
+						transition: all .4s;
 
 						&:before {
 							content: "...";
-							font-family: sans-serif;
-							font-size: 18px;
+							font-family: Tahoma, sans-serif;
+							font-size: 17px;
 							color: #999;
 							font-weight: bolder;
 							width: 20px;
@@ -94,14 +94,17 @@ header.entry-header {
 
 						.article-menu__menu {
 							position: absolute;
-							display: none;
+							display: block;
+							visibility: hidden;
+							opacity: 0;
+							transition: all .4s;
 							background: #fff;
 							border: 1px solid #999;
-							padding: 5px;
+							padding: 0;
 							top: 5px;
 							right: 5px;
 							width: 100px;
-							border-radius: 0 6px 0 0;
+							border-radius: 0;
 
 							li {
 								list-style: none;
@@ -114,7 +117,7 @@ header.entry-header {
 									cursor: pointer;
 									font-size: 12px;
 									line-height: 1;
-									padding: 7px;
+									padding: 12px;
 
 									&:hover{
 										background: #ccc;
@@ -131,12 +134,14 @@ header.entry-header {
 								background: #999;
 							}
 							.article-menu__menu {
-								display: block;
+								visibility: visible;
+								opacity: 1;
 							}
 						}
 					}
 
 					.actualize-article {
+						display: none; // no need for now
 						bottom: 0;
 						left: 0;
 						width: 100%;

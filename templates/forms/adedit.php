@@ -127,16 +127,14 @@ $cats_args  = [
             </div>
         </div>
 
-        <div class="categories-tags-select">
+        <div class="categories-tags-select basic-info">
 
-            <h3>Categories and tags</h3>
+            <h3>Categories, tags, salary and experience</h3>
             <p class="description">
-                This will help searching. Add new or use existing ones.
+                Select/add categories, tags and set the minimum salary level and experience.
             </p>
-
-            <label for="article_categories">Categories</label>
-            <div class="control-wrap">
-                <select id="article_categories" name="article[categories][]" multiple class="sel2 invalidate">
+            <label class="control-wrap">
+                <select id="article_categories" name="article[categories][]" data-placeholder="Categories" multiple class="sel2 invalidate">
                     <?php
                     if( $cats = get_terms( $cats_args ) )
                         foreach ( $cats as $cat )
@@ -145,14 +143,13 @@ $cats_args  = [
                                         $cat->name .
                                 '</option>';
                     else
-                        echo '<option value="-1" selected disabled>No categories</option>';
+                        echo '<option value="-1" selected disabled>No categories yet</option>';
                     ?>
                 </select>
-            </div>
+            </label>
 
-            <label for="article_tags">Tags</label>
-            <div class="control-wrap">
-                <select id="article_tags" name="article[tags][]" multiple class="sel2 invalidate">
+            <label class="control-wrap">
+                <select id="article_tags" name="article[tags][]" data-placeholder="Tags" multiple class="sel2 invalidate">
                     <?php
                     if( $tags = get_terms( $tags_args ) )
                         foreach ( $tags as $tag )
@@ -161,69 +158,32 @@ $cats_args  = [
                                 $tag->name .
                                 '</option>';
                     else
-                        echo '<option value="-1" selected disabled>No tags</option>';
+                        echo '<option value="-1" selected disabled>No tags yet</option>';
                     ?>
                 </select>
-            </div>
+            </label>
 
-        </div>
+            <label class="control-wrap">
+                <input type="number" class="invalidate emeon-salary"
+                       name="article[salary]"
+                       pattern="[0-9]" step="1" min="0"
+                       value="<?=$article['salary']??''?>"
+                       placeholder="Salary from (EUR)" />
+                <span class="emeon-currency-label"><?=EMEON_CUR_SYMB?></span>
+            </label>
 
-        <div class="contact-info">
+            <label class="control-wrap">
+                <select name="article[experience]" class="invalidate sel2">
+                    <?php
+                    foreach( EMEON_EXP_LVL as $index=>$lvl )
+                        echo '<option ' .
+                            ( (int)$article['experience'] === $index ? 'selected' : '' ) .' 
+                            value="'. $index .'">' . $lvl .
+                            '</option>';
+                    ?>
+                </select>
+            </label>
 
-            <h3>Contacts, salary and experience</h3>
-
-            <p class="description">This info will be visible to authorized users only</p>
-
-            <div class="no-pads">
-
-                <label class="control-wrap">
-                    <input type="email"
-                           name="article[email]"
-                           class="invalidate"
-                           value="<?=$article['email']??''?>"
-                           placeholder="your@email.here"
-                    />
-                </label>
-
-                <label class="control-wrap">
-                    <input type="text"
-                           name="article[phone]"
-                           class="invalidate"
-                           placeholder="+1 233 456 789"
-                           value="<?=$article['phone']??''?>" />
-                </label>
-
-                <label class="control-wrap">
-                    <textarea name="article[urls]"
-                              rows="4"
-                              class="article-urls invalidate"
-                              placeholder =
-                              " - Website URL <?="\n"?> - Portfolio URL<?="\n"?> - Another phone number<?="\n"?> ..."
-                    ><?=$article['urls']??''?></textarea>
-                </label>
-
-                <label class="control-wrap">
-                    <input type="number" class="invalidate emeon-salary"
-                           name="article[salary]"
-                           pattern="[0-9]" step="1" min="0"
-                           value="<?=$article['salary']??''?>"
-                           placeholder="Salary from (EUR)" />
-                    <span class="emeon-currency-label"><?=EMEON_CUR_SYMB?></span>
-                </label>
-
-                <label class="control-wrap">
-                    <select name="article[experience]" class="invalidate">
-		                <?php
-		                foreach( EMEON_EXP_LVL as $index=>$lvl )
-			                echo '<option ' .
-			                     ( (int)$article['experience'] === $index ? 'selected' : '' ) .' 
-                                value="'. $index .'">' . $lvl .
-			                     '</option>';
-		                ?>
-                    </select>
-                </label>
-
-            </div>
         </div>
 
         <div class="article-text">
@@ -253,20 +213,49 @@ $cats_args  = [
 
         </div>
 
-        <div class="attachment-area">
+        <div class="contact-info">
 
-            <h3>
-                Attachment PDF
-            </h3>
-            <p class="description">
-                This document will be available for downloading to registered users.<br/>
-                Maximum size is 5 mb. Click to add/replace the attachment below:
-            </p>
+            <h3>Contacts and attachment</h3>
+
+            <p class="description">Info below will be visible to authorized users only</p>
+
+            <div class="no-pads">
+
+                <label class="control-wrap">
+                    <input type="email"
+                           name="article[email]"
+                           class="invalidate"
+                           value="<?=$article['email']??''?>"
+                           placeholder="your@email.here"
+                    />
+                </label>
+
+                <label class="control-wrap">
+                    <input type="text"
+                           name="article[phone]"
+                           class="invalidate"
+                           placeholder="+1 233 456 789"
+                           value="<?=$article['phone']??''?>" />
+                </label>
+
+                <label class="control-wrap">
+                    <textarea name="article[urls]"
+                              rows="4"
+                              class="article-urls invalidate"
+                              placeholder =
+                              " - Website URL <?="\n"?> - Portfolio URL<?="\n"?> - Another phone number<?="\n"?> ..."
+                    ><?=$article['urls']??''?></textarea>
+                </label>
+
+            </div>
+        </div>
+
+        <div class="attachment-area">
 
             <label for="attachment-file" id="attachment-info" class="<?=($article['attachment']?'added':'')?>">
                 <span class="remove-icon attachment-remove"></span>
                 <iframe id="attachment-preview" src="<?=$article['attachment']??''?>"></iframe>
-                <span id="no-attachment">No file selected...</span>
+                <span id="no-attachment">PDF for downloading. Max size is 5 mb.</span>
             </label>
 
             <input type="file" id="attachment-file" name="article_attachment" accept=".pdf" />
@@ -274,7 +263,9 @@ $cats_args  = [
         </div>
 
         <div class="cta-controls">
-            <button type="submit" class="button button-cta">Save</button>
+            <button type="submit" class="button cta-button">Save</button>
+            <br/>
+            <a href="/account/" class="cta-cancel">Cancel</a>
         </div>
 
 

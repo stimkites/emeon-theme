@@ -20,8 +20,12 @@ $nonce = wp_create_nonce( EMEON_SLUG );
             <input id="subject" name="subject" type="text" placeholder="Subject" value="<?=$_POST['subject']??''?>" />
         </p>
         <p>
-            <textarea class="emeon-textarea" id="content" name="content" type="text"
-                      placeholder="Your message"><?=$_POST['content']?></textarea>
+            <textarea class="emeon-textarea"
+                      id="content"
+                      name="content"
+                      type="text"
+                      placeholder="Your message"
+            ><?=$_POST['content']??''?></textarea>
         </p>
 		<p>
 			<button type="submit" class="button button-cta">Send</button>

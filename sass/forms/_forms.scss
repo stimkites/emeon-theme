@@ -154,12 +154,14 @@
       label {
         font-size: 13px;
         padding:0;
-        margin-top: 10px;
       }
 
       .select2 .select2-selection {
         font-size: 11px;
         text-align: left;
+        border-radius: 0;
+        margin-top: -1px;
+        border-color: #ccc;
         ul,ol {
           margin: 0;
         }
@@ -168,6 +170,7 @@
           top: 3px;
         }
       }
+
     }
 
     .contact-info {
@@ -231,8 +234,41 @@
     .cta-controls {
       width: 100%;
       text-align: center;
+      line-height: 3em;
+
+      .cta-cancel {
+        font-size: 11px;
+        margin-top: 15px;
+        color: #999;
+        text-decoration: none;
+        opacity: .4;
+        transition: opacity .3s ease-in-out;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
       button {
         cursor: pointer;
+
+        &.cta-button {
+          border-radius: 0;
+          border: 1px solid #ccc;
+          padding: 9px 15px;
+          width: 100%;
+          max-width: 200px;
+          font-weight: normal;
+          font-size: 12px;
+          background: #cecece;
+          opacity: .7;
+          color: #fff;
+          transition: opacity .3s ease-in-out;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
       }
     }
 
@@ -266,15 +302,16 @@
 
     input.emeon-salary {
       padding-right: 30px;
+      font-size: 11px;
     }
 
     .emeon-currency-label {
       position: absolute;
-      right: 10px;
-      font-size: 21px;
+      right: 6px;
+      font-size: 17px;
       font-weight: bolder;
-      top: 4px;
-      color: #777;
+      top: 2px;
+      color: #aaa;
     }
 
     input[type=file]{

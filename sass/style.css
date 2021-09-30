@@ -534,6 +534,20 @@ article.post footer.entry-footer {
 article.page {
   text-align: center; }
 
+/* Single post page */
+body.single-post #primary {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center; }
+  body.single-post #primary .post-thumbnail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; }
+    body.single-post #primary .post-thumbnail img {
+      max-height: 240px;
+      width: auto; }
+
 /*--------------------------------------------------------------
 ## Sections
 --------------------------------------------------------------*/
@@ -610,7 +624,7 @@ header.entry-header {
           margin: 0 5px 10px;
           max-width: 200px;
           border: 1px solid #ccc;
-          padding: 10px 10px 40px;
+          padding: 10px;
           position: relative; }
           .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu {
             display: block;
@@ -620,11 +634,11 @@ header.entry-header {
             z-index: 1;
             opacity: .8;
             cursor: pointer;
-            transition: all .2s linear; }
+            transition: all .4s; }
             .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:before {
               content: "...";
-              font-family: sans-serif;
-              font-size: 18px;
+              font-family: Tahoma, sans-serif;
+              font-size: 17px;
               color: #999;
               font-weight: bolder;
               width: 20px;
@@ -637,14 +651,17 @@ header.entry-header {
               padding: 0; }
             .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu {
               position: absolute;
-              display: none;
+              display: block;
+              visibility: hidden;
+              opacity: 0;
+              transition: all .4s;
               background: #fff;
               border: 1px solid #999;
-              padding: 5px;
+              padding: 0;
               top: 5px;
               right: 5px;
               width: 100px;
-              border-radius: 0 6px 0 0; }
+              border-radius: 0; }
               .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li {
                 list-style: none;
                 line-height: 1;
@@ -655,7 +672,7 @@ header.entry-header {
                   cursor: pointer;
                   font-size: 12px;
                   line-height: 1;
-                  padding: 7px; }
+                  padding: 12px; }
                   .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a:hover {
                     background: #ccc; }
             .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover {
@@ -663,8 +680,10 @@ header.entry-header {
               .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover:before {
                 background: #999; }
               .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover .article-menu__menu {
-                display: block; }
+                visibility: visible;
+                opacity: 1; }
           .emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article {
+            display: none;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -692,7 +711,10 @@ header.entry-header {
 # Footer
 --------------------------------------------------------------*/
 footer#colophon {
-  padding: 20px; }
+  padding: 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%; }
   footer#colophon ul {
     margin: 0;
     padding: 0;
@@ -725,8 +747,13 @@ footer#colophon {
           width: auto; }
   footer#colophon .site-info {
     font-size: 12px;
-    padding: 0px;
-    text-align: center; }
+    padding: 4px;
+    text-align: right;
+    line-height: 1;
+    margin: 0 auto;
+    background: white;
+    width: 100%;
+    max-width: 1440px; }
 
 @media screen and (max-width: 767px) {
   footer#colophon .columns {
@@ -1068,11 +1095,13 @@ textarea {
       position: relative; }
       .emeon-form fieldset .categories-tags-select label {
         font-size: 13px;
-        padding: 0;
-        margin-top: 10px; }
+        padding: 0; }
       .emeon-form fieldset .categories-tags-select .select2 .select2-selection {
         font-size: 11px;
-        text-align: left; }
+        text-align: left;
+        border-radius: 0;
+        margin-top: -1px;
+        border-color: #ccc; }
         .emeon-form fieldset .categories-tags-select .select2 .select2-selection ul, .emeon-form fieldset .categories-tags-select .select2 .select2-selection ol {
           margin: 0; }
         .emeon-form fieldset .categories-tags-select .select2 .select2-selection .select2-selection__choice__remove {
@@ -1116,9 +1145,33 @@ textarea {
         padding: 0; }
     .emeon-form fieldset .cta-controls {
       width: 100%;
-      text-align: center; }
+      text-align: center;
+      line-height: 3em; }
+      .emeon-form fieldset .cta-controls .cta-cancel {
+        font-size: 11px;
+        margin-top: 15px;
+        color: #999;
+        text-decoration: none;
+        opacity: .4;
+        transition: opacity .3s ease-in-out; }
+        .emeon-form fieldset .cta-controls .cta-cancel:hover {
+          opacity: 1; }
       .emeon-form fieldset .cta-controls button {
         cursor: pointer; }
+        .emeon-form fieldset .cta-controls button.cta-button {
+          border-radius: 0;
+          border: 1px solid #ccc;
+          padding: 9px 15px;
+          width: 100%;
+          max-width: 200px;
+          font-weight: normal;
+          font-size: 12px;
+          background: #cecece;
+          opacity: .7;
+          color: #fff;
+          transition: opacity .3s ease-in-out; }
+          .emeon-form fieldset .cta-controls button.cta-button:hover {
+            opacity: 1; }
     .emeon-form fieldset .article-text {
       width: 100%; }
     .emeon-form fieldset label {
@@ -1140,14 +1193,15 @@ textarea {
       cursor: pointer;
       background: #ffffff; }
     .emeon-form fieldset input.emeon-salary {
-      padding-right: 30px; }
+      padding-right: 30px;
+      font-size: 11px; }
     .emeon-form fieldset .emeon-currency-label {
       position: absolute;
-      right: 10px;
-      font-size: 21px;
+      right: 6px;
+      font-size: 17px;
       font-weight: bolder;
-      top: 4px;
-      color: #777; }
+      top: 2px;
+      color: #aaa; }
     .emeon-form fieldset input[type=file] {
       display: none !important;
       visibility: hidden;
@@ -1258,6 +1312,11 @@ a {
     outline: thin dotted; }
   a:hover, a:active {
     outline: 0; }
+
+#primary-menu li a {
+  font-size: 12px;
+  font-family: Tahoma, sans-serif;
+  text-transform: uppercase; }
 
 /*--------------------------------------------------------------
 # Accessibility
@@ -1446,6 +1505,20 @@ article.post footer.entry-footer {
 article.page {
   text-align: center; }
 
+/* Single post page */
+body.single-post #primary {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center; }
+  body.single-post #primary .post-thumbnail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; }
+    body.single-post #primary .post-thumbnail img {
+      max-height: 240px;
+      width: auto; }
+
 /*--------------------------------------------------------------
 ## Sections
 --------------------------------------------------------------*/
@@ -1522,7 +1595,7 @@ header.entry-header {
           margin: 0 5px 10px;
           max-width: 200px;
           border: 1px solid #ccc;
-          padding: 10px 10px 40px;
+          padding: 10px;
           position: relative; }
           .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu {
             display: block;
@@ -1532,11 +1605,11 @@ header.entry-header {
             z-index: 1;
             opacity: .8;
             cursor: pointer;
-            transition: all .2s linear; }
+            transition: all .4s; }
             .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:before {
               content: "...";
-              font-family: sans-serif;
-              font-size: 18px;
+              font-family: Tahoma, sans-serif;
+              font-size: 17px;
               color: #999;
               font-weight: bolder;
               width: 20px;
@@ -1549,14 +1622,17 @@ header.entry-header {
               padding: 0; }
             .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu {
               position: absolute;
-              display: none;
+              display: block;
+              visibility: hidden;
+              opacity: 0;
+              transition: all .4s;
               background: #fff;
               border: 1px solid #999;
-              padding: 5px;
+              padding: 0;
               top: 5px;
               right: 5px;
               width: 100px;
-              border-radius: 0 6px 0 0; }
+              border-radius: 0; }
               .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li {
                 list-style: none;
                 line-height: 1;
@@ -1567,7 +1643,7 @@ header.entry-header {
                   cursor: pointer;
                   font-size: 12px;
                   line-height: 1;
-                  padding: 7px; }
+                  padding: 12px; }
                   .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a:hover {
                     background: #ccc; }
             .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover {
@@ -1575,8 +1651,10 @@ header.entry-header {
               .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover:before {
                 background: #999; }
               .emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover .article-menu__menu {
-                display: block; }
+                visibility: visible;
+                opacity: 1; }
           .emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article {
+            display: none;
             bottom: 0;
             left: 0;
             width: 100%;

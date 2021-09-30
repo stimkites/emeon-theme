@@ -14,13 +14,13 @@ $nonce = wp_create_nonce( EMEON_SLUG );
     <input type="hidden" name="emeon_form_action" value="password" />
     <input type="hidden" name="__nonce" value="<?=$nonce?>" />
 	<fieldset>
-        <input id="current-pass" name="current" type="password" placeholder="Current" value="" />
-        <input id="new-pass" name="new" type="password" placeholder="New" value="" />
-        <input id="current-pass" name="confirm" type="password" placeholder="Confirm" value="" />
         <label>
             <input type="checkbox" id="view-pass" />
             View
         </label>
+        <input id="current-pass" name="current" type="password" placeholder="Current" value="" />
+        <input id="new-pass" name="new" type="password" placeholder="New" value="" />
+        <input id="current-pass" name="confirm" type="password" placeholder="Confirm" value="" />
         <button type="submit" class="button button-cta">Set</button>
 	</fieldset>
 </form>

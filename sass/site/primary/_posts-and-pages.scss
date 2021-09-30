@@ -95,3 +95,23 @@ article.post {
 article.page {
 	text-align: center;
 }
+
+/* Single post page */
+body.single-post {
+	#primary {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		justify-content: center;
+
+		.post-thumbnail {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			img {
+				max-height: 240px;
+				width: auto;
+			}
+		}
+	}
+}

@@ -1,5 +1,8 @@
 footer#colophon {
-	padding: 20px;
+	padding: 0;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 
 	ul {
 	    margin: 0;
@@ -43,9 +46,14 @@ footer#colophon {
 		}
 	}
 	.site-info {
-	    font-size: 12px;
-	    padding: 0px;
-	    text-align: center;
+		font-size: 12px;
+		padding: 4px;
+		text-align: right;
+		line-height: 1;
+		margin: 0 auto;
+		background: white;
+		width: 100%;
+		max-width: 1440px;
 	}
 }
 
