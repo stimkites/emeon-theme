@@ -14,6 +14,9 @@ header.entry-header {
 	h2 {
 		font-size: 18px;
 		line-height: 1;
+		text-align: center;
+		padding: 12px;
+		margin: 0;
 	}
 
 	.emeon-account-menu {
@@ -42,6 +45,34 @@ header.entry-header {
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: column;
+		position: relative;
+
+		#my-ads {
+			position: relative;
+
+			.add-link {
+				text-align: right;
+				margin: 0;
+				padding: 4px;
+
+				a {
+					font-size: 24px;
+					color: #555;
+					opacity: .4;
+					transition: opacity ease-in-out .2s;
+
+					&:after{
+						font-family: Dashicons, sans-serif;
+						font-size: 32px;
+						content: "\f10f";
+					}
+
+					&:hover {
+						opacity: 1;
+					}
+				}
+			}
+		}
 
 		.account-content {
 			display: none;
@@ -77,18 +108,16 @@ header.entry-header {
 						transition: all .4s;
 
 						&:before {
-							content: "...";
-							font-family: Tahoma, sans-serif;
-							font-size: 17px;
+							content: "\f329";
+							font-family: Dashicons, sans-serif;
+							font-size: 18px;
 							color: #999;
-							font-weight: bolder;
 							width: 20px;
 							height: 20px;
-							border: 1px solid #ccc;
 							background: #fff;
 							display: block;
 							border-radius: 100%;
-							line-height: 10px;
+							line-height: 18px;
 							padding: 0;
 						}
 
@@ -111,13 +140,18 @@ header.entry-header {
 								line-height: 1;
 								padding: 0;
 
+								&.item-bl {
+									border-bottom: 1px dotted #ccc;
+									color: #7f2a28;
+								}
+
 								a {
 									display: block;
 									width: 100%;
 									cursor: pointer;
 									font-size: 12px;
 									line-height: 1;
-									padding: 12px;
+									padding: 7px;
 
 									&:hover{
 										background: #ccc;
@@ -156,25 +190,97 @@ header.entry-header {
 							opacity: 1;
 						}
 					}
-				}
 
-				.add-link {
-					font-size: 24px;
-					color: #555;
-					opacity: .4;
-					transition: opacity ease-in-out .2s;
-					display: block;
-					padding: 9px;
-					height: 54px;
-
-					&:hover {
-						opacity: 1;
+					.post-thumbnail {
+						height: 191px;
 					}
+
 				}
+
 			}
 
+		}
+
+		#pass {
+
+			form.form-password {
+				position: relative;
+				padding-top: 40px;
+
+				input, button {
+					width: 100%;
+					padding: 9px;
+					font-size: 12px;
+					border-radius: 0;
+					border: 1px solid #ccc;
+					margin: -1px 0 0 0;
+					cursor: pointer;
+					box-sizing: border-box;
+					display: block;
+				}
+
+				// Toggle view
+				label[for=view-pass] {
+					position: relative;
+					font-family: Dashicons, sans-serif;
+					font-size: 28px;
+					color: #999;
+					display: block;
+
+					&:before {
+						content: "\f530";
+						position: absolute;
+						cursor: pointer;
+						right: 0;
+						top: -45px;
+					}
+				}
+
+				#view-pass {
+					display: none;
+
+					&:checked + label[for=view-pass]:before {
+						content: "\f177"
+					}
+				}
 
 
+			}
+		}
+
+		#contacts {
+
+			form.form-contactus {
+				position: relative;
+
+				fieldset {
+					flex-direction: column;
+
+					.control-wrap {
+						padding: 0;
+						margin: -1px 0 0 0;
+
+
+						input.emeon-control, button.button-cta {
+							width: 100%;
+							padding: 9px;
+							font-size: 12px;
+							border-radius: 0;
+							border: 1px solid #ccc;
+							margin: 0;
+							cursor: pointer;
+							box-sizing: border-box;
+							display: block;
+						}
+					}
+				}
+
+				.description {
+					text-align: right;
+					margin-top: 10px;
+				}
+
+			}
 		}
 
 

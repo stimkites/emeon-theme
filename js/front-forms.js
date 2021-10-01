@@ -249,7 +249,7 @@
 } )( jQuery.noConflict() ).init(); /** Ad edit form **/
 
 /**
- * Account menus
+ * My account
  */
 ( $ => {
 
@@ -272,6 +272,9 @@
         return false;
       }
     } );
+    $( '#view-pass' ).off().on( 'change', function(){
+      $( 'form.form-password input.view-toggle' ).attr( 'type', ( $( this ).prop( 'checked' ) ? 'text' : 'password' ) );
+    } );
   };
 
   return {
@@ -286,6 +289,6 @@
 
   }
 
-} )( jQuery.noConflict() ).init(); /** Account menus **/
+} )( jQuery.noConflict() ).init(); /** My account **/
 
 

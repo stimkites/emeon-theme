@@ -79,7 +79,18 @@
 				}
 			}
 		}
+
+		#menu-item-234 {
+			display: none;
+		}
+		&.show-join {
+			#menu-item-234 {
+				display: list-item;
+			}
+		}
 	}
+
+
 
 	.toggle-mobile-menu {
 		display: none;

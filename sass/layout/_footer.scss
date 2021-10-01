@@ -12,6 +12,7 @@ footer#colophon {
 	    flex-direction: column;
 	    justify-content: center;
 	}
+
 	.columns {
 	    display: flex;
 	    flex-direction: row;
@@ -45,9 +46,10 @@ footer#colophon {
 			}
 		}
 	}
+
 	.site-info {
 		font-size: 12px;
-		padding: 4px;
+		padding: 4px 20px;
 		text-align: right;
 		line-height: 1;
 		margin: 0 auto;
@@ -55,6 +57,7 @@ footer#colophon {
 		width: 100%;
 		max-width: 1440px;
 	}
+
 }
 
 @media screen and (max-width: 767px) {

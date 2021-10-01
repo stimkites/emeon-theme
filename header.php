@@ -49,13 +49,13 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 				</a>
 			</div><!-- .site-branding -->
 
-			<nav id="site-navigation" class="main-navigation">
+			<nav id="site-navigation" class="main-navigation <?=( ! is_user_logged_in() ? 'show-join' : '' )?>">
 				<button class="toggle-mobile-menu"></button>
 				<?php
-				wp_nav_menu( array(
+				wp_nav_menu( [
 					'theme_location' => 'menu-1',
 					'menu_id'        => 'primary-menu',
-				) );
+				] );
 				?>
 			</nav><!-- #site-navigation -->
 

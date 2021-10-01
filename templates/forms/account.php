@@ -35,6 +35,9 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
     <div class="emeon-account-content">
         <div class="account-content viz" id="my-ads">
             <h2>My ads</h2>
+            <div class="add-link">
+                <a href="<?=$adedit_url?>" class="add-edit-link"></a>
+            </div>
             <div class="my-articles">
 	            <?php
 	            global $post;
@@ -43,9 +46,6 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 		            get_template_part( 'template-parts/content', 'account-ad' );
 	            $post = $a;
 	            ?>
-                <span class="add-link">
-                    <a href="<?=$adedit_url?>" class="add-edit-link">Add +</a>
-                </span>
             </div>
         </div>
         <div class="emeon-pass-change account-content" id="pass">
