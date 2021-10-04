@@ -15,7 +15,7 @@ const
     EMEON_TPL       = EMEON_PATH . '/templates',
     EMEON_SLUG      = 'emeon-theme',
 	EMEON_STATUSES  = [ 'active',    'moderation', 'archive'    ],
-	EMEON_TYPES     = [ 'vacancies', 'candidates', 'emeon-team' ],
+	EMEON_TYPES     = [ 'vacancies', 'candidates', 'emeon-team', 'want-join' ],
 	EMEON_CURRENCY  = 'EUR',
 	EMEON_CUR_SYMB  = '€',
 	EMEON_EXP_LVL   = [ 'Career start', 'A few months', 'Half a year', '1-3 years', '3-5 years', '5+ years' ];

@@ -10,11 +10,6 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php if ( !FLBuilderModel::is_builder_enabled() ) : ?>
-		<header class="entry-header">
-			<?php the_title( '<h1 class="title is-1 entry-title pierre">', '</h1>' ); ?>
-		</header><!-- .entry-header -->
-		<?php endif; ?>
 
 	<?php emeon_post_thumbnail(); ?>
 

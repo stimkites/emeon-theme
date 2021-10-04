@@ -17,7 +17,7 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
         <ul class="article-menu__menu">
             <li class="article-menu__item"><a href="<?=$adedit_url?>?ad=<?php the_ID() ?>">Edit</a></li>
             <li class="article-menu__item item-bl"><a href="<?=esc_url( get_permalink() )?>">View</a></li>
-            <li class="article-menu__item delete-item"><a href="?trash=<?php the_ID() ?>">Delete</a></li>
+            <li class="article-menu__item delete-item" data-title="<?=the_title()?>"><a href="?trash=<?php the_ID() ?>">Delete</a></li>
         </ul>
     </span>
 

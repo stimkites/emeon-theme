@@ -34,10 +34,12 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
     </div>
     <div class="emeon-account-content">
         <div class="account-content viz" id="my-ads">
-            <h2>My ads</h2>
-            <div class="add-link">
-                <a href="<?=$adedit_url?>" class="add-edit-link"></a>
-            </div>
+            <h2>
+                My ads
+                <span class="add-link">
+                    <a href="<?=$adedit_url?>" class="add-edit-link" title="Add new"></a>
+                </span>
+            </h2>
             <div class="my-articles">
 	            <?php
 	            global $post;

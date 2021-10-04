@@ -231,6 +231,42 @@
 
     }
 
+    .join-emeon-prompt {
+      input {
+        display: none;
+      }
+      label {
+        font-size: 12px;
+        cursor: pointer;
+        position: relative;
+        padding-left: 30px;
+        &:before{
+          position: absolute;
+          left: 0;
+          top: 1px;
+          width: 23px;
+          height: 14px;
+          border: 1px solid #999;
+          content: " ";
+          display: block;
+        }
+        &:after {
+          content: " ";
+          position: absolute;
+          left: 12px;
+          width: 8px;
+          height: 8px;
+          background: #ccc;
+          top: 4px;
+          transition: all ease-in-out .3s;
+        }
+      }
+      input:checked + label:after {
+        left: 3px;
+        background: #999;
+      }
+    }
+
     .cta-controls {
       width: 100%;
       text-align: center;

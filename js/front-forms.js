@@ -266,7 +266,7 @@
       l.addClass( 'viz' );
     } );
     $( '.delete-item' ).off().on( 'click', function( e ){
-      if( ! confirm( 'Proceed to delete item?' ) ) {
+      if( ! confirm( 'Proceed to delete "' + $( this ).data( 'title' ) + '"?' ) ) {
         e.stopPropagation();
         e.preventDefault();
         return false;

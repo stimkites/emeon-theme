@@ -15,7 +15,7 @@ header.entry-header {
 		font-size: 18px;
 		line-height: 1;
 		text-align: center;
-		padding: 12px;
+		padding: 0 0 30px 0;
 		margin: 0;
 	}
 
@@ -54,6 +54,7 @@ header.entry-header {
 				text-align: right;
 				margin: 0;
 				padding: 4px;
+				vertical-align: middle;
 
 				a {
 					font-size: 24px;
@@ -93,9 +94,15 @@ header.entry-header {
 					width: 100%;
 					margin: 0 5px 10px;
 					max-width: 200px;
-					border: 1px solid #ccc;
+					border: none;
 					padding: 10px;
 					position: relative;
+
+					&:hover {
+						-webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
+						-moz-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
+						box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
+					}
 
 					.article-menu {
 						display: block;

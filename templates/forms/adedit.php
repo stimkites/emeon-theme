@@ -262,6 +262,11 @@ $cats_args  = [
 
         </div>
 
+        <div class="join-emeon-prompt">
+            <input id="want_join" type="checkbox" name="article[want_join]" value="yes" />
+            <label for="want_join">Join Emeon team. <a href="/join-info/" target="_blank" title="Find out more about this offer">Read more</a></label>
+        </div>
+
         <div class="cta-controls">
             <button type="submit" class="button cta-button">Save</button>
             <br/>
