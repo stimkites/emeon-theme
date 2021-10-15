@@ -11,16 +11,16 @@ defined( 'ABSPATH' ) or exit;
  * Constants
  */
 const
-    EMEON_PATH      = __DIR__,
-    EMEON_TPL       = EMEON_PATH . '/templates',
-    EMEON_SLUG      = 'emeon-theme',
-	EMEON_STATUSES  = [ 'active',    'moderation', 'archive'    ],
-	EMEON_TYPES     = [ 'vacancies', 'candidates', 'emeon-team', 'want-join' ],
-	EMEON_CURRENCY  = 'EUR',
-	EMEON_CUR_SYMB  = '€',
-	EMEON_EXP_LVL   = [ 'Career start', 'A few months', 'Half a year', '1-3 years', '3-5 years', '5+ years' ];
+EMEON_PATH     = __DIR__,
+EMEON_TPL      = EMEON_PATH . '/templates',
+EMEON_SLUG     = 'emeon-theme',
+EMEON_STATUSES = [ 'active', 'moderation', 'archive' ],
+EMEON_TYPES    = [ 'vacancies', 'candidates', 'emeon-team', 'want-join' ],
+EMEON_CURRENCY = 'EUR',
+EMEON_CUR_SYMB = '€',
+EMEON_EXP_LVL  = [ 'Career start', 'A few months', 'Half a year', '1-3 years', '3-5 years', '5+ years' ];
 
-define( 'EMEON_URL',  get_template_directory_uri()  );
+define( 'EMEON_URL', get_template_directory_uri() );
 
 
 /**
@@ -31,32 +31,35 @@ define( 'EMEON_URL',  get_template_directory_uri()  );
  *
  * @return string
  */
-function make_hrefs( $str ){
-	$reg_exUrl = "/(http|https|ftp|ftps)\\:\\/\\/[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(\\/\\S*)?/";
-	$urls = array();
+function make_hrefs( $str ) {
+	$reg_exUrl     = "/(http|https|ftp|ftps)\\:\\/\\/[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(\\/\\S*)?/";
+	$urls          = array();
 	$urlsToReplace = array();
-	if ( ! preg_match_all( $reg_exUrl, $str, $urls ) ) return $str;
-	$numOfMatches = count($urls[0]);
-	for ($i = 0;$i < $numOfMatches;$i++) {
-		$alreadyAdded = false;
-		$numOfUrlsToReplace = count($urlsToReplace);
-		for ($j = 0;$j < $numOfUrlsToReplace;$j++) {
-			if ($urlsToReplace[$j] == $urls[0][$i]) {
+	if ( ! preg_match_all( $reg_exUrl, $str, $urls ) ) {
+		return $str;
+	}
+	$numOfMatches = count( $urls[ 0 ] );
+	for ( $i = 0; $i < $numOfMatches; $i ++ ) {
+		$alreadyAdded       = false;
+		$numOfUrlsToReplace = count( $urlsToReplace );
+		for ( $j = 0; $j < $numOfUrlsToReplace; $j ++ ) {
+			if ( $urlsToReplace[ $j ] == $urls[ 0 ][ $i ] ) {
 				$alreadyAdded = true;
 			}
 		}
-		if (!$alreadyAdded) {
-			array_push($urlsToReplace, $urls[0][$i]);
+		if ( ! $alreadyAdded ) {
+			array_push( $urlsToReplace, $urls[ 0 ][ $i ] );
 		}
 	}
-	$numOfUrlsToReplace = count($urlsToReplace);
-	for ($i = 0;$i < $numOfUrlsToReplace;$i++) {
+	$numOfUrlsToReplace = count( $urlsToReplace );
+	for ( $i = 0; $i < $numOfUrlsToReplace; $i ++ ) {
 		$str = str_replace(
-			$urlsToReplace[$i],
-			'<a href="' . $urlsToReplace[$i] . '" target="_blank">' . $urlsToReplace[$i] . '</a>',
+			$urlsToReplace[ $i ],
+			'<a href="' . $urlsToReplace[ $i ] . '" target="_blank">' . $urlsToReplace[ $i ] . '</a>',
 			$str
 		);
-    }
+	}
+
 	return $str;
 }
 
@@ -148,11 +151,13 @@ add_action( 'after_setup_theme', 'emeon_setup' );
  *
  * @return mixed
  */
-function emeon_mime_types($mimes) {
-	$mimes['svg'] = 'image/svg+xml';
+function emeon_mime_types( $mimes ) {
+	$mimes[ 'svg' ] = 'image/svg+xml';
+
 	return $mimes;
 }
-add_filter('upload_mimes', 'emeon_mime_types');
+
+add_filter( 'upload_mimes', 'emeon_mime_types' );
 
 
 /**
@@ -166,8 +171,9 @@ function emeon_content_width() {
 	// This variable is intended to be overruled from themes.
 	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
 	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-	$GLOBALS['content_width'] = apply_filters( 'emeon_content_width', 640 );
+	$GLOBALS[ 'content_width' ] = apply_filters( 'emeon_content_width', 640 );
 }
+
 add_action( 'after_setup_theme', __NAMESPACE__ . '\emeon_content_width', 0 );
 
 /**
@@ -186,51 +192,52 @@ function emeon_widgets_init() {
 		'after_title'   => '</h2>',
 	) );
 	register_sidebar( array(
-    	'name' => __( 'Footer 1', 'emeon' ),
-        'id' => 'footer-sidebar-1',
-        'description' => __( 'Add widgets here for your footer.', 'emeon' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'name'          => __( 'Footer 1', 'emeon' ),
+		'id'            => 'footer-sidebar-1',
+		'description'   => __( 'Add widgets here for your footer.', 'emeon' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h2 class="widgettitle">',
 		'after_title'   => '</h2>',
-    ) );
-    register_sidebar( array(
-    	'name' => __( 'Footer 2', 'emeon' ),
-        'id' => 'footer-sidebar-2',
-        'description' => __( 'Add widgets here for your footer.', 'emeon' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+	) );
+	register_sidebar( array(
+		'name'          => __( 'Footer 2', 'emeon' ),
+		'id'            => 'footer-sidebar-2',
+		'description'   => __( 'Add widgets here for your footer.', 'emeon' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h2 class="widgettitle">',
 		'after_title'   => '</h2>',
-    ) );
-    register_sidebar( array(
-    	'name' => __( 'Footer 3', 'emeon' ),
-        'id' => 'footer-sidebar-3',
-        'description' => __( 'Add widgets here for your footer.', 'emeon' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+	) );
+	register_sidebar( array(
+		'name'          => __( 'Footer 3', 'emeon' ),
+		'id'            => 'footer-sidebar-3',
+		'description'   => __( 'Add widgets here for your footer.', 'emeon' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h2 class="widgettitle">',
 		'after_title'   => '</h2>',
-    ) );
-    register_sidebar( array(
-    	'name' => __( 'Footer 4', 'emeon' ),
-        'id' => 'footer-sidebar-4',
-        'description' => __( 'Add widgets here for your footer.', 'emeon' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+	) );
+	register_sidebar( array(
+		'name'          => __( 'Footer 4', 'emeon' ),
+		'id'            => 'footer-sidebar-4',
+		'description'   => __( 'Add widgets here for your footer.', 'emeon' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h2 class="widgettitle">',
 		'after_title'   => '</h2>',
-    ) );
-    register_sidebar( array(
-    	'name' => __( 'Footer 5', 'emeon' ),
-        'id' => 'footer-sidebar-5',
-        'description' => __( 'Add widgets here for your footer.', 'emeon' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+	) );
+	register_sidebar( array(
+		'name'          => __( 'Footer 5', 'emeon' ),
+		'id'            => 'footer-sidebar-5',
+		'description'   => __( 'Add widgets here for your footer.', 'emeon' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h2 class="widgettitle">',
 		'after_title'   => '</h2>',
-    ) );
+	) );
 }
+
 add_action( 'widgets_init', 'emeon_widgets_init' );
 
 /**
@@ -243,13 +250,16 @@ function emeon_scripts() {
 	wp_enqueue_style( 'swiper', EMEON_URL . '/css/swiper-bundle.min.css' );
 	wp_enqueue_script( 'swiper', EMEON_URL . '/js/libs/swiper-bundle.min.js', [], '7.0.2', true );
 
-	wp_enqueue_style( 'theme-style', EMEON_URL  . '/sass/style.css', [ 'swiper' ], filemtime( EMEON_PATH . '/sass/style.css' ) );
+	wp_enqueue_style( 'theme-style', EMEON_URL . '/sass/style.css', [ 'swiper' ], filemtime( EMEON_PATH . '/sass/style.css' ) );
 
-	wp_enqueue_style( 'emeon-font-awesome', EMEON_URL  . '/fonts/fontawesome-pro/css/all.min.css' );
+	wp_enqueue_style( 'emeon-font-awesome', EMEON_URL . '/fonts/fontawesome-pro/css/all.min.css' );
 
-	wp_enqueue_style( 'emeon-icons', EMEON_URL  . '/fonts/emeon/styles.css' );
+	wp_enqueue_style( 'emeon-icons', EMEON_URL . '/fonts/emeon/styles.css' );
 
-	wp_enqueue_script( 'emeon-theme', EMEON_URL . '/js/theme.js', [ 'jquery', 'swiper' ], filemtime( EMEON_PATH . '/js/theme.js' ), true );
+	wp_enqueue_script( 'emeon-theme', EMEON_URL . '/js/theme.js', [
+		'jquery',
+		'swiper'
+	], filemtime( EMEON_PATH . '/js/theme.js' ), true );
 
 	wp_enqueue_script( 'emeon-skip-link-focus-fix', EMEON_URL . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
@@ -260,6 +270,7 @@ function emeon_scripts() {
 	// Dashicons
 	wp_enqueue_style( 'dashicons' );
 }
+
 add_action( 'wp_enqueue_scripts', 'emeon_scripts' );
 
 /**
@@ -318,20 +329,26 @@ function emeon_get_categories_ids( array $arr ): array {
  * Custom logging
  *
  * @param $data
+ *
  * @return mixed
  */
-function emeon_log( $data ){
-    if( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) return $data;
-    $mem = memory_get_usage( true ) / 1024 / 1024 . 'MB';
-    error_log( "[$mem][EMEON] " . var_export( $data, true ) . PHP_EOL );
-    return $data;
+function emeon_log( $data ) {
+	if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
+		return $data;
+	}
+	$mem = memory_get_usage( true ) / 1024 / 1024 . 'MB';
+	error_log( "[$mem][EMEON] " . var_export( $data, true ) . PHP_EOL );
+
+	return $data;
 }
 
 /**
  * Force all urls to be HTTPS if active
  */
-add_filter( 'wp_get_attachment_url', function( $url ){
-    if( is_ssl() )
-        return str_replace( 'http:', 'https:', $url );
-    return $url;
+add_filter( 'wp_get_attachment_url', function ( $url ) {
+	if ( is_ssl() ) {
+		return str_replace( 'http:', 'https:', $url );
+	}
+
+	return $url;
 }, 999 );

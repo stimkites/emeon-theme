@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) or exit;
 <?php
 $logo = '';
 if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
-	 ( $_logo = wp_get_attachment_image_src( $custom_logo_id, 'full' ) ) ) {
+     ( $_logo = wp_get_attachment_image_src( $custom_logo_id, 'full' ) ) ) {
 	$logo = '<img class="logo-image" src="' . esc_url( $_logo[ 0 ] ) . '" alt="emeon" />';
 }
 ?>
@@ -44,12 +44,13 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 						<?= get_bloginfo( 'description' ) ?>
 					</span>
 					<span class="logo-scrolled">
-						<img class="logo-image" src="<?php echo get_template_directory_uri() . '/img/emeon-logo-2-cr.png' ?>" alt="emeon" />
+						<img class="logo-image"
+						     src="<?php echo get_template_directory_uri() . '/img/emeon-logo-2-cr.png' ?>" alt="emeon"/>
 					</span>
 				</a>
 			</div><!-- .site-branding -->
 
-			<nav id="site-navigation" class="main-navigation <?=( ! is_user_logged_in() ? 'show-join' : '' )?>">
+			<nav id="site-navigation" class="main-navigation <?= ( ! is_user_logged_in() ? 'show-join' : '' ) ?>">
 				<button class="toggle-mobile-menu"></button>
 				<?php
 				wp_nav_menu( [

@@ -8,16 +8,18 @@
  */
 
 $contact_info = '';
-if( $contacts = get_post_meta( get_the_ID(), 'emeon_contacts', true ) ){
-    $contact_info = '<div class="emeon-contact-info">';
-    foreach( $contacts as $key=>$value )
-        if( $key === 'email' )
-            $contact_info .= '<p class="contact-email"><a href="mailto:' . $value . '">' . $value . '</a></p>';
-        elseif( $key === 'phone' )
-	        $contact_info .= '<p class="contact-phone"><a href="tel:' . $value . '">' . $value . '</a></p>';
-        else
-            $contact_info .= '<div class="contact-additional">' . make_hrefs( $value ) . '</div>';
-    $contact_info .= '</div>';
+if ( $contacts = get_post_meta( get_the_ID(), 'emeon_contacts', true ) ) {
+	$contact_info = '<div class="emeon-contact-info">';
+	foreach ( $contacts as $key => $value ) {
+		if ( $key === 'email' ) {
+			$contact_info .= '<p class="contact-email"><a href="mailto:' . $value . '">' . $value . '</a></p>';
+		} elseif ( $key === 'phone' ) {
+			$contact_info .= '<p class="contact-phone"><a href="tel:' . $value . '">' . $value . '</a></p>';
+		} else {
+			$contact_info .= '<div class="contact-additional">' . make_hrefs( $value ) . '</div>';
+		}
+	}
+	$contact_info .= '</div>';
 }
 
 ?>
@@ -45,14 +47,14 @@ if( $contacts = get_post_meta( get_the_ID(), 'emeon_contacts', true ) ){
 		<?php endif; ?>
 	</header><!-- .entry-header -->
 
-    <!--Contact info-->
+	<!--Contact info-->
 
 
 	<div class="entry-content">
 		<?php
 		the_content( sprintf(
 			wp_kses(
-				/* translators: %s: Name of current post. Only visible to screen readers */
+			/* translators: %s: Name of current post. Only visible to screen readers */
 				__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'emeon' ),
 				array(
 					'span' => array(

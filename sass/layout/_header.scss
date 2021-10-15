@@ -1,9 +1,9 @@
 @use "../variables-site/colors";
 
 .site-header {
-    background: #ffffff;
-    padding: 0;
-    position: fixed;
+	background: #ffffff;
+	padding: 0;
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -83,13 +83,13 @@
 		#menu-item-234 {
 			display: none;
 		}
+
 		&.show-join {
 			#menu-item-234 {
 				display: list-item;
 			}
 		}
 	}
-
 
 
 	.toggle-mobile-menu {
@@ -104,7 +104,7 @@
 
 		&::before,
 		&::after {
-			content: '';
+			content: "";
 			position: absolute;
 			left: 50%;
 			transform: translate(-50%, -50%);
@@ -169,7 +169,7 @@
 }
 
 @media (max-width: 1199px) {
-    .site-header {
+	.site-header {
 		.nav-shop {
 			min-width: unset;
 		}

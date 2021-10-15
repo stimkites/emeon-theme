@@ -95,11 +95,11 @@ window.onload = ( function( $ ) {
 			slidesPerView: 1,
 			autoHeight: true,
 			autoplay: {
-				disableOnInteraction: false
+				disableOnInteraction: false,
 			},
 			pagination: {
 				el: '.swiper-pagination--about',
-				clickable: true
+				clickable: true,
 			},
 		} );
 
@@ -108,11 +108,11 @@ window.onload = ( function( $ ) {
 			spaceBetween: 20,
 			autoHeight: true,
 			autoplay: {
-				disableOnInteraction: false
+				disableOnInteraction: false,
 			},
 			pagination: {
 				el: '.swiper-pagination--vacancies',
-				clickable: true
+				clickable: true,
 			},
 			navigation: {
 				nextEl: '.swiper-button-next--vacancies',
@@ -127,8 +127,8 @@ window.onload = ( function( $ ) {
 				},
 				991: {
 					slidesPerView: 4,
-				}
-			}
+				},
+			},
 		} );
 
 		const candidates_swiper = new Swiper( '.candidates--swiper', {
@@ -136,11 +136,11 @@ window.onload = ( function( $ ) {
 			spaceBetween: 20,
 			autoHeight: true,
 			autoplay: {
-				disableOnInteraction: false
+				disableOnInteraction: false,
 			},
 			pagination: {
 				el: '.swiper-pagination--candidates',
-				clickable: true
+				clickable: true,
 			},
 			navigation: {
 				nextEl: '.swiper-button-next--candidates',
@@ -155,8 +155,8 @@ window.onload = ( function( $ ) {
 				},
 				991: {
 					slidesPerView: 4,
-				}
-			}
+				},
+			},
 		} );
 
 		const stories_swiper = new Swiper( '.stories--swiper', {
@@ -164,12 +164,12 @@ window.onload = ( function( $ ) {
 			slidesPerView: 1,
 			autoHeight: true,
 			autoplay: {
-				disableOnInteraction: false
+				disableOnInteraction: false,
 			},
 			pagination: {
 				el: '.swiper-pagination--stories',
-				clickable: true
-			}
+				clickable: true,
+			},
 		} );
 	}
 
@@ -188,7 +188,7 @@ window.onload = ( function( $ ) {
 			_window.off( 'scroll', __page_scroll_handler );
 			_window.off( 'resize', __window_resize_handler );
 			_sandwich_button_elem.off( 'click', __click_sandwich_button_handler );
-		}
+		};
 	}
 
 
@@ -211,6 +211,6 @@ window.onload = ( function( $ ) {
 		 */
 		init: function() {
 			return __init;
-		}
-	}
+		},
+	};
 } )( jQuery.noConflict() ).init();

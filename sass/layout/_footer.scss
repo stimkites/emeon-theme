@@ -5,42 +5,47 @@ footer#colophon {
 	width: 100%;
 
 	ul {
-	    margin: 0;
-	    padding: 0;
-	    list-style: none;
-	    display: flex;
-	    flex-direction: column;
-	    justify-content: center;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
 	.columns {
-	    display: flex;
-	    flex-direction: row;
-	    justify-content: space-between;
-	    width: 100%;
-	    margin-bottom: 15px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 100%;
+		margin-bottom: 15px;
 		padding-bottom: 15px;
+
 		.column {
-		    padding: 0px 10px 0px 0;
-		    &:last-child {
-			    padding-right: 0;
-		    }
+			padding: 0px 10px 0px 0;
+
+			&:last-child {
+				padding-right: 0;
+			}
 		}
+
 		.column.col-2 {
-		    width: 16.6%;
+			width: 16.6%;
 		}
 
 		.column.col-6 {
-		    width: 50%;
+			width: 50%;
 		}
+
 		&.payments-logo .column {
-		    display: flex;
-		    flex-direction: row;
+			display: flex;
+			flex-direction: row;
 
 			.widget_media_image {
 				margin: 0 20px 0 0;
+
 				img {
-			    	max-height: 15px;
+					max-height: 15px;
 					width: auto;
 				}
 			}
@@ -64,8 +69,8 @@ footer#colophon {
 	footer#colophon .columns {
 		flex-direction: column;
 
-		.column.col-2,.column.col-6 {
-		    width: 100%;
+		.column.col-2, .column.col-6 {
+			width: 100%;
 		}
 	}
 }

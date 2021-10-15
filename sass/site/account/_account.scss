@@ -26,13 +26,14 @@ header.entry-header {
 		ul {
 			list-style: none;
 			text-align: left;
+
 			li a {
 				display: block;
 				border-bottom: 1px solid #ccc;
 				cursor: pointer;
 				padding: 12px;
 
-				&:hover{
+				&:hover {
 					background: #eee;
 				}
 			}
@@ -41,7 +42,7 @@ header.entry-header {
 
 	.emeon-account-content {
 		width: 100%;
-		max-width: calc( 100% - 306px );
+		max-width: calc(100% - 306px);
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: column;
@@ -62,7 +63,7 @@ header.entry-header {
 					opacity: .4;
 					transition: opacity ease-in-out .2s;
 
-					&:after{
+					&:after {
 						font-family: Dashicons, sans-serif;
 						font-size: 32px;
 						content: "\f10f";
@@ -160,7 +161,7 @@ header.entry-header {
 									line-height: 1;
 									padding: 7px;
 
-									&:hover{
+									&:hover {
 										background: #ccc;
 									}
 								}
@@ -171,9 +172,11 @@ header.entry-header {
 
 						&:hover {
 							opacity: 1;
+
 							&:before {
 								background: #999;
 							}
+
 							.article-menu__menu {
 								visibility: visible;
 								opacity: 1;
@@ -193,6 +196,7 @@ header.entry-header {
 						cursor: pointer;
 						opacity: .8;
 						transition: opacity .3s ease-in-out;
+
 						&:hover {
 							opacity: 1;
 						}
