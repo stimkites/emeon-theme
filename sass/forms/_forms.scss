@@ -47,7 +47,7 @@
 		margin: 20px auto 0 auto;
 	}
 
-	fieldset {
+	&__fieldset {
 		border: none;
 		padding: 0;
 		margin: 5px auto;
@@ -93,9 +93,12 @@
 			position: absolute;
 			top: 0;
 			right: 0;
-			z-index: 999;
+			z-index: 99;
 			width: 30px;
 			height: 30px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
 			display: none;
 
 			&::before,
@@ -120,8 +123,9 @@
 		}
 
 		.logo-wrap {
-			flex-basis: 330px;
+			flex: 1 1 330px;
 			height: auto;
+			margin-bottom: 20px;
 			text-align: center;
 
 			.logo-area {
@@ -138,11 +142,17 @@
 					object-fit: contain;
 				}
 
+				&.added {
+					.remove-icon {
+						display: block;
+					}
+				}
 			}
 		}
 
 		.general-info {
 			flex-basis: 340px;
+			margin: 0 auto;
 
 			.article-excerpt {
 				resize: none;
@@ -237,6 +247,8 @@
 		}
 
 		.join-emeon-prompt {
+			margin-bottom: 20px;
+
 			input {
 				display: none;
 			}
@@ -267,6 +279,10 @@
 					background: #ccc;
 					top: 4px;
 					transition: all ease-in-out .3s;
+				}
+
+				a {
+					text-decoration: underline;
 				}
 			}
 

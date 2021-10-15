@@ -83,7 +83,7 @@ $cats_args = [
       id="form-article-edit"
       enctype="multipart/form-data"
       name="emeon-form">
-	<fieldset>
+	<fieldset class="emeon-form__fieldset">
 
 		<div class="article-type">
 			<div class="article-type-selectors">
@@ -105,7 +105,7 @@ $cats_args = [
 
 		<div class="logo-wrap">
 			<label for="photo-file" class="logo-area <?= ( $article[ 'image' ] ? 'added' : '' ) ?>">
-				<span class="remove-icon logo-remove"></span>
+				<button class="remove-icon logo-remove"></button>
 				<img class="logo" src="<?= $article[ 'image' ] ?? $def_image ?>" data-default="<?= $def_image ?>"
 				     alt="image"/>
 			</label>

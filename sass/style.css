@@ -1291,7 +1291,7 @@ textarea {
   padding: 5px 0;
   margin: 20px auto 0 auto;
 }
-.emeon-form fieldset {
+.emeon-form__fieldset {
   border: none;
   padding: 0;
   margin: 5px auto;
@@ -1300,19 +1300,19 @@ textarea {
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.emeon-form fieldset .article-type {
+.emeon-form__fieldset .article-type {
   width: 100%;
   text-align: left;
   margin-bottom: 20px;
 }
-.emeon-form fieldset .article-type-selectors {
+.emeon-form__fieldset .article-type-selectors {
   width: 100%;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: row;
 }
-.emeon-form fieldset .article-type-selectors label {
+.emeon-form__fieldset .article-type-selectors label {
   border: 1px solid #ccc;
   width: 50%;
   padding: 10px;
@@ -1321,23 +1321,26 @@ textarea {
   color: #999;
   margin-right: -1px;
 }
-.emeon-form fieldset .article-type-selectors input[type=radio]:checked + label {
+.emeon-form__fieldset .article-type-selectors input[type=radio]:checked + label {
   background: #efefef;
   color: black;
 }
-.emeon-form fieldset .article-type-selectors input[type=radio] {
+.emeon-form__fieldset .article-type-selectors input[type=radio] {
   display: none;
 }
-.emeon-form fieldset .remove-icon {
+.emeon-form__fieldset .remove-icon {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 999;
+  z-index: 99;
   width: 30px;
   height: 30px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
   display: none;
 }
-.emeon-form fieldset .remove-icon::before, .emeon-form fieldset .remove-icon::after {
+.emeon-form__fieldset .remove-icon::before, .emeon-form__fieldset .remove-icon::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -1347,18 +1350,19 @@ textarea {
   width: 50%;
   background-color: #000;
 }
-.emeon-form fieldset .remove-icon::before {
+.emeon-form__fieldset .remove-icon::before {
   transform: translate(-50%, -50%) rotate(45deg);
 }
-.emeon-form fieldset .remove-icon::after {
+.emeon-form__fieldset .remove-icon::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-.emeon-form fieldset .logo-wrap {
-  flex-basis: 330px;
+.emeon-form__fieldset .logo-wrap {
+  flex: 1 1 330px;
   height: auto;
+  margin-bottom: 20px;
   text-align: center;
 }
-.emeon-form fieldset .logo-wrap .logo-area {
+.emeon-form__fieldset .logo-wrap .logo-area {
   height: 256px;
   width: 256px;
   border: none;
@@ -1366,51 +1370,55 @@ textarea {
   position: relative;
   margin: 0 auto;
 }
-.emeon-form fieldset .logo-wrap .logo-area img {
+.emeon-form__fieldset .logo-wrap .logo-area img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.emeon-form fieldset .general-info {
-  flex-basis: 340px;
+.emeon-form__fieldset .logo-wrap .logo-area.added .remove-icon {
+  display: block;
 }
-.emeon-form fieldset .general-info .article-excerpt {
+.emeon-form__fieldset .general-info {
+  flex-basis: 340px;
+  margin: 0 auto;
+}
+.emeon-form__fieldset .general-info .article-excerpt {
   resize: none;
   height: 232px;
 }
-.emeon-form fieldset .categories-tags-select {
+.emeon-form__fieldset .categories-tags-select {
   width: 100%;
   position: relative;
 }
-.emeon-form fieldset .categories-tags-select label {
+.emeon-form__fieldset .categories-tags-select label {
   font-size: 13px;
   padding: 0;
 }
-.emeon-form fieldset .categories-tags-select .select2 .select2-selection {
+.emeon-form__fieldset .categories-tags-select .select2 .select2-selection {
   font-size: 11px;
   text-align: left;
   border-radius: 0;
   margin-top: -1px;
   border-color: #ccc;
 }
-.emeon-form fieldset .categories-tags-select .select2 .select2-selection ul, .emeon-form fieldset .categories-tags-select .select2 .select2-selection ol {
+.emeon-form__fieldset .categories-tags-select .select2 .select2-selection ul, .emeon-form__fieldset .categories-tags-select .select2 .select2-selection ol {
   margin: 0;
 }
-.emeon-form fieldset .categories-tags-select .select2 .select2-selection .select2-selection__choice__remove {
+.emeon-form__fieldset .categories-tags-select .select2 .select2-selection .select2-selection__choice__remove {
   border-right: none;
   top: 3px;
 }
-.emeon-form fieldset .contact-info {
+.emeon-form__fieldset .contact-info {
   width: 100%;
 }
-.emeon-form fieldset .contact-info .article-urls {
+.emeon-form__fieldset .contact-info .article-urls {
   resize: vertical;
   height: 110px;
 }
-.emeon-form fieldset .attachment-area {
+.emeon-form__fieldset .attachment-area {
   width: 100%;
 }
-.emeon-form fieldset .attachment-area #attachment-info {
+.emeon-form__fieldset .attachment-area #attachment-info {
   margin: 20px auto;
   padding: 0;
   text-align: center;
@@ -1420,24 +1428,24 @@ textarea {
   justify-content: center;
   position: relative;
 }
-.emeon-form fieldset .attachment-area #attachment-info.added {
+.emeon-form__fieldset .attachment-area #attachment-info.added {
   border: 1px solid #000;
 }
-.emeon-form fieldset .attachment-area #attachment-info.added .remove-icon, .emeon-form fieldset .attachment-area #attachment-info.added #attachment-preview {
+.emeon-form__fieldset .attachment-area #attachment-info.added .remove-icon, .emeon-form__fieldset .attachment-area #attachment-info.added #attachment-preview {
   display: block;
 }
-.emeon-form fieldset .attachment-area #attachment-info.added #no-attachment {
+.emeon-form__fieldset .attachment-area #attachment-info.added #no-attachment {
   display: none;
 }
-.emeon-form fieldset .attachment-area #attachment-info .remove-icon {
+.emeon-form__fieldset .attachment-area #attachment-info .remove-icon {
   top: -30px;
 }
-.emeon-form fieldset .attachment-area #attachment-info #no-attachment {
+.emeon-form__fieldset .attachment-area #attachment-info #no-attachment {
   padding: 20px;
   display: block;
   font-size: 11px;
 }
-.emeon-form fieldset .attachment-area #attachment-preview {
+.emeon-form__fieldset .attachment-area #attachment-preview {
   border: none;
   width: 100%;
   height: 500px;
@@ -1446,16 +1454,19 @@ textarea {
   margin: 0;
   padding: 0;
 }
-.emeon-form fieldset .join-emeon-prompt input {
+.emeon-form__fieldset .join-emeon-prompt {
+  margin-bottom: 20px;
+}
+.emeon-form__fieldset .join-emeon-prompt input {
   display: none;
 }
-.emeon-form fieldset .join-emeon-prompt label {
+.emeon-form__fieldset .join-emeon-prompt label {
   font-size: 12px;
   cursor: pointer;
   position: relative;
   padding-left: 30px;
 }
-.emeon-form fieldset .join-emeon-prompt label:before {
+.emeon-form__fieldset .join-emeon-prompt label:before {
   position: absolute;
   left: 0;
   top: 1px;
@@ -1465,7 +1476,7 @@ textarea {
   content: " ";
   display: block;
 }
-.emeon-form fieldset .join-emeon-prompt label:after {
+.emeon-form__fieldset .join-emeon-prompt label:after {
   content: " ";
   position: absolute;
   left: 12px;
@@ -1475,16 +1486,19 @@ textarea {
   top: 4px;
   transition: all ease-in-out 0.3s;
 }
-.emeon-form fieldset .join-emeon-prompt input:checked + label:after {
+.emeon-form__fieldset .join-emeon-prompt label a {
+  text-decoration: underline;
+}
+.emeon-form__fieldset .join-emeon-prompt input:checked + label:after {
   left: 3px;
   background: #999;
 }
-.emeon-form fieldset .cta-controls {
+.emeon-form__fieldset .cta-controls {
   width: 100%;
   text-align: center;
   line-height: 3em;
 }
-.emeon-form fieldset .cta-controls .cta-cancel {
+.emeon-form__fieldset .cta-controls .cta-cancel {
   font-size: 11px;
   margin-top: 15px;
   color: #999;
@@ -1492,13 +1506,13 @@ textarea {
   opacity: 0.7;
   transition: opacity 0.3s ease-in-out;
 }
-.emeon-form fieldset .cta-controls .cta-cancel:hover {
+.emeon-form__fieldset .cta-controls .cta-cancel:hover {
   opacity: 1;
 }
-.emeon-form fieldset .cta-controls button {
+.emeon-form__fieldset .cta-controls button {
   cursor: pointer;
 }
-.emeon-form fieldset .cta-controls button.cta-button {
+.emeon-form__fieldset .cta-controls button.cta-button {
   border-radius: 0;
   border: 1px solid #ccc;
   padding: 9px 15px;
@@ -1511,24 +1525,24 @@ textarea {
   color: #555;
   transition: opacity 0.3s ease-in-out;
 }
-.emeon-form fieldset .cta-controls button.cta-button:hover {
+.emeon-form__fieldset .cta-controls button.cta-button:hover {
   opacity: 1;
 }
-.emeon-form fieldset .article-text {
+.emeon-form__fieldset .article-text {
   width: 100%;
 }
-.emeon-form fieldset label {
+.emeon-form__fieldset label {
   width: 100%;
   text-align: left;
   display: block;
   margin: 0;
   padding: 0;
 }
-.emeon-form fieldset .no-pads {
+.emeon-form__fieldset .no-pads {
   padding: 0;
   line-height: 1;
 }
-.emeon-form fieldset input[type=text], .emeon-form fieldset input[type=email], .emeon-form fieldset input[type=number], .emeon-form fieldset textarea, .emeon-form fieldset select {
+.emeon-form__fieldset input[type=text], .emeon-form__fieldset input[type=email], .emeon-form__fieldset input[type=number], .emeon-form__fieldset textarea, .emeon-form__fieldset select {
   width: 100%;
   padding: 7px;
   margin: -1px 0 -3px 0;
@@ -1538,11 +1552,11 @@ textarea {
   cursor: pointer;
   background: #ffffff;
 }
-.emeon-form fieldset input.emeon-salary {
+.emeon-form__fieldset input.emeon-salary {
   padding-right: 30px;
   font-size: 11px;
 }
-.emeon-form fieldset .emeon-currency-label {
+.emeon-form__fieldset .emeon-currency-label {
   position: absolute;
   right: 6px;
   font-size: 17px;
@@ -1550,12 +1564,12 @@ textarea {
   top: 2px;
   color: #aaa;
 }
-.emeon-form fieldset input[type=file] {
+.emeon-form__fieldset input[type=file] {
   display: none !important;
   visibility: hidden;
   opacity: 0;
 }
-.emeon-form fieldset textarea {
+.emeon-form__fieldset textarea {
   font-size: 12px;
 }
 
