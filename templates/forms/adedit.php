@@ -104,7 +104,7 @@ $cats_args = [
 		</div>
 
 		<div class="logo-wrap">
-			<label for="photo-file" class="logo-area <?= ( $article[ 'image' ] ? 'added' : '' ) ?>">
+			<label for="photo-file" class="logo-area <?= ( isset( $article[ 'image' ] ) ? 'added' : '' ) ?>">
 				<button class="remove-icon logo-remove"></button>
 				<img class="logo" src="<?= $article[ 'image' ] ?? $def_image ?>" data-default="<?= $def_image ?>"
 				     alt="image"/>
@@ -189,7 +189,7 @@ $cats_args = [
 					<?php
 					foreach ( EMEON_EXP_LVL as $index => $lvl ) {
 						echo '<option ' .
-						     ( (int) $article[ 'experience' ] === $index ? 'selected' : '' ) . '
+						     ( isset ( $article[ 'experience' ] ) && ( (int) $article[ 'experience' ] === $index ) ? 'selected' : '' ) . '
                             value="' . $index . '">' . $lvl .
 						     '</option>';
 					}
@@ -266,7 +266,7 @@ $cats_args = [
 		<div class="attachment-area">
 
 			<label for="attachment-file" id="attachment-info"
-			       class="<?= ( $article[ 'attachment' ] ? 'added' : '' ) ?>">
+			       class="<?= ( isset( $article[ 'attachment' ] ) ? 'added' : '' ) ?>">
 				<span class="remove-icon attachment-remove"></span>
 				<iframe id="attachment-preview" src="<?= $article[ 'attachment' ] ?? '' ?>"></iframe>
 				<span id="no-attachment">PDF for downloading. Max size is 5 mb.</span>

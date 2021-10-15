@@ -686,10 +686,8 @@ header.entry-header {
   position: relative;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
-  align-content: space-between;
 }
 .emeon-account h2 {
   font-size: 18px;
@@ -698,69 +696,72 @@ header.entry-header {
   padding: 0 0 30px 0;
   margin: 0;
 }
-.emeon-account .emeon-account-menu {
-  width: 100%;
-  max-width: 300px;
+.emeon-account-menu {
+  flex: 0 0 200px;
 }
-.emeon-account .emeon-account-menu ul {
+.emeon-account-menu > ul {
   list-style: none;
   text-align: left;
+  margin: 0;
+  padding: 0;
 }
-.emeon-account .emeon-account-menu ul li a {
+.emeon-account-menu > ul li a {
   display: block;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
   padding: 12px;
 }
-.emeon-account .emeon-account-menu ul li a:hover {
+.emeon-account-menu > ul li a:hover {
   background: #eee;
 }
-.emeon-account .emeon-account-content {
-  width: 100%;
-  max-width: calc(100% - 306px);
+.emeon-account-content {
+  flex: 1 1 auto;
+  margin-left: 30px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   position: relative;
+  /* Cards grid */
+  /* Single card */
 }
-.emeon-account .emeon-account-content #my-ads {
+.emeon-account-content #my-ads {
   position: relative;
 }
-.emeon-account .emeon-account-content #my-ads .add-link {
+.emeon-account-content #my-ads .add-link {
   text-align: right;
   margin: 0;
   padding: 4px;
   vertical-align: middle;
 }
-.emeon-account .emeon-account-content #my-ads .add-link a {
+.emeon-account-content #my-ads .add-link a {
   font-size: 24px;
   color: #555;
   opacity: 0.4;
   transition: opacity ease-in-out 0.2s;
 }
-.emeon-account .emeon-account-content #my-ads .add-link a:after {
+.emeon-account-content #my-ads .add-link a:after {
   font-family: Dashicons, sans-serif;
   font-size: 32px;
   content: "\f10f";
 }
-.emeon-account .emeon-account-content #my-ads .add-link a:hover {
+.emeon-account-content #my-ads .add-link a:hover {
   opacity: 1;
 }
-.emeon-account .emeon-account-content .account-content {
+.emeon-account-content .account-content {
   display: none;
 }
-.emeon-account .emeon-account-content .account-content.viz {
+.emeon-account-content .account-content.viz {
   display: block;
 }
-.emeon-account .emeon-account-content .account-content .my-articles {
+.emeon-account-content .my-articles {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
   align-content: space-between;
-  /* Single card */
+  margin: 0 -10px;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article {
+.emeon-account-content .account-article {
   width: 100%;
   margin: 0 5px 10px;
   max-width: 200px;
@@ -768,12 +769,12 @@ header.entry-header {
   padding: 10px;
   position: relative;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article:hover {
+.emeon-account-content .account-article:hover {
   -webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
   -moz-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
   box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu {
+.emeon-account-content .account-article .article-menu {
   display: block;
   position: absolute;
   top: 4px;
@@ -783,7 +784,7 @@ header.entry-header {
   cursor: pointer;
   transition: all 0.4s;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:before {
+.emeon-account-content .account-article .article-menu:before {
   content: "\f329";
   font-family: Dashicons, sans-serif;
   font-size: 18px;
@@ -796,7 +797,7 @@ header.entry-header {
   line-height: 18px;
   padding: 0;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu {
+.emeon-account-content .account-article .article-menu .article-menu__menu {
   position: absolute;
   display: block;
   visibility: hidden;
@@ -810,16 +811,16 @@ header.entry-header {
   width: 100px;
   border-radius: 0;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li {
+.emeon-account-content .account-article .article-menu .article-menu__menu li {
   list-style: none;
   line-height: 1;
   padding: 0;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li.item-bl {
+.emeon-account-content .account-article .article-menu .article-menu__menu li.item-bl {
   border-bottom: 1px dotted #ccc;
   color: #7f2a28;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a {
+.emeon-account-content .account-article .article-menu .article-menu__menu li a {
   display: block;
   width: 100%;
   cursor: pointer;
@@ -827,20 +828,20 @@ header.entry-header {
   line-height: 1;
   padding: 7px;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a:hover {
+.emeon-account-content .account-article .article-menu .article-menu__menu li a:hover {
   background: #ccc;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover {
+.emeon-account-content .account-article .article-menu:hover {
   opacity: 1;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover:before {
+.emeon-account-content .account-article .article-menu:hover:before {
   background: #999;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover .article-menu__menu {
+.emeon-account-content .account-article .article-menu:hover .article-menu__menu {
   visibility: visible;
   opacity: 1;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article {
+.emeon-account-content .account-article .actualize-article {
   display: none;
   bottom: 0;
   left: 0;
@@ -853,17 +854,17 @@ header.entry-header {
   opacity: 0.8;
   transition: opacity 0.3s ease-in-out;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article:hover {
+.emeon-account-content .account-article .actualize-article:hover {
   opacity: 1;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .post-thumbnail {
+.emeon-account-content .account-article .post-thumbnail {
   height: 191px;
 }
-.emeon-account .emeon-account-content #pass form.form-password {
+.emeon-account-content #pass form.form-password {
   position: relative;
   padding-top: 40px;
 }
-.emeon-account .emeon-account-content #pass form.form-password input, .emeon-account .emeon-account-content #pass form.form-password button {
+.emeon-account-content #pass form.form-password input, .emeon-account-content #pass form.form-password button {
   width: 100%;
   padding: 9px;
   font-size: 12px;
@@ -874,37 +875,37 @@ header.entry-header {
   box-sizing: border-box;
   display: block;
 }
-.emeon-account .emeon-account-content #pass form.form-password label[for=view-pass] {
+.emeon-account-content #pass form.form-password label[for=view-pass] {
   position: relative;
   font-family: Dashicons, sans-serif;
   font-size: 28px;
   color: #999;
   display: block;
 }
-.emeon-account .emeon-account-content #pass form.form-password label[for=view-pass]:before {
+.emeon-account-content #pass form.form-password label[for=view-pass]:before {
   content: "\f530";
   position: absolute;
   cursor: pointer;
   right: 0;
   top: -45px;
 }
-.emeon-account .emeon-account-content #pass form.form-password #view-pass {
+.emeon-account-content #pass form.form-password #view-pass {
   display: none;
 }
-.emeon-account .emeon-account-content #pass form.form-password #view-pass:checked + label[for=view-pass]:before {
+.emeon-account-content #pass form.form-password #view-pass:checked + label[for=view-pass]:before {
   content: "\f177";
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus {
+.emeon-account-content #contacts form.form-contactus {
   position: relative;
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus fieldset {
+.emeon-account-content #contacts form.form-contactus fieldset {
   flex-direction: column;
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus fieldset .control-wrap {
+.emeon-account-content #contacts form.form-contactus fieldset .control-wrap {
   padding: 0;
   margin: -1px 0 0 0;
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus fieldset .control-wrap input.emeon-control, .emeon-account .emeon-account-content #contacts form.form-contactus fieldset .control-wrap button.button-cta {
+.emeon-account-content #contacts form.form-contactus fieldset .control-wrap input.emeon-control, .emeon-account-content #contacts form.form-contactus fieldset .control-wrap button.button-cta {
   width: 100%;
   padding: 9px;
   font-size: 12px;
@@ -915,11 +916,26 @@ header.entry-header {
   box-sizing: border-box;
   display: block;
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus .description {
+.emeon-account-content #contacts form.form-contactus .description {
   text-align: right;
   margin-top: 10px;
 }
 
+@media (max-width: 767px) {
+  .emeon-account {
+    flex-direction: column;
+  }
+  .emeon-account-menu, .emeon-account-content {
+    flex: 0 1 auto;
+  }
+  .emeon-account-content {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  .emeon-account-content .my-articles {
+    justify-content: space-evenly;
+  }
+}
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -1255,7 +1271,6 @@ textarea {
   max-width: 700px;
   width: 100%;
   margin: 20px auto;
-  padding: 10px;
   border: none;
   /* fieldset */
 }
@@ -1978,10 +1993,8 @@ header.entry-header {
   position: relative;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
-  align-content: space-between;
 }
 .emeon-account h2 {
   font-size: 18px;
@@ -1990,69 +2003,72 @@ header.entry-header {
   padding: 0 0 30px 0;
   margin: 0;
 }
-.emeon-account .emeon-account-menu {
-  width: 100%;
-  max-width: 300px;
+.emeon-account-menu {
+  flex: 0 0 200px;
 }
-.emeon-account .emeon-account-menu ul {
+.emeon-account-menu > ul {
   list-style: none;
   text-align: left;
+  margin: 0;
+  padding: 0;
 }
-.emeon-account .emeon-account-menu ul li a {
+.emeon-account-menu > ul li a {
   display: block;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
   padding: 12px;
 }
-.emeon-account .emeon-account-menu ul li a:hover {
+.emeon-account-menu > ul li a:hover {
   background: #eee;
 }
-.emeon-account .emeon-account-content {
-  width: 100%;
-  max-width: calc(100% - 306px);
+.emeon-account-content {
+  flex: 1 1 auto;
+  margin-left: 30px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   position: relative;
+  /* Cards grid */
+  /* Single card */
 }
-.emeon-account .emeon-account-content #my-ads {
+.emeon-account-content #my-ads {
   position: relative;
 }
-.emeon-account .emeon-account-content #my-ads .add-link {
+.emeon-account-content #my-ads .add-link {
   text-align: right;
   margin: 0;
   padding: 4px;
   vertical-align: middle;
 }
-.emeon-account .emeon-account-content #my-ads .add-link a {
+.emeon-account-content #my-ads .add-link a {
   font-size: 24px;
   color: #555;
   opacity: 0.4;
   transition: opacity ease-in-out 0.2s;
 }
-.emeon-account .emeon-account-content #my-ads .add-link a:after {
+.emeon-account-content #my-ads .add-link a:after {
   font-family: Dashicons, sans-serif;
   font-size: 32px;
   content: "\f10f";
 }
-.emeon-account .emeon-account-content #my-ads .add-link a:hover {
+.emeon-account-content #my-ads .add-link a:hover {
   opacity: 1;
 }
-.emeon-account .emeon-account-content .account-content {
+.emeon-account-content .account-content {
   display: none;
 }
-.emeon-account .emeon-account-content .account-content.viz {
+.emeon-account-content .account-content.viz {
   display: block;
 }
-.emeon-account .emeon-account-content .account-content .my-articles {
+.emeon-account-content .my-articles {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
   align-content: space-between;
-  /* Single card */
+  margin: 0 -10px;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article {
+.emeon-account-content .account-article {
   width: 100%;
   margin: 0 5px 10px;
   max-width: 200px;
@@ -2060,12 +2076,12 @@ header.entry-header {
   padding: 10px;
   position: relative;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article:hover {
+.emeon-account-content .account-article:hover {
   -webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
   -moz-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
   box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu {
+.emeon-account-content .account-article .article-menu {
   display: block;
   position: absolute;
   top: 4px;
@@ -2075,7 +2091,7 @@ header.entry-header {
   cursor: pointer;
   transition: all 0.4s;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:before {
+.emeon-account-content .account-article .article-menu:before {
   content: "\f329";
   font-family: Dashicons, sans-serif;
   font-size: 18px;
@@ -2088,7 +2104,7 @@ header.entry-header {
   line-height: 18px;
   padding: 0;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu {
+.emeon-account-content .account-article .article-menu .article-menu__menu {
   position: absolute;
   display: block;
   visibility: hidden;
@@ -2102,16 +2118,16 @@ header.entry-header {
   width: 100px;
   border-radius: 0;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li {
+.emeon-account-content .account-article .article-menu .article-menu__menu li {
   list-style: none;
   line-height: 1;
   padding: 0;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li.item-bl {
+.emeon-account-content .account-article .article-menu .article-menu__menu li.item-bl {
   border-bottom: 1px dotted #ccc;
   color: #7f2a28;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a {
+.emeon-account-content .account-article .article-menu .article-menu__menu li a {
   display: block;
   width: 100%;
   cursor: pointer;
@@ -2119,20 +2135,20 @@ header.entry-header {
   line-height: 1;
   padding: 7px;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu .article-menu__menu li a:hover {
+.emeon-account-content .account-article .article-menu .article-menu__menu li a:hover {
   background: #ccc;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover {
+.emeon-account-content .account-article .article-menu:hover {
   opacity: 1;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover:before {
+.emeon-account-content .account-article .article-menu:hover:before {
   background: #999;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .article-menu:hover .article-menu__menu {
+.emeon-account-content .account-article .article-menu:hover .article-menu__menu {
   visibility: visible;
   opacity: 1;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article {
+.emeon-account-content .account-article .actualize-article {
   display: none;
   bottom: 0;
   left: 0;
@@ -2145,17 +2161,17 @@ header.entry-header {
   opacity: 0.8;
   transition: opacity 0.3s ease-in-out;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .actualize-article:hover {
+.emeon-account-content .account-article .actualize-article:hover {
   opacity: 1;
 }
-.emeon-account .emeon-account-content .account-content .my-articles .account-article .post-thumbnail {
+.emeon-account-content .account-article .post-thumbnail {
   height: 191px;
 }
-.emeon-account .emeon-account-content #pass form.form-password {
+.emeon-account-content #pass form.form-password {
   position: relative;
   padding-top: 40px;
 }
-.emeon-account .emeon-account-content #pass form.form-password input, .emeon-account .emeon-account-content #pass form.form-password button {
+.emeon-account-content #pass form.form-password input, .emeon-account-content #pass form.form-password button {
   width: 100%;
   padding: 9px;
   font-size: 12px;
@@ -2166,37 +2182,37 @@ header.entry-header {
   box-sizing: border-box;
   display: block;
 }
-.emeon-account .emeon-account-content #pass form.form-password label[for=view-pass] {
+.emeon-account-content #pass form.form-password label[for=view-pass] {
   position: relative;
   font-family: Dashicons, sans-serif;
   font-size: 28px;
   color: #999;
   display: block;
 }
-.emeon-account .emeon-account-content #pass form.form-password label[for=view-pass]:before {
+.emeon-account-content #pass form.form-password label[for=view-pass]:before {
   content: "\f530";
   position: absolute;
   cursor: pointer;
   right: 0;
   top: -45px;
 }
-.emeon-account .emeon-account-content #pass form.form-password #view-pass {
+.emeon-account-content #pass form.form-password #view-pass {
   display: none;
 }
-.emeon-account .emeon-account-content #pass form.form-password #view-pass:checked + label[for=view-pass]:before {
+.emeon-account-content #pass form.form-password #view-pass:checked + label[for=view-pass]:before {
   content: "\f177";
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus {
+.emeon-account-content #contacts form.form-contactus {
   position: relative;
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus fieldset {
+.emeon-account-content #contacts form.form-contactus fieldset {
   flex-direction: column;
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus fieldset .control-wrap {
+.emeon-account-content #contacts form.form-contactus fieldset .control-wrap {
   padding: 0;
   margin: -1px 0 0 0;
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus fieldset .control-wrap input.emeon-control, .emeon-account .emeon-account-content #contacts form.form-contactus fieldset .control-wrap button.button-cta {
+.emeon-account-content #contacts form.form-contactus fieldset .control-wrap input.emeon-control, .emeon-account-content #contacts form.form-contactus fieldset .control-wrap button.button-cta {
   width: 100%;
   padding: 9px;
   font-size: 12px;
@@ -2207,11 +2223,26 @@ header.entry-header {
   box-sizing: border-box;
   display: block;
 }
-.emeon-account .emeon-account-content #contacts form.form-contactus .description {
+.emeon-account-content #contacts form.form-contactus .description {
   text-align: right;
   margin-top: 10px;
 }
 
+@media (max-width: 767px) {
+  .emeon-account {
+    flex-direction: column;
+  }
+  .emeon-account-menu, .emeon-account-content {
+    flex: 0 1 auto;
+  }
+  .emeon-account-content {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  .emeon-account-content .my-articles {
+    justify-content: space-evenly;
+  }
+}
 /*--------------------------------------------------------------
 # Infinite scroll
 --------------------------------------------------------------*/
