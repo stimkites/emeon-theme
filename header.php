@@ -33,7 +33,7 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<header id="masthead" class="site-header">
-		<div class="site-content site-header__content">
+		<div class="site-content site-header__content container">
 
 			<div class="site-branding">
 				<a class="home-link" href="<?= get_home_url() ?>">
@@ -79,4 +79,4 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 
 	</header><!-- #masthead -->
 
-	<div id="content" class="site-content page">
+	<div id="content" class="site-content page container">

@@ -214,10 +214,17 @@
 	 * @private
 	 */
 	const __init_selects = function() {
-		$( 'select.sel2:not(.select2-offscreen)' ).select2( {
+		$( '.sel2[multiple]' ).select2( {
 			width: '100%',
-			tags: true,
+			multiple: true,
+			selectionCssClass: ':all:',
 		} );
+		//
+		// $( 'select.sel2:not(.select2-offscreen)' ).select2( {
+		// 	width: '100%',
+		// 	tags: true,
+		// 	containerCssClass: 'form-control',
+		// } );
 	};
 
 	const __error_flush = function() {

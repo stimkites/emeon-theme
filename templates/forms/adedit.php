@@ -85,126 +85,143 @@ $cats_args = [
       name="emeon-form">
 	<fieldset class="emeon-form__fieldset">
 
-		<div class="article-type">
-			<div class="article-type-selectors">
+		<div class="article-type mb-4">
+			<div class="btn-group w-100">
 
 				<input id="type-cv"
+				       class="btn-check"
 				       type="radio" <?= ( $article[ 'type' ] === 'candidates' ? 'checked' : '' ) ?>
 				       name="article[type]"
 				       value="candidates"/>
-				<label for="type-cv">Candidate</label>
+				<label class="btn btn-outline-dark" for="type-cv">Candidate</label>
 
 				<input id="type-vc"
+				       class="btn-check"
 				       type="radio" <?= ( $article[ 'type' ] === 'vacancies' ? 'checked' : '' ) ?>
 				       name="article[type]"
 				       value="vacancies"/>
-				<label for="type-vc">Vacancy</label>
+				<label class="btn btn-outline-dark" for="type-vc">Vacancy</label>
 
 			</div>
 		</div>
 
-		<div class="logo-wrap">
-			<label for="photo-file" class="logo-area <?= ( isset( $article[ 'image' ] ) ? 'added' : '' ) ?>">
-				<button class="remove-icon logo-remove"></button>
-				<img class="logo" src="<?= $article[ 'image' ] ?? $def_image ?>" data-default="<?= $def_image ?>"
-				     alt="image"/>
-			</label>
-			<input type="file" id="photo-file" accept="image/*" name="article_image" value=""/>
-		</div>
-
-		<div class="general-info">
-			<div class="no-pads">
-
-				<label class="control-wrap">
-					<input type="text"
-					       class="invalidate"
-					       name="article[title]"
-					       placeholder="Title/name"
-					       value="<?= $article[ 'title' ] ?? '' ?>"/>
+		<div class="row">
+			<div class="logo-wrap col">
+				<label for="photo-file" class="logo-area <?= ( isset( $article[ 'image' ] ) ? 'added' : '' ) ?>">
+					<button class="remove-icon logo-remove"></button>
+					<img class="logo" src="<?= $article[ 'image' ] ?? $def_image ?>" data-default="<?= $def_image ?>"
+					     alt="image"/>
 				</label>
+				<input type="file"
+				       id="photo-file"
+				       class="visually-hidden"
+				       accept="image/*"
+				       name="article_image"
+				       value=""/>
+			</div>
 
-				<label class="control-wrap">
-                    <textarea name="article[excerpt]"
-                              class="article-excerpt invalidate"
-                              rows="5"
-                              placeholder="A few lines in short..."><?= $article[ 'excerpt' ] ?? '' ?></textarea>
-				</label>
+			<div class="general-info col-6">
+				<div class="list-group">
+					<label class="list-group-item p-0">
+						<input type="text"
+						       class="form-control border-0 invalidate"
+						       name="article[title]"
+						       placeholder="Title/name"
+						       value="<?= $article[ 'title' ] ?? '' ?>"/>
+					</label>
 
+					<label class="list-group-item p-0">
+					<textarea name="article[excerpt]"
+					          class="form-control border-0 article-excerpt invalidate"
+					          rows="5"
+					          placeholder="A few lines in short..."><?= $article[ 'excerpt' ] ?? '' ?></textarea>
+					</label>
+				</div>
 			</div>
 		</div>
 
-		<div class="categories-tags-select basic-info">
+		<div class="categories-tags-select basic-info mb-4">
 
-			<h3>Categories, tags, salary and experience</h3>
-			<p class="description">
+			<h3 class="text-center">Categories, tags, salary and experience</h3>
+			<p class="text-center description">
 				Select/add categories, tags and set the minimum salary level and experience.
 			</p>
-			<label class="control-wrap">
-				<select id="article_categories" name="article[categories][]" data-placeholder="Categories" multiple
-				        class="sel2 invalidate">
-					<?php
-					if ( $cats = get_terms( $cats_args ) ) {
-						foreach ( $cats as $cat ) {
-							echo '<option value="' . $cat->term_id . '" ' .
-							     ( in_array( $cat->term_id, $post_cats ?? [] ) ? 'selected' : '' ) . '>' .
-							     $cat->name .
-							     '</option>';
+			<div class="list-group">
+
+				<label class="list-group-item p-0" for="article_categories">
+
+					<select id="article_categories"
+					        class="sel2 invalidate form-select border-0"
+					        name="article[categories][]"
+					        data-placeholder="Categories"
+					        multiple>
+						<?php
+						if ( $cats = get_terms( $cats_args ) ) {
+							foreach ( $cats as $cat ) {
+								echo '<option value="' . $cat->term_id . '" ' .
+								     ( in_array( $cat->term_id, $post_cats ?? [] ) ? 'selected' : '' ) . '>' .
+								     $cat->name .
+								     '</option>';
+							}
+						} else {
+							echo '<option value="-1" selected disabled>No categories yet</option>';
 						}
-					} else {
-						echo '<option value="-1" selected disabled>No categories yet</option>';
-					}
-					?>
-				</select>
-			</label>
+						?>
+					</select>
+				</label>
 
-			<label class="control-wrap">
-				<select id="article_tags" name="article[tags][]" data-placeholder="Tags" multiple
-				        class="sel2 invalidate">
-					<?php
-					if ( $tags = get_terms( $tags_args ) ) {
-						foreach ( $tags as $tag ) {
-							echo '<option value="' . $tag->slug . '" ' .
-							     ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
-							     $tag->name .
-							     '</option>';
+				<label class="list-group-item p-0" for="article_tags">
+
+					<select id="article_tags"
+					        class="sel2 invalidate form-select border-0"
+					        name="article[tags][]"
+					        data-placeholder="Tags"
+					        multiple>
+						<?php
+						if ( $tags = get_terms( $tags_args ) ) {
+							foreach ( $tags as $tag ) {
+								echo '<option value="' . $tag->slug . '" ' .
+								     ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
+								     $tag->name .
+								     '</option>';
+							}
+						} else {
+							echo '<option value="-1" selected disabled>No tags yet</option>';
 						}
-					} else {
-						echo '<option value="-1" selected disabled>No tags yet</option>';
-					}
-					?>
-				</select>
-			</label>
+						?>
+					</select>
+				</label>
 
-			<label class="control-wrap">
-				<input type="number" class="invalidate emeon-salary"
-				       name="article[salary]"
-				       pattern="[0-9]" step="1" min="0"
-				       value="<?= $article[ 'salary' ] ?? '' ?>"
-				       placeholder="Salary from (EUR)"/>
-				<span class="emeon-currency-label"><?= EMEON_CUR_SYMB ?></span>
-			</label>
+				<label class="input-group list-group-item p-0 d-flex">
+					<input type="number" class="invalidate form-control border-0 emeon-salary"
+					       name="article[salary]"
+					       pattern="[0-9]" step="50" min="0"
+					       value="<?= $article[ 'salary' ] ?? '' ?>"
+					       placeholder="Salary from (EUR)"/>
+					<span class="input-group-text border-0 rounded-0"><?= EMEON_CUR_SYMB ?></span>
+				</label>
 
-			<label class="control-wrap">
-				<select name="article[experience]" class="invalidate sel2">
-					<?php
-					foreach ( EMEON_EXP_LVL as $index => $lvl ) {
-						echo '<option ' .
-						     ( isset ( $article[ 'experience' ] ) && ( (int) $article[ 'experience' ] === $index ) ? 'selected' : '' ) . '
+				<label class="list-group-item w-100 p-0">
+					<select name="article[experience]" class="invalidate form-select border-0">
+						<?php
+						foreach ( EMEON_EXP_LVL as $index => $lvl ) {
+							echo '<option ' .
+							     ( isset ( $article[ 'experience' ] ) && ( (int) $article[ 'experience' ] === $index ) ? 'selected' : '' ) . '
                             value="' . $index . '">' . $lvl .
-						     '</option>';
-					}
-					?>
-				</select>
-			</label>
-
+							     '</option>';
+						}
+						?>
+					</select>
+				</label>
+			</div>
 		</div>
 
-		<div class="article-text">
+		<div class="article-text mb-4">
 
-			<h3>
+			<h3 class="text-center">
 				Content
 			</h3>
-			<p class="description">
+			<p class="text-center description">
 				Use official language communication only here. Any impolite phrases and words will cause moderation
 				delay automatically.
 			</p>
@@ -228,42 +245,40 @@ $cats_args = [
 
 		<div class="contact-info">
 
-			<h3>Contacts and attachment</h3>
+			<h3 class="text-center">Contacts and attachment</h3>
 
-			<p class="description">Info below will be visible to authorized users only</p>
+			<p class="text-center description">Info below will be visible to authorized users only</p>
 
-			<div class="no-pads">
-
-				<label class="control-wrap">
+			<div class="list-group">
+				<label class="list-group-item p-0">
 					<input type="email"
 					       name="article[email]"
-					       class="invalidate"
+					       class="form-control border-0 invalidate"
 					       value="<?= $article[ 'email' ] ?? '' ?>"
 					       placeholder="your@email.here"
 					/>
 				</label>
 
-				<label class="control-wrap">
+				<label class="list-group-item p-0">
 					<input type="text"
 					       name="article[phone]"
-					       class="invalidate"
+					       class="form-control border-0 invalidate"
 					       placeholder="+1 233 456 789"
 					       value="<?= $article[ 'phone' ] ?? '' ?>"/>
 				</label>
 
-				<label class="control-wrap">
+				<label class="list-group-item p-0">
                     <textarea name="article[urls]"
                               rows="4"
-                              class="article-urls invalidate"
+                              class="form-control border-0 article-urls invalidate"
                               placeholder=
                               " - Website URL <?= "\n" ?> - Portfolio URL<?= "\n" ?> - Another phone number<?= "\n" ?> ..."
                     ><?= $article[ 'urls' ] ?? '' ?></textarea>
 				</label>
-
 			</div>
 		</div>
 
-		<div class="attachment-area">
+		<div class="attachment-area mb-4">
 
 			<label for="attachment-file" id="attachment-info"
 			       class="<?= ( isset( $article[ 'attachment' ] ) ? 'added' : '' ) ?>">
@@ -272,20 +287,20 @@ $cats_args = [
 				<span id="no-attachment">PDF for downloading. Max size is 5 mb.</span>
 			</label>
 
-			<input type="file" id="attachment-file" name="article_attachment" accept=".pdf"/>
+			<input type="file" id="attachment-file" class="visually-hidden" name="article_attachment" accept=".pdf"/>
 
 		</div>
 
-		<div class="join-emeon-prompt">
-			<input id="want_join" type="checkbox" name="article[want_join]" value="yes"/>
-			<label for="want_join">Join Emeon team. <a href="/join-info/" target="_blank"
+		<div class="form-check form-switch join-emeon-prompt mb-5">
+			<input id="want_join" class="form-check-input" type="checkbox" name="article[want_join]" value="yes"/>
+			<label for="want_join" class="form-check-label">Join Emeon team. <a href="/join-info/" class="link-info" target="_blank"
 			                                           title="Find out more about this offer">Read more</a></label>
 		</div>
 
-		<div class="cta-controls">
-			<button type="submit" class="button cta-button">Save</button>
+		<div class="cta-controls d-flex justify-content-between align-items-center">
+			<button type="submit" class="button cta-button btn btn-primary px-5">Save</button>
 			<br/>
-			<a href="/account/" class="cta-cancel">Cancel</a>
+			<a href="/account/" class="cta-cancel btn btn-outline-danger">Cancel</a>
 		</div>
 
 

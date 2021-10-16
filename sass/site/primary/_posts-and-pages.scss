@@ -2,10 +2,10 @@
 	display: block;
 }
 
-.post,
-.page {
-	margin: 0;
-}
+//.post,
+//.page {
+//	margin: 0;
+//}
 
 .updated:not(.published) {
 	display: none;
@@ -23,9 +23,7 @@
 }
 
 .site-content {
-	max-width: 1440px;
-	margin: 0 auto;
-	padding: 0 20px;
+	padding-bottom: 100px;
 
 	&.page {
 		padding-top: 120px;
@@ -92,10 +90,6 @@ article.post {
 		display: flex;
 		justify-content: space-between;
 	}
-}
-
-article.page {
-	text-align: center;
 }
 
 /* Single post page */
