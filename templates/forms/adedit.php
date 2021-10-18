@@ -79,7 +79,7 @@ $cats_args = [
 
 <form action=" "
       method="post"
-      class="emeon-form form-article-edit mx-auto col-lg-9 col-xl-8 col-xxl-7"
+      class="emeon-form form-article-edit mx-auto mt-5 col-lg-9 col-xl-8 col-xxl-7"
       id="form-article-edit"
       enctype="multipart/form-data"
       name="emeon-form">
