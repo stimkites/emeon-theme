@@ -28,6 +28,55 @@ new class {
 
 		// Adedit form permalink
 		add_filter( 'emeon_adedit_url', [ $this, 'get_adedit_url' ] );
+
+		// All categories selectors
+		add_filter( 'emeon_cats', [ $this, 'fetch_cats' ], 10, 2 );
+	}
+
+	/**
+	 * Render all categories for front-end selectors as options
+	 *
+	 * @param string $html
+	 * @param null | array $post_cats
+	 *
+	 * @return string
+	 */
+	static function fetch_cats( $html = '', $post_cats = null ){
+		if( ! empty( $html ) )
+			return $html; //already collected
+
+		static $emeon_cats_html;
+		if( null !== $emeon_cats_html )
+			return $emeon_cats_html; // Already in Ram
+
+		if( empty( $post_cats ) ) {
+			global $post;
+			if( ! empty( $post ) )
+				$post_cats  = wp_get_post_categories( $post->ID );
+			else
+				$post_cats = $_POST['f'] ?? [];
+		}
+		$ex_cats = [ 1 ];
+		foreach ( EMEON_TYPES as $type ) {
+			if ( $term = get_term_by( 'slug', $type, 'category' ) ) {
+				$ex_cats[] = $term->term_id;
+			}
+		}
+
+		$cats_args = [
+			'taxonomy'   => 'category',
+			'exclude'    => $ex_cats,
+			'hide_empty' => 0
+		];
+
+		foreach ( get_terms( $cats_args ) as $cat )
+			$emeon_cats_html .=
+				'<option value="' . $cat->term_id . '" ' .
+		            ( in_array( $cat->term_id, $post_cats ?? [] ) ? 'selected' : '' ) . '>' .
+		            $cat->name .
+	            '</option>';
+
+		return $emeon_cats_html;
 	}
 
 	/**

@@ -35,6 +35,29 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 	<header id="masthead" class="site-header">
 		<div class="site-content site-header__content container">
 
+			<form action="/search/" id="search-form" method="post" enctype="multipart/form-data" class="search-filters">
+				<fieldset class="search-field input-group">
+					<input type="search" class="form-control border-end-0 border"
+					       name="s"
+					       value="<?=$_POST['s']??''?>" />
+					<span class="input-group-append">
+		                <button class="btn btn-outline-secondary bg-white border-start-0 border ms-n3"
+		                        type="button">
+		                    <i class="fa fa-search"></i>
+		                </button>
+		            </span>
+				</fieldset>
+				<fieldset class="filters-field input-group rounded">
+					<select class="filters sel2 form-select border-0"
+					        data-placeholder="Categories filter"
+					        multiple
+					        name="f">
+						<?=apply_filters( 'emeon_cats', '', $_POST['f']??[] )?>
+					</select>
+				</fieldset>
+
+			</form>
+
 			<div class="site-branding">
 				<a class="home-link" href="<?= get_home_url() ?>">
 					<span class="logo-wrap">
@@ -63,7 +86,7 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 			<nav class="nav-shop">
 				<ul class="menu">
 					<li class="menu-item search">
-						<a href="#">
+						<a href="#" id="toggle-search">
 							<i class="far fa-search toggle-search"></i>
 						</a>
 					</li>

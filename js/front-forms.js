@@ -316,4 +316,33 @@
 
 } )( jQuery.noConflict() ).init(); /** My account **/
 
+/** Search form */
+( $ => {
+
+	/**
+	 * Assign all events
+	 *
+	 * @private
+	 */
+	const __assign = function() {
+
+		$( '#toggle-search' ).off().on( 'click', () => {
+			$( '#search-form' ).toggleClass( 'visible', '' );
+		} );
+	};
+
+	return {
+
+		/**
+		 * Initialize account menus
+		 */
+		init: function() {
+			if ( !document.getElementById( 'search-form' ) ) return;
+			$( document ).ready( __assign );
+		},
+
+	};
+
+} )( jQuery.noConflict() ).init(); /** Search form **/
+
 

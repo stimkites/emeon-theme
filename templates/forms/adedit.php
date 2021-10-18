@@ -62,19 +62,6 @@ $tags_args = [
 	'hide_empty' => 0
 ];
 
-$ex_cats = [ 1 ];
-foreach ( EMEON_TYPES as $type ) {
-	if ( $term = get_term_by( 'slug', $type, 'category' ) ) {
-		$ex_cats[] = $term->term_id;
-	}
-}
-
-$cats_args = [
-	'taxonomy'   => 'category',
-	'exclude'    => $ex_cats,
-	'hide_empty' => 0
-];
-
 ?>
 
 <form action=" "
@@ -155,18 +142,7 @@ $cats_args = [
 					        name="article[categories][]"
 					        data-placeholder="Categories"
 					        multiple>
-						<?php
-						if ( $cats = get_terms( $cats_args ) ) {
-							foreach ( $cats as $cat ) {
-								echo '<option value="' . $cat->term_id . '" ' .
-								     ( in_array( $cat->term_id, $post_cats ?? [] ) ? 'selected' : '' ) . '>' .
-								     $cat->name .
-								     '</option>';
-							}
-						} else {
-							echo '<option value="-1" selected disabled>No categories yet</option>';
-						}
-						?>
+						<?=apply_filters( 'emeon_cats', '', $post_cats??[] )?>
 					</select>
 				</label>
 
@@ -177,17 +153,11 @@ $cats_args = [
 					        name="article[tags][]"
 					        data-placeholder="Tags"
 					        multiple>
-						<?php
-						if ( $tags = get_terms( $tags_args ) ) {
-							foreach ( $tags as $tag ) {
-								echo '<option value="' . $tag->slug . '" ' .
+						<?php foreach ( get_terms( $tags_args ) as $tag )
+							echo '<option value="' . $tag->slug . '" ' .
 								     ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
 								     $tag->name .
-								     '</option>';
-							}
-						} else {
-							echo '<option value="-1" selected disabled>No tags yet</option>';
-						}
+							     '</option>';
 						?>
 					</select>
 				</label>

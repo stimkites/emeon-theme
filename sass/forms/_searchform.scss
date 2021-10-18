@@ -1,0 +1,20 @@
+.search-filters {
+	position: absolute;
+	z-index: 2;
+	top: -150px;
+	transition: all ease-in-out .4s;
+	height: 100px;
+	width: 100%;
+	left: 0;
+	background: #fff;
+	border-bottom: 1px solid #999;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: space-between;
+	box-sizing: border-box;
+
+	&.visible {
+		top: 0;
+	}
+}
