@@ -79,7 +79,7 @@ $cats_args = [
 
 <form action=" "
       method="post"
-      class="emeon-form form-article-edit"
+      class="emeon-form form-article-edit mx-auto col-lg-9 col-xl-8 col-xxl-7"
       id="form-article-edit"
       enctype="multipart/form-data"
       name="emeon-form">
@@ -105,7 +105,7 @@ $cats_args = [
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row mb-4">
 			<div class="logo-wrap col">
 				<label for="photo-file" class="logo-area <?= ( isset( $article[ 'image' ] ) ? 'added' : '' ) ?>">
 					<button class="remove-icon logo-remove"></button>
@@ -120,9 +120,9 @@ $cats_args = [
 				       value=""/>
 			</div>
 
-			<div class="general-info col-6">
+			<div class="general-info col-12 col-md-6">
 				<div class="list-group">
-					<label class="list-group-item p-0">
+					<label class="control-wrap list-group-item p-0">
 						<input type="text"
 						       class="form-control border-0 invalidate"
 						       name="article[title]"
@@ -130,7 +130,7 @@ $cats_args = [
 						       value="<?= $article[ 'title' ] ?? '' ?>"/>
 					</label>
 
-					<label class="list-group-item p-0">
+					<label class="control-wrap list-group-item p-0">
 					<textarea name="article[excerpt]"
 					          class="form-control border-0 article-excerpt invalidate"
 					          rows="5"
@@ -148,7 +148,7 @@ $cats_args = [
 			</p>
 			<div class="list-group">
 
-				<label class="list-group-item p-0" for="article_categories">
+				<label class="control-wrap list-group-item p-0" for="article_categories">
 
 					<select id="article_categories"
 					        class="sel2 invalidate form-select border-0"
@@ -170,7 +170,7 @@ $cats_args = [
 					</select>
 				</label>
 
-				<label class="list-group-item p-0" for="article_tags">
+				<label class="control-wrap list-group-item p-0" for="article_tags">
 
 					<select id="article_tags"
 					        class="sel2 invalidate form-select border-0"
@@ -192,7 +192,7 @@ $cats_args = [
 					</select>
 				</label>
 
-				<label class="input-group list-group-item p-0 d-flex">
+				<label class="control-wrap input-group list-group-item p-0 d-flex">
 					<input type="number" class="invalidate form-control border-0 emeon-salary"
 					       name="article[salary]"
 					       pattern="[0-9]" step="50" min="0"
@@ -201,7 +201,7 @@ $cats_args = [
 					<span class="input-group-text border-0 rounded-0"><?= EMEON_CUR_SYMB ?></span>
 				</label>
 
-				<label class="list-group-item w-100 p-0">
+				<label class="control-wrap list-group-item w-100 p-0">
 					<select name="article[experience]" class="invalidate form-select border-0">
 						<?php
 						foreach ( EMEON_EXP_LVL as $index => $lvl ) {
@@ -243,14 +243,14 @@ $cats_args = [
 
 		</div>
 
-		<div class="contact-info">
+		<div class="contact-info mb-5">
 
 			<h3 class="text-center">Contacts and attachment</h3>
 
 			<p class="text-center description">Info below will be visible to authorized users only</p>
 
 			<div class="list-group">
-				<label class="list-group-item p-0">
+				<label class="control-wrap list-group-item p-0">
 					<input type="email"
 					       name="article[email]"
 					       class="form-control border-0 invalidate"
@@ -259,7 +259,7 @@ $cats_args = [
 					/>
 				</label>
 
-				<label class="list-group-item p-0">
+				<label class="control-wrap list-group-item p-0">
 					<input type="text"
 					       name="article[phone]"
 					       class="form-control border-0 invalidate"
@@ -267,7 +267,7 @@ $cats_args = [
 					       value="<?= $article[ 'phone' ] ?? '' ?>"/>
 				</label>
 
-				<label class="list-group-item p-0">
+				<label class="control-wrap list-group-item p-0">
                     <textarea name="article[urls]"
                               rows="4"
                               class="form-control border-0 article-urls invalidate"
@@ -293,8 +293,13 @@ $cats_args = [
 
 		<div class="form-check form-switch join-emeon-prompt mb-5">
 			<input id="want_join" class="form-check-input" type="checkbox" name="article[want_join]" value="yes"/>
-			<label for="want_join" class="form-check-label">Join Emeon team. <a href="/join-info/" class="link-info" target="_blank"
-			                                           title="Find out more about this offer">Read more</a></label>
+			<label for="want_join" class="form-check-label">
+				Join Emeon team.
+				<a href="/join-info/"
+				   class="link-info"
+				   target="_blank"
+				   title="Find out more about this offer">Read more</a>
+			</label>
 		</div>
 
 		<div class="cta-controls d-flex justify-content-between align-items-center">
@@ -302,7 +307,6 @@ $cats_args = [
 			<br/>
 			<a href="/account/" class="cta-cancel btn btn-outline-danger">Cancel</a>
 		</div>
-
 
 		<input type="hidden" name="emeon_form_action" value="adedit"/>
 		<input type="hidden" name="article[id]" value="<?= $post->ID ?? 0 ?>"/>
