@@ -1199,13 +1199,7 @@ table {
   margin: 0 !important;
   height: 23px !important;
 }
-.emeon-form__fieldset .attachment-area {
-  width: 100%;
-}
 .emeon-form__fieldset .attachment-area #attachment-info {
-  margin: 20px auto;
-  padding: 0;
-  text-align: center;
   border: 3px dotted #ccc;
   cursor: pointer;
   display: flex;

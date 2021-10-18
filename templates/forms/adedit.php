@@ -93,14 +93,14 @@ $cats_args = [
 				       type="radio" <?= ( $article[ 'type' ] === 'candidates' ? 'checked' : '' ) ?>
 				       name="article[type]"
 				       value="candidates"/>
-				<label class="btn btn-outline-dark" for="type-cv">Candidate</label>
+				<label class="btn btn-outline-secondary" for="type-cv">Candidate</label>
 
 				<input id="type-vc"
 				       class="btn-check"
 				       type="radio" <?= ( $article[ 'type' ] === 'vacancies' ? 'checked' : '' ) ?>
 				       name="article[type]"
 				       value="vacancies"/>
-				<label class="btn btn-outline-dark" for="type-vc">Vacancy</label>
+				<label class="btn btn-outline-secondary" for="type-vc">Vacancy</label>
 
 			</div>
 		</div>
@@ -278,10 +278,10 @@ $cats_args = [
 			</div>
 		</div>
 
-		<div class="attachment-area mb-4">
+		<div class="attachment-area mb-4 w-100">
 
 			<label for="attachment-file" id="attachment-info"
-			       class="<?= ( isset( $article[ 'attachment' ] ) ? 'added' : '' ) ?>">
+			       class="mx-auto my-3 p-0 text-center border-secondary rounded-3 <?= ( isset( $article[ 'attachment' ] ) ? 'added' : '' ) ?>">
 				<span class="remove-icon attachment-remove"></span>
 				<iframe id="attachment-preview" src="<?= $article[ 'attachment' ] ?? '' ?>"></iframe>
 				<span id="no-attachment">PDF for downloading. Max size is 5 mb.</span>
@@ -292,7 +292,7 @@ $cats_args = [
 		</div>
 
 		<div class="form-check form-switch join-emeon-prompt mb-5">
-			<input id="want_join" class="form-check-input" type="checkbox" name="article[want_join]" value="yes"/>
+			<input id="want_join" class="form-check-input border-secondary bg-secondary btn-secondary text-secondary" type="checkbox" name="article[want_join]" value="yes"/>
 			<label for="want_join" class="form-check-label">
 				Join Emeon team.
 				<a href="/join-info/"
@@ -303,7 +303,7 @@ $cats_args = [
 		</div>
 
 		<div class="cta-controls d-flex justify-content-between align-items-center">
-			<button type="submit" class="button cta-button btn btn-primary px-5">Save</button>
+			<button type="submit" class="button cta-button btn btn-secondary px-5">Save</button>
 			<br/>
 			<a href="/account/" class="cta-cancel btn btn-outline-danger">Cancel</a>
 		</div>
