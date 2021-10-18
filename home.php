@@ -89,7 +89,7 @@ get_header();
 			<section class="section section--slider section--candidates">
 				<h2 class="section__header">CANDIDATES</h2>
 				<div class="candidates candidates--swiper swiper-slider" width="600" height="300">
-					<div class="swiper-wrapper">
+					<div class="swiper-wrapper align-items-stretch py-5">
 						<?php
 						global $post;
 
@@ -109,7 +109,7 @@ get_header();
 
 							foreach ( $candidates as $post ) {
 								setup_postdata( $post );
-								get_template_part( 'template-parts/content', 'swiper-slide' );
+								get_template_part( 'template-parts/content', 'candidate' );
 							}
 
 							wp_reset_postdata();
@@ -126,7 +126,7 @@ get_header();
 				<div class="swiper-pagination swiper-pagination--candidates"></div>
 
 				<!-- If we need navigation buttons -->
-				<div class="swiper-button-prev swiper-button-prev--candidates"></div>
+				<div class="swiper-button-prev swiper-button-prev--candidates "></div>
 				<div class="swiper-button-next swiper-button-next--candidates"></div>
 			</section>
 

@@ -31,7 +31,7 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 ?>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
+<div id="page" class="site bg-light">
 	<header id="masthead" class="site-header">
 		<div class="site-content site-header__content container">
 

@@ -649,6 +649,14 @@ body.single-post #primary .post-thumbnail img {
   width: auto;
 }
 
+.hover-shadow {
+  transition: box-shadow 0.2s;
+}
+.hover-shadow:hover {
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s;
+}
+
 /*--------------------------------------------------------------
 ## Sections
 --------------------------------------------------------------*/
@@ -1476,7 +1484,14 @@ a:hover, a:active {
 }
 
 .swiper-pagination-bullets.swiper-pagination-horizontal {
-  bottom: -10px;
+  bottom: -40px;
+}
+
+.swiper-button-prev--candidates {
+  left: -50px;
+}
+.swiper-button-next--candidates {
+  right: -50px;
 }
 
 /*--------------------------------------------------------------
@@ -1600,6 +1615,14 @@ body.single-post #primary {
 body.single-post #primary .post-thumbnail img {
   max-height: 240px;
   width: auto;
+}
+
+.hover-shadow {
+  transition: box-shadow 0.2s;
+}
+.hover-shadow:hover {
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s;
 }
 
 /*--------------------------------------------------------------

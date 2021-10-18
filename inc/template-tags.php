@@ -126,7 +126,7 @@ if ( ! function_exists( 'emeon_post_thumbnail' ) ) :
 		if ( is_singular() ) :
 			?>
 
-			<div class="post-thumbnail">
+			<div class="post-thumbnail ">
 				<?php the_post_thumbnail( 'post-thumbnail', array(
 					'class' => '',
 				) ); ?>
@@ -140,7 +140,7 @@ if ( ! function_exists( 'emeon_post_thumbnail' ) ) :
 					'alt' => the_title_attribute( array(
 						'echo' => false,
 					) ),
-					'class' => 'h-100 w-100 img-cover rounded-top',
+					'class' => 'h-100 w-100 img-cover rounded-circle',
 				) );
 				?>
 			</a>
