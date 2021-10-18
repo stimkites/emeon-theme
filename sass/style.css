@@ -1494,6 +1494,18 @@ a:hover, a:active {
   right: -50px;
 }
 
+@media (max-width: 767px) {
+  .swiper-button-prev--candidates {
+    left: 10px;
+  }
+  .swiper-button-next--candidates {
+    right: 10px;
+  }
+
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -10px;
+  }
+}
 /*--------------------------------------------------------------
 # Widgets
 --------------------------------------------------------------*/
