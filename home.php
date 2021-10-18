@@ -48,7 +48,7 @@ get_header();
 			</section>
 
 			<section class="section section--slider section--vacancies">
-				<h2 class="section__header">VACANCIES</h2>
+				<h2 class="section__header text-center h1 my-5">VACANCIES</h2>
 				<div class="vacancies vacancies--swiper swiper-slider" width="600" height="300">
 					<div class="swiper-wrapper">
 						<?php
@@ -87,7 +87,7 @@ get_header();
 			</section>
 
 			<section class="section section--slider section--candidates">
-				<h2 class="section__header">CANDIDATES</h2>
+				<h2 class="section__header text-center h1 my-5">CANDIDATES</h2>
 				<div class="candidates candidates--swiper swiper-slider" width="600" height="300">
 					<div class="swiper-wrapper align-items-stretch py-5">
 						<?php
@@ -131,7 +131,7 @@ get_header();
 			</section>
 
 			<section class="section section--slider section--stories">
-				<h2 class="section__header">STORIES</h2>
+				<h2 class="section__header text-center h1 my-5">STORIES</h2>
 				<div class="stories stories--swiper swiper-slider" width="600" height="300">
 					<div class="swiper-wrapper">
 						<?php

@@ -345,6 +345,49 @@ template {
 }
 
 /*--------------------------------------------------------------
+# Layouts
+--------------------------------------------------------------*/
+.m-n1 {
+  margin: -0.25rem !important;
+}
+
+.m-n2 {
+  margin: -0.5rem !important;
+}
+
+.m-n3 {
+  margin: -1rem !important;
+}
+
+.m-n4 {
+  margin: -1.5rem !important;
+}
+
+.m-n5 {
+  margin: -3rem !important;
+}
+
+.mx-n1 {
+  margin: 0 -0.25rem !important;
+}
+
+.mx-n2 {
+  margin: 0 -0.5rem !important;
+}
+
+.mx-n3 {
+  margin: 0 -1rem !important;
+}
+
+.mx-n4 {
+  margin: 0 -1.5rem !important;
+}
+
+.mx-n5 {
+  margin: 0 -3rem !important;
+}
+
+/*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 .site-header {
@@ -562,8 +605,14 @@ template {
   margin: 0 0 1.5em;
 }
 
+.site {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 .site-content {
   padding-bottom: 100px;
+  flex-grow: 1;
 }
 .site-content.page {
   padding-top: 120px;
@@ -596,29 +645,6 @@ body.mobile-menu-opened #page::after {
 
 .section {
   margin-bottom: 100px;
-}
-.section__header {
-  font-size: 2rem;
-  font-weight: 900;
-}
-
-.card .post-thumbnail {
-  height: 380px;
-}
-@media (max-width: 1199px) {
-  .card .post-thumbnail {
-    height: 270px;
-  }
-}
-@media (max-width: 991px) {
-  .card .post-thumbnail {
-    height: 500px;
-  }
-}
-@media (max-width: 575px) {
-  .card .post-thumbnail {
-    height: 80vw;
-  }
 }
 
 article.post .entry-meta {
@@ -662,12 +688,6 @@ body.single-post #primary .post-thumbnail img {
 --------------------------------------------------------------*/
 .section--slider {
   position: relative;
-}
-.section--slider .post-thumbnail {
-  display: block;
-  height: 200px;
-  width: 200px;
-  margin: 0 auto;
 }
 .section--slider .attachment-post-thumbnail {
   width: 100%;
@@ -1081,6 +1101,7 @@ big {
 --------------------------------------------------------------*/
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
 *,
@@ -1091,6 +1112,7 @@ html {
 }
 
 body {
+  height: 100%;
   background: #fff;
   /* Fallback for when there is no custom background color defined. */
 }
@@ -1143,6 +1165,14 @@ img.img-cover {
 }
 img.img-contain {
   object-fit: contain;
+}
+
+.post-thumbnail {
+  display: block;
+  height: 200px;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
 }
 
 figure {
@@ -1542,8 +1572,14 @@ a:hover, a:active {
   margin: 0 0 1.5em;
 }
 
+.site {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 .site-content {
   padding-bottom: 100px;
+  flex-grow: 1;
 }
 .site-content.page {
   padding-top: 120px;
@@ -1576,29 +1612,6 @@ body.mobile-menu-opened #page::after {
 
 .section {
   margin-bottom: 100px;
-}
-.section__header {
-  font-size: 2rem;
-  font-weight: 900;
-}
-
-.card .post-thumbnail {
-  height: 380px;
-}
-@media (max-width: 1199px) {
-  .card .post-thumbnail {
-    height: 270px;
-  }
-}
-@media (max-width: 991px) {
-  .card .post-thumbnail {
-    height: 500px;
-  }
-}
-@media (max-width: 575px) {
-  .card .post-thumbnail {
-    height: 80vw;
-  }
 }
 
 article.post .entry-meta {
@@ -1642,12 +1655,6 @@ body.single-post #primary .post-thumbnail img {
 --------------------------------------------------------------*/
 .section--slider {
   position: relative;
-}
-.section--slider .post-thumbnail {
-  display: block;
-  height: 200px;
-  width: 200px;
-  margin: 0 auto;
 }
 .section--slider .attachment-post-thumbnail {
   width: 100%;

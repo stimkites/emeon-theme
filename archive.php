@@ -17,14 +17,14 @@ get_header();
 			<div class="container px-0">
 			<?php if ( have_posts() ) : ?>
 
-				<header class="page-header text-center">
+				<header class="page-header text-center mb-5">
 					<?php
 					the_archive_title( '<h1 class="page-title display-1 h1">', '</h1>' );
 					the_archive_description( '<div class="archive-description lead">', '</div>' );
 					?>
 				</header><!-- .page-header -->
 
-				<div class="d-flex flex-wrap row-cols-1 row-cols-md-2 row-cols-lg-4">
+				<div class="d-flex flex-wrap row-cols-1 row-cols-md-2 row-cols-lg-4 align-items-stretch mx-n2">
 					<?php
 					/* Start the Loop */
 					while ( have_posts() ) :
