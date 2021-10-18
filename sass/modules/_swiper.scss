@@ -14,13 +14,15 @@
 
 .swiper-button{
 	&-prev {
-		&--candidates {
+		&--candidates,
+		&--vacancies {
 			left: -50px;
 		}
 	}
 
 	&-next {
-		&--candidates {
+		&--candidates,
+		&--vacancies {
 			right: -50px;
 		}
 	}
@@ -29,13 +31,15 @@
 @media (max-width: 767px) {
 	.swiper-button{
 		&-prev {
-			&--candidates {
+			&--candidates,
+			&--vacancies {
 				left: 10px;
 			}
 		}
 
 		&-next {
-			&--candidates {
+			&--candidates,
+			&--vacancies {
 				right: 10px;
 			}
 		}

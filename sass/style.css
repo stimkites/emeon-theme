@@ -1447,18 +1447,18 @@ a:hover, a:active {
   bottom: -40px;
 }
 
-.swiper-button-prev--candidates {
+.swiper-button-prev--candidates, .swiper-button-prev--vacancies {
   left: -50px;
 }
-.swiper-button-next--candidates {
+.swiper-button-next--candidates, .swiper-button-next--vacancies {
   right: -50px;
 }
 
 @media (max-width: 767px) {
-  .swiper-button-prev--candidates {
+  .swiper-button-prev--candidates, .swiper-button-prev--vacancies {
     left: 10px;
   }
-  .swiper-button-next--candidates {
+  .swiper-button-next--candidates, .swiper-button-next--vacancies {
     right: 10px;
   }
 
