@@ -127,17 +127,20 @@ if ( ! function_exists( 'emeon_post_thumbnail' ) ) :
 			?>
 
 			<div class="post-thumbnail">
-				<?php the_post_thumbnail(); ?>
+				<?php the_post_thumbnail( 'post-thumbnail', array(
+					'class' => '',
+				) ); ?>
 			</div><!-- .post-thumbnail -->
 
 		<?php else : ?>
 
-			<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
+			<a class="post-thumbnail card-img" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 				<?php
 				the_post_thumbnail( 'post-thumbnail', array(
 					'alt' => the_title_attribute( array(
 						'echo' => false,
 					) ),
+					'class' => 'h-100 w-100 img-cover rounded-top',
 				) );
 				?>
 			</a>

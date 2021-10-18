@@ -2,11 +2,6 @@
 	display: block;
 }
 
-//.post,
-//.page {
-//	margin: 0;
-//}
-
 .updated:not(.published) {
 	display: none;
 }
@@ -66,6 +61,24 @@ body.mobile-menu-opened {
 	}
 }
 
+.card {
+	.post-thumbnail {
+		height: 380px;
+
+		@media (max-width: 1199px) {
+			height: 270px;
+		}
+
+		@media (max-width: 991px) {
+			height: 500px;
+		}
+
+		@media (max-width: 575px) {
+			height: 80vw;
+		}
+	}
+}
+
 
 @media screen and (max-width: 1280px) {
 
@@ -101,10 +114,6 @@ body.single-post {
 		justify-content: center;
 
 		.post-thumbnail {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-
 			img {
 				max-height: 240px;
 				width: auto;

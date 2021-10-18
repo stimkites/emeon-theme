@@ -357,3 +357,18 @@ add_filter( 'wp_get_attachment_url', function ( $url ) {
 
 	return $url;
 }, 999 );
+
+
+/**
+ * Clean up page titles
+ */
+add_filter( 'get_the_archive_title', function ($title) {
+	if ( is_category() ) {
+		$title = single_cat_title( '', false );
+	} elseif ( is_tag() ) {
+		$title = single_tag_title( '', false );
+	} elseif ( is_author() ) {
+		$title = '<span class="vcard">' . get_the_author() . '</span>' ;
+	}
+	return $title;
+});
