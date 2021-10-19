@@ -8,7 +8,7 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'px-2 d-flex mb-4' ); ?>>
-	<a href="<?php the_permalink(); ?>" class="p-4 card border-0 hover-shadow mx-auto">
+	<a href="<?php the_permalink(); ?>" class="p-4 card border-0 hover-shadow mx-auto w-100">
 
 		<span class="post-thumbnail card-img">
 			<?php

@@ -30,7 +30,7 @@ get_header();
 
 							foreach ( $vacancies as $post ) {
 								setup_postdata( $post );
-								get_template_part( 'template-parts/content', 'swiper-slide' );
+								get_template_part( 'template-parts/content', 'swiper-slide-full-width' );
 							}
 
 							wp_reset_postdata();
@@ -48,7 +48,7 @@ get_header();
 			</section>
 
 			<section class="section section--slider section--vacancies">
-				<h2 class="section__header text-center h1 my-5">VACANCIES</h2>
+				<h2 class="section__header text-center h1 mb-5 pt-5">VACANCIES</h2>
 				<div class="vacancies vacancies--swiper swiper-slider" width="600" height="300">
 					<div class="swiper-wrapper">
 						<?php
@@ -65,7 +65,7 @@ get_header();
 
 							foreach ( $vacancies as $post ) {
 								setup_postdata( $post );
-								get_template_part( 'template-parts/content', 'swiper-slide' );
+								get_template_part( 'template-parts/content', 'swiper-slide-card' );
 							}
 
 							wp_reset_postdata();
@@ -87,9 +87,9 @@ get_header();
 			</section>
 
 			<section class="section section--slider section--candidates">
-				<h2 class="section__header text-center h1 my-5">CANDIDATES</h2>
+				<h2 class="section__header text-center h1 pt-5 mb-5">CANDIDATES</h2>
 				<div class="candidates candidates--swiper swiper-slider" width="600" height="300">
-					<div class="swiper-wrapper align-items-stretch py-5">
+					<div class="swiper-wrapper align-items-stretch">
 						<?php
 						global $post;
 
@@ -109,7 +109,7 @@ get_header();
 
 							foreach ( $candidates as $post ) {
 								setup_postdata( $post );
-								get_template_part( 'template-parts/content', 'candidate' );
+								get_template_part( 'template-parts/content', 'swiper-slide-card' );
 							}
 
 							wp_reset_postdata();
@@ -131,7 +131,7 @@ get_header();
 			</section>
 
 			<section class="section section--slider section--stories">
-				<h2 class="section__header text-center h1 my-5">STORIES</h2>
+				<h2 class="section__header text-center h1 pt-5 mb-5">STORIES</h2>
 				<div class="stories stories--swiper swiper-slider" width="600" height="300">
 					<div class="swiper-wrapper">
 						<?php
@@ -148,7 +148,7 @@ get_header();
 
 							foreach ( $stories as $post ) {
 								setup_postdata( $post );
-								get_template_part( 'template-parts/content', 'swiper-slide' );
+								get_template_part( 'template-parts/content', 'swiper-slide-full-width' );
 							}
 
 							wp_reset_postdata();
