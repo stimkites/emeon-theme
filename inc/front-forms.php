@@ -29,25 +29,89 @@ new class {
 		// Adedit form permalink
 		add_filter( 'emeon_adedit_url', [ $this, 'get_adedit_url' ] );
 
-		// All categories selectors
-		add_filter( 'emeon_cats', [ $this, 'fetch_cats' ], 10, 2 );
-		add_filter( 'emeon_cats', [ $this, 'fetch_tags' ], 10, 2 );
+		// All categories/tags selectors
+		add_filter( 'emeon_cats',       [ $this, 'fetch_cats'       ], 10, 2 );
+		add_filter( 'emeon_tags',       [ $this, 'fetch_tags'       ], 10, 2 );
+		add_filter( 'emeon_search',     [ $this, 'search_terms'     ], 10, 2 );
+
 	}
+
+	/**
+	 * Make unique terms by slug
+	 *
+	 * @param array $terms
+	 *
+	 * @return array
+	 */
+	private static function unique_terms( $terms = [] ){
+		$filtered = [];
+		foreach( $terms as $term )
+			if( ! isset( $filtered[ $term->slug ] ) )
+				$filtered[ $term->slug ] = $term;
+		return $filtered;
+	}
+
+	/**
+	 * Re-sort an array of terms
+	 *
+	 * @param $terms
+	 *
+	 * @return mixed
+	 */
+	private static function resort( $terms = [] ){
+		$terms = self::unique_terms( $terms );
+		uasort( $terms, function( $a, $b ){ return strcmp( $a->slug, $b->slug ); } );
+		return $terms;
+	}
+
+	/**
+	 * Fetch all possible terms for Emeon
+	 *
+	 * @param string $html
+	 * @param string $search
+	 *
+	 * @return mixed|string|null
+	 */
+	static function search_terms( $html = '', $search = '' ){
+		if( $html )
+			return $html;
+		static $emeon_all_terms;
+		if( null !== $emeon_all_terms )
+			return $emeon_all_terms;
+		$all = self::resort( array_merge(
+			self::fetch_cats( '', [ 1 ], true ),
+			self::fetch_tags( '', [ 1 ], true )
+		) );
+		$selected = '';
+		foreach ( $all as $cat )
+			$emeon_all_terms .=
+				'<option value="' . $cat->name . '" ' .
+					( ( $selected = $cat->name == $search ) ? 'selected' : '' ) . '>' .
+					$cat->name .
+				'</option>';
+		if( ! $selected && $search )
+			$emeon_all_terms .= '<option value="' . $search . '" selected>' . $search . '</option>';
+		elseif( ! $search )
+			$emeon_all_terms .= '<option value="" selected></option>';
+		return $emeon_all_terms;
+	}
+
 
 	/**
 	 * Render all categories for front-end selectors as options
 	 *
 	 * @param string $html
 	 * @param null | array $post_cats
+	 * @param bool $raw Whenever we return HTML or array of items
 	 *
 	 * @return string
 	 */
-	static function fetch_cats( $html = '', $post_cats = null ){
+	static function fetch_cats( $html = '', $post_cats = null, $raw = false ){
 		if( ! empty( $html ) )
 			return $html; //already collected
 
 		static $emeon_cats_html;
-		if( null !== $emeon_cats_html )
+		if( null !== $emeon_cats_html && ! $raw )
 			return $emeon_cats_html; // Already in Ram
 
 		$emeon_cats_html = '';
@@ -72,7 +136,12 @@ new class {
 			'hide_empty' => false
 		];
 
-		foreach ( get_terms( $cats_args ) as $cat )
+		$terms = get_terms( $cats_args );
+
+		if( $raw )
+			return $terms;
+
+		foreach ( self::resort( $terms ) as $cat )
 			$emeon_cats_html .=
 				'<option value="' . $cat->term_id . '" ' .
 		            ( in_array( $cat->term_id, $post_cats ?? [] ) ? 'selected' : '' ) . '>' .
@@ -87,15 +156,16 @@ new class {
 	 *
 	 * @param string $html
 	 * @param null $post_tags
+	 * @param bool $raw
 	 *
 	 * @return mixed|string
 	 */
-	static function fetch_tags( $html = '', $post_tags = null ){
+	static function fetch_tags( $html = '', $post_tags = null, $raw = false ){
 		if( ! empty( $html ) )
 			return $html; //already collected
 
 		static $emeon_tags_html;
-		if( null !== $emeon_tags_html )
+		if( null !== $emeon_tags_html && ! $raw )
 			return $emeon_tags_html; // Already in Ram
 
 		$emeon_tags_html = '';
@@ -111,12 +181,17 @@ new class {
 			'taxonomy'   => 'post_tag',
 			'hide_empty' => false
 		];
-		foreach ( get_terms( $tags_args ) as $tag )
+
+		$terms = get_terms( $tags_args );
+
+		if( $raw )
+			return $terms;
+
+		foreach ( self::resort( $terms ) as $tag )
 			$emeon_tags_html .= '<option value="' . $tag->slug . '" ' .
 			     ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
 			     $tag->name .
 			     '</option>';
-
 		return $emeon_tags_html;
 	}
 

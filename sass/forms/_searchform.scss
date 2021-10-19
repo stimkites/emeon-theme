@@ -1,13 +1,13 @@
 .search-filters {
 	position: absolute;
 	z-index: 2;
-	top: -150px;
-	transition: all ease-in-out .4s;
-	height: 100px;
-	width: 100%;
-	left: 0;
+	right: 60px;
+	transition: all ease-in-out .2s;
+	overflow: hidden;
+	top: calc( 50% - 20px );
+	width: 0;
 	background: #fff;
-	border-bottom: 1px solid #999;
+	height: 40px;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
@@ -15,6 +15,26 @@
 	box-sizing: border-box;
 
 	&.visible {
-		top: 0;
+		width: calc( 100% - 174px );
+	}
+
+	.search-field {
+		position: relative;
+		width: 100%;
+	}
+
+	@media screen and ( max-width: 768px ) {
+		right: 138px;
+		&.visible {
+			width: calc(100% - 265px);
+		}
+	}
+
+	.select2-selection.search {
+		background-color: #fff;
+		border: none;
+		border-bottom: 1px solid #aaa;
+		border-radius: 0;
+		font-size: 90%;
 	}
 }

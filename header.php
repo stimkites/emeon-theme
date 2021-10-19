@@ -35,26 +35,6 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 	<header id="masthead" class="site-header">
 		<div class="site-content site-header__content container">
 
-			<form action="?" id="search-form" method="post" enctype="multipart/form-data" class="search-filters">
-				<fieldset class="search-field input-group rounded">
-					<select class="search sel2 form-select border-0"
-					        id="search-select"
-					        data-placeholder="Search..."
-					        multiple
-					        name="s[]">
-						<?=apply_filters( 'emeon_cats', '', $_POST['s']??[] )?>
-						<?=apply_filters( 'emeon_tags', '', $_POST['s']??[] )?>
-					</select>
-					<span class="input-group-append">
-		                <button class="btn btn-outline-secondary bg-white border-start-0 border ms-n3"
-		                        type="submit">
-		                    <i class="fa fa-search"></i>
-		                </button>
-		            </span>
-				</fieldset>
-				<span id="search-close"></span>
-			</form>
-
 			<div class="site-branding">
 				<a class="home-link" href="<?= get_home_url() ?>">
 					<span class="logo-wrap">
@@ -94,6 +74,18 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 					</li>
 				</ul>
 			</nav>
+
+			<form action="/" id="search-form" method="post" enctype="multipart/form-data" class="search-filters">
+				<fieldset class="search-field">
+					<select class="search sel2"
+					        id="search-select"
+					        data-placeholder="Search..."
+					        name="s">
+						<?=apply_filters( 'emeon_search', '', $_POST['s']??'' )?>
+					</select>
+				</fieldset>
+				<span id="search-close"></span>
+			</form>
 
 		</div><!-- #content -->
 

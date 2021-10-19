@@ -328,13 +328,20 @@
 	const __assign = function() {
 		$( '#search-select' ).select2( {
 			width: '100%',
-			multiple: true,
+			multiple: false,
+			minimumInputLength: 3,
 			tags: true,
 			allowClear: true,
 			selectionCssClass: ':all:',
+		} ).on( 'change', () => {
+			if( $( '#search-select' ).val().length > 2 )
+				$( '#search-form' ).submit();
 		} );
-		$( '#toggle-search' ).off().on( 'click', () => {
+		$( '#toggle-search' ).off().on( 'click', ( e ) => {
 			$( '#search-form' ).toggleClass( 'visible', '' );
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
 		} );
 	};
 
