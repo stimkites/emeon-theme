@@ -57,11 +57,6 @@ if ( isset( $_POST[ 'article' ] ) ) { // we already posted data, but something w
 	];
 }
 
-$tags_args = [
-	'taxonomy'   => 'post_tag',
-	'hide_empty' => 0
-];
-
 ?>
 
 <form action=" "
@@ -153,12 +148,7 @@ $tags_args = [
 					        name="article[tags][]"
 					        data-placeholder="Tags"
 					        multiple>
-						<?php foreach ( get_terms( $tags_args ) as $tag )
-							echo '<option value="' . $tag->slug . '" ' .
-								     ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
-								     $tag->name .
-							     '</option>';
-						?>
+						<?=apply_filters( 'emeon_tags', '', $post_tags??[] )?>
 					</select>
 				</label>
 
@@ -176,8 +166,12 @@ $tags_args = [
 						<?php
 						foreach ( EMEON_EXP_LVL as $index => $lvl ) {
 							echo '<option ' .
-							     ( isset ( $article[ 'experience' ] ) && ( (int) $article[ 'experience' ] === $index ) ? 'selected' : '' ) . '
-                            value="' . $index . '">' . $lvl .
+							        ( isset ( $article[ 'experience' ] ) &&
+							          ( (int) $article[ 'experience' ] === $index )
+								        ? 'selected'
+								        : ''
+							        ) . '
+                                        value="' . $index . '">' . $lvl .
 							     '</option>';
 						}
 						?>

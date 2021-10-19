@@ -31,6 +31,7 @@ new class {
 
 		// All categories selectors
 		add_filter( 'emeon_cats', [ $this, 'fetch_cats' ], 10, 2 );
+		add_filter( 'emeon_cats', [ $this, 'fetch_tags' ], 10, 2 );
 	}
 
 	/**
@@ -49,12 +50,14 @@ new class {
 		if( null !== $emeon_cats_html )
 			return $emeon_cats_html; // Already in Ram
 
+		$emeon_cats_html = '';
+
 		if( empty( $post_cats ) ) {
 			global $post;
 			if( ! empty( $post ) )
 				$post_cats  = wp_get_post_categories( $post->ID );
 			else
-				$post_cats = $_POST['f'] ?? [];
+				$post_cats = $_POST['s'] ?? [];
 		}
 		$ex_cats = [ 1 ];
 		foreach ( EMEON_TYPES as $type ) {
@@ -66,7 +69,7 @@ new class {
 		$cats_args = [
 			'taxonomy'   => 'category',
 			'exclude'    => $ex_cats,
-			'hide_empty' => 0
+			'hide_empty' => false
 		];
 
 		foreach ( get_terms( $cats_args ) as $cat )
@@ -77,6 +80,44 @@ new class {
 	            '</option>';
 
 		return $emeon_cats_html;
+	}
+
+	/**
+	 * Collect all tags/post tags for the front-end
+	 *
+	 * @param string $html
+	 * @param null $post_tags
+	 *
+	 * @return mixed|string
+	 */
+	static function fetch_tags( $html = '', $post_tags = null ){
+		if( ! empty( $html ) )
+			return $html; //already collected
+
+		static $emeon_tags_html;
+		if( null !== $emeon_tags_html )
+			return $emeon_tags_html; // Already in Ram
+
+		$emeon_tags_html = '';
+
+		if( empty( $post_tags ) ) {
+			global $post;
+			if( ! empty( $post ) )
+				$post_tags  = wp_get_post_tags( $post->ID, [ 'fields' => 'ids' ] );
+			else
+				$post_tags = $_POST['s'] ?? [];
+		}
+		$tags_args = [
+			'taxonomy'   => 'post_tag',
+			'hide_empty' => false
+		];
+		foreach ( get_terms( $tags_args ) as $tag )
+			$emeon_tags_html .= '<option value="' . $tag->slug . '" ' .
+			     ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
+			     $tag->name .
+			     '</option>';
+
+		return $emeon_tags_html;
 	}
 
 	/**
@@ -141,10 +182,6 @@ new class {
 	 * Forms JS
 	 */
 	function enqueue() {
-		global $post;
-		if ( false === strpos( $post->post_content ?? '', '[emeon_forms' ) ) {
-			return;
-		}
 		if ( ! wp_script_is( 'jquery-core' ) ) {
 			wp_enqueue_script( 'jquery-core', "/wp-includes/js/jquery/jquery.min.js", [], '3.6.0' );
 		}

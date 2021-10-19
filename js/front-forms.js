@@ -217,6 +217,7 @@
 		$( '.sel2[multiple]' ).select2( {
 			width: '100%',
 			multiple: true,
+			tags: true,
 			selectionCssClass: ':all:',
 		} );
 		//
@@ -325,7 +326,13 @@
 	 * @private
 	 */
 	const __assign = function() {
-
+		$( '#search-select' ).select2( {
+			width: '100%',
+			multiple: true,
+			tags: true,
+			allowClear: true,
+			selectionCssClass: ':all:',
+		} );
 		$( '#toggle-search' ).off().on( 'click', () => {
 			$( '#search-form' ).toggleClass( 'visible', '' );
 		} );
@@ -337,7 +344,7 @@
 		 * Initialize account menus
 		 */
 		init: function() {
-			if ( !document.getElementById( 'search-form' ) ) return;
+			if ( ! document.getElementById( 'search-form' ) ) return;
 			$( document ).ready( __assign );
 		},
 

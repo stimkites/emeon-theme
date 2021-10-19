@@ -822,7 +822,8 @@ footer#colophon {
   padding: 0;
   position: fixed;
   bottom: 0;
-  width: 100%; }
+  width: 100%;
+  z-index: 1; }
   footer#colophon ul {
     margin: 0;
     padding: 0;
