@@ -215,6 +215,7 @@
 	 */
 	const __init_selects = function() {
 		$( '.sel2[multiple]' ).select2( {
+			allowClear: true,
 			width: '100%',
 			multiple: true,
 			tags: true,

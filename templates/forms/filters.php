@@ -37,6 +37,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				<select class="sel2 select select-experience form-select border-0"
 				        id="experience-select"
 				        multiple
+				        data-placeholder="Choose experience level"
 				        name="f[exp][]">
 					<?php
 					foreach ( EMEON_EXP_LVL as $index => $lvl )
