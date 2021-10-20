@@ -974,7 +974,7 @@ table {
       right: 138px; }
       .search-filters.visible {
         width: calc(100% - 265px); } }
-  .search-filters .select2-selection.search {
+  .search-filters .select2-selection.emeon-search-select {
     background-color: #fff;
     border: none;
     border-bottom: 1px solid #aaa;

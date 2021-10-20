@@ -75,17 +75,7 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 				</ul>
 			</nav>
 
-			<form action="/" id="search-form" method="post" enctype="multipart/form-data" class="search-filters">
-				<fieldset class="search-field">
-					<select class="search sel2"
-					        id="search-select"
-					        data-placeholder="Search..."
-					        name="s">
-						<?=apply_filters( 'emeon_search', '', $_POST['s']??'' )?>
-					</select>
-				</fieldset>
-				<span id="search-close"></span>
-			</form>
+            <?php get_search_form(); ?>
 
 		</div><!-- #content -->
 

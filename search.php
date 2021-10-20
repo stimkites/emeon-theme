@@ -27,6 +27,10 @@ get_header();
 				</header><!-- .page-header -->
 
 				<?php
+
+                // Filters
+                echo do_shortcode( '[emeon_forms form=filters]' );
+
 				/* Start the Loop */
 				while ( have_posts() ) :
 					the_post();

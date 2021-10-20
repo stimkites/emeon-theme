@@ -5,34 +5,41 @@
 
 new class {
 
+	/**
+     * HTML we have already built (RAM optimizations)
+     *
+	 * @var array
+	 */
+    private static $html = [];
+
 	function __construct() {
 
 		// Register custom post statuses and primary categories
-		add_action( 'init', [ $this, 'register' ] );
+		add_action( 'init',                 __CLASS__ . '::register'    );
 
 		// Render forms
-		add_shortcode( 'emeon_forms', [ $this, 'render' ] );
+		add_shortcode( 'emeon_forms',       __CLASS__ . '::render'      );
 
 		// Process forms
-		add_action( 'template_redirect', [ $this, 'process' ] );
+		add_action( 'template_redirect',    __CLASS__ . '::process'     );
 
 		// Contact fields in admin
-		add_action( 'add_meta_boxes_post', [ $this, 'add_fields' ] );
-		add_action( 'save_post', [ $this, 'save_fields' ] );
+		add_action( 'add_meta_boxes_post',  __CLASS__ . '::add_fields'  );
+		add_action( 'save_post',            __CLASS__ . '::save_fields' );
 
 		// Enqueue form scripts
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+		add_action( 'wp_enqueue_scripts',   __CLASS__ . '::enqueue'     );
 
 		// Admin scripts and styles
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin' ] );
+		add_action( 'admin_enqueue_scripts', __CLASS__ . '::enqueue_admin' );
 
 		// Adedit form permalink
-		add_filter( 'emeon_adedit_url', [ $this, 'get_adedit_url' ] );
+		add_filter( 'emeon_adedit_url',     __CLASS__ . '::get_adedit_url' );
 
 		// All categories/tags selectors
-		add_filter( 'emeon_cats',       [ $this, 'fetch_cats'       ], 10, 2 );
-		add_filter( 'emeon_tags',       [ $this, 'fetch_tags'       ], 10, 2 );
-		add_filter( 'emeon_search',     [ $this, 'search_terms'     ], 10, 2 );
+		add_filter( 'emeon_cats',       __CLASS__ . '::fetch_cats',     10, 2 );
+		add_filter( 'emeon_tags',       __CLASS__ . '::fetch_tags',     10, 2 );
+		add_filter( 'emeon_search',     __CLASS__ . '::search_terms',   10, 2 );
 
 	}
 
@@ -73,27 +80,26 @@ new class {
 	 * @return mixed|string|null
 	 */
 	static function search_terms( $html = '', $search = '' ){
-		if( $html )
-			return $html;
-		static $emeon_all_terms;
-		if( null !== $emeon_all_terms )
-			return $emeon_all_terms;
+		if( null !== self::$html['all'] )
+			return self::$html['all'];
 		$all = self::resort( array_merge(
 			self::fetch_cats( '', [ 1 ], true ),
 			self::fetch_tags( '', [ 1 ], true )
 		) );
-		$selected = '';
+
+		$selected = self::$html['all'] = '';
+
 		foreach ( $all as $cat )
-			$emeon_all_terms .=
+			self::$html['all'] .=
 				'<option value="' . $cat->name . '" ' .
 					( ( $selected = $cat->name == $search ) ? 'selected' : '' ) . '>' .
 					$cat->name .
 				'</option>';
 		if( ! $selected && $search )
-			$emeon_all_terms .= '<option value="' . $search . '" selected>' . $search . '</option>';
+			self::$html['all'] .= '<option value="' . $search . '" selected>' . $search . '</option>';
 		elseif( ! $search )
-			$emeon_all_terms .= '<option value="" selected></option>';
-		return $emeon_all_terms;
+			self::$html['all'] .= '<option value="" selected></option>';
+		return $html . self::$html['all'];
 	}
 
 
@@ -104,17 +110,13 @@ new class {
 	 * @param null | array $post_cats
 	 * @param bool $raw Whenever we return HTML or array of items
 	 *
-	 * @return string
+	 * @return array | string
 	 */
 	static function fetch_cats( $html = '', $post_cats = null, $raw = false ){
-		if( ! empty( $html ) )
-			return $html; //already collected
+		if( ! empty( self::$html['cats'] ) && ! $raw )
+			return self::$html['cats']; // Already in Ram
 
-		static $emeon_cats_html;
-		if( null !== $emeon_cats_html && ! $raw )
-			return $emeon_cats_html; // Already in Ram
-
-		$emeon_cats_html = '';
+		self::$html['cats'] = '';
 
 		if( empty( $post_cats ) ) {
 			global $post;
@@ -142,13 +144,13 @@ new class {
 			return $terms;
 
 		foreach ( self::resort( $terms ) as $cat )
-			$emeon_cats_html .=
+			self::$html['cats'] .=
 				'<option value="' . $cat->term_id . '" ' .
 		            ( in_array( $cat->term_id, $post_cats ?? [] ) ? 'selected' : '' ) . '>' .
 		            $cat->name .
 	            '</option>';
 
-		return $emeon_cats_html;
+		return $html . self::$html['cats'];
 	}
 
 	/**
@@ -161,14 +163,10 @@ new class {
 	 * @return mixed|string
 	 */
 	static function fetch_tags( $html = '', $post_tags = null, $raw = false ){
-		if( ! empty( $html ) )
-			return $html; //already collected
+		if( ! empty( self::$html['tags'] ) && ! $raw )
+			return self::$html['tags']; // Already in Ram
 
-		static $emeon_tags_html;
-		if( null !== $emeon_tags_html && ! $raw )
-			return $emeon_tags_html; // Already in Ram
-
-		$emeon_tags_html = '';
+		self::$html['tags'] = '';
 
 		if( empty( $post_tags ) ) {
 			global $post;
@@ -188,11 +186,12 @@ new class {
 			return $terms;
 
 		foreach ( self::resort( $terms ) as $tag )
-			$emeon_tags_html .= '<option value="' . $tag->slug . '" ' .
+			self::$html['tags'] .= '<option value="' . $tag->slug . '" ' .
 			     ( in_array( $tag->term_id, $post_tags ?? [] ) ? 'selected' : '' ) . '>' .
 			     $tag->name .
 			     '</option>';
-		return $emeon_tags_html;
+
+		return $html . self::$html['tags'];
 	}
 
 	/**
@@ -202,7 +201,7 @@ new class {
 	 *
 	 * @return false|string
 	 */
-	function get_adedit_url( $value = '' ) {
+	static function get_adedit_url( $value = '' ) {
 		global $wpdb;
 		if ( ! ( $post_id = $wpdb->get_var(
 			"SELECT ID FROM {$wpdb->posts} " .
@@ -218,7 +217,7 @@ new class {
 	/**
 	 * Our custom post statuses and primary categories
 	 */
-	function register() {
+	static function register() {
 		foreach ( EMEON_STATUSES as $status ) {
 			register_post_status(
 				$status,
@@ -244,7 +243,7 @@ new class {
 	/**
 	 * Enqueue custom admin styles and scripts for POST edit pages
 	 */
-	function enqueue_admin() {
+	static function enqueue_admin() {
 		if ( false === strpos( $_SERVER[ 'REQUEST_URI' ], '/post.php?post=' ) &&
 		     false === strpos( $_SERVER[ 'REQUEST_URI' ], '/post-new.php' ) ) {
 			return;
@@ -256,7 +255,7 @@ new class {
 	/**
 	 * Forms JS
 	 */
-	function enqueue() {
+	static function enqueue() {
 		if ( ! wp_script_is( 'jquery-core' ) ) {
 			wp_enqueue_script( 'jquery-core', "/wp-includes/js/jquery/jquery.min.js", [], '3.6.0' );
 		}
@@ -279,7 +278,7 @@ new class {
 	/**
 	 * Add meta box with the contact info to posts
 	 */
-	function add_fields() {
+	static function add_fields() {
 		add_meta_box(
 			'emeon-contact-box',
 			'Contacts and attachment',
@@ -296,7 +295,7 @@ new class {
 	 *
 	 * @param int $post_id
 	 */
-	function save_fields( $post_id ) {
+	static function save_fields( $post_id ) {
 		if ( ! isset( $_POST[ 'emeon_contacts' ] ) ) {
 			return;
 		}
@@ -309,7 +308,7 @@ new class {
 	/**
 	 * Process POST request
 	 */
-	function process() {
+	static function process() {
 		if ( ! ( $action = ( $_POST[ 'emeon_form_action' ] ?? false ) ) ) {
 			return;
 		}
@@ -318,12 +317,12 @@ new class {
 
 			return;
 		}
-		if ( ! method_exists( $this, $action ) ) {
+		if ( ! method_exists( __CLASS__, $action ) ) {
 			$_POST[ 'emeon_error' ][] = '[ERR1586] Action not found!';
 
 			return;
 		}
-		$this->{$action}();
+		self::{$action}();
 	}
 
 	/**
@@ -333,14 +332,14 @@ new class {
 	 *
 	 * @return false|string|null
 	 */
-	function render( $attributes = [] ) {
+	static function render( $attributes = [] ) {
 		$path = EMEON_TPL . '/forms/' . ( $attributes[ 'form' ] ?? 'unknown' ) . '.php';
 		if ( ! file_exists( $path ) ) {
 			return null;
 		}
 		ob_start();
 		include $path;
-		if ( $errors = ( $_POST[ 'emeon_error' ] ?? false ) ) : ?>
+		if ( $errors = ( $_POST[ 'emeon_error' ] ?? [] ) ) : ?>
 			<div class="emeon-error">
 				<div class="error-icon"></div>
 				<div class="error-content">
@@ -360,7 +359,7 @@ new class {
 	/**
 	 * Join action
 	 */
-	protected function join() {
+	protected static function join() {
 		if ( ! ( $email = $_POST[ 'email' ] ) ||
 		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 			$_POST[ 'emeon_error' ][] = 'The email you entered is invalid. Please, try again.';
@@ -387,7 +386,7 @@ new class {
 	/**
 	 * Login action
 	 */
-	protected function login() {
+	protected static function login() {
 		if ( ! ( $email = $_POST[ 'email' ] ) ||
 		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 			$_POST[ 'emeon_error' ][] = 'The email you entered is invalid. Please, try again.';
@@ -424,14 +423,14 @@ new class {
 		exit;
 	}
 
-	protected function captcha() {
+	protected static function captcha() {
 
 	}
 
 	/**
 	 * Adedit action
 	 */
-	protected function adedit() {
+	protected static function adedit() {
 		$text_to_analyze =
 			$_POST[ 'article' ][ 'title' ] . ' ' . $_POST[ 'article' ][ 'excerpt' ] . ' ' . $_POST[ 'article' ][ 'content' ] . ' ' .
 			implode( " ", $_POST[ 'article' ][ 'tags' ] ) . ' ' . implode( " ", $_POST[ 'article' ][ 'categories' ] );

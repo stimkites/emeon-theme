@@ -332,7 +332,7 @@
 			minimumInputLength: 3,
 			tags: true,
 			allowClear: true,
-			selectionCssClass: ':all:',
+			selectionCssClass: ':all:'
 		} ).on( 'change', () => {
 			if( $( '#search-select' ).val().length > 2 )
 				$( '#search-form' ).submit();
@@ -360,3 +360,33 @@
 } )( jQuery.noConflict() ).init(); /** Search form **/
 
 
+/** Filters form */
+( $ => {
+
+  /**
+   * Assign all events
+   *
+   * @private
+   */
+  const __assign = function() {
+    $( '#emeon-form-filters .sel2' ).select2( {
+      width: '100%',
+      multiple: true,
+      allowClear: true,
+      selectionCssClass: ':all:'
+    } );
+  };
+
+  return {
+
+    /**
+     * Initialize account menus
+     */
+    init: function() {
+      if ( ! document.getElementById( 'emeon-form-filters' ) ) return;
+      $( document ).ready( __assign );
+    },
+
+  };
+
+} )( jQuery.noConflict() ).init(); /** Filters form **/
