@@ -522,7 +522,7 @@ template {
   display: block;
 }
 .site-header.scrolled {
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.04);
 }
 .site-header.scrolled .site-header__content {
   height: 50px;
@@ -1096,27 +1096,70 @@ footer#colophon .site-info {
 .search-content .irs-handle.single {
   cursor: pointer;
 }
-.search-content .select2-container--default .select2-selection--multiple {
-  margin-top: 10px;
-}
-.search-content .select2-container--default .select2-selection--multiple.select2-selection--clearable {
-  padding: 0;
-}
-.search-content .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  margin-right: 10px;
-  margin-left: 0;
-  margin-top: 0;
-  margin-bottom: 10px;
-}
 .search-content .emeon-form {
+  position: sticky;
+  top: 60px;
   width: calc(30% - 20px);
   background: #ffffff;
   align-self: flex-start;
   padding: 20px;
   border-radius: 5px;
 }
+.search-content .emeon-form .form-select {
+  background: none;
+}
 .search-content .emeon-form label {
   width: 100%;
+}
+.search-content .emeon-form .select2-container--default .select2-selection--multiple {
+  margin-top: 10px;
+  padding: 0;
+}
+.search-content .emeon-form .select2-container--default .select2-selection--multiple.select2-selection--clearable {
+  padding: 0;
+}
+.search-content .emeon-form .select2-container--default .select2-selection--multiple .select2-selection__clear {
+  font-size: 33px;
+  font-weight: 100;
+  line-height: 1;
+  height: unset;
+  max-height: unset;
+  min-height: unset;
+  margin-top: -10px;
+}
+.search-content .emeon-form .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  height: 100%;
+}
+.search-content .emeon-form .select2-container--default .select2-selection--multiple .select2-selection__choice {
+  margin: 0 10px 10px 0;
+  background: #f8f8f8;
+}
+.search-content .emeon-form .select2-container--default .select2-selection--multiple .select2-search.select2-search--inline {
+  position: relative;
+  display: block;
+  min-height: 40px;
+  max-height: 40px;
+}
+.search-content .emeon-form .select2-container--default .select2-selection--multiple .select2-search.select2-search--inline:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  margin-top: -3px;
+  padding: 3px;
+  transform: rotate(45deg) translateY(-50%);
+  -webkit-transform: rotate(45deg) translateY(-50%);
+}
+.search-content .emeon-form .select2-container--default .select2-selection--multiple textarea {
+  width: 100% !important;
+  border: 1px solid #aaaaaa;
+  padding: 9px 10px 0;
+  height: 40px;
+  border-radius: 5px;
+  margin: 0;
 }
 .search-posts {
   width: calc(70% - 20px);
