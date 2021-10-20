@@ -1,7 +1,16 @@
 .search {
+
+	&-mobile-bar {
+		display: none;
+	}
+
 	&-content {
 		display: flex;
 		justify-content: space-between;
+
+		.btn-close {
+			display: none;
+		}
 
 		ul {
 			padding: 0;
@@ -46,6 +55,7 @@
 					font-size: 33px;
 					font-weight: 100;
 					line-height: 1;
+					right: -30px;
 					height: unset;
 					max-height: unset;
 					min-height: unset;
@@ -58,7 +68,7 @@
 
 				.select2-selection__choice {
 					margin: 0 10px 10px 0;
-					background: #f8f8f8;
+					background: #f2f2f2;
 				}
 
 				.select2-search.select2-search--inline {
@@ -97,4 +107,54 @@
 	&-posts {
 		width: calc(70% - 20px);
 	}
+}
+
+@media (max-width: 991px) {
+	.search {
+		&-mobile-bar {
+			display: block;
+			width: 100%;
+		}
+
+		&-content {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+
+			.btn-close {
+				display: block;
+				position: absolute;
+				right: 10px;
+				top: 20px;
+			}
+
+			ul {
+				padding: 0;
+				margin: 0;
+			}
+
+			.emeon-form {
+				position: fixed;
+				left: -100%;
+				top: 0;
+				width: 100%;
+				background: #ffffff;
+				align-self: stretch;
+				height: 100%;
+				z-index: 999;
+				box-shadow: 0 3px 20px rgba(0,0,0,0.04);
+				transition: left .2s;
+
+				&.open {
+					left: 0;
+					transition: left .2s;
+				}
+			}
+		}
+
+		&-posts {
+			width: 100%;
+		}
+	}
+
 }

@@ -16,6 +16,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
       id="emeon-form-filters"
       enctype="multipart/form-data"
       name="emeon-form-filters" >
+	<button type="button" class="btn btn-close"></button>
 	<h3>Filters</h3>
 	<fieldset>
 		<p>

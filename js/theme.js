@@ -5,7 +5,9 @@ window.onload = ( function( $ ) {
 	const _body = $( 'body' ),
 		_window = $( window ),
 		_header_elem = $( '.site-header' ),
-		_sandwich_button_elem = $( '.toggle-mobile-menu' );
+		_sandwich_button_elem = $( '.toggle-mobile-menu' ),
+		_searchBtnFilter = $('.search-mobile-bar .btn'),
+		_closeFilterBtn = $('.search-content .emeon-form .btn-close');
 
 
 	/**
@@ -173,6 +175,11 @@ window.onload = ( function( $ ) {
 		} );
 	}
 
+	/**
+	 * Range slider in search results
+	 * @private
+	 */
+
 	function  __rangeSlider_init() {
 		const salary = $(".emeon-form .emeon-salary");
 		const curSymb = salary.siblings('.cur-symbol').text();
@@ -188,6 +195,24 @@ window.onload = ( function( $ ) {
 		});
 	}
 
+	/**
+	 * Toggle class for mobile filtering
+	 * @private
+	 */
+
+	function __clickSearchFilterHandler() {
+		$('.search-content .emeon-form').toggleClass('open')
+	}
+
+	/**
+	 * Close filters
+	 * @private
+	 */
+
+	function __closeFiltersMobile() {
+		$('.search-content .emeon-form').removeClass('open')
+	}
+
 
 	/**
 	 * Assign events handlers
@@ -198,6 +223,8 @@ window.onload = ( function( $ ) {
 		_window.on( 'scroll', __page_scroll_handler );
 		_window.on( 'resize', __window_resize_handler );
 		_sandwich_button_elem.on( 'click', __click_sandwich_button_handler );
+		_searchBtnFilter.on( 'click', __clickSearchFilterHandler );
+		_closeFilterBtn.on('click', __closeFiltersMobile);
 
 		window.onbeforeunload = function() {
 			_window.off( 'scroll', __page_scroll_handler );

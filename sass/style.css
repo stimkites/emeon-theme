@@ -1081,9 +1081,15 @@ footer#colophon .site-info {
 /*--------------------------------------------------------------
 # Search results
 --------------------------------------------------------------*/
+.search-mobile-bar {
+  display: none;
+}
 .search-content {
   display: flex;
   justify-content: space-between;
+}
+.search-content .btn-close {
+  display: none;
 }
 .search-content ul {
   padding: 0;
@@ -1122,6 +1128,7 @@ footer#colophon .site-info {
   font-size: 33px;
   font-weight: 100;
   line-height: 1;
+  right: -30px;
   height: unset;
   max-height: unset;
   min-height: unset;
@@ -1132,7 +1139,7 @@ footer#colophon .site-info {
 }
 .search-content .emeon-form .select2-container--default .select2-selection--multiple .select2-selection__choice {
   margin: 0 10px 10px 0;
-  background: #f8f8f8;
+  background: #f2f2f2;
 }
 .search-content .emeon-form .select2-container--default .select2-selection--multiple .select2-search.select2-search--inline {
   position: relative;
@@ -1165,6 +1172,46 @@ footer#colophon .site-info {
   width: calc(70% - 20px);
 }
 
+@media (max-width: 991px) {
+  .search-mobile-bar {
+    display: block;
+    width: 100%;
+  }
+  .search-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .search-content .btn-close {
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+  }
+  .search-content ul {
+    padding: 0;
+    margin: 0;
+  }
+  .search-content .emeon-form {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    background: #ffffff;
+    align-self: stretch;
+    height: 100%;
+    z-index: 999;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.04);
+    transition: left 0.2s;
+  }
+  .search-content .emeon-form.open {
+    left: 0;
+    transition: left 0.2s;
+  }
+  .search-posts {
+    width: 100%;
+  }
+}
 /*--------------------------------------------------------------
 # Elements
 --------------------------------------------------------------*/
