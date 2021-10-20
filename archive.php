@@ -24,6 +24,11 @@ get_header();
 					?>
 				</header><!-- .page-header -->
 
+                <?php
+                    // Filters
+				    echo do_shortcode( '[emeon_forms form=filters]' );
+				?>
+
 				<div class="d-flex flex-wrap row-cols-1 row-cols-md-2 row-cols-lg-4 align-items-stretch mx-n2">
 					<?php
 					/* Start the Loop */
