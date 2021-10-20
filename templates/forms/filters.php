@@ -33,7 +33,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 		<p>
 			<label>
 				Experience level
-				<select class="sel2 select select-experience form-select"
+				<select class="sel2 select select-experience form-select border-0"
 				        id="experience-select"
 				        multiple
 				        name="f[exp][]">
