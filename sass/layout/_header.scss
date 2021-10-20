@@ -146,6 +146,28 @@
 
 		.menu-item.search {
 			margin-right: 15px;
+			& > a {
+				display: flex;
+				align-items: center;
+
+				&:focus {
+					outline: none;
+				}
+			}
+
+			.close-btn {
+				display: none;
+			}
+
+			.visible {
+				.fa-search {
+					display: none;
+				}
+
+				.close-btn {
+					display: block;
+				}
+			}
 		}
 	}
 

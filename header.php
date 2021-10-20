@@ -65,6 +65,7 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 					<li class="menu-item search">
 						<a href="#" id="toggle-search">
 							<i class="far fa-search toggle-search"></i>
+							<button class="close-btn"></button>
 						</a>
 					</li>
 					<li class="menu-item account">

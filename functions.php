@@ -266,6 +266,8 @@ function emeon_scripts() {
 		'swiper'
 	], filemtime( EMEON_PATH . '/js/theme.js' ), true );
 
+	wp_enqueue_script( 'emeon-account', EMEON_URL . '/js/account.js', array(), filemtime( EMEON_PATH . '/js/account.js' ), true  );
+
 	wp_enqueue_script( 'emeon-skip-link-focus-fix', EMEON_URL . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

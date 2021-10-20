@@ -109,10 +109,14 @@ header.entry-header {
 			}
 
 			.article-menu {
-				display: block;
 				position: absolute;
 				top: 4px;
 				right: 4px;
+				width: 20px;
+				height: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				z-index: 1;
 				opacity: .8;
 				cursor: pointer;
@@ -123,8 +127,6 @@ header.entry-header {
 					font-family: Dashicons, sans-serif;
 					font-size: 18px;
 					color: #999;
-					width: 20px;
-					height: 20px;
 					background: #fff;
 					display: block;
 					border-radius: 100%;
@@ -171,6 +173,16 @@ header.entry-header {
 
 
 					}
+
+					@media (max-width: 991px) {
+						visibility: hidden;
+						opacity: 0;
+
+						&.active {
+							visibility: visible;
+							opacity: 1;
+						}
+					}
 				}
 
 				&:hover {
@@ -178,12 +190,27 @@ header.entry-header {
 
 					&:before {
 						background: #999;
+						color: #ffffff;
 					}
 
 					.article-menu__menu {
 						visibility: visible;
 						opacity: 1;
+
+						@media (max-width: 991px) {
+							visibility: hidden;
+							opacity: 0;
+
+							&.active {
+								visibility: visible;
+								opacity: 1;
+							}
+						}
 					}
+				}
+
+				@media (max-width: 991px) {
+					opacity: 1;
 				}
 			}
 

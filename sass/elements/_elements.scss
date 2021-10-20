@@ -61,4 +61,40 @@ a:focus, button, input, select, password, textarea {
 	outline: none;
 }
 
+.close-btn {
+	width: 17px;
+	height: 17px;
+	background: transparent;
+	outline: none;
+	border: none;
+	position: relative;
+
+	&:active,
+	&:focus-visible,
+	&:focus-within,
+	&:focus {
+		outline: none;
+	}
+}
+.close-btn:hover {
+	opacity: 1;
+}
+.close-btn:before, .close-btn:after {
+	content: " ";
+	position: absolute;
+	left: auto;
+	right: auto;
+	top: 0;
+	display: block;
+	height: 17px;
+	width: 2px;
+	background-color: #333;
+}
+.close-btn:before {
+	transform: rotate(45deg);
+}
+.close-btn:after {
+	transform: rotate(-45deg);
+}
+
 @import "tables";

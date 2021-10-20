@@ -339,6 +339,7 @@
 		} );
 		$( '#toggle-search' ).off().on( 'click', ( e ) => {
 			$( '#search-form' ).toggleClass( 'visible', '' );
+			$( '#toggle-search' ).toggleClass( 'visible', '' );
 			e.preventDefault();
 			e.stopPropagation();
 			return false;
