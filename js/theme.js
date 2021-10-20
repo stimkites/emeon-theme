@@ -173,6 +173,21 @@ window.onload = ( function( $ ) {
 		} );
 	}
 
+	function  __rangeSlider_init() {
+		const salary = $(".emeon-form .emeon-salary");
+		const curSymb = salary.siblings('.cur-symbol').text();
+		const minSalary = +salary.attr('min');
+		const stepSalary = +salary.attr('step');
+		salary.ionRangeSlider({
+			skin: "round",
+			min: minSalary,
+			step: stepSalary,
+			max: 20000,
+			from: 50,
+			postfix: ` ${curSymb}`
+		});
+	}
+
 
 	/**
 	 * Assign events handlers
@@ -201,6 +216,7 @@ window.onload = ( function( $ ) {
 		console.info( '[theme] Theme JS initiated!' );
 		__page_scroll_handler();
 		__swiper_init();
+		__rangeSlider_init();
 		__assign();
 	}
 

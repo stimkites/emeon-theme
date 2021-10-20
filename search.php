@@ -26,12 +26,17 @@ get_header();
 					</h1>
 				</header><!-- .page-header -->
 
-				<?php
+				<div class="search-content">
 
-                // Filters
-                echo do_shortcode( '[emeon_forms form=filters]' );
+				<?php
+				// Filters
+
+				echo do_shortcode( '[emeon_forms form=filters]' );
 
 				/* Start the Loop */
+				?>
+				<div class="search-posts">
+				<?php
 				while ( have_posts() ) :
 					the_post();
 
@@ -43,8 +48,12 @@ get_header();
 					get_template_part( 'template-parts/content', 'search' );
 
 				endwhile;
+				?>
 
-				the_posts_navigation();
+				</div>
+					<?php
+
+		the_posts_navigation();
 
 			else :
 
@@ -52,7 +61,7 @@ get_header();
 
 			endif;
 			?>
-
+			</div>
 		</main><!-- #main -->
 	</section><!-- #primary -->
 

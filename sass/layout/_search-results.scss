@@ -1,0 +1,50 @@
+.search {
+	&-content {
+		display: flex;
+		justify-content: space-between;
+
+		ul {
+			padding: 0;
+			margin: 0;
+		}
+
+		.irs {
+			margin: 10px 0;
+			cursor: pointer;
+
+			&-handle.single {
+				cursor: pointer;
+			}
+		}
+
+		.select2-container--default .select2-selection--multiple {
+			margin-top: 10px;
+			&.select2-selection--clearable {
+				padding: 0;
+			}
+
+			.select2-selection__choice {
+				margin-right: 10px;
+				margin-left: 0;
+				margin-top: 0;
+				margin-bottom: 10px;
+			}
+		}
+
+		.emeon-form {
+			width: calc(30% - 20px);
+			background: #ffffff;
+			align-self: flex-start;
+			padding: 20px;
+			border-radius: 5px;
+
+			label {
+				width: 100%;
+			}
+		}
+	}
+
+	&-posts {
+		width: calc(70% - 20px);
+	}
+}

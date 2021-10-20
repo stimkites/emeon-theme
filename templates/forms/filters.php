@@ -33,7 +33,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 		<p>
 			<label>
 				Experience level
-				<select class="sel2 select select-experience form-select border-0"
+				<select class="sel2 select select-experience form-select"
 				        id="experience-select"
 				        multiple
 				        name="f[exp][]">
@@ -58,12 +58,12 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				       pattern="[0-9]" step="50" min="0"
 				       value="<?= $_POST['f']['sal'] ?? '' ?>"
 				       placeholder="Salary from (EUR)"/>
-				<span class="input-group-text border-0 rounded-0"><?= EMEON_CUR_SYMB ?></span>
+				<span class="input-group-text border-0 rounded-0 cur-symbol"><?= EMEON_CUR_SYMB ?></span>
 			</label>
 		</p>
 		<p class="filters-cta">
-			<button class="button button-primary" type="submit">Apply</button>
-			<button class="button button-secondary" type="reset">Reset</button>
+			<button class="btn btn-primary" type="submit">Apply</button>
+			<button class="btn btn-secondary" type="reset">Reset</button>
 		</p>
 	</fieldset>
 </form>

@@ -250,6 +250,10 @@ function emeon_scripts() {
 	wp_enqueue_style( 'swiper', EMEON_URL . '/css/swiper-bundle.min.css' );
 	wp_enqueue_script( 'swiper', EMEON_URL . '/js/libs/swiper-bundle.min.js', [], '7.0.2', true );
 
+	// Range slider
+	wp_enqueue_style( 'range-slider', EMEON_URL . '/css/ion.rangeSlider.min.css' );
+	wp_enqueue_script( 'range-slider', EMEON_URL . '/js/libs/ion.rangeSlider.min.js', [], '2.3.1', true );
+
 	// Bootstrap
 	wp_enqueue_style( 'bootstrap', EMEON_URL . '/css/bootstrap.min.css', [], '5.3.1' );
 	wp_enqueue_script( 'bootstrap', EMEON_URL . '/js/libs/bootstrap.bundle.min.js', [], '5.3.1', true );

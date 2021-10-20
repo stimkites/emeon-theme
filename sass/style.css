@@ -1079,6 +1079,50 @@ footer#colophon .site-info {
   }
 }
 /*--------------------------------------------------------------
+# Search results
+--------------------------------------------------------------*/
+.search-content {
+  display: flex;
+  justify-content: space-between;
+}
+.search-content ul {
+  padding: 0;
+  margin: 0;
+}
+.search-content .irs {
+  margin: 10px 0;
+  cursor: pointer;
+}
+.search-content .irs-handle.single {
+  cursor: pointer;
+}
+.search-content .select2-container--default .select2-selection--multiple {
+  margin-top: 10px;
+}
+.search-content .select2-container--default .select2-selection--multiple.select2-selection--clearable {
+  padding: 0;
+}
+.search-content .select2-container--default .select2-selection--multiple .select2-selection__choice {
+  margin-right: 10px;
+  margin-left: 0;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.search-content .emeon-form {
+  width: calc(30% - 20px);
+  background: #ffffff;
+  align-self: flex-start;
+  padding: 20px;
+  border-radius: 5px;
+}
+.search-content .emeon-form label {
+  width: 100%;
+}
+.search-posts {
+  width: calc(70% - 20px);
+}
+
+/*--------------------------------------------------------------
 # Elements
 --------------------------------------------------------------*/
 html {
