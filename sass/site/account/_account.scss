@@ -109,70 +109,47 @@ header.entry-header {
 			}
 
 			.article-menu {
-				position: absolute;
-				top: 4px;
-				right: 4px;
-				width: 20px;
-				height: 20px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				z-index: 1;
-				opacity: .8;
-				cursor: pointer;
-				transition: all .4s;
+				&__button {
+					position: absolute;
+					top: 4px;
+					right: 4px;
+					width: 30px;
+					height: 30px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border: none;
+					background-color: transparent;
+					z-index: 1;
+					opacity: .8;
+					cursor: pointer;
+					transition: all .4s;
 
-				&:before {
-					content: "\f329";
-					font-family: Dashicons, sans-serif;
-					font-size: 18px;
-					color: #999;
-					background: #fff;
-					display: block;
-					border-radius: 100%;
-					line-height: 18px;
-					padding: 0;
+					&:before {
+						content: "\f329";
+						font-family: Dashicons, sans-serif;
+						font-size: 18px;
+						color: #999;
+						background: #fff;
+						display: block;
+						border-radius: 100%;
+						line-height: 18px;
+						padding: 0;
+					}
 				}
 
-				.article-menu__menu {
+
+				&__menu {
 					position: absolute;
 					display: block;
 					visibility: hidden;
 					opacity: 0;
 					transition: all .4s;
-					background: #fff;
-					border: 1px solid #999;
-					padding: 0;
-					top: 5px;
+					top: 30px;
 					right: 5px;
-					width: 100px;
-					border-radius: 0;
-
-					li {
-						list-style: none;
-						line-height: 1;
-						padding: 0;
-
-						&.item-bl {
-							border-bottom: 1px dotted #ccc;
-							color: #7f2a28;
-						}
-
-						a {
-							display: block;
-							width: 100%;
-							cursor: pointer;
-							font-size: 12px;
-							line-height: 1;
-							padding: 7px;
-
-							&:hover {
-								background: #ccc;
-							}
-						}
-
-
-					}
+					width: calc( 100% - 10px );
+					padding: 0;
+					margin: 0;
 
 					@media (max-width: 991px) {
 						visibility: hidden;
@@ -185,26 +162,19 @@ header.entry-header {
 					}
 				}
 
-				&:hover {
+				&__item {
+					cursor: pointer;
+				}
+
+				&.open {
 					opacity: 1;
 
-					&:before {
-						background: #999;
-						color: #ffffff;
-					}
 
-					.article-menu__menu {
-						visibility: visible;
-						opacity: 1;
 
-						@media (max-width: 991px) {
-							visibility: hidden;
-							opacity: 0;
-
-							&.active {
-								visibility: visible;
-								opacity: 1;
-							}
+					.article-menu {
+						&__menu {
+							visibility: visible;
+							opacity: 1;
 						}
 					}
 				}

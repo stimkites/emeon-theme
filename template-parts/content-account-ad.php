@@ -14,10 +14,11 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'account-article' ); ?>>
 
     <span class="article-menu">
-        <ul class="article-menu__menu">
-            <li class="article-menu__item"><a href="<?= $adedit_url ?>?ad=<?php the_ID() ?>">Edit</a></li>
-            <li class="article-menu__item item-bl"><a href="<?= esc_url( get_permalink() ) ?>">View</a></li>
-            <li class="article-menu__item delete-item" data-title="<?= the_title() ?>"><a
+	    <button class="article-menu__button"></button>
+        <ul class="article-menu__menu list-group">
+            <li class="article-menu__item list-group-item list-group-item-action"><a href="<?= $adedit_url ?>?ad=<?php the_ID() ?>">Edit</a></li>
+            <li class="article-menu__item item-bl list-group-item list-group-item-action"><a href="<?= esc_url( get_permalink() ) ?>">View</a></li>
+            <li class="article-menu__item delete-item list-group-item list-group-item-action" data-title="<?= the_title() ?>"><a
 		            href="?trash=<?php the_ID() ?>">Delete</a></li>
         </ul>
     </span>

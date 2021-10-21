@@ -282,27 +282,81 @@
 ( $ => {
 
 	/**
+	 * Switch my-account sections
+	 *
+	 * @param e
+	 * @private
+	 */
+	const __switch_partitions = e => {
+		let l = $( $( e.target ).attr( 'href' ) );
+		if ( !l.length ) return;
+		$( '.account-content' ).removeClass( 'viz' );
+		l.addClass( 'viz' );
+	};
+
+
+	/**
+	 * Delete post/ad
+	 *
+	 * @param e
+	 * @returns {boolean}
+	 * @private
+	 */
+	const __delete_post = e => {
+		if ( !confirm( 'Proceed to delete "' + $( this ).data( 'title' ) + '"?' ) ) {
+			e.stopPropagation();
+			e.preventDefault();
+			return false;
+		}
+	};
+
+
+	/**
+	 * Toggle password visibility in the inputs
+	 *
+	 * @private
+	 */
+	const __toggle_password_visibility = () => {
+		$( 'form.form-password input.view-toggle' ).attr( 'type', ( $( this ).prop( 'checked' ) ? 'text' : 'password' ) );
+	};
+
+
+	/**
+	 * Close article menu
+	 *
+	 * @private
+	 */
+	const __close_post_menu = () => {
+		$( '.article-menu' ).removeClass( 'open' );
+	}
+
+
+	/**
+	 * Toggle article menu visibility
+	 *
+	 * @param e
+	 * @private
+	 */
+	const __toggle_post_menu = e => {
+		__close_post_menu();
+		const parent = $( e.target ).parents( '.article-menu' );
+
+		if ( parent.length > 0 && !parent.hasClass( 'open' ) ) {
+			parent.addClass( 'open' );
+		}
+	};
+
+
+	/**
 	 * Assign all events
 	 *
 	 * @private
 	 */
 	const __assign = function() {
-		$( '#account-primary-menu li a' ).off().click( ( e ) => {
-			let l = $( $( e.target ).attr( 'href' ) );
-			if ( !l.length ) return;
-			$( '.account-content' ).removeClass( 'viz' );
-			l.addClass( 'viz' );
-		} );
-		$( '.delete-item' ).off().on( 'click', function( e ) {
-			if ( !confirm( 'Proceed to delete "' + $( this ).data( 'title' ) + '"?' ) ) {
-				e.stopPropagation();
-				e.preventDefault();
-				return false;
-			}
-		} );
-		$( '#view-pass' ).off().on( 'change', function() {
-			$( 'form.form-password input.view-toggle' ).attr( 'type', ( $( this ).prop( 'checked' ) ? 'text' : 'password' ) );
-		} );
+		$( '#account-primary-menu li a' ).off().on( 'click', __switch_partitions );
+		$( '.delete-item' ).off().on( 'click', __delete_post );
+		$( '#view-pass' ).off().on( 'change', __toggle_password_visibility );
+		$( document.body ).on( 'click', __toggle_post_menu );
 	};
 
 	return {
@@ -334,9 +388,9 @@
 			minimumInputLength: 3,
 			tags: true,
 			allowClear: true,
-			selectionCssClass: ':all:'
+			selectionCssClass: ':all:',
 		} ).on( 'change', () => {
-			if( $( '#search-select' ).val().length > 2 )
+			if ( $( '#search-select' ).val().length > 2 )
 				$( '#search-form' ).submit();
 		} );
 		$( '#toggle-search' ).off().on( 'click', ( e ) => {
@@ -354,7 +408,7 @@
 		 * Initialize account menus
 		 */
 		init: function() {
-			if ( ! document.getElementById( 'search-form' ) ) return;
+			if ( !document.getElementById( 'search-form' ) ) return;
 			$( document ).ready( __assign );
 		},
 
@@ -366,30 +420,30 @@
 /** Filters form */
 ( $ => {
 
-  /**
-   * Assign all events
-   *
-   * @private
-   */
-  const __assign = function() {
-    $( '#emeon-form-filters .sel2' ).select2( {
-      width: '100%',
-      multiple: true,
-      allowClear: true,
-      selectionCssClass: ':all:'
-    } );
-  };
+	/**
+	 * Assign all events
+	 *
+	 * @private
+	 */
+	const __assign = function() {
+		$( '#emeon-form-filters .sel2' ).select2( {
+			width: '100%',
+			multiple: true,
+			allowClear: true,
+			selectionCssClass: ':all:',
+		} );
+	};
 
-  return {
+	return {
 
-    /**
-     * Initialize account menus
-     */
-    init: function() {
-      if ( ! document.getElementById( 'emeon-form-filters' ) ) return;
-      $( document ).ready( __assign );
-    },
+		/**
+		 * Initialize account menus
+		 */
+		init: function() {
+			if ( !document.getElementById( 'emeon-form-filters' ) ) return;
+			$( document ).ready( __assign );
+		},
 
-  };
+	};
 
 } )( jQuery.noConflict() ).init(); /** Filters form **/
