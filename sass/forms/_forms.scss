@@ -5,6 +5,24 @@
 @import "searchform";
 
 .emeon-form {
+
+	/*ad-edit form*/
+	&.form-article-edit {
+
+		.form-select {
+			background-image: none !important;
+			cursor: pointer;
+		}
+
+		input, textarea {
+			cursor: pointer;
+		}
+
+		.article-excerpt {
+			min-height: 236px;
+		}
+	}
+
 	&__fieldset {
 		.remove-icon {
 			position: absolute;

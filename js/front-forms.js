@@ -74,6 +74,7 @@
 			if ( current_error ) {
 				errors.push( current_error );
 				$( this ).parents( '.control-wrap' ).addClass( 'error-field' );
+				console.log( this.name );
 			}
 		} );
 		if ( errors.length ) {

@@ -153,7 +153,7 @@ if ( isset( $_POST[ 'article' ] ) ) { // we already posted data, but something w
 				</label>
 
 				<label class="control-wrap input-group list-group-item p-0 d-flex">
-					<input type="number" class="invalidate form-control border-0 emeon-salary"
+					<input type="number" class="invalidate form-control border-0"
 					       name="article[salary]"
 					       pattern="[0-9]" step="50" min="0"
 					       value="<?= $article[ 'salary' ] ?? '' ?>"
@@ -186,8 +186,7 @@ if ( isset( $_POST[ 'article' ] ) ) { // we already posted data, but something w
 				Content
 			</h3>
 			<p class="text-center description">
-				Use official language communication only here. Any impolite phrases and words will cause moderation
-				delay automatically.
+				Official language communication, please. Violations would cause moderation check.
 			</p>
 
 			<div class="control-wrap">
@@ -248,7 +247,7 @@ if ( isset( $_POST[ 'article' ] ) ) { // we already posted data, but something w
 			       class="mx-auto my-3 p-0 text-center border-secondary rounded-3 <?= ( isset( $article[ 'attachment' ] ) ? 'added' : '' ) ?>">
 				<span class="remove-icon attachment-remove"></span>
 				<iframe id="attachment-preview" src="<?= $article[ 'attachment' ] ?? '' ?>"></iframe>
-				<span id="no-attachment">PDF for downloading. Max size is 5 mb.</span>
+				<span id="no-attachment">Click to add PDF with more details. Max size is 5 mb.</span>
 			</label>
 
 			<input type="file" id="attachment-file" class="visually-hidden" name="article_attachment" accept=".pdf"/>
