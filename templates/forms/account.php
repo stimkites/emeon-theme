@@ -29,13 +29,13 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 <div class="emeon-account" id="emeon-account">
 	<div class="emeon-account-menu">
 		<ul id="account-primary-menu">
-			<li><a href="#my-ads" class="my-pass">My ads</a></li>
+			<li><a href="#my-articles" class="my-pass">My ads</a></li>
 			<li><a href="#pass" class="my-pass">My password</a></li>
 			<li><a href="#contacts" class="contacts">Contact us</a></li>
 		</ul>
 	</div>
 	<div class="emeon-account-content">
-		<div class="account-content viz" id="my-ads">
+		<div class="account-content viz" id="my-articles">
 			<h2>
 				My ads
 				<span class="add-link">

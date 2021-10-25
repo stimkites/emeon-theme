@@ -39,7 +39,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 		</div>
 
 		<p class="description">
-			Or just send us message to <a href="mailto:support@emeon.io">support@emeon.io</a>
+			Or just send us message to <a class="link-info" href="mailto:support@emeon.io">support@emeon.io</a>
 		</p>
 
 		<input type="hidden" name="emeon_form_action" value="contactus"/>

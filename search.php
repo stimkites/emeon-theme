@@ -26,6 +26,11 @@ get_header();
 					</h1>
 				</header><!-- .page-header -->
 
+				<?php
+				// Filters
+				echo do_shortcode( '[emeon_forms form=filters]' );
+				?>
+
 				<div class="search-content">
 				<div class="search-mobile-bar">
 					<button class="btn btn-primary">
@@ -33,10 +38,6 @@ get_header();
 						Filters</button>
 				</div>
 				<?php
-				// Filters
-
-				echo do_shortcode( '[emeon_forms form=filters]' );
-
 				/* Start the Loop */
 				?>
 				<div class="search-posts">

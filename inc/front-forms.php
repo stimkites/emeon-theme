@@ -41,6 +41,44 @@ new class {
 		add_filter( 'emeon_tags',       __CLASS__ . '::fetch_tags',     10, 2 );
 		add_filter( 'emeon_search',     __CLASS__ . '::search_terms',   10, 2 );
 
+		// Apply filters on search/filter
+		add_filter( 'pre_get_posts', __CLASS__ . '::apply_filters' );
+
+	}
+
+	/**
+	 * Apply filtering
+	 *
+	 * @param WP_Query $search
+	 */
+	static function apply_filters( $search ){
+		if( ! isset( $_POST['f'] ) ) return $search;
+		if( ! empty( $_POST['f']['cats'] ) )
+			$search->set( 'tax_query', [
+				[
+					'taxonomy' => 'category',
+					'field' => 'id',
+					'terms' => $_POST['f']['cats'],
+					'operator'=> 'IN'
+				]
+			] );
+		$meta_query = [];
+		if( $_POST['f']['sal'] )
+			$meta_query[] = [
+				'meta_key'      => 'emeon_salary',
+				'meta_value'    => $_POST['f']['sal'],
+				'operator'      => '>='
+			];
+		if( $_POST['f']['exp'] )
+			$meta_query[] = [
+				'meta_key'      => 'emeon_experience',
+				'meta_value'    => $_POST['f']['exp'],
+				'operator'      => '>='
+			];
+		if( ! empty( $meta_query ) )
+			$search->set( 'meta_query', $meta_query );
+
+		return $search;
 	}
 
 	/**
@@ -80,7 +118,7 @@ new class {
 	 * @return mixed|string|null
 	 */
 	static function search_terms( $html = '', $search = '' ){
-		if( null !== self::$html['all'] )
+		if( null !== ( self::$html['all'] ?? null ) )
 			return self::$html['all'];
 		$all = self::resort( array_merge(
 			self::fetch_cats( '', [ 1 ], true ),
