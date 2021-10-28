@@ -5,17 +5,17 @@
 
 defined( 'ABSPATH' ) or exit;
 
-$email = $_POST[ 'email' ] ?? $_GET[ 'email' ] ?? '';
+$email = $_GET[ 'email' ] ?? '';
 $nonce = wp_create_nonce( EMEON_SLUG );
 
 ?>
 
 <div class="form-check form-switch filters-toggling mb-5">
-	<form action=" "
-	      method="post"
+	<form action="?"
+	      method="GET"
 	      class="emeon-form form-filters w-100 rounded-3 border-0 p-4"
 	      id="emeon-form-filters"
-	      enctype="multipart/form-data"
+	      enctype="application/x-www-form-urlencoded"
 	      name="emeon-form-filters">
 
 		<div class="switch-wrapper mb-2 d-flex align-items-center justify-content-start">
@@ -33,7 +33,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				        data-placeholder="Choose categories to filter"
 				        multiple
 				        name="f[cats][]">
-					<?= apply_filters( 'emeon_cats', '', $_POST[ 'f' ][ 'cats' ] ?? [] ) ?>
+					<?= apply_filters( 'emeon_cats', '', $_GET[ 'f' ][ 'cats' ] ?? [] ) ?>
 				</select>
 			</p>
 			<p>
@@ -45,7 +45,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 					<?php
 					foreach ( EMEON_EXP_LVL as $index => $lvl ) {
 						echo '<option ' .
-						     ( $index == ( $_POST[ 'f' ][ 'exp' ] ?? 0 )
+						     ( $index == ( $_GET[ 'f' ][ 'exp' ] ?? 0 )
 							     ? 'selected'
 							     : ''
 						     ) . '
@@ -62,7 +62,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				       class="invalidate form-control border-0 emeon-salary"
 				       name="f[sal]"
 				       pattern="[0-9]" step="50" min="0"
-				       value="<?= $_POST[ 'f' ][ 'sal' ] ?? '' ?>"
+				       value="<?= $_GET[ 'f' ][ 'sal' ] ?? '' ?>"
 				       placeholder="Salary from (EUR)"/>
 				<span class="input-group-text border-0 rounded-0 cur-symbol"><?= EMEON_CUR_SYMB ?></span>
 			</p>
@@ -71,7 +71,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				<button class="btn btn-primary" type="submit">Apply</button>
 			</p>
 
-			<input type="hidden" name="s" value="<?= $_POST[ 's' ] ?? '' ?>"/>
+			<input type="hidden" name="s" value="<?= $_GET[ 's' ] ?? '' ?>"/>
 
 		</fieldset>
 	</form>

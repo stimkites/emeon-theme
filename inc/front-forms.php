@@ -50,29 +50,31 @@ new class {
 	 * Apply filtering
 	 *
 	 * @param WP_Query $search
+     *
+     * @return WP_Query
 	 */
 	static function apply_filters( $search ){
-		if( ! isset( $_POST['f'] ) ) return $search;
-		if( ! empty( $_POST['f']['cats'] ) )
+		if( ! isset( $_GET['f'] ) ) return $search;
+		if( ! empty( $_GET['f']['cats'] ) )
 			$search->set( 'tax_query', [
 				[
 					'taxonomy' => 'category',
 					'field' => 'id',
-					'terms' => $_POST['f']['cats'],
+					'terms' => $_GET['f']['cats'],
 					'operator'=> 'IN'
 				]
 			] );
 		$meta_query = [];
-		if( $_POST['f']['sal'] )
+		if( $_GET['f']['sal'] )
 			$meta_query[] = [
 				'meta_key'      => 'emeon_salary',
-				'meta_value'    => $_POST['f']['sal'],
+				'meta_value'    => $_GET['f']['sal'],
 				'operator'      => '>='
 			];
-		if( $_POST['f']['exp'] )
+		if( $_GET['f']['exp'] )
 			$meta_query[] = [
 				'meta_key'      => 'emeon_experience',
-				'meta_value'    => $_POST['f']['exp'],
+				'meta_value'    => $_GET['f']['exp'],
 				'operator'      => '>='
 			];
 		if( ! empty( $meta_query ) )
