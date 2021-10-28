@@ -190,8 +190,8 @@ window.onload = ( function( $ ) {
 			min: minSalary,
 			step: stepSalary,
 			max: 20000,
-			from: 50,
-			postfix: ` ${curSymb}`
+			postfix: ` ${curSymb}`,
+			from: salary.val()
 		});
 	}
 

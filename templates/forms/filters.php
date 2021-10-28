@@ -61,7 +61,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				       id="salary-select"
 				       class="invalidate form-control border-0 emeon-salary"
 				       name="f[sal]"
-				       pattern="[0-9]" step="50" min="0"
+				       pattern="[0-9]" step="50" min="10"
 				       value="<?= $_POST[ 'f' ][ 'sal' ] ?? '' ?>"
 				       placeholder="Salary from (EUR)"/>
 				<span class="input-group-text border-0 rounded-0 cur-symbol"><?= EMEON_CUR_SYMB ?></span>
