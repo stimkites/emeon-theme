@@ -328,7 +328,7 @@
 	 */
 	const __close_post_menu = () => {
 		$( '.article-menu' ).removeClass( 'open' );
-	}
+	};
 
 
 	/**
@@ -382,20 +382,33 @@
 	 * @private
 	 */
 	const __assign = function() {
-		$( '#search-select' ).select2( {
-			width: '100%',
-			multiple: false,
-			minimumInputLength: 3,
-			tags: true,
-			allowClear: true,
-			selectionCssClass: ':all:',
-		} ).on( 'change', () => {
-			if ( $( '#search-select' ).val().length > 2 )
-				$( '#search-form' ).submit();
+		$( '.emeon-search-select' ).each( function( index, element ) {
+			const _this = $( element );
+			_this.select2( {
+				width: '100%',
+				multiple: false,
+				minimumInputLength: 3,
+				tags: true,
+				allowClear: true,
+				selectionCssClass: ':all:',
+			} ).on( 'change', function() {
+				if ( _this.val().length > 2 ) {
+					_this.parents( 'form' ).trigger( 'submit' );
+				}
+			} ).on( 'select2:open', function( e ) {
+				setTimeout( function() {
+					const _input = document.querySelector( '[aria-controls="select2-' + e.currentTarget.id + '-results"]' );
+					if ( _input ) {
+						_input.focus();
+					}
+				}, 100 );
+			} );
 		} );
+
 		$( '#toggle-search' ).off().on( 'click', ( e ) => {
-			$( '#search-form' ).toggleClass( 'visible', '' );
-			$( '#toggle-search' ).toggleClass( 'visible', '' );
+			const form = $( e.currentTarget ).parents( '.site-header' ).find( $( '.search-filters' ) );
+			form.toggleClass( 'visible' );
+			$( e.currentTarget ).toggleClass( 'visible' );
 			e.preventDefault();
 			e.stopPropagation();
 			return false;
@@ -408,7 +421,7 @@
 		 * Initialize account menus
 		 */
 		init: function() {
-			if ( !document.getElementById( 'search-form' ) ) return;
+			if ( $( '.emeon-search-select' ).length === 0 ) return;
 			$( document ).ready( __assign );
 		},
 

@@ -8,3 +8,30 @@
 	font-family: Tahoma, sans-serif;
 	text-transform: uppercase;
 }
+
+.post-navigation {
+	margin: 10px 0 20px;
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.nav-previous {
+		&:before {
+			content: "\02190";
+		}
+	}
+
+	.nav-next {
+		&:after {
+			content: "\02192";
+		}
+	}
+
+	.nav-previous:before,
+	.nav-next:after {
+		font-size: 2em;
+	}
+}

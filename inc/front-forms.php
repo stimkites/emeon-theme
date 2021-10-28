@@ -305,7 +305,7 @@ new class {
 		wp_register_script(
 			$slug,
 			EMEON_URL . '/js/front-forms.js',
-			[ 'jquery-core' ],
+			[ 'jquery-core', 'select2' ],
 			filemtime( EMEON_PATH . '/js/front-forms.js' ),
 			true
 		);

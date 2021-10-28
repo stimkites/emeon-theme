@@ -6,6 +6,10 @@
 	display: none;
 }
 
+.entry-header {
+	margin-bottom: 20px;
+}
+
 .page-content,
 .entry-content,
 .entry-summary {
@@ -27,7 +31,7 @@
 		flex-grow: 1;
 
 		&.page {
-			padding-top: 120px;
+			padding-top: 160px;
 		}
 	}
 }

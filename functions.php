@@ -378,3 +378,21 @@ add_filter( 'get_the_archive_title', function ($title) {
 	}
 	return $title;
 });
+
+
+/**
+ * Adding classes to comment form elements
+ */
+add_filter( 'comment_form_defaults', function ( $defaults ) {
+	$defaults['submit_button' ] = '<input name="%1$s" type="submit" id="%2$s" class="%3$s btn btn-outline-secondary" value="%4$s" />';
+	$defaults['comment_field' ] = sprintf(
+		'<p class="comment-form-comment">%s %s</p>',
+		sprintf(
+			'<label class="form-label" for="comment">%s</label>',
+			_x( 'Comment', 'noun' )
+		),
+		'<textarea id="comment" class="form-control btn-outline-secondary bg-body text-black" name="comment" rows="8" maxlength="65525" required="required"></textarea>'
+	);
+
+	return $defaults;
+} );
