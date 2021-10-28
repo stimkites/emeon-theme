@@ -11,17 +11,21 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 ?>
 
 <div class="form-check form-switch filters-toggling mb-5">
-	<label for="toggle_filters" class="form-check-label">Filters</label>
-	<input id="toggle_filters"
-	       class="form-check-input border-secondary bg-secondary btn-secondary text-secondary"
-	       type="checkbox" name="toggle_filters" value="yes"/>
 	<form action=" "
 	      method="post"
-	      class="emeon-form form-filters"
+	      class="emeon-form form-filters w-100 rounded-3 border-0 p-4"
 	      id="emeon-form-filters"
 	      enctype="multipart/form-data"
 	      name="emeon-form-filters">
-		<fieldset>
+
+		<div class="switch-wrapper mb-2 d-flex align-items-center justify-content-start">
+			<input id="toggle_filters"
+			       class="form-check-input border-secondary bg-secondary btn-secondary text-secondary "
+			       type="checkbox" name="toggle_filters" value="yes"/>
+			<label for="toggle_filters" class="form-check-label d-block ms-2">Filters</label>
+		</div>
+
+		<fieldset class="fieldset">
 			<p>
 				<label for="filters-select">Categories</label>
 				<select class="sel2 select select-categories form-select border-0"

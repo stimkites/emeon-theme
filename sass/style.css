@@ -1029,32 +1029,27 @@ table {
 /*Filters toggle*/
 .filters-toggling {
   position: relative;
+  transition-property: z-index;
+  transition-delay: 0.2s;
+  z-index: 0;
 }
-.filters-toggling label {
+.filters-toggling .form-check-label,
+.filters-toggling .form-check-input {
   cursor: pointer;
-}
-.filters-toggling #toggle_filters:checked + .form-filters {
-  display: block;
-}
-.filters-toggling #toggle_filters,
-.filters-toggling label[for=toggle_filters] {
-  position: absolute;
+  position: relative;
   z-index: 2;
 }
+.filters-toggling .form-check-label {
+  width: auto;
+}
 .filters-toggling .form-filters {
-  display: none;
-  width: 100%;
-  margin: -7px 0 0 -61px;
-  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  background: #fff;
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
   max-width: 600px;
-  border-radius: 13px;
-  border: 1px solid #ccc;
-  padding: 36px 10px 0;
+  background-color: transparent;
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
 .filters-toggling .form-filters label {
   width: 100%;
@@ -1090,6 +1085,22 @@ table {
   font-size: unset;
   position: relative;
   width: 100px;
+}
+.filters-toggling .fieldset {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.filters-toggling.open {
+  transition-delay: 0s;
+  z-index: 1;
+}
+.filters-toggling.open .form-filters {
+  background-color: #fff;
+}
+.filters-toggling.open .fieldset {
+  opacity: 1;
+  visibility: visible;
 }
 
 .emeon-form {

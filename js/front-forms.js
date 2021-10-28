@@ -433,19 +433,44 @@
 /** Filters form */
 ( $ => {
 
-	/**
-	 * Assign all events
-	 *
-	 * @private
-	 */
-	const __assign = function() {
+	function __toggle_form( e ) {
+		const checked = e.target.checked,
+			switcher = $( e.target ),
+			form_wrapper = switcher.parents( '.form-check' ),
+			form = switcher.parents( '.form-filters' );
+
+		if ( checked ) {
+			form_wrapper.addClass( 'open' );
+			form.addClass( 'shadow' );
+		} else {
+			form_wrapper.removeClass( 'open' );
+			form.removeClass( 'shadow' );
+		}
+	}
+
+	function __select2_init() {
 		$( '#emeon-form-filters .sel2' ).select2( {
 			width: '100%',
 			multiple: true,
 			allowClear: true,
 			selectionCssClass: ':all:',
 		} );
-	};
+	}
+
+	/**
+	 * Assign all events
+	 *
+	 * @private
+	 */
+	function __assign() {
+		$( '#toggle_filters' ).on( 'change', __toggle_form );
+	}
+
+
+	function __init() {
+		__select2_init();
+		__assign();
+	}
 
 	return {
 
@@ -454,7 +479,7 @@
 		 */
 		init: function() {
 			if ( !document.getElementById( 'emeon-form-filters' ) ) return;
-			$( document ).ready( __assign );
+			$( document ).ready( __init );
 		},
 
 	};
