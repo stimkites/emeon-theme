@@ -31,17 +31,10 @@
 		background-color: transparent;
 		transition: background-color 0.2s, box-shadow 0.2s;
 
-		label{
-			width: 100%;
-			display: block;
-			font-size: 14px;
-			color: #999;
-		}
-
 		input, select, textarea {
 			cursor: pointer;
 			padding: 0;
-			margin: 0 !important;
+			margin: 0;
 			font-size: 15px !important;
 		}
 
@@ -51,6 +44,12 @@
 
 		.select2-selection__rendered {
 			margin:0;
+		}
+
+		.select2-search--inline {
+			.select2-search__field {
+				margin: 0 0 5px 5px;
+			}
 		}
 
 		.form-select {

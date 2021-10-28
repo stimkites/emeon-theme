@@ -20,14 +20,14 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 
 		<div class="switch-wrapper mb-2 d-flex align-items-center justify-content-start">
 			<input id="toggle_filters"
-			       class="form-check-input border-secondary bg-secondary btn-secondary text-secondary "
+			       class="form-check-input border-secondary bg-secondary btn-secondary text-secondary"
 			       type="checkbox" name="toggle_filters" value="yes"/>
 			<label for="toggle_filters" class="form-check-label d-block ms-2">Filters</label>
 		</div>
 
 		<fieldset class="fieldset">
 			<p>
-				<label for="filters-select">Categories</label>
+				<label class="fs-6 text-black-50" for="filters-select">Categories</label>
 				<select class="sel2 select select-categories form-select border-0"
 				        id="filters-select"
 				        data-placeholder="Choose categories to filter"
@@ -37,7 +37,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				</select>
 			</p>
 			<p>
-				<label for="experience-select">Experience (from)</label>
+				<label class="fs-6 text-black-50" for="experience-select">Experience (from)</label>
 				<select class="sel2 select select-experience form-select border-0"
 				        id="experience-select"
 				        data-placeholder="Choose experience level"
@@ -56,7 +56,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				</select>
 			</p>
 			<p>
-				<label for="salary-select">Salary (from)</label>
+				<label class="fs-6 text-black-50" for="salary-select">Salary (from)</label>
 				<input type="number"
 				       id="salary-select"
 				       class="invalidate form-control border-0 emeon-salary"
@@ -67,7 +67,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				<span class="input-group-text border-0 rounded-0 cur-symbol"><?= EMEON_CUR_SYMB ?></span>
 			</p>
 			<p class="filters-cta">
-				<label for="toggle_filters" class="filters-cancel link-info">Cancel</label>
+				<label for="toggle_filters" class="filters-cancel btn btn-outline-secondary">Cancel</label>
 				<button class="btn btn-primary" type="submit">Apply</button>
 			</p>
 
