@@ -40,7 +40,7 @@ get_header();
 				<?php
 				/* Start the Loop */
 				?>
-				<div class="search-posts">
+				<div class="search-posts w-100 d-flex flex-wrap row-cols-1 row-cols-md-2 row-cols-lg-4 align-items-stretch mx-n2">
 				<?php
 				while ( have_posts() ) :
 					the_post();
