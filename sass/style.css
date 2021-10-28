@@ -1181,6 +1181,25 @@ table {
   margin: 0 !important;
   height: 23px !important;
 }
+.emeon-form__fieldset .error-field:after {
+  position: absolute;
+  content: "\f534";
+  font-family: "dashicons", sans-serif;
+  font-size: 19px;
+  font-kerning: revert;
+  color: red;
+  border-radius: 100%;
+  margin: 0;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+  -moz-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+  display: block;
+  top: 5px;
+  right: -27px;
+}
 .emeon-form__fieldset .attachment-area #attachment-info {
   border: 3px dotted #ccc;
   cursor: pointer;
