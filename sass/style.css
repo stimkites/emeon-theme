@@ -1040,7 +1040,7 @@ table {
   z-index: 2;
 }
 .filters-toggling .form-check-label {
-  width: auto;
+  width: auto !important;
 }
 .filters-toggling .form-filters {
   position: absolute;
