@@ -41,7 +41,6 @@
 			case 'article[excerpt]' :
 				return ( value.length < 4 ? 'Too short excerpt' : /<\/?[a-z][\s\S]*>/i.test( value ) ? 'Excerpt contains HTML tags' : false );
 			case 'article[categories]' :
-				console.log( value );
 				return ( value.length ? false : 'Categories undefined' );
 			case 'article[tags]' :
 				return ( value.length ? false : 'No tags? Please add at least one' );
@@ -69,12 +68,15 @@
 		let errors = [];
 		$( '.error-field' ).removeClass( 'error-field' );
 		if ( 'undefined' !== typeof tinyMCE ) tinyMCE.get( 'article_content' ).save();
-		$( 'form.emeon-form .invalidate' ).each( function() {
+		$(
+			'form.emeon-form input.invalidate,' +
+			'form.emeon-form textarea.invalidate,' +
+			'form.emeon-form select.invalidate'
+		).each( function() {
 			let current_error = __invalid( this.name, $( this ).val() );
 			if ( current_error ) {
 				errors.push( current_error );
 				$( this ).parents( '.control-wrap' ).addClass( 'error-field' );
-				console.log( this.name );
 			}
 		} );
 		if ( errors.length ) {
