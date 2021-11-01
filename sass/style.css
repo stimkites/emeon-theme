@@ -1023,7 +1023,11 @@ table {
   padding: 0 10px;
 }
 
-.form-join fieldset {
+.form-join {
+  margin: 0 auto;
+  max-width: 300px;
+}
+.form-join .form-group {
   position: relative;
 }
 .form-join .error {
@@ -1999,3 +2003,5 @@ object {
 .gallery-caption {
   display: block;
 }
+
+/*# sourceMappingURL=style.css.map */
