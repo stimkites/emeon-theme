@@ -65,13 +65,13 @@ new class {
 				]
 			] );
 		$meta_query = [];
-		if( $_GET['f']['sal'] )
+		if( isset( $_GET['f']['sal'] ) )
 			$meta_query[] = [
 				'meta_key'      => 'emeon_salary',
 				'meta_value'    => $_GET['f']['sal'],
 				'operator'      => '>='
 			];
-		if( $_GET['f']['exp'] )
+		if( isset( $_GET['f']['exp'] ) )
 			$meta_query[] = [
 				'meta_key'      => 'emeon_experience',
 				'meta_value'    => $_GET['f']['exp'],
