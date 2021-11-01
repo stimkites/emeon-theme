@@ -311,7 +311,7 @@ new class {
 			filemtime( EMEON_PATH . '/js/front-forms.js' ),
 			true
 		);
-		wp_localize_script( $slug, '__emeon', [ 'n' => wp_create_nonce( EMEON_SLUG ) ] );
+		wp_localize_script( $slug, '__emeon', ['ajax_url' => admin_url( 'admin-ajax.php' ), 'n' => wp_create_nonce( EMEON_SLUG ) ] );
 		wp_enqueue_script( $slug );
 	}
 

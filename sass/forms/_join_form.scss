@@ -1,0 +1,23 @@
+.form-join {
+	fieldset {
+		position: relative;
+	}
+
+	.error {
+		display: none;
+		position: absolute;
+		left: 0;
+		top: 100%;
+		font-size: 12px;
+		color: red;
+	}
+
+	.success {
+		display: none;
+		position: absolute;
+		left: 0;
+		top: 100%;
+		font-size: 12px;
+		color: green;
+	}
+}

@@ -66,12 +66,13 @@
 	 */
 	const __validate_form = function( e ) {
 		let errors = [];
+
 		$( '.error-field' ).removeClass( 'error-field' );
 		if ( 'undefined' !== typeof tinyMCE ) tinyMCE.get( 'article_content' ).save();
 		$(
 			'form.emeon-form input.invalidate,' +
 			'form.emeon-form textarea.invalidate,' +
-			'form.emeon-form select.invalidate'
+			'form.emeon-form select.invalidate',
 		).each( function() {
 			let current_error = __invalid( this.name, $( this ).val() );
 			if ( current_error ) {
@@ -83,6 +84,7 @@
 			__error( errors[ 0 ] );
 			return __noreturn( e );
 		}
+
 		$( 'body' ).addClass( 'loading' );
 		$( '<input type="hidden" name="__nonce" value="' + __emeon.n + '" />' ).appendTo( 'form.emeon-form' );
 		return e;
@@ -374,6 +376,134 @@
 	};
 
 } )( jQuery.noConflict() ).init(); /** My account **/
+
+/** Join form */
+( $ => {
+
+	/**
+	 * Assign all events
+	 *
+	 * @private
+	 */
+
+	const validateEmail = ( email ) => {
+		const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test( String( email ).toLowerCase() );
+	};
+
+	const __validate_form = async ( event ) => {
+		event.preventDefault();
+		let _target = $( event.target );
+		let errors = 0,
+			tokenNum,
+			value;
+
+		//key "6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7" is site_key for google captcha
+		const getToken = await grecaptcha.execute( '6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7', { action: 'submit' } ).then( ( token ) => tokenNum = token);
+
+		if (getToken) {
+			let err,
+				errorEmailEl = _target.find($('span.error.email')),
+				errorElNoValidText =  errorEmailEl.data('valid'),
+				errorElEmptyText = errorEmailEl.data('empty'),
+				nonceVal = _target.find($('input[name="__nonce"]')).val(),
+				emailVal = _target.find( $( 'input[type="email"]' ) ).val();
+
+			if ( emailVal && !validateEmail( emailVal ) ) {
+				errors++;
+				err = 'novalid';
+			}
+
+			if ( !emailVal ) {
+				errors++;
+				err = 'empty';
+			}
+
+			value = emailVal;
+
+			if (err === 'novalid') {
+				errorEmailEl.fadeIn(200)
+				errorEmailEl.text(errorElNoValidText)
+			}
+
+			if (err === 'empty') {
+				errorEmailEl.fadeIn(200)
+				errorEmailEl.text(errorElEmptyText)
+			}
+
+			if ( tokenNum && !errors && value && nonceVal ) {
+				return {
+					token: tokenNum,
+					errors: false,
+					emailVal: value,
+					nonceVal: nonceVal
+				};
+			}
+		}else {
+			return false
+		}
+	};
+
+	const __submitHandler = ( event ) => {
+		event.preventDefault();
+		let curTarget = $(event.currentTarget);
+		if (!__validate_form( event )) return;
+		__validate_form( event ).then(res => {
+			if (!res) return;
+			const { token, errors, emailVal, nonceVal } = res;
+			if ( !errors ) {
+				let adminUrl = __emeon.ajax_url;
+				console.log( adminUrl );
+				let data = {
+					action: 'ajax_join_form',
+					email: emailVal,
+					token: token,
+					nonce: nonceVal
+				};
+				$.ajax( {
+					url: adminUrl,
+					data: data,
+					type: 'POST',
+					beforeSend: function( xhr ) {
+						curTarget.addClass('loading');
+					},
+					success: function( data ) {
+						if ( data.message === 'success' ) {
+							curTarget.removeClass('loading');
+							curTarget.find($('input[type="email"]')).val('');
+							curTarget.find($('.error')).hide();
+							curTarget.find($('.success')).fadeIn(200);
+
+							setTimeout(function() {
+								curTarget.find($('.success')).fadeOut(200);
+							}, 3000)
+							console.log( data );
+						}else {
+							curTarget.find($('.error')).fadeIn(200).text('You are bot sorry, we can\'t register you')
+						}
+					},
+				} );
+			}
+		})
+	};
+
+	const __assign = function() {
+		$( '.emeon-form.form-join' ).off().on( 'submit', __submitHandler );
+	};
+
+	return {
+
+		/**
+		 * Initialize account menus
+		 */
+		init: function() {
+			if ( $( '.emeon-form.form-join' ).length === 0 ) return;
+			$( document ).ready( __assign );
+		},
+
+	};
+
+} )( jQuery.noConflict() ).init(); /** Join form **/
 
 /** Search form */
 ( $ => {
