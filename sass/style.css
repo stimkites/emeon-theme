@@ -453,7 +453,7 @@ body.single-post #primary .post-thumbnail img {
 .emeon-account-content #my-articles .add-link a:after {
   font-family: Dashicons, sans-serif;
   font-size: 32px;
-  content: "";
+  content: "\f10f";
 }
 .emeon-account-content #my-articles .add-link a:hover {
   opacity: 1;
@@ -502,7 +502,7 @@ body.single-post #primary .post-thumbnail img {
   transition: all 0.4s;
 }
 .emeon-account-content .account-article .article-menu__button:before {
-  content: "";
+  content: "\f329";
   font-family: Dashicons, sans-serif;
   font-size: 18px;
   color: #999;
@@ -591,7 +591,7 @@ body.single-post #primary .post-thumbnail img {
   display: block;
 }
 .emeon-account-content #pass form.form-password label[for=view-pass]:before {
-  content: "";
+  content: "\f530";
   position: absolute;
   cursor: pointer;
   right: 0;
@@ -601,7 +601,7 @@ body.single-post #primary .post-thumbnail img {
   display: none;
 }
 .emeon-account-content #pass form.form-password #view-pass:checked + label[for=view-pass]:before {
-  content: "";
+  content: "\f177";
 }
 .emeon-account-content #contacts form.form-contactus {
   position: relative;
@@ -1197,7 +1197,7 @@ table {
 }
 .emeon-form__fieldset .error-field:after {
   position: absolute;
-  content: "";
+  content: "\f534";
   font-family: "dashicons", sans-serif;
   font-size: 19px;
   font-kerning: revert;
@@ -1291,7 +1291,7 @@ table {
 }
 .loading:after {
   position: fixed;
-  content: "";
+  content: "\f463";
   font: normal normal 50px/50px dashicons, sans-serif;
   -webkit-animation: spin 0.8s linear infinite;
   -moz-animation: spin 0.8s linear infinite;
@@ -1708,7 +1708,7 @@ body.single-post #primary .post-thumbnail img {
 .emeon-account-content #my-articles .add-link a:after {
   font-family: Dashicons, sans-serif;
   font-size: 32px;
-  content: "";
+  content: "\f10f";
 }
 .emeon-account-content #my-articles .add-link a:hover {
   opacity: 1;
@@ -1757,7 +1757,7 @@ body.single-post #primary .post-thumbnail img {
   transition: all 0.4s;
 }
 .emeon-account-content .account-article .article-menu__button:before {
-  content: "";
+  content: "\f329";
   font-family: Dashicons, sans-serif;
   font-size: 18px;
   color: #999;
@@ -1846,7 +1846,7 @@ body.single-post #primary .post-thumbnail img {
   display: block;
 }
 .emeon-account-content #pass form.form-password label[for=view-pass]:before {
-  content: "";
+  content: "\f530";
   position: absolute;
   cursor: pointer;
   right: 0;
@@ -1856,7 +1856,7 @@ body.single-post #primary .post-thumbnail img {
   display: none;
 }
 .emeon-account-content #pass form.form-password #view-pass:checked + label[for=view-pass]:before {
-  content: "";
+  content: "\f177";
 }
 .emeon-account-content #contacts form.form-contactus {
   position: relative;
@@ -1999,3 +1999,5 @@ object {
 .gallery-caption {
   display: block;
 }
+
+/*# sourceMappingURL=style.css.map */
