@@ -399,7 +399,7 @@
 			value;
 
 		//key "6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7" is site_key for google captcha
-		const getToken = await grecaptcha.execute( '6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7', { action: 'submit' } ).then( ( token ) => tokenNum = token);
+		const getToken = await grecaptcha.execute( '6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx', { action: 'submit' } ).then( ( token ) => tokenNum = token);
 
 		if (getToken) {
 			let err,

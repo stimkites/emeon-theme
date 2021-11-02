@@ -414,7 +414,7 @@ function emeon_join_ajax_handler () {
 	if (!isset($email) && !isset($token)) return;
 
 	$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-	$recaptcha_secret = '6LezDgkdAAAAAAmpoZ8hZOjHoO_csmrswV4T7AkP';
+	$recaptcha_secret = '6LfvAwkdAAAAAK5OA8_ZcQ1K-UG8IELZiK1cd1CY';
 	$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token);
 	$recaptcha = json_decode($recaptcha);
 
