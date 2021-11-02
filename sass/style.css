@@ -1079,6 +1079,37 @@ table {
   color: green;
 }
 
+.form-login-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.form-login .form-check-label {
+  cursor: pointer;
+}
+.form-login label.error {
+  position: relative;
+}
+.form-login label.error:after {
+  position: absolute;
+  content: "";
+  font-family: "dashicons", sans-serif;
+  font-size: 19px;
+  font-kerning: revert;
+  color: red;
+  border-radius: 100%;
+  margin: 0;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+  -moz-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+  display: block;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -27px;
+}
+
 /*Filters toggle*/
 .filters-toggling {
   position: relative;
@@ -1309,6 +1340,9 @@ table {
   border-left-color: #34d831;
 }
 #emeon-error-popup.visible {
+  right: 35px;
+}
+#emeon-error-popup:hover {
   right: 35px;
 }
 

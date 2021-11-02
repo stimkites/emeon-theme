@@ -4,6 +4,7 @@
 
 @import "searchform";
 @import "join_form";
+@import "login_form";
 
 /*Filters toggle*/
 .filters-toggling {
@@ -299,6 +300,10 @@
 	}
 
 	&.visible {
+		right: 35px;
+	}
+
+	&:hover {
 		right: 35px;
 	}
 }

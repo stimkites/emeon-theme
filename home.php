@@ -165,10 +165,6 @@ get_header();
 				<div class="swiper-pagination swiper-pagination--stories"></div>
 
 			</section>
-
-			<section>
-				<?php echo do_shortcode('[emeon_forms form=login]'); ?>
-			</section>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 <?php
