@@ -468,7 +468,8 @@
 						curTarget.addClass('loading');
 					},
 					success: function( data ) {
-						if ( data.message === 'success' ) {
+						let newData = JSON.parse(data)
+						if ( newData && newData['message'] && newData['message'] === 'success' ) {
 							curTarget.removeClass('loading');
 							curTarget.find($('input[type="email"]')).val('');
 							curTarget.find($('.error')).hide();
@@ -477,8 +478,8 @@
 							setTimeout(function() {
 								curTarget.find($('.success')).fadeOut(200);
 							}, 3000)
-							console.log( data );
 						}else {
+							curTarget.removeClass('loading');
 							curTarget.find($('.error')).fadeIn(200).text('You are bot sorry, we can\'t register you')
 						}
 					},
