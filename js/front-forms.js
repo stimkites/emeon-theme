@@ -164,14 +164,14 @@
 		let allowed_images = [ '.png', '.jpg', '.gif', 'jpeg', '.bmp' ];
 		if ( -1 === allowed_images.indexOf( f.name.substr( -4 ) ) ) {
 			__error( 'Improper image format!' );
-			return;
+			return __reset_photo( e );
 		}
 		if ( f.size > 5 * 1024 * 1024 ) {
 			__error( 'Image file size exceeds 5Mb!' );
-			return;
+			return __reset_photo( e );
 		}
 		let src = URL.createObjectURL( f );
-		if ( !src ) return;
+		if ( !src ) return __reset_photo( e );
 		$( 'img.logo' )
 			.prop( 'src', src )
 			.parent()
@@ -194,11 +194,11 @@
 		let f = e.target.files[ 0 ];
 		if ( '.pdf' !== f.name.substr( -4 ) ) {
 			__error( 'Improper PDF file format!' );
-			return;
+			return __reset_attachment( e );
 		}
 		if ( f.size > 5 * 1024 * 1024 ) {
 			__error( 'PDF file size exceeds 5Mb!' );
-			return;
+			return __reset_attachment( e );
 		}
 		const obj_url = URL.createObjectURL( f );
 		$( '#attachment-preview' )

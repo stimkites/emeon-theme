@@ -254,13 +254,14 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
 				<span id="no-attachment">Click to add PDF with more details. Max size is 5 mb.</span>
 			</label>
 
-			<input type="file" id="attachment-file" class="visually-hidden" name="article[attachment]" accept=".pdf"/>
+			<input type="file" id="attachment-file" class="visually-hidden" name="article_attachment" accept=".pdf"/>
 
 		</div>
 
 		<div class="form-check form-switch join-emeon-prompt mb-5">
 			<input id="want_join" class="form-check-input border-secondary bg-secondary btn-secondary text-secondary"
 			       type="checkbox"
+			       <?=( in_array( $join_cat_id, $post_cats ?? [] ) ? 'checked' : '' )?>
 			       name="article[categories][]"
 			       value="<?=$join_cat_id?>"/>
 			<label for="want_join" class="form-check-label">

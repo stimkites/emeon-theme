@@ -467,110 +467,133 @@ new class {
 	 * Adedit action
 	 */
 	protected static function adedit() {
-		$text_to_analyze =
-			$_POST[ 'article' ][ 'title' ] . ' ' . $_POST[ 'article' ][ 'excerpt' ] . ' ' . $_POST[ 'article' ][ 'content' ] . ' ' .
-			implode( " ", $_POST[ 'article' ][ 'tags' ] ) . ' ' . implode( " ", $_POST[ 'article' ][ 'categories' ] );
-		$user            = get_user_by( 'ID', get_current_user_id() );
-		$post_status     = wp_check_comment_disallowed_list(
-			$user->display_name, $user->user_email, '', $text_to_analyze, '', ''
-		) ? 'moderation' : 'publish';
-		$tags            = $_POST[ 'article' ][ 'tags' ];
-		$cats            = $_POST[ 'article' ][ 'categories' ];
-		$post_id         = (int) $_POST[ 'article' ][ 'id' ];
-		$post_data       = [
-			'post_title'   => esc_html( $_POST[ 'article' ][ 'title' ] ),
-			'post_excerpt' => esc_html( $_POST[ 'article' ][ 'excerpt' ] ),
-			'post_content' => $_POST[ 'article' ][ 'content' ],
-			'post_status'  => $post_status,
-			'post_author'  => $user->ID
-		];
-		if ( $post_id ) {
-			$post_data[ 'ID' ] = $post_id;
-			wp_update_post( $post_data );
-		} else {
-			$post_id = wp_insert_post( $post_data );
-		}
-		if ( ! $post_id || is_wp_error( $post_id ) ) {
-			$error = ( is_wp_error( $post_id ) ? $post_id->get_error_message() : 'Unknown error occurred.' );
+		$notify = false;
+		try{
+			$text_to_analyze =
+				$_POST[ 'article' ][ 'title' ]   . ' ' .
+				$_POST[ 'article' ][ 'excerpt' ] . ' ' .
+				$_POST[ 'article' ][ 'content' ] . ' ' .
+				implode( " ", $_POST[ 'article' ][ 'tags' ] ) . ' ' .
+				implode( " ", $_POST[ 'article' ][ 'categories' ] );
+			$user            = get_user_by( 'ID', get_current_user_id() );
 
-			return $_POST[ 'emeon_error' ][] =
-				$error . ' Please, contact us asap: <a href="mailto:admin@emeon.io">admin@emeon.io</a>';
-		}
+			$post_status     = ( wp_check_comment_disallowed_list(
+									$user->display_name, $user->user_email, '', $text_to_analyze, '', ''
+								)   ? 'moderation'
+									: 'publish' );
+			$notify = $post_status === 'moderation';
 
-		// Cats and tags
-		$_POST[ 'ID' ] = $post_id;
-		wp_set_post_tags( $post_id, $tags, 'post_tag' );
-		wp_set_post_categories( $post_id, $cats );
+			$tags            = array_map( 'sanitize_text_field', $_POST[ 'article' ][ 'tags' ] );
+			$cats            = array_map( 'sanitize_text_field', $_POST[ 'article' ][ 'categories' ] );
 
-		// Contacts
-		$contacts = [];
-		foreach ( [ 'email', 'phone', 'urls' ] as $contact ) {
-			$contacts[ $contact ] = $_POST[ 'article' ][ $contact ] ?? '';
-		}
-		update_post_meta( $post_id, 'emeon_contacts', $contacts );
+			// Set primary category (candidates or vacancies)
+			if( $p_cat = get_term_by( 'slug', sanitize_text_field( $_POST[ 'article' ][ 'type' ] ), 'category' ) )
+				$cats[] = $p_cat->term_id;
 
-		// Salary and experience
-		$salary = sanitize_key( $_POST[ 'article' ][ 'salary' ] );
-		$experience = sanitize_key( $_POST[ 'article' ][ 'experience' ] );
-		update_post_meta( $post_id, 'emeon_salary', $salary );
-		update_post_meta( $post_id, 'emeon_experience', $experience );
+			$post_id         = (int) $_POST[ 'article' ][ 'id' ];
+			$post_data       = [
+				'post_title'   => sanitize_text_field( $_POST[ 'article' ][ 'title' ] ),
+				'post_excerpt' => sanitize_textarea_field( $_POST[ 'article' ][ 'excerpt' ] ),
+				'post_content' => trim( $_POST[ 'article' ][ 'content' ], "'" ),
+				'post_status'  => $post_status,
+				'post_author'  => $user->ID
+			];
 
-		// Notify admin
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-		$headers .= 'From: Emeon <info@emeon.io>' . "\r\n";
-		$post_data[] = $cats;
-		$post_data[] = $tags;
-		$post_data[] = $contacts;
-		$post_data[] = $salary;
-		$post_data[] = $experience;
- 		wp_mail(
-			get_option( 'admin_email' ),
-			'New entry: ' . $post_data['post_title'] . ' ' . $post_id,
-			implode( "<br><br>", $post_data ),
-			$headers
-		);
+			if ( $post_id ) {
+				$post_data[ 'ID' ] = $post_id;
+				wp_update_post( $post_data );
+			} else {
+				$post_id = wp_insert_post( $post_data );
+				$notify = true;
+			}
+			if ( ! $post_id || is_wp_error( $post_id ) ) {
+				$error = ( is_wp_error( $post_id ) ? $post_id->get_error_message() : 'Unknown error occurred.' );
 
-		// Image and attachment
-		foreach ( [ 'article_image', 'article_attachment' ] as $file_id ) {
-			if ( is_uploaded_file( $_FILES[ $file_id ][ 'tmp_name' ] ) ) {
-				if ( ! function_exists( 'wp_handle_upload' ) ) {
-					include ABSPATH . '/wp-admin/includes/file.php';
-					include ABSPATH . '/wp-admin/includes/image.php';
-				}
-				$file = wp_handle_upload( $_FILES[ $file_id ], [ 'test_form' => false ] );
-				if ( isset( $file[ 'error' ] ) ) {
-					return $_POST[ 'emeon_error' ][] = $file[ 'error' ];
-				}
-				$name       = $_FILES[ $file_id ][ 'name' ];
-				$ext        = pathinfo( $name, PATHINFO_EXTENSION );
-				$name       = wp_basename( $name, ".$ext" );
-				$url        = $file[ 'url' ];
-				$type       = $file[ 'type' ];
-				$file       = $file[ 'file' ];
-				$title      = sanitize_text_field( $name );
-				$attachment = [
-					'post_mime_type' => $type,
-					'guid'           => $url,
-					'post_parent'    => $post_id,
-					'post_title'     => $title,
-					'post_content'   => '',
-				];
-				// Save the attachment metadata.
-				$attachment_id = wp_insert_attachment( $attachment, $file, $post_id, true );
-				if ( ! is_wp_error( $attachment_id ) ) {
-					wp_update_attachment_metadata(
-						$attachment_id, wp_generate_attachment_metadata( $attachment_id, $file )
-					);
-					if ( 'article_image' === $file_id ) {
-						set_post_thumbnail( $post_id, $attachment_id );
-					} else {
-						update_post_meta( $post_id, 'emeon_attachment', $attachment_id );
+				throw new Exception(
+					$error . ' Please, contact us asap: <a href="mailto:admin@emeon.io">admin@emeon.io</a>'
+				);
+			}
+
+			// Cats and tags
+			$_POST[ 'ID' ] = $post_id;
+			wp_set_post_tags( $post_id, $tags, 'post_tag' );
+			wp_set_post_categories( $post_id, $cats );
+
+			// Contacts
+			$contacts = [];
+			foreach ( [ 'email', 'phone', 'urls' ] as $contact ) {
+				$contacts[ $contact ] = sanitize_textarea_field( $_POST[ 'article' ][ $contact ] ?? '' );
+			}
+			update_post_meta( $post_id, 'emeon_contacts', $contacts );
+
+			// Salary and experience
+			$salary = sanitize_key( $_POST[ 'article' ][ 'salary' ] );
+			$experience = sanitize_key( $_POST[ 'article' ][ 'experience' ] );
+			update_post_meta( $post_id, 'emeon_salary', $salary );
+			update_post_meta( $post_id, 'emeon_experience', $experience );
+
+			// Image and attachment
+			foreach ( [ 'article_image', 'article_attachment' ] as $file_id ) {
+				if ( isset( $_FILES[ $file_id ] ) && is_uploaded_file( $_FILES[ $file_id ][ 'tmp_name' ] ) ) {
+					if ( ! function_exists( 'wp_handle_upload' ) ) {
+						include ABSPATH . '/wp-admin/includes/file.php';
+						include ABSPATH . '/wp-admin/includes/image.php';
+					}
+					$file = wp_handle_upload( $_FILES[ $file_id ], [ 'test_form' => false ] );
+					if ( isset( $file[ 'error' ] ) ) {
+						throw new Exception( $file[ 'error' ] );
+					}
+					$name       = $_FILES[ $file_id ][ 'name' ];
+					$ext        = pathinfo( $name, PATHINFO_EXTENSION );
+					$name       = wp_basename( $name, ".$ext" );
+					$url        = $file[ 'url' ];
+					$type       = $file[ 'type' ];
+					$file       = $file[ 'file' ];
+					$title      = sanitize_text_field( $name );
+					$attachment = [
+						'post_mime_type' => $type,
+						'guid'           => $url,
+						'post_parent'    => $post_id,
+						'post_title'     => $title,
+						'post_content'   => '',
+					];
+					// Save the attachment metadata.
+					$attachment_id = wp_insert_attachment( $attachment, $file, $post_id, true );
+					if ( ! is_wp_error( $attachment_id ) ) {
+						wp_update_attachment_metadata(
+							$attachment_id, wp_generate_attachment_metadata( $attachment_id, $file )
+						);
+						if ( 'article_image' === $file_id ) {
+							set_post_thumbnail( $post_id, $attachment_id );
+						} else {
+							update_post_meta( $post_id, 'emeon_attachment', $attachment_id );
+						}
 					}
 				}
 			}
+		} catch ( Throwable $e ) {
+			return $_POST[ 'emeon_error' ][] = $e->getMessage();
+		} finally {
+			// Notify admin
+			if( $notify && ! empty( $post_data ) ) {
+				$user_id     = $post_data['post_author'];
+				$user_email  = get_user_by( 'ID', $user_id )->user_email;
+				unset( $post_data['post_author'] );
+				$post_data[] = 'Categories: '   . implode( ",", $cats ?? [] );
+				$post_data[] = 'Tags: '         . implode( ",", $tags ?? [] );
+				$post_data[] = 'Contacts: '     . implode( "<br/>", $contacts ?? [] );
+				$post_data[] = 'Salary: '       . ( $salary ?? 0 );
+				$post_data[] = 'Experience: '   . EMEON_EXP_LVL[ $experience ?? 0 ];
+				$post_data[] = 'Author: '       . $user_email;
+				wp_mail(
+					get_option( 'admin_email' ),
+					'New entry: ' . $post_data[ 'post_title' ] . ' ' . ( $post_id ?? 0 ),
+					implode( "<br/>", $post_data ),
+					"MIME-Version: 1.0 \r\n" .
+					"Content-type: text/html; charset=UTF-8 \r\n"
+				);
+			}
 		}
-
 
 		wp_safe_redirect( '/account/' );
 		exit;

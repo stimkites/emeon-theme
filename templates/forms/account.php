@@ -18,10 +18,19 @@ if ( isset( $_GET[ 'archive' ] ) ) {
 	$acted = wp_update_post( [ 'ID' => $_GET[ 'archive' ], 'post_status' => 'archive' ] );
 }
 
-$uposts = get_posts( [
-	'post_author' => $uid,
-	'category'    => [ $cid, $vid ]
-] );
+$uposts = get_posts(
+	[
+		'post_author' => $uid,
+		'posts_per_page' => -1,
+		'category'      => get_terms(
+			[
+				'slug' => [ 'vacancies', 'candidates' ],
+				'taxonomy' => 'category',
+				'fields' => 'ids'
+			]
+		)
+	]
+);
 
 $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 ?>
