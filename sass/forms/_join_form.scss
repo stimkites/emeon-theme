@@ -1,6 +1,20 @@
 .form-join {
-	margin: 0 auto;
-	max-width: 300px;
+
+	&-wrapper {
+		margin: 0 auto;
+		max-width: 300px;
+	}
+
+	.button-cta{
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+	}
+
+	.email {
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+		border-right: 0;
+	}
 
 	.form-group {
 		position: relative;

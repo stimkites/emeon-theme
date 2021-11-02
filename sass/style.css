@@ -1023,9 +1023,18 @@ table {
   padding: 0 10px;
 }
 
-.form-join {
+.form-join-wrapper {
   margin: 0 auto;
   max-width: 300px;
+}
+.form-join .button-cta {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.form-join .email {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  border-right: 0;
 }
 .form-join .form-group {
   position: relative;

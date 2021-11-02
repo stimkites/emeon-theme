@@ -467,7 +467,6 @@ new class {
 			$UID  = wp_create_user( $email, $pass, $email );
 			if ( is_wp_error( $UID ) ) {
 				$_POST[ 'emeon_error' ][] = $UID->get_error_message() . ' Please, try again.';
-
 				return;
 			}
 			wp_send_new_user_notifications( $UID );
