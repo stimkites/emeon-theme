@@ -75,7 +75,7 @@ $experience = get_post_meta( $post->ID, 'emeon_experience', true );
 				<span class="remove-icon attachment-remove"></span>
 				<iframe id="attachment-preview" src="<?= $pdf ?>"></iframe>
 				<span id="no-attachment">No file selected...</span>
-				<input type="hidden" id="attachment-file" name="ad_attachment" value="<?= $pdf_id ?? '' ?>"/>
+				<input type="hidden" id="attachment-file" name="emeon_attachment" value="<?= $pdf_id ?? '' ?>"/>
 			</label>
 		</p>
 	</fieldset>

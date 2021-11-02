@@ -339,9 +339,9 @@ new class {
 		if ( ! isset( $_POST[ 'emeon_contacts' ] ) ) {
 			return;
 		}
-		update_post_meta( $post_id, 'emeon_contacts', $_POST[ 'emeon_contacts' ] ?? [] );
-		update_post_meta( $post_id, 'emeon_attachment', $_POST[ 'ad_attachment' ] ?? '' );
-		update_post_meta( $post_id, 'emeon_salary', $_POST[ 'emeon_salary' ] ?? '' );
+		update_post_meta( $post_id, 'emeon_contacts',   $_POST[ 'emeon_contacts' ]   ?? [] );
+		update_post_meta( $post_id, 'emeon_attachment', $_POST[ 'emeon_attachment' ] ?? '' );
+		update_post_meta( $post_id, 'emeon_salary',     $_POST[ 'emeon_salary' ]     ?? '' );
 		update_post_meta( $post_id, 'emeon_experience', $_POST[ 'emeon_experience' ] ?? '' );
 	}
 
@@ -463,10 +463,6 @@ new class {
 		exit;
 	}
 
-	protected static function captcha() {
-
-	}
-
 	/**
 	 * Adedit action
 	 */
@@ -482,8 +478,8 @@ new class {
 		$cats            = $_POST[ 'article' ][ 'categories' ];
 		$post_id         = (int) $_POST[ 'article' ][ 'id' ];
 		$post_data       = [
-			'post_title'   => $_POST[ 'article' ][ 'title' ],
-			'post_excerpt' => $_POST[ 'article' ][ 'excerpt' ],
+			'post_title'   => esc_html( $_POST[ 'article' ][ 'title' ] ),
+			'post_excerpt' => esc_html( $_POST[ 'article' ][ 'excerpt' ] ),
 			'post_content' => $_POST[ 'article' ][ 'content' ],
 			'post_status'  => $post_status,
 			'post_author'  => $user->ID
@@ -514,8 +510,26 @@ new class {
 		update_post_meta( $post_id, 'emeon_contacts', $contacts );
 
 		// Salary and experience
-		update_post_meta( $post_id, 'emeon_salary', $_POST[ 'article' ][ 'salary' ] );
-		update_post_meta( $post_id, 'emeon_experience', $_POST[ 'article' ][ 'experience' ] );
+		$salary = sanitize_key( $_POST[ 'article' ][ 'salary' ] );
+		$experience = sanitize_key( $_POST[ 'article' ][ 'experience' ] );
+		update_post_meta( $post_id, 'emeon_salary', $salary );
+		update_post_meta( $post_id, 'emeon_experience', $experience );
+
+		// Notify admin
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+		$headers .= 'From: Emeon <info@emeon.io>' . "\r\n";
+		$post_data[] = $cats;
+		$post_data[] = $tags;
+		$post_data[] = $contacts;
+		$post_data[] = $salary;
+		$post_data[] = $experience;
+ 		wp_mail(
+			get_option( 'admin_email' ),
+			'New entry: ' . $post_data['post_title'] . ' ' . $post_id,
+			implode( "<br><br>", $post_data ),
+			$headers
+		);
 
 		// Image and attachment
 		foreach ( [ 'article_image', 'article_attachment' ] as $file_id ) {
