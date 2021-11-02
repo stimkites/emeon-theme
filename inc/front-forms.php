@@ -44,6 +44,10 @@ new class {
 		// Apply filters on search/filter
 		add_filter( 'pre_get_posts', __CLASS__ . '::apply_filters' );
 
+		// Ajax for join form
+		add_action('wp_ajax_ajax_join_form',  __CLASS__ . '::emeon_join_ajax_handler');
+		add_action('wp_ajax_nopriv_ajax_join_form',  __CLASS__ . '::emeon_join_ajax_handler');
+
 	}
 
 	/**
@@ -421,6 +425,67 @@ new class {
 		wp_send_new_user_notifications( $UID );
 		wp_safe_redirect( '/login?uid=' . $UID );
 		exit;
+	}
+
+	/**
+	 * Join ajax handler
+	 */
+
+	static function emeon_join_ajax_handler () {
+		$token = $_POST['token'];
+
+		if ( ! ( $email = $_POST[ 'email' ] ) ||
+		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+			$_POST[ 'emeon_error' ][] = 'The email you entered is invalid. Please, try again.';
+			echo json_encode(['message' => 'error','error_text'=> 'The email you entered is invalid. Please, try again.' ]);
+			exit;
+		}
+
+		if (!check_ajax_referer( EMEON_SLUG, 'nonce' )) return;
+		if (!isset($email) && !isset($token)) return;
+
+		if ( ( $user = get_user_by( 'email', $email ) ) && ! is_wp_error( $user ) ) {
+			$_POST[ 'emeon_error' ][] = 'User with this email already registered. Please, <a href="/login/">login</a>.';
+			echo json_encode(['message' => 'error','error_text'=> 'User with this email already registered. Please, <a href="/login/">login</a>.' ]);
+			exit;
+		}
+
+		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+		$recaptcha_secret = '6LezDgkdAAAAAAmpoZ8hZOjHoO_csmrswV4T7AkP';
+		$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token);
+		$recaptcha = json_decode($recaptcha);
+
+		// if more than 0.5 then it is human
+		if ($recaptcha->score >= 0.5) {
+
+
+			/**
+			 * register here
+			 */
+
+			$pass = wp_generate_password( 6 );
+			$UID  = wp_create_user( $email, $pass, $email );
+			if ( is_wp_error( $UID ) ) {
+				$_POST[ 'emeon_error' ][] = $UID->get_error_message() . ' Please, try again.';
+
+				return;
+			}
+			wp_send_new_user_notifications( $UID );
+			echo json_encode(['message' => 'success', 'score' => $recaptcha->score]);
+			wp_safe_redirect( '/login?uid=' . $UID );
+			exit;
+
+
+		} else {
+			echo json_encode(['message' => 'you are a bot', 'score' => $recaptcha->score]);
+			die();
+
+			/**
+			 * send errors here
+			 */
+
+		}
+
 	}
 
 	/**

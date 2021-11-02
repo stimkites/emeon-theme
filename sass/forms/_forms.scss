@@ -294,6 +294,10 @@
 	-moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);
 	transition: all ease-in-out .3s;
 
+	&.success {
+		border-left-color: #34d831;
+	}
+
 	&.visible {
 		right: 35px;
 	}

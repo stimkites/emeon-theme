@@ -399,43 +399,4 @@ add_filter( 'comment_form_defaults', function ( $defaults ) {
 	return $defaults;
 } );
 
-/**
- * Ajax for join form
- */
 
-add_action('wp_ajax_ajax_join_form', 'emeon_join_ajax_handler');
-add_action('wp_ajax_nopriv_ajax_join_form', 'emeon_join_ajax_handler');
-
-function emeon_join_ajax_handler () {
-	$email = $_POST['email'];
-	$token = $_POST['token'];
-
-	if (!check_ajax_referer( EMEON_SLUG, 'nonce' )) return;
-	if (!isset($email) && !isset($token)) return;
-
-	$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-	$recaptcha_secret = '6LfvAwkdAAAAAK5OA8_ZcQ1K-UG8IELZiK1cd1CY';
-	$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token);
-	$recaptcha = json_decode($recaptcha);
-
-	// if more than 0.5 then it is human
-	if ($recaptcha->score >= 0.5) {
-		echo json_encode(['message' => 'success', 'score' => $recaptcha->score]);
-		die();
-
-		/**
-		 * register here
-		 */
-
-
-	} else {
-		echo json_encode(['message' => 'you are a bot', 'score' => $recaptcha->score]);
-		die();
-
-		/**
-		 * send errors here
-		 */
-
-	}
-
-}
