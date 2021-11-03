@@ -44,6 +44,14 @@ new class {
 		// Apply filters on search/filter
 		add_filter( 'pre_get_posts', __CLASS__ . '::apply_filters' );
 
+		// Ajax for join form
+		add_action('wp_ajax_ajax_join_form',  __CLASS__ . '::emeon_join_ajax_handler');
+		add_action('wp_ajax_nopriv_ajax_join_form',  __CLASS__ . '::emeon_join_ajax_handler');
+
+		// Ajax login form
+		add_action('wp_ajax_ajax_login_form',  __CLASS__ . '::emeon_login_ajax_handler');
+		add_action('wp_ajax_nopriv_ajax_login_form',  __CLASS__ . '::emeon_login_ajax_handler');
+
 	}
 
 	/**
@@ -424,19 +432,120 @@ new class {
 	}
 
 	/**
-	 * Login action
+	 * Join ajax handler
 	 */
-	protected static function login() {
+
+	static function emeon_join_ajax_handler () {
+		$token = $_POST['token'];
+
 		if ( ! ( $email = $_POST[ 'email' ] ) ||
 		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 			$_POST[ 'emeon_error' ][] = 'The email you entered is invalid. Please, try again.';
+			echo json_encode(['message' => 'error','error_text'=> 'The email you entered is invalid. Please, try again.' ]);
+			exit;
+		}
 
-			return;
+		if (!check_ajax_referer( EMEON_SLUG, 'nonce' )) return;
+		if (!isset($email) && !isset($token)) return;
+
+		if ( ( $user = get_user_by( 'email', $email ) ) && ! is_wp_error( $user ) ) {
+			$_POST[ 'emeon_error' ][] = 'User with this email already registered. Please, <a href="/login/">login</a>.';
+			echo json_encode(['message' => 'error','error_text'=> 'User with this email already registered. Please, <a href="/login/">login</a>.' ]);
+			exit;
+		}
+
+		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+		$recaptcha_secret = '6LfvAwkdAAAAAK5OA8_ZcQ1K-UG8IELZiK1cd1CY';
+		$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token);
+		$recaptcha = json_decode($recaptcha);
+
+		// if more than 0.5 then it is human
+		if ($recaptcha->score >= 0.5) {
+
+
+			/**
+			 * register here
+			 */
+
+			$pass = wp_generate_password( 6 );
+			$UID  = wp_create_user( $email, $pass, $email );
+			if ( is_wp_error( $UID ) ) {
+				$_POST[ 'emeon_error' ][] = $UID->get_error_message() . ' Please, try again.';
+				return;
+			}
+			wp_send_new_user_notifications( $UID );
+			echo json_encode(['message' => 'success', 'score' => $recaptcha->score]);
+			wp_safe_redirect( '/login?uid=' . $UID );
+			exit;
+
+
+		} else {
+			echo json_encode(['message' => 'you are a bot', 'score' => $recaptcha->score]);
+			die();
+
+			/**
+			 * send errors here
+			 */
+
+		}
+	}
+
+	/**
+	 * Login action
+	 */
+//	protected static function login() {
+//		if ( ! ( $email = $_POST[ 'email' ] ) ||
+//		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+//			$_POST[ 'emeon_error' ][] = 'The email you entered is invalid. Please, try again.';
+//
+//			return;
+//		}
+//		if ( ! ( $user = get_user_by( 'email', $email ) ) || is_wp_error( $user ) ) {
+//			$_POST[ 'emeon_error' ][] = 'User with email "' . $email . '" is not registered!';
+//
+//			return;
+//		}
+//		$remains = get_user_meta( $user->ID, '_login_remaining_attempts', true );
+//		if ( false === $remains ) {
+//			$remains = 5;
+//		}
+//		if ( ! $remains ) {
+//			$_POST[ 'emeon_error' ][] = 'Unfortunately you have missed all attempts for login. Please, try to ' .
+//			                            '<a href="/recover/">recover</a>. If you still experience troubles with login in, drop us a ' .
+//			                            'line to <a href="mailto:info@emeon.io">info@emeon.io</a>';
+//
+//			return;
+//		}
+//		$auth = wp_authenticate( $user->user_login, $_POST[ 'pass' ] );
+//		if ( ! $auth || is_wp_error( $auth ) ) {
+//			-- $remains;
+//			update_user_meta( $user->ID, '_login_remaining_attempts', $remains );
+//			$_POST[ 'emeon_error' ][] = 'Invalid password. Remaining attempts: ' . ( $remains + 1 ) . 'Please, try again.';
+//
+//			return;
+//		}
+//		wp_set_current_user( $auth->ID );
+//		wp_set_auth_cookie( $auth->ID, $_POST[ 'remember' ] ?? false );
+//		wp_safe_redirect( '/account/' );
+//		exit;
+//	}
+
+	static function emeon_login_ajax_handler() {
+		$token = $_POST['token'];
+
+		if (!check_ajax_referer( EMEON_SLUG, 'nonce' )) return;
+
+		if ( ! ( $email = $_POST[ 'email' ] ) ||
+		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+			$_POST[ 'emeon_error' ][] = 'The email you entered is invalid. Please, try again.';
+			echo json_encode(['message' => 'error', 'error_text' => 'The email you entered is invalid. Please, try again.']);
+			exit;
 		}
 		if ( ! ( $user = get_user_by( 'email', $email ) ) || is_wp_error( $user ) ) {
 			$_POST[ 'emeon_error' ][] = 'User with email "' . $email . '" is not registered!';
 
-			return;
+			echo json_encode(['message' => 'error', 'error_text' => 'User with email "' . $email . '" is not registered!']);
+			exit;
 		}
 		$remains = get_user_meta( $user->ID, '_login_remaining_attempts', true );
 		if ( false === $remains ) {
@@ -447,7 +556,10 @@ new class {
 			                            '<a href="/recover/">recover</a>. If you still experience troubles with login in, drop us a ' .
 			                            'line to <a href="mailto:info@emeon.io">info@emeon.io</a>';
 
-			return;
+			echo json_encode(['message' => 'error', 'error_text' => 'Unfortunately you have missed all attempts for login. Please, try to ' .
+			                                                        '<a href="/recover/">recover</a>. If you still experience troubles with login in, drop us a ' .
+			                                                        'line to <a href="mailto:info@emeon.io">info@emeon.io</a>']);
+			exit;
 		}
 		$auth = wp_authenticate( $user->user_login, $_POST[ 'pass' ] );
 		if ( ! $auth || is_wp_error( $auth ) ) {
@@ -455,12 +567,39 @@ new class {
 			update_user_meta( $user->ID, '_login_remaining_attempts', $remains );
 			$_POST[ 'emeon_error' ][] = 'Invalid password. Remaining attempts: ' . ( $remains + 1 ) . 'Please, try again.';
 
-			return;
+			echo json_encode(['message' => 'error', 'error_text' => 'Invalid password. Remaining attempts: ' . ( $remains + 1 ) . 'Please, try again.']);
+			exit;
 		}
-		wp_set_current_user( $auth->ID );
-		wp_set_auth_cookie( $auth->ID, $_POST[ 'remember' ] ?? false );
-		wp_safe_redirect( '/account/' );
-		exit;
+
+		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+		$recaptcha_secret = '6LfvAwkdAAAAAK5OA8_ZcQ1K-UG8IELZiK1cd1CY';
+		$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token);
+		$recaptcha = json_decode($recaptcha);
+
+		// if more than 0.5 then it is human
+		if ($recaptcha->score >= 0.5) {
+
+
+			/**
+			 * register here
+			 */
+
+			wp_set_current_user( $auth->ID );
+			wp_set_auth_cookie( $auth->ID, $_POST[ 'remember' ] ?? false );
+			echo json_encode(['message' => 'success', 'score' => $recaptcha->score]);
+			wp_safe_redirect( '/account/' );
+			exit;
+
+
+		} else {
+			echo json_encode(['message' => 'you are a bot', 'score' => $recaptcha->score]);
+			die();
+
+			/**
+			 * send errors here
+			 */
+
+		}
 	}
 
 	/**

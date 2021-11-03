@@ -377,6 +377,11 @@
 
 } )( jQuery.noConflict() ).init(); /** My account **/
 
+const validateEmail = ( email ) => {
+		const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test( String( email ).toLowerCase() );
+};
+
 /** Join form */
 ( $ => {
 
@@ -386,9 +391,39 @@
 	 * @private
 	 */
 
-	const validateEmail = ( email ) => {
-		const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test( String( email ).toLowerCase() );
+	const __error = function( msg, delay, type ) {
+		let e = $( '#emeon-error-popup' );
+		let t;
+		if ( !( e.length ) )
+			e = $( '<div id="emeon-error-popup"></div>' )
+				.prependTo( 'body' )
+				.on( 'mouseenter', () => {
+					clearTimeout( t );
+				} )
+				.on( 'mouseleave', () => {
+					t = setTimeout( () => {
+						e.removeClass( 'visible' );
+					}, 1000 );
+				} )
+				.on(
+					'click',
+					( e ) => {
+						$( e.target ).removeClass( 'visible' );
+					},
+				);
+		if (type === 'success') {
+			$('#emeon-error-popup').addClass('success')
+		}else {
+			if ($('#emeon-error-popup').hasClass('success')) {
+				$('#emeon-error-popup').removeClass('success');
+			}
+		}
+		setTimeout( () => {
+			e.html( msg || 'error' ).addClass( 'visible' );
+		}, 200 );
+		t = setTimeout( () => {
+			e.removeClass( 'visible' );
+		}, delay || 5000 );
 	};
 
 	const __validate_form = async ( event ) => {
@@ -399,14 +434,14 @@
 			value;
 
 		//key "6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7" is site_key for google captcha
-		const getToken = await grecaptcha.execute( '6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7', { action: 'submit' } ).then( ( token ) => tokenNum = token);
+		const getToken = await grecaptcha.execute( '6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx', { action: 'submit' } ).then( ( token ) => tokenNum = token );
 
-		if (getToken) {
+		if ( getToken ) {
 			let err,
-				errorEmailEl = _target.find($('span.error.email')),
-				errorElNoValidText =  errorEmailEl.data('valid'),
-				errorElEmptyText = errorEmailEl.data('empty'),
-				nonceVal = _target.find($('input[name="__nonce"]')).val(),
+				label = _target.find( $( 'label[for="join_email"]' ) ),
+				errorElNoValidText = label.data( 'valid' ),
+				errorElEmptyText = label.data( 'empty' ),
+				nonceVal = _target.find( $( 'input[name="__nonce"]' ) ).val(),
 				emailVal = _target.find( $( 'input[type="email"]' ) ).val();
 
 			if ( emailVal && !validateEmail( emailVal ) ) {
@@ -421,71 +456,76 @@
 
 			value = emailVal;
 
-			if (err === 'novalid') {
-				errorEmailEl.fadeIn(200)
-				errorEmailEl.text(errorElNoValidText)
+			if ( err === 'novalid' ) {
+				__error(errorElNoValidText)
+				label.addClass( 'error' );
 			}
 
-			if (err === 'empty') {
-				errorEmailEl.fadeIn(200)
-				errorEmailEl.text(errorElEmptyText)
+			if ( err === 'empty' ) {
+				__error(errorElEmptyText)
+				label.addClass( 'error' );
 			}
 
 			if ( tokenNum && !errors && value && nonceVal ) {
+				label.removeClass( 'error' );
 				return {
 					token: tokenNum,
 					errors: false,
 					emailVal: value,
-					nonceVal: nonceVal
+					nonceVal: nonceVal,
 				};
 			}
-		}else {
-			return false
+		} else {
+			return false;
 		}
 	};
 
 	const __submitHandler = ( event ) => {
 		event.preventDefault();
-		let curTarget = $(event.currentTarget);
-		if (!__validate_form( event )) return;
-		__validate_form( event ).then(res => {
-			if (!res) return;
+		let curTarget = $( event.currentTarget );
+		if ( !__validate_form( event ) ) return;
+		__validate_form( event ).then( res => {
+			if ( !res ) return;
 			const { token, errors, emailVal, nonceVal } = res;
 			if ( !errors ) {
 				let adminUrl = __emeon.ajax_url;
-				console.log( adminUrl );
+
 				let data = {
 					action: 'ajax_join_form',
 					email: emailVal,
 					token: token,
-					nonce: nonceVal
+					nonce: nonceVal,
 				};
 				$.ajax( {
 					url: adminUrl,
 					data: data,
 					type: 'POST',
 					beforeSend: function( xhr ) {
-						curTarget.addClass('loading');
+						curTarget.addClass( 'loading' );
 					},
 					success: function( data ) {
-						let newData = JSON.parse(data)
-						if ( newData && newData['message'] && newData['message'] === 'success' ) {
-							curTarget.removeClass('loading');
-							curTarget.find($('input[type="email"]')).val('');
-							curTarget.find($('.error')).hide();
-							curTarget.find($('.success')).fadeIn(200);
 
-							setTimeout(function() {
-								curTarget.find($('.success')).fadeOut(200);
-							}, 3000)
-						}else {
-							curTarget.removeClass('loading');
-							curTarget.find($('.error')).fadeIn(200).text('You are bot sorry, we can\'t register you')
+						let label = curTarget.find( $( 'label[for="join_email"]' ) );
+						let newData = $.parseJSON( data );
+						if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'success' ) {
+							curTarget.removeClass( 'loading' );
+							curTarget.find( $( 'input[type="email"]' ) ).val( '' );
+							label.removeClass( 'error' );
+							__error(label.data('success'), 4000, 'success');
+
+						} else if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
+							curTarget.removeClass( 'loading' );
+							label.addClass( 'error' );
+							__error(newData[ 'error_text' ])
+						} else {
+							curTarget.removeClass( 'loading' );
+							label.addClass( 'error' );
+							__error('You are bot sorry, we can\'t register you')
 						}
 					},
 				} );
 			}
-		})
+		} );
 	};
 
 	const __assign = function() {
@@ -495,7 +535,7 @@
 	return {
 
 		/**
-		 * Initialize account menus
+		 * Initialize join form handler
 		 */
 		init: function() {
 			if ( $( '.emeon-form.form-join' ).length === 0 ) return;
@@ -505,6 +545,182 @@
 	};
 
 } )( jQuery.noConflict() ).init(); /** Join form **/
+
+/** Login form */
+
+( $ => {
+	const loginForm = $( '.emeon-form.form-login' );
+
+	const __error = function( msg, delay, type ) {
+		let e = $( '#emeon-error-popup' );
+		let t;
+		if ( !( e.length ) )
+			e = $( '<div id="emeon-error-popup"></div>' )
+				.prependTo( 'body' )
+				.on( 'mouseenter', () => {
+					clearTimeout( t );
+				} )
+				.on( 'mouseleave', () => {
+					t = setTimeout( () => {
+						e.removeClass( 'visible' );
+					}, 1000 );
+				} )
+				.on(
+					'click',
+					( e ) => {
+						$( e.target ).removeClass( 'visible' );
+					},
+				);
+		if (type === 'success') {
+			$('#emeon-error-popup').addClass('success')
+		}else {
+			if ($('#emeon-error-popup').hasClass('success')) {
+				$('#emeon-error-popup').removeClass('success');
+			}
+		}
+		setTimeout( () => {
+			e.html( msg || 'error' ).addClass( 'visible' );
+		}, 200 );
+		t = setTimeout( () => {
+			e.removeClass( 'visible' );
+		}, delay || 5000 );
+	};
+
+	const getToken = async function() {
+		let tokenNum;
+		const getToken = await grecaptcha.execute( '6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx', { action: 'submit' } )
+			.then( ( token ) => tokenNum = token )
+			.catch(err => console.error(err));
+
+		if ( getToken ) {
+			return tokenNum;
+		}
+	};
+
+	const __validate = async function(event) {
+		let err = 0,
+			_target = $(event.target),
+			email = _target.find($('input[type="email"]')),
+			pass = _target.find($('input[type="password"]')),
+			passLabel = pass.parent('label'),
+			emailLabel = email.parent('label'),
+			passVal = pass.val(),
+			emailVal = email.val(),
+			emailNoValidText = email.data('valid'),
+			emptyText = email.data('empty'),
+			result;
+
+		if (emailVal && !validateEmail(emailVal)) {
+			err++;
+			emailLabel.addClass('error');
+			__error(emailNoValidText)
+		}
+
+		if (!passVal || !emailVal) {
+			if (!passVal ) {
+				passLabel.addClass('error');
+			}
+
+			if (!emailVal) {
+				emailLabel.addClass('error');
+			}
+
+			err++;
+			__error(emptyText)
+		}
+
+	 	await getToken().then(res => {
+			result = res;
+		});
+
+		if (err === 0 && result) {
+			passLabel.removeClass('error')
+			emailLabel.removeClass('error');
+			return {
+				token: result,
+				email: emailVal,
+				pass: passVal
+			}
+		}
+	}
+
+	const __submitHandler = function( event ) {
+		event.preventDefault();
+		let target = $(event.currentTarget);
+			const validate = __validate(event);
+			validate.then(res => {
+				if (!res) return;
+				if ( Object.keys(res).length === 0 ) return;
+				const { token, email, pass } = res;
+				let adminUrl = __emeon.ajax_url;
+				let nonceVal = target.find($('input[name="__nonce"]')).val();
+				let remember = target.find($('input[name="remember"]'))[0].checked;
+
+				let data = {
+					action: 'ajax_login_form',
+					email: email,
+					token: token,
+					pass: pass,
+					nonce: nonceVal,
+					remember: remember
+				};
+
+				$.ajax( {
+					url: adminUrl,
+					data: data,
+					type: 'POST',
+					beforeSend: function( xhr ) {
+						target.addClass( 'loading' );
+					},
+					success: function( data ) {
+						let email = target.find($('input[type="email"]')),
+							pass = target.find($('input[type="password"]')),
+							passLabel = pass.parent('label'),
+							emailLabel = email.parent('label');
+
+						let newData = $.parseJSON( data );
+						if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'success' ) {
+							target.removeClass( 'loading' );
+							target.find( $( 'input[type="email"]' ) ).val( '' );
+							target.find( $( 'input[type="password"]' ) ).val( '' );
+							passLabel.removeClass( 'error' );
+							emailLabel.removeClass( 'error' );
+							console.log(target.data('success'));
+							__error(target.data('success'), 4000, 'success');
+
+						} else if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
+							target.removeClass( 'loading' );
+							passLabel.addClass( 'error' );
+							emailLabel.addClass( 'error' );
+							__error(newData[ 'error_text' ])
+						} else {
+							target.removeClass( 'loading' );
+							passLabel.addClass( 'error' );
+							emailLabel.addClass( 'error' );
+							__error('You are bot sorry, we can\'t register you')
+						}
+					},
+				} );
+
+			})
+
+
+
+	};
+
+	const __assign = function() {
+		loginForm.off().on( 'submit', __submitHandler );
+	};
+
+	return {
+
+		init: function() {
+			if ( loginForm.length === 0 ) return;
+			$( document ).ready( __assign );
+		},
+	};
+
+} )( jQuery.noConflict() ).init();
 
 /** Search form */
 ( $ => {
