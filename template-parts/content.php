@@ -32,23 +32,26 @@ $cats = '<ul class="emeon-cats-tags"><li>' .
 
 if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 	if( is_user_logged_in() ){
-		$pdf  = ( ( $pdf_id = get_post_meta( $post_id, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '' );
-		$contact_info = '<div class="emeon-contact-info">';
+		$contact_info = '<div class="emeon-contact-info"><h4>Contacts</h4>';
+		if( $pdf  = ( ( $pdf_id = get_post_meta( $post_id, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '' ) )
+			$contact_info .=
+				'<p class="attachment">' .
+                 '<a href="' . $pdf . '" download="">' .
+                 '<img src="' . get_stylesheet_directory_uri() . '/img/pdf-icon.png" alt="PDF" />' .
+                 '</a>' .
+                 '</p>';
 		foreach ( $contacts as $key => $value ) {
 			if ( $key === 'email' ) {
 				$contact_info .= '<p class="contact-email"><a href="mailto:' . $value . '">' . $value . '</a></p>';
 			} elseif ( $key === 'phone' ) {
 				$contact_info .= '<p class="contact-phone"><a href="tel:' . $value . '">' . $value . '</a></p>';
 			} else {
-				$contact_info .= '<div class="contact-additional">' . make_hrefs( $value ) . '</div>';
+				$contact_info .=
+					'<div class="contact-additional">' .
+		                 make_hrefs( str_replace( "\n", '<br/>', $value ) ) .
+					'</div>';
 			}
 		}
-		if( $pdf )
-			$contact_info .= '<p class="attachment">' .
-			                    '<a href="' . $pdf . '" download="">' .
-			                        '<img src="' . get_stylesheet_directory_uri() . '/img/pdf-icon.png" alt="PDF" />' .
-			                    '</a>' .
-			                 '</p>';
 		$contact_info .= '</div>';
 	} else {
 		$contact_info =
@@ -86,9 +89,6 @@ if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 				emeon_posted_by();
 				?>
 			</div><!-- .entry-meta -->
-			<div class="excerpt">
-				<?php the_excerpt() ?>
-			</div>
 			<div class="categories-tags">
 				<?=$cats?>
 			</div>
@@ -98,39 +98,41 @@ if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 	<!--Contact info-->
 
 	<div class="entry-content">
-		<?php
-		the_content( sprintf(
-			wp_kses(
-			/* translators: %s: Name of current post. Only visible to screen readers */
-				__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'emeon' ),
-				array(
-					'span' => array(
-						'class' => array(),
-					),
-				)
-			),
-			get_the_title()
-		) );
+		<div class="entry-content-body">
+			<?php
+			the_content( sprintf(
+				wp_kses(
+				/* translators: %s: Name of current post. Only visible to screen readers */
+					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'emeon' ),
+					array(
+						'span' => array(
+							'class' => array(),
+						),
+					)
+				),
+				get_the_title()
+			) );
 
-		?>
+			?>
+		</div>
 		<div class="additional-info">
 			<div class="salary-experience">
 				<?php if( $salary = get_post_meta( $post_id, 'emeon_salary', true ) ): ?>
-				<p class="salary">
+					<p class="salary">
 					<span class="info-label">
 						Salary
 					</span>
-					From <?=EMEON_CUR_SYMB.$salary?>
-				</p>
+						From <?=EMEON_CUR_SYMB.$salary?>
+					</p>
 				<?php endif ?>
 
 				<?php if( $exp = get_post_meta( $post_id, 'emeon_experience', true ) ) : ?>
-				<p class="experience">
+					<p class="experience">
 					<span class="info-label">
 						Experience
 					</span>
-					<?=EMEON_EXP_LVL[ $exp ]?>
-				</p>
+						<?=EMEON_EXP_LVL[ $exp ]?>
+					</p>
 				<?php endif ?>
 
 			</div>

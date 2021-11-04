@@ -32,11 +32,13 @@ get_header();
 				?>
 
 				<div class="search-content">
-				<div class="search-mobile-bar">
-					<button class="btn btn-primary">
-	               <i class="fal fa-filter"></i>
-						Filters</button>
-				</div>
+
+					<!--div class="search-mobile-bar">
+						<button class="btn btn-primary">
+		               <i class="fal fa-filter"></i>
+							Filters</button>
+					</div-->
+
 				<?php
 				/* Start the Loop */
 				?>

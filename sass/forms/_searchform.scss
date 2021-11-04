@@ -30,7 +30,7 @@
 	.search-filters {
 		position: absolute;
 		top: calc( 50% - 20px );
-		right: 60px;
+		right: 74px;
 		z-index: 2;
 		width: 0;
 		height: 40px;
@@ -39,8 +39,12 @@
 		transition: all ease-in-out .2s;
 
 		&.visible {
-			width: calc( 100% - 174px );
+			width: calc( 100% - 192px );
 			padding: 0 10px;
+			@media screen and ( max-width: 768px ) {
+				width: calc(100% - 265px);
+				right: 148px;
+			}
 		}
 	}
 }

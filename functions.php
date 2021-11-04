@@ -278,7 +278,13 @@ function emeon_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
-	wp_enqueue_script( 'google-captcha', 'https://www.google.com/recaptcha/api.js?render=6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7', array('jquery'), '1.0', true );
+	wp_enqueue_script(
+		'google-captcha',
+		'https://www.google.com/recaptcha/api.js?render=6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7',
+		[ 'jquery' ],
+		'1.0',
+		true
+	);
 
 	// Dashicons
 	wp_enqueue_style( 'dashicons' );
@@ -400,3 +406,11 @@ add_filter( 'comment_form_defaults', function ( $defaults ) {
 } );
 
 
+/**
+ * Fix nav menus on search page
+ */
+add_filter( 'pre_get_posts', function ( $query ) {
+	if ( is_search() )
+		$query->set( 'post_type', [ 'post', 'nav_menu_item' ] );
+	return $query;
+} );

@@ -685,6 +685,40 @@ html {
   box-sizing: border-box;
   height: 100%; }
 
+.grecaptcha-badge {
+  display: none !important; }
+
+.emeon-cats-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 20px 0;
+  padding: 0; }
+  .emeon-cats-tags li {
+    margin: 2px 6px 2px 0;
+    padding: 5px;
+    background: #eee;
+    font-size: 95%;
+    white-space: nowrap;
+    border-left: 5px solid #ccc; }
+
+.additional-info {
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  font-size: 90%; }
+  .additional-info .info-label {
+    display: inline-block;
+    width: 100px;
+    background: #eee;
+    padding: 2px 5px; }
+  .additional-info h4 {
+    font-size: 18px; }
+  .additional-info .attachment {
+    float: right; }
+    .additional-info .attachment img {
+      max-height: 69px; }
+
 *,
 *:before,
 *:after {
@@ -813,7 +847,7 @@ table {
 .site-header .search-filters {
   position: absolute;
   top: calc( 50% - 20px );
-  right: 60px;
+  right: 74px;
   z-index: 2;
   width: 0;
   height: 40px;
@@ -821,8 +855,12 @@ table {
   background: #fff;
   transition: all ease-in-out .2s; }
   .site-header .search-filters.visible {
-    width: calc( 100% - 174px );
+    width: calc( 100% - 192px );
     padding: 0 10px; }
+    @media screen and (max-width: 768px) {
+      .site-header .search-filters.visible {
+        width: calc(100% - 265px);
+        right: 148px; } }
 
 .form-join-wrapper {
   margin: 0 auto;

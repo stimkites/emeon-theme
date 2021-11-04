@@ -120,7 +120,8 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
 					<textarea name="article[excerpt]"
 					          class="form-control border-0 article-excerpt invalidate"
 					          rows="5"
-					          placeholder="A few lines in short..."><?= $article[ 'excerpt' ] ?? '' ?></textarea>
+					          placeholder="A few lines (shown in search results)"
+						><?= $article[ 'excerpt' ] ?? '' ?></textarea>
 					</label>
 				</div>
 			</div>
