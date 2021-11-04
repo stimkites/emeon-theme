@@ -21,7 +21,7 @@ $article = [ 'type' => 'candidates' ];
  * Prevent unauthorized access
  */
 if ( ! is_user_logged_in() ) {
-	return $_POST[ 'emeon_erros' ][] = 'Unauthorized access is prohibited!';
+	return $_POST[ 'emeon_error' ][] = 'Unauthorized access is prohibited!';
 }
 
 if ( isset( $_POST[ 'article' ] ) ) { // we already posted data, but something went wrong and we were not redirected

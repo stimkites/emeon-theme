@@ -618,7 +618,7 @@ new class {
 
 			$post_status     = ( wp_check_comment_disallowed_list(
 									$user->display_name, $user->user_email, '', $text_to_analyze, '', ''
-								)   ? 'moderation'
+								)   ? 'review'
 									: 'publish' );
 			$notify = $post_status === 'moderation';
 

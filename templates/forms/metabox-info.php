@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) or exit;
 
 $info = get_post_meta( $post->ID, 'emeon_contacts', true );
-$pdf  = ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '';
+$pdf  = ( ( $pdf_id = get_post_meta( $post->ID, 'emeon_attachment', true ) ) ? wp_get_attachment_url( $pdf_id ) : '' );
 
 // Salary and experience
 $salary     = get_post_meta( $post->ID, 'emeon_salary', true );
