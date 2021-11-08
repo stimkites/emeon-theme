@@ -12,16 +12,12 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 ?>
 
 <div class="form-login-wrapper bg-white rounded p-5">
-	<h2>
-		<?= __('Login', EMEON_SLUG) ?>
-	</h2>
-	<p>
-		<?= __('Please enter your email and password and you will be in!', EMEON_SLUG) ?>
-	</p>
-	<form action=" " method="post" class="emeon-form form-login" enctype="multipart/form-data" name="emeon-form" novalidate data-success="<?= __('You are logged in successfully!', EMEON_SLUG) ?>">
+	<h2>Login</h2>
+	<p>Access your posts and account</p>
+	<form action=" " method="post" class="emeon-form form-login" enctype="multipart/form-data" name="emeon-form" novalidate data-success="You are logged in successfully!">
 		<fieldset class="emeon-form__fieldset">
 			<label class="d-block mb-2">
-				<input id="email" name="email" class="form-control" type="email" placeholder="Email" data-empty="<?= __('This field couldn\'t be empty!' ) ?>" data-valid="<?= 'The email you entered is invalid. Please, try again.'; ?>" value="<?= $email ?>"/>
+				<input id="email" name="email" class="form-control" type="email" placeholder="Email" data-empty="This field couldn't be empty!" data-valid="The email you entered is invalid. Please, try again." value="<?= $email ?>"/>
 			</label>
 			<label class="d-block mb-2">
 				<input id="pass" class="form-control" name="pass" type="password" value="" placeholder="Pass"/>

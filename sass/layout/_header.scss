@@ -196,6 +196,16 @@
 		.nav-shop {
 			min-width: unset;
 		}
+
+		.main-navigation {
+			.menu {
+				&-item {
+					&:not(:last-child) {
+						margin-right: 25px;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -209,6 +219,7 @@
 			min-width: unset;
 		}
 	}
+
 }
 
 @media screen and (max-width: 767px) {

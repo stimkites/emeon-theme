@@ -142,3 +142,14 @@ a:focus, button, input, select, password, textarea {
 }
 
 @import "tables";
+
+/* about us image */
+@media screen and ( max-width: 991px ) {
+	#post-299 .wp-block-image {
+		display: flex;
+		justify-content: center;
+		img {
+			max-width: 300px;
+		}
+	}
+}

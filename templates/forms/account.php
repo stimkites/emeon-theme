@@ -6,7 +6,11 @@
 
 defined( 'ABSPATH' ) or exit;
 
-$uid = get_current_user_id();
+if( ! ( $uid = get_current_user_id() ) ){
+	echo do_shortcode( '[emeon_forms form=login]' );
+	return;
+}
+
 $vid = get_term_by( 'slug', 'vacancies', 'category' )->term_id ?? '0';
 $cid = get_term_by( 'slug', 'candidates', 'category' )->term_id ?? '0';
 
