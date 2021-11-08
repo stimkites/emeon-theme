@@ -280,7 +280,7 @@ function emeon_scripts() {
 
 	wp_enqueue_script(
 		'google-captcha',
-		'https://www.google.com/recaptcha/api.js?render=6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7',
+		'https://www.google.com/recaptcha/api.js?render=6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx',
 		[ 'jquery' ],
 		'1.0',
 		true
