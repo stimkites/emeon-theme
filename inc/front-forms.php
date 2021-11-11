@@ -455,7 +455,7 @@ new class {
 		}
 
 		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-		$recaptcha_secret = '6LfvAwkdAAAAAK5OA8_ZcQ1K-UG8IELZiK1cd1CY';
+		$recaptcha_secret = EMEON_CAPTCHA['secret'];
 		$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token);
 		$recaptcha = json_decode($recaptcha);
 
@@ -538,13 +538,18 @@ new class {
 		if ( ! ( $email = $_POST[ 'email' ] ) ||
 		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 			$_POST[ 'emeon_error' ][] = 'The email you entered is invalid. Please, try again.';
-			echo json_encode(['message' => 'error', 'error_text' => 'The email you entered is invalid. Please, try again.']);
+			echo json_encode([
+				'message' => 'error',
+				'error_text' => 'The email you entered is invalid. Please, try again.'
+			]);
 			exit;
 		}
 		if ( ! ( $user = get_user_by( 'email', $email ) ) || is_wp_error( $user ) ) {
 			$_POST[ 'emeon_error' ][] = 'User with email "' . $email . '" is not registered!';
 
-			echo json_encode(['message' => 'error', 'error_text' => 'User with email "' . $email . '" is not registered!']);
+			echo json_encode([
+				'message' => 'error',
+				'error_text' => 'User with email "' . $email . '" is not registered!']);
 			exit;
 		}
 		$remains = get_user_meta( $user->ID, '_login_remaining_attempts', true );
@@ -552,54 +557,87 @@ new class {
 			$remains = 5;
 		}
 		if ( ! $remains ) {
-			$_POST[ 'emeon_error' ][] = 'Unfortunately you have missed all attempts for login. Please, try to ' .
-			                            '<a href="/recover/">recover</a>. If you still experience troubles with login in, drop us a ' .
-			                            'line to <a href="mailto:info@emeon.io">info@emeon.io</a>';
 
-			echo json_encode(['message' => 'error', 'error_text' => 'Unfortunately you have missed all attempts for login. Please, try to ' .
-			                                                        '<a href="/recover/">recover</a>. If you still experience troubles with login in, drop us a ' .
-			                                                        'line to <a href="mailto:info@emeon.io">info@emeon.io</a>']);
+			echo json_encode([
+				'message' => 'error',
+				'error_text' =>
+					'Unfortunately you have missed all attempts for login. Please, try to ' .
+                    '<a href="/recover/">recover</a>. If you still experience troubles with login in, drop us a ' .
+                    'line to <	a href="mailto:info@emeon.io">info@emeon.io</a>'
+			]);
 			exit;
 		}
 		$auth = wp_authenticate( $user->user_login, $_POST[ 'pass' ] );
 		if ( ! $auth || is_wp_error( $auth ) ) {
 			-- $remains;
 			update_user_meta( $user->ID, '_login_remaining_attempts', $remains );
-			$_POST[ 'emeon_error' ][] = 'Invalid password. Remaining attempts: ' . ( $remains + 1 ) . 'Please, try again.';
 
-			echo json_encode(['message' => 'error', 'error_text' => 'Invalid password. Remaining attempts: ' . ( $remains + 1 ) . 'Please, try again.']);
+			echo json_encode( [
+				'message' => 'error',
+				'error_text' => 'Invalid password. Remaining attempts: ' . ( $remains + 1 ) . 'Please, try again.'
+			] );
 			exit;
 		}
 
-		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-		$recaptcha_secret = '6LfvAwkdAAAAAK5OA8_ZcQ1K-UG8IELZiK1cd1CY';
-		$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token);
-		$recaptcha = json_decode($recaptcha);
+		$recaptcha = null;
+
+		if( ! EMEON_DEBUG ) {
+			$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+			$recaptcha_secret = EMEON_CAPTCHA['secret'];
+			$recaptcha = file_get_contents( $recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token );
+			$recaptcha = json_decode( $recaptcha );
+		}
 
 		// if more than 0.5 then it is human
-		if ($recaptcha->score >= 0.5) {
-
+		if ( EMEON_DEBUG || $recaptcha->score >= 0.5 ) {
 
 			/**
-			 * register here
+			 * Authorize here
 			 */
-
 			wp_set_current_user( $auth->ID );
-			wp_set_auth_cookie( $auth->ID, $_POST[ 'remember' ] ?? false );
+			wp_set_auth_cookie(  $auth->ID, $_POST[ 'remember' ] ?? false );
 			echo json_encode(['message' => 'success', 'score' => $recaptcha->score]);
 			wp_safe_redirect( '/account/' );
 			exit;
 
 
 		} else {
-			echo json_encode(['message' => 'you are a bot', 'score' => $recaptcha->score]);
+			echo json_encode( [
+				'message' => 'Hehe :) You are a bot, according to Google captcha :)',
+				'score' => $recaptcha->score
+			] );
 			die();
-
-			/**
-			 * send errors here
-			 */
-
 		}
+	}
+
+	/**
+	 * Simplified function to analyze text for bad words
+	 *
+	 * @note: we are not allowing here word parts, only whole words. E.g. "press" wont match "WordPress"
+	 *
+	 * @param string $text
+	 *
+	 * @return bool
+	 */
+	private static function bad_words( $text ){
+		return preg_match(
+			'/(\b)(' .
+				implode(
+					"|",
+					array_filter(
+						explode(
+							"\n",
+							str_replace(
+								' ',
+								'',
+								get_option( 'moderation_keys' )
+							)
+						)
+					)
+				)
+			. ')(\b)/',
+			 $text
+		);
 	}
 
 	/**
@@ -608,37 +646,35 @@ new class {
 	protected static function adedit() {
 		$notify = false;
 		try{
-			$text_to_analyze =
-				$_POST[ 'article' ][ 'title' ]   . ' ' .
-				$_POST[ 'article' ][ 'excerpt' ] . ' ' .
-				$_POST[ 'article' ][ 'content' ] . ' ' .
-				implode( " ", $_POST[ 'article' ][ 'tags' ] ) . ' ' .
-				implode( " ", $_POST[ 'article' ][ 'categories' ] );
 			$user            = get_user_by( 'ID', get_current_user_id() );
+			if( ! $user )
+				throw new Exception( 'User session is corrupted!' );
 
-			$post_status     = ( wp_check_comment_disallowed_list(
-									$user->display_name, $user->user_email, '', $text_to_analyze, '', ''
-								)   ? 'review'
-									: 'publish' );
-			$notify = $post_status === 'moderation';
-
+			$post_data       = [
+				'post_title'   => sanitize_text_field( $_POST[ 'article' ][ 'title' ] ),
+				'post_excerpt' => sanitize_textarea_field( $_POST[ 'article' ][ 'excerpt' ] ),
+				'post_content' => trim( $_POST[ 'article' ][ 'content' ], "'" ),
+				'post_status'  => 'publish',
+				'post_author'  => $user->ID
+			];
 			$tags            = array_map( 'sanitize_text_field', $_POST[ 'article' ][ 'tags' ] );
 			$cats            = array_map( 'sanitize_text_field', $_POST[ 'article' ][ 'categories' ] );
+
+			$text_to_analyze =
+				wp_strip_all_tags(
+					implode( ' ', $post_data ) .
+					implode( " ", $tags ) . ' ' .
+					implode( " ", $cats )
+				);
+
+			if( self::bad_words( $text_to_analyze ) )
+				$post_data['post_status'] = 'pending';
 
 			// Set primary category (candidates or vacancies)
 			if( $p_cat = get_term_by( 'slug', sanitize_text_field( $_POST[ 'article' ][ 'type' ] ), 'category' ) )
 				$cats[] = $p_cat->term_id;
 
-			$post_id         = (int) $_POST[ 'article' ][ 'id' ];
-			$post_data       = [
-				'post_title'   => sanitize_text_field( $_POST[ 'article' ][ 'title' ] ),
-				'post_excerpt' => sanitize_textarea_field( $_POST[ 'article' ][ 'excerpt' ] ),
-				'post_content' => trim( $_POST[ 'article' ][ 'content' ], "'" ),
-				'post_status'  => $post_status,
-				'post_author'  => $user->ID
-			];
-
-			if ( $post_id ) {
+			if( $post_id = ( (int) $_POST[ 'article' ][ 'id' ] ?? 0 ) ) {
 				$post_data[ 'ID' ] = $post_id;
 				wp_update_post( $post_data );
 			} else {

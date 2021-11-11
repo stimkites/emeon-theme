@@ -26,6 +26,7 @@ $uposts = get_posts(
 	[
 		'post_author' => $uid,
 		'posts_per_page' => -1,
+		'post_status' => 'any',
 		'category'      => get_terms(
 			[
 				'slug' => [ 'vacancies', 'candidates' ],

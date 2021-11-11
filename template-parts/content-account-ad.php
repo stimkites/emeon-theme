@@ -33,6 +33,8 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 			<div class="entry-meta">
 				<?php
 				emeon_posted_on();
+				if( 'pending' === get_post_status() )
+					echo '<span class="moderation-status">On moderation!</span>';
 				?>
 			</div><!-- .entry-meta -->
 		<?php endif; ?>

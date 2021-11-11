@@ -322,6 +322,12 @@ body.single-post #primary {
   flex-direction: row;
   width: 100%;
   justify-content: space-between; }
+  .emeon-account .moderation-status {
+    display: block;
+    margin: 10px 0;
+    border-left: 5px solid orangered;
+    font-weight: bolder;
+    padding: 5px; }
   .emeon-account h2 {
     font-size: 18px;
     line-height: 1;
@@ -1458,6 +1464,12 @@ body.single-post #primary {
   flex-direction: row;
   width: 100%;
   justify-content: space-between; }
+  .emeon-account .moderation-status {
+    display: block;
+    margin: 10px 0;
+    border-left: 5px solid orangered;
+    font-weight: bolder;
+    padding: 5px; }
   .emeon-account h2 {
     font-size: 18px;
     line-height: 1;

@@ -11,16 +11,21 @@ defined( 'ABSPATH' ) or exit;
  * Constants
  */
 const
-EMEON_PATH     = __DIR__,
-EMEON_TPL      = EMEON_PATH . '/templates',
-EMEON_SLUG     = 'emeon-theme',
-EMEON_STATUSES = [ 'active', 'moderation', 'archive' ],
-EMEON_TYPES    = [ 'vacancies', 'candidates', 'emeon-team', 'want-join', 'user-stories' ],
-EMEON_CURRENCY = 'EUR',
-EMEON_CUR_SYMB = '€',
-EMEON_EXP_LVL  = [ 'Career start', 'A few months', 'Half a year', '1-3 years', '3-5 years', '5+ years' ];
+	EMEON_PATH     = __DIR__,
+	EMEON_TPL      = EMEON_PATH . '/templates',
+	EMEON_SLUG     = 'emeon-theme',
+	EMEON_STATUSES = [ 'active', 'moderation', 'archive' ],
+	EMEON_TYPES    = [ 'vacancies', 'candidates', 'emeon-team', 'want-join', 'user-stories' ],
+	EMEON_CURRENCY = 'EUR',
+	EMEON_CUR_SYMB = '€',
+	EMEON_EXP_LVL  = [ 'Career start', 'A few months', 'Half a year', '1-3 years', '3-5 years', '5+ years' ],
+	EMEON_CAPTCHA  = [
+		'key'       => '6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx',
+		'secret'    => '6LfvAwkdAAAAAK5OA8_ZcQ1K-UG8IELZiK1cd1CY'
+	];
 
-define( 'EMEON_URL', get_template_directory_uri() );
+define( 'EMEON_URL',   get_template_directory_uri() );
+define( 'EMEON_DEBUG', 'https://emeon.io/' === home_url() );
 
 
 /**
@@ -280,7 +285,7 @@ function emeon_scripts() {
 
 	wp_enqueue_script(
 		'google-captcha',
-		'https://www.google.com/recaptcha/api.js?render=6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx',
+		'https://www.google.com/recaptcha/api.js?render=' . EMEON_CAPTCHA['key'],
 		[ 'jquery' ],
 		'1.0',
 		true

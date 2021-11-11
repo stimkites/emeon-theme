@@ -5,6 +5,14 @@
 	width: 100%;
 	justify-content: space-between;
 
+	.moderation-status {
+		display: block;
+		margin: 10px 0;
+		border-left: 5px solid orangered;
+		font-weight: bolder;
+		padding: 5px;
+	}
+
 	h2 {
 		font-size: 18px;
 		line-height: 1;
