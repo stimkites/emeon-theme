@@ -2,7 +2,17 @@
 
 	&-wrapper {
 		margin: 0 auto;
-		max-width: 300px;
+		max-width: 600px;
+		width: 100%;
+
+		.privacy-policy-link {
+			margin: 20px 0;
+			font-size: 80%;
+		}
+		a {
+			text-decoration: underline;
+			color: #137dc5;
+		}
 	}
 
 	.button-cta{
@@ -18,6 +28,7 @@
 
 	.form-group {
 		position: relative;
+		display: flex;
 	}
 
 	label.error {

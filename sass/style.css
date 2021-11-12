@@ -879,7 +879,14 @@ table {
 
 .form-join-wrapper {
   margin: 0 auto;
-  max-width: 300px; }
+  max-width: 600px;
+  width: 100%; }
+  .form-join-wrapper .privacy-policy-link {
+    margin: 20px 0;
+    font-size: 80%; }
+  .form-join-wrapper a {
+    text-decoration: underline;
+    color: #137dc5; }
 .form-join .button-cta {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0; }
@@ -888,7 +895,8 @@ table {
   border-top-right-radius: 0;
   border-right: 0; }
 .form-join .form-group {
-  position: relative; }
+  position: relative;
+  display: flex; }
 .form-join label.error {
   position: relative; }
   .form-join label.error:after {
