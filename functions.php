@@ -17,6 +17,7 @@ const
 	EMEON_STATUSES = [ 'active', 'moderation', 'archive' ],
 	EMEON_TYPES    = [ 'vacancies', 'candidates', 'emeon-team', 'want-join', 'user-stories' ],
 	EMEON_CURRENCY = 'EUR',
+	EMEON_LOGINS   = 5, // Login attempts limit
 	EMEON_CUR_SYMB = '€',
 	EMEON_EXP_LVL  = [ 'Career start', 'A few months', 'Half a year', '1-3 years', '3-5 years', '5+ years' ],
 	EMEON_CAPTCHA  = [
@@ -419,3 +420,15 @@ add_filter( 'pre_get_posts', function ( $query ) {
 		$query->set( 'post_type', [ 'post', 'nav_menu_item' ] );
 	return $query;
 } );
+
+/**
+ * Login always via front-end form only (no wp-admin login!)
+ */
+add_action( 'init', function(){
+	if ( ! is_user_logged_in() &&
+	     (  strpos( $_SERVER['REQUEST_URI'], 'wp-admin' ) !== false ||
+	        strpos( $_SERVER['REQUEST_URI'], 'wp-login' ) !== false ) ) {
+		wp_redirect( site_url( '/account/' ) );
+		exit;
+	}
+}, -999 );

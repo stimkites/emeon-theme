@@ -319,7 +319,11 @@ new class {
 			filemtime( EMEON_PATH . '/js/front-forms.js' ),
 			true
 		);
-		wp_localize_script( $slug, '__emeon', ['ajax_url' => admin_url( 'admin-ajax.php' ), 'n' => wp_create_nonce( EMEON_SLUG ) ] );
+		wp_localize_script( $slug, '__emeon', [
+            'ajax_url'  => admin_url( 'admin-ajax.php' ),
+            'n'         => wp_create_nonce( EMEON_SLUG ),
+            'd'         => EMEON_DEBUG
+        ] );
 		wp_enqueue_script( $slug );
 	}
 
@@ -454,14 +458,17 @@ new class {
 			exit;
 		}
 
-		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-		$recaptcha_secret = EMEON_CAPTCHA['secret'];
-		$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token);
-		$recaptcha = json_decode($recaptcha);
+		$recaptcha = null;
+
+		if( ! EMEON_DEBUG ) {
+			$recaptcha_url    = 'https://www.google.com/recaptcha/api/siteverify';
+			$recaptcha_secret = EMEON_CAPTCHA['secret'];
+			$recaptcha        = file_get_contents( $recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token );
+			$recaptcha        = json_decode( $recaptcha );
+		}
 
 		// if more than 0.5 then it is human
-		if ($recaptcha->score >= 0.5) {
-
+		if ( EMEON_DEBUG || $recaptcha->score >= 0.5 ) {
 
 			/**
 			 * register here
@@ -480,13 +487,11 @@ new class {
 
 
 		} else {
-			echo json_encode(['message' => 'you are a bot', 'score' => $recaptcha->score]);
+			echo json_encode([
+			        'message' => 'Sorry, seems like you are using improper browser...',
+                    'score' => $recaptcha->score
+            ]);
 			die();
-
-			/**
-			 * send errors here
-			 */
-
 		}
 	}
 
@@ -533,48 +538,34 @@ new class {
 	static function emeon_login_ajax_handler() {
 		$token = $_POST['token'];
 
-		if (!check_ajax_referer( EMEON_SLUG, 'nonce' )) return;
+		if ( ! check_ajax_referer( EMEON_SLUG, 'nonce' ) ) return;
 
-		if ( ! ( $email = $_POST[ 'email' ] ) ||
-		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-			$_POST[ 'emeon_error' ][] = 'The email you entered is invalid. Please, try again.';
-			echo json_encode([
+		$login = sanitize_key( $_POST['email'] );
+		if( ! ( $user = get_user_by( 'user_login', $login ) ) && ! ( $user = get_user_by( 'email', $login ) ) )
+			die( json_encode( [
 				'message' => 'error',
-				'error_text' => 'The email you entered is invalid. Please, try again.'
-			]);
-			exit;
-		}
-		if ( ! ( $user = get_user_by( 'email', $email ) ) || is_wp_error( $user ) ) {
-			$_POST[ 'emeon_error' ][] = 'User with email "' . $email . '" is not registered!';
+				'error_text' => 'User with email/login "' . $login . '" is not found... <a href="/join/"><i>Join us!</i></a>'
+            ] ) );
 
-			echo json_encode([
-				'message' => 'error',
-				'error_text' => 'User with email "' . $email . '" is not registered!']);
-			exit;
-		}
-		$remains = get_user_meta( $user->ID, '_login_remaining_attempts', true );
-		if ( false === $remains ) {
-			$remains = 5;
-		}
-		if ( ! $remains ) {
-
-			echo json_encode([
+		if( ! ( $remains = get_user_meta( $user->ID, '_login_attempts', true ) ) )
+		    $remains = 0;
+		if ( EMEON_LOGINS <= $remains )
+			die( json_encode( [
 				'message' => 'error',
 				'error_text' =>
-					'Unfortunately you have missed all attempts for login. Please, try to ' .
-                    '<a href="/recover/">recover</a>. If you still experience troubles with login in, drop us a ' .
-                    'line to <	a href="mailto:info@emeon.io">info@emeon.io</a>'
-			]);
-			exit;
-		}
-		$auth = wp_authenticate( $user->user_login, $_POST[ 'pass' ] );
-		if ( ! $auth || is_wp_error( $auth ) ) {
-			-- $remains;
-			update_user_meta( $user->ID, '_login_remaining_attempts', $remains );
+					'Unfortunately you have missed all ' . EMEON_LOGINS . ' attempts to login! <br/>' .
+                    'Please, try to <a href="/recover/"><b>recover</b></a>.<br/>' .
+                    'If you still experience troubles with login in, drop us a ' .
+                    'line to <a href="mailto:info@emeon.io"><i><b>info@emeon.io</b></i></a>'
+			] ) );
 
+		$auth = wp_authenticate( $user->user_login, sanitize_text_field( $_POST[ 'pass' ] ) );
+		if ( ! $auth || is_wp_error( $auth ) ) {
+			$remains++;
+			update_user_meta( $user->ID, '_login_attempts', $remains );
 			echo json_encode( [
 				'message' => 'error',
-				'error_text' => 'Invalid password. Remaining attempts: ' . ( $remains + 1 ) . 'Please, try again.'
+				'error_text' => 'Invalid password. Remaining attempts: ' . ( EMEON_LOGINS - $remains ) . '. Please, try again.'
 			] );
 			exit;
 		}

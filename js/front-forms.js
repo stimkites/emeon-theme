@@ -606,15 +606,8 @@ const validateEmail = ( email ) => {
 			emailLabel = email.parent('label'),
 			passVal = pass.val(),
 			emailVal = email.val(),
-			emailNoValidText = email.data('valid'),
 			emptyText = email.data('empty'),
 			result;
-
-		if (emailVal && !validateEmail(emailVal)) {
-			err++;
-			emailLabel.addClass('error');
-			__error(emailNoValidText)
-		}
 
 		if (!passVal || !emailVal) {
 			if (!passVal ) {
@@ -629,9 +622,12 @@ const validateEmail = ( email ) => {
 			__error(emptyText)
 		}
 
-	 	await getToken().then(res => {
-			result = res;
-		});
+		if( __emeon.d )
+			result = true;
+		else
+			await getToken().then(res => {
+				result = res;
+			});
 
 		if (err === 0 && result) {
 			passLabel.removeClass('error')
