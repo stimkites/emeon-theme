@@ -23,7 +23,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 		       placeholder="Current" value=""/>
 		<input id="new-pass" class="view-toggle" name="new" type="password" autocomplete="false" placeholder="New"
 		       value=""/>
-		<input id="current-pass" class="view-toggle" name="confirm" type="password" autocomplete="false"
+		<input id="confirm-pass" class="view-toggle" name="confirm" type="password" autocomplete="false"
 		       placeholder="Confirm" value=""/>
 
 		<button type="submit" class="button button-cta">Set</button>

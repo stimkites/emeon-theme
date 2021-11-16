@@ -17,8 +17,8 @@
 		font-size: 18px;
 		line-height: 1;
 		text-align: center;
-		padding: 0 0 30px 0;
-		margin: 0;
+		padding: 0;
+		margin: 0 0 10px;
 	}
 
 	&-menu {
@@ -54,27 +54,33 @@
 		#my-articles {
 			position: relative;
 
+			.add-link,
+			.add-link-wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+			}
+
+			.add-link-wrapper {
+				margin: 0 0 20px;
+				padding: 0;
+			}
+
 			.add-link {
-				text-align: right;
-				margin: 0;
-				padding: 4px;
-				vertical-align: middle;
+				font-size: 16px;
+				color: #555;
+				opacity: .4;
+				transition: opacity ease-in-out .2s;
 
-				a {
-					font-size: 24px;
-					color: #555;
-					opacity: .4;
-					transition: opacity ease-in-out .2s;
+				&:after {
+					content: "\f10f";
+					font-family: Dashicons, sans-serif;
+					font-size: 32px;
+					margin-left: 5px;
+				}
 
-					&:after {
-						font-family: Dashicons, sans-serif;
-						font-size: 32px;
-						content: "\f10f";
-					}
-
-					&:hover {
-						opacity: 1;
-					}
+				&:hover {
+					opacity: 1;
 				}
 			}
 		}

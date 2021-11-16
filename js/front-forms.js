@@ -317,7 +317,7 @@ const __error = ( $ => {
 	 * @private
 	 */
 	const __switch_partitions = e => {
-		if( e.target.classList.indexOf( 'logout') ) return e;
+		if( e.target.classList.contains( 'logout' ) ) return e;
 		let l = $( $( e.target ).attr( 'href' ) );
 		if ( !l.length ) return;
 		$( '.account-content' ).removeClass( 'viz' );

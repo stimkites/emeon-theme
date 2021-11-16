@@ -6,8 +6,9 @@
 
 defined( 'ABSPATH' ) or exit;
 
-if( ! ( $uid = get_current_user_id() ) ){
+if ( ! ( $uid = get_current_user_id() ) ) {
 	echo do_shortcode( '[emeon_forms form=login]' );
+
 	return;
 }
 
@@ -24,14 +25,14 @@ if ( isset( $_GET[ 'archive' ] ) ) {
 
 $uposts = get_posts(
 	[
-		'post_author' => $uid,
-		'posts_per_page' => -1,
-		'post_status' => 'any',
-		'category'      => get_terms(
+		'post_author'    => $uid,
+		'posts_per_page' => - 1,
+		'post_status'    => 'any',
+		'category'       => get_terms(
 			[
-				'slug' => [ 'vacancies', 'candidates' ],
+				'slug'     => [ 'vacancies', 'candidates' ],
 				'taxonomy' => 'category',
-				'fields' => 'ids'
+				'fields'   => 'ids'
 			]
 		)
 	]
@@ -46,17 +47,17 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 			<li><a href="#my-articles" class="my-pass">My ads</a></li>
 			<li><a href="#pass" class="my-pass">My password</a></li>
 			<li><a href="#contacts" class="contacts">Contact us</a></li>
-			<li><a href="<?=wp_logout_url( home_url() )?>" class="logout">Log out</a></li>
+			<li><a href="<?= wp_logout_url( home_url() ) ?>" class="logout">Log out</a></li>
 		</ul>
 	</div>
 	<div class="emeon-account-content">
 		<div class="account-content viz" id="my-articles">
 			<h2>
 				My ads
-				<span class="add-link">
-                    <a href="<?= $adedit_url ?>" class="add-edit-link" title="Add new"></a>
-                </span>
 			</h2>
+			<div class="add-link-wrapper">
+                <a href="<?= $adedit_url ?>" class="add-link" title="Add new">Add new</a>
+            </div>
 			<div class="my-articles">
 				<?php
 				global $post;
