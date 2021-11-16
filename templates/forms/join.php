@@ -10,7 +10,7 @@ $email = $_POST[ 'email' ] ?? '';
 $nonce = wp_create_nonce( EMEON_SLUG );
 
 ?>
-<div class="form-join-wrapper bg-white rounded p-4">
+<div class="form-join-wrapper bg-white rounded p-5">
 	<h2>Join us</h2>
 	<form method="post" class="emeon-form form-join d-flex justify-content-between" enctype="multipart/form-data" name="emeon-form" novalidate>
 		<input type="hidden" name="__nonce" value="<?= $nonce ?>"/>

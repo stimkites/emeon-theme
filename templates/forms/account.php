@@ -46,6 +46,7 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 			<li><a href="#my-articles" class="my-pass">My ads</a></li>
 			<li><a href="#pass" class="my-pass">My password</a></li>
 			<li><a href="#contacts" class="contacts">Contact us</a></li>
+			<li><a href="<?=wp_logout_url( home_url() )?>" class="logout">Log out</a></li>
 		</ul>
 	</div>
 	<div class="emeon-account-content">

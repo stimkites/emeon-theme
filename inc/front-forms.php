@@ -399,7 +399,6 @@ new class {
 						<?= implode( "</p><p>", $errors ) ?>
 					</p>
 				</div>
-				<button class="error-dismiss"></button>
 			</div>
 			<?php emeon_log( implode( PHP_EOL, $errors ) ); endif;
 
@@ -541,7 +540,7 @@ new class {
 		if ( ! check_ajax_referer( EMEON_SLUG, 'nonce' ) ) return;
 
 		$login = sanitize_key( $_POST['email'] );
-		if( ! ( $user = get_user_by( 'user_login', $login ) ) && ! ( $user = get_user_by( 'email', $login ) ) )
+		if( ! ( $user = get_user_by( 'login', $login ) ) && ! ( $user = get_user_by( 'email', $login ) ) )
 			die( json_encode( [
 				'message' => 'error',
 				'error_text' => 'User with email/login "' . $login . '" is not found... <a href="/join/"><i>Join us!</i></a>'
@@ -587,10 +586,8 @@ new class {
 			 */
 			wp_set_current_user( $auth->ID );
 			wp_set_auth_cookie(  $auth->ID, $_POST[ 'remember' ] ?? false );
-			echo json_encode(['message' => 'success', 'score' => $recaptcha->score]);
-			wp_safe_redirect( '/account/' );
+			echo json_encode([ 'message' => 'success', 'score' => $recaptcha->score ]);
 			exit;
-
 
 		} else {
 			echo json_encode( [

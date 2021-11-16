@@ -38,10 +38,10 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				<label class="form-check-label" for="flexCheckDefault">
 					Remember
 				</label> |
-				<a href="/recover/" target="_self">Recover</a>
+				<a href="/recover/">Recover</a> |
+                <a href="/join/">Register</a>
 			</div>
 			<button class="button button-cta btn btn-primary">Login</button>
-			<a href="/join/" class="button btn btn-secondary">Register</a>
 			<input type="hidden" name="__nonce" value="<?= $nonce ?>"/>
 		</fieldset>
 	</form>

@@ -26,7 +26,7 @@ const
 	];
 
 define( 'EMEON_URL',   get_template_directory_uri() );
-define( 'EMEON_DEBUG', 'https://emeon.io/' === home_url() );
+define( 'EMEON_DEBUG', 'https://emeon.io/' !== home_url() );
 
 
 /**
@@ -425,6 +425,7 @@ add_filter( 'pre_get_posts', function ( $query ) {
  * Login always via front-end form only (no wp-admin login!)
  */
 add_action( 'init', function(){
+	if( wp_doing_ajax() ) return;
 	if ( ! is_user_logged_in() &&
 	     (  strpos( $_SERVER['REQUEST_URI'], 'wp-admin' ) !== false ||
 	        strpos( $_SERVER['REQUEST_URI'], 'wp-login' ) !== false ) ) {
