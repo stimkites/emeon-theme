@@ -10,19 +10,19 @@ $email = $_POST[ 'email' ] ?? $_GET[ 'email' ] ?? '';
 $nonce = wp_create_nonce( EMEON_SLUG );
 
 ?>
-
-<form action=" " method="post" class="emeon-form form-recover" enctype="multipart/form-data" name="emeon-form">
-	<fieldset>
-		<p class="description">
-			We will send a new password to your account.
-		</p>
-		<p>
-			<input id="email" name="email" type="email" placeholder="Email" value="<?= $email ?>"/>
-		</p>
-		<p>
-			<button class="button button-cta">Recover</button>
-		</p>
-		<input type="hidden" name="emeon_form_action" value="recover"/>
-		<input type="hidden" name="__nonce" value="<?= $nonce ?>"/>
-	</fieldset>
-</form>
+<div class="form-login-wrapper bg-white rounded p-5">
+    <h2>Recover</h2>
+    <p>We will send you a new password to login</p>
+    <form action=" " method="post" class="emeon-form form-recover" enctype="multipart/form-data" name="emeon-form">
+        <fieldset>
+            <p>
+                <input id="email" name="email" type="email" placeholder="Email" value="<?= $email ?>"/>
+            </p>
+            <p>
+                <button class="button button-cta btn btn-primary">Recover</button>
+            </p>
+            <input type="hidden" name="emeon_form_action" value="recover"/>
+            <input type="hidden" name="__nonce" value="<?= $nonce ?>"/>
+        </fieldset>
+    </form>
+</div>

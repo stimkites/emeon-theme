@@ -1,10 +1,87 @@
+'use strict';
+
+/*global __emeon*/
+
+/**
+ * Global Error renderer
+ */
+const __error = ( $ => {
+  return {
+
+    /**
+     * Show error
+     *
+     * @param msg
+     * @param delay
+     * @param type
+     */
+    show: (msg, delay, type) => {
+      if (!type)
+        type = 'error';
+      let elem = $('#emeon-error-popup');
+      let t;
+      if (!(elem.length))
+        elem = $('<div id="emeon-error-popup"></div>')
+          .prependTo('body')
+          .on('mouseenter', () => {
+            clearTimeout(t);
+          })
+          .on('mouseleave', () => {
+            t = setTimeout(() => {
+              elem.removeClass('visible');
+            }, 1000);
+          })
+          .on(
+            'click',
+            (e) => {
+              $(e.target).removeClass('visible');
+            },
+          );
+      if (type === 'success') {
+        elem.addClass('success')
+      } else {
+        if (elem.hasClass('success')) {
+          elem.removeClass('success');
+        }
+      }
+      setTimeout(() => {
+        elem.html(msg || 'There is an error on this page!').addClass('visible');
+      }, 200);
+      t = setTimeout(() => {
+        elem.removeClass('visible');
+      }, delay || 5000);
+    },
+
+    /**
+     * Cleanup errors
+     */
+    flush: () => {
+      $(document).on( // remove "error" icon on elements
+        'mousedown click blur enter focus', '.error-field',
+        (e) => {
+          $(e.target).removeClass('error-field').parents().removeClass('error-field');
+        },
+      );
+      setTimeout(() => {
+        if( 'undefined' === typeof tinymce ) return;
+        tinymce.activeEditor.on(
+          'keydown mousedown paste enter focus',
+          () => {
+            $('#article_content').parents().removeClass('error-field');
+          },
+        );
+      }, 100);
+    }
+
+  }
+
+} )( jQuery.noConflict() );
+
 /**
  * Forms JS
  *
  * Adding/editing/joining/logging in and other forms javascript
  */
-
-'use strict';
 
 /**
  * Add/edit form JS
@@ -81,48 +158,13 @@
 			}
 		} );
 		if ( errors.length ) {
-			__error( errors[ 0 ] );
+			__error.show( errors[ 0 ] );
 			return __noreturn( e );
 		}
 
 		$( 'body' ).addClass( 'loading' );
 		$( '<input type="hidden" name="__nonce" value="' + __emeon.n + '" />' ).appendTo( 'form.emeon-form' );
 		return e;
-	};
-
-	/**
-	 * Show error
-	 *
-	 * @param msg
-	 * @param delay
-	 * @private
-	 */
-	const __error = function( msg, delay ) {
-		let e = $( '#emeon-error-popup' );
-		let t;
-		if ( !( e.length ) )
-			e = $( '<div id="emeon-error-popup"></div>' )
-				.prependTo( 'body' )
-				.on( 'mouseenter', () => {
-					clearTimeout( t );
-				} )
-				.on( 'mouseleave', () => {
-					t = setTimeout( () => {
-						e.removeClass( 'visible' );
-					}, 1000 );
-				} )
-				.on(
-					'click',
-					( e ) => {
-						$( e.target ).removeClass( 'visible' );
-					},
-				);
-		setTimeout( () => {
-			e.html( msg || 'error' ).addClass( 'visible' );
-		}, 200 );
-		t = setTimeout( () => {
-			e.removeClass( 'visible' );
-		}, delay || 5000 );
 	};
 
 	/**
@@ -163,11 +205,11 @@
 		let f = e.target.files[ 0 ];
 		let allowed_images = [ '.png', '.jpg', '.gif', 'jpeg', '.bmp' ];
 		if ( -1 === allowed_images.indexOf( f.name.substr( -4 ) ) ) {
-			__error( 'Improper image format!' );
+			__error.show( 'Improper image format!' );
 			return __reset_photo( e );
 		}
 		if ( f.size > 5 * 1024 * 1024 ) {
-			__error( 'Image file size exceeds 5Mb!' );
+			__error.show( 'Image file size exceeds 5Mb!' );
 			return __reset_photo( e );
 		}
 		let src = URL.createObjectURL( f );
@@ -193,11 +235,11 @@
 	const __set_attachment_info = function( e ) {
 		let f = e.target.files[ 0 ];
 		if ( '.pdf' !== f.name.substr( -4 ) ) {
-			__error( 'Improper PDF file format!' );
+			__error.show( 'Improper PDF file format!' );
 			return __reset_attachment( e );
 		}
 		if ( f.size > 5 * 1024 * 1024 ) {
-			__error( 'PDF file size exceeds 5Mb!' );
+			__error.show( 'PDF file size exceeds 5Mb!' );
 			return __reset_attachment( e );
 		}
 		const obj_url = URL.createObjectURL( f );
@@ -234,23 +276,6 @@
 		// } );
 	};
 
-	const __error_flush = function() {
-		$( document ).on( // remove "error" icon on elements
-			'mousedown click blur enter focus', '.error-field',
-			( e ) => {
-				$( e.target ).removeClass( 'error-field' ).parents().removeClass( 'error-field' );
-			},
-		);
-		setTimeout( () => {
-			tinymce.activeEditor.on(
-				'keydown mousedown paste enter focus',
-				() => {
-					$( '#article_content' ).parents().removeClass( 'error-field' );
-				},
-			);
-		}, 100 );
-	};
-
 	/**
 	 * Assign all events
 	 *
@@ -262,7 +287,7 @@
 		$( '#attachment-file' ).off().change( __set_attachment_info );
 		$( '.attachment-remove' ).off().click( __reset_attachment );
 		$( 'form.emeon-form' ).off().submit( __validate_form );
-		__error_flush();
+		__error.flush();
 		__init_selects();
 	};
 
@@ -292,6 +317,7 @@
 	 * @private
 	 */
 	const __switch_partitions = e => {
+		if( e.target.classList.indexOf( 'logout') ) return e;
 		let l = $( $( e.target ).attr( 'href' ) );
 		if ( !l.length ) return;
 		$( '.account-content' ).removeClass( 'viz' );
@@ -385,47 +411,6 @@ const validateEmail = ( email ) => {
 /** Join form */
 ( $ => {
 
-	/**
-	 * Assign all events
-	 *
-	 * @private
-	 */
-
-	const __error = function( msg, delay, type ) {
-		let e = $( '#emeon-error-popup' );
-		let t;
-		if ( !( e.length ) )
-			e = $( '<div id="emeon-error-popup"></div>' )
-				.prependTo( 'body' )
-				.on( 'mouseenter', () => {
-					clearTimeout( t );
-				} )
-				.on( 'mouseleave', () => {
-					t = setTimeout( () => {
-						e.removeClass( 'visible' );
-					}, 1000 );
-				} )
-				.on(
-					'click',
-					( e ) => {
-						$( e.target ).removeClass( 'visible' );
-					},
-				);
-		if (type === 'success') {
-			$('#emeon-error-popup').addClass('success')
-		}else {
-			if ($('#emeon-error-popup').hasClass('success')) {
-				$('#emeon-error-popup').removeClass('success');
-			}
-		}
-		setTimeout( () => {
-			e.html( msg || 'error' ).addClass( 'visible' );
-		}, 200 );
-		t = setTimeout( () => {
-			e.removeClass( 'visible' );
-		}, delay || 5000 );
-	};
-
 	const __validate_form = async ( event ) => {
 		event.preventDefault();
 		let _target = $( event.target );
@@ -457,12 +442,12 @@ const validateEmail = ( email ) => {
 			value = emailVal;
 
 			if ( err === 'novalid' ) {
-				__error(errorElNoValidText)
+				__error.show(errorElNoValidText)
 				label.addClass( 'error' );
 			}
 
 			if ( err === 'empty' ) {
-				__error(errorElEmptyText)
+				__error.show(errorElEmptyText)
 				label.addClass( 'error' );
 			}
 
@@ -511,16 +496,16 @@ const validateEmail = ( email ) => {
 							curTarget.removeClass( 'loading' );
 							curTarget.find( $( 'input[type="email"]' ) ).val( '' );
 							label.removeClass( 'error' );
-							__error(label.data('success'), 4000, 'success');
+							__error.show(label.data('success'), 4000, 'success');
 
 						} else if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
 							curTarget.removeClass( 'loading' );
 							label.addClass( 'error' );
-							__error(newData[ 'error_text' ])
+							__error.show(newData[ 'error_text' ])
 						} else {
 							curTarget.removeClass( 'loading' );
 							label.addClass( 'error' );
-							__error('You are bot sorry, we can\'t register you')
+							__error.show('You are bot sorry, we can\'t register you')
 						}
 					},
 				} );
@@ -530,6 +515,7 @@ const validateEmail = ( email ) => {
 
 	const __assign = function() {
 		$( '.emeon-form.form-join' ).off().on( 'submit', __submitHandler );
+    __error.flush();
 	};
 
 	return {
@@ -551,43 +537,8 @@ const validateEmail = ( email ) => {
 ( $ => {
 	const loginForm = $( '.emeon-form.form-login' );
 
-	const __error = function( msg, delay, type ) {
-		let e = $( '#emeon-error-popup' );
-		let t;
-		if ( !( e.length ) )
-			e = $( '<div id="emeon-error-popup"></div>' )
-				.prependTo( 'body' )
-				.on( 'mouseenter', () => {
-					clearTimeout( t );
-				} )
-				.on( 'mouseleave', () => {
-					t = setTimeout( () => {
-						e.removeClass( 'visible' );
-					}, 1000 );
-				} )
-				.on(
-					'click',
-					( e ) => {
-						$( e.target ).removeClass( 'visible' );
-					},
-				);
-		if (type === 'success') {
-			$('#emeon-error-popup').addClass('success')
-		}else {
-			if ($('#emeon-error-popup').hasClass('success')) {
-				$('#emeon-error-popup').removeClass('success');
-			}
-		}
-		setTimeout( () => {
-			e.html( msg || 'error' ).addClass( 'visible' );
-		}, 200 );
-		t = setTimeout( () => {
-			e.removeClass( 'visible' );
-		}, delay || 5000 );
-	};
-
 	const getToken = async function() {
-		let tokenNum;
+		let tokenNum = 0;
 		const getToken = await grecaptcha.execute( '6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx', { action: 'submit' } )
 			.then( ( token ) => tokenNum = token )
 			.catch(err => console.error(err));
@@ -600,8 +551,8 @@ const validateEmail = ( email ) => {
 	const __validate = async function(event) {
 		let err = 0,
 			_target = $(event.target),
-			email = _target.find($('input[type="email"]')),
-			pass = _target.find($('input[type="password"]')),
+			email = _target.find($('#email')),
+			pass = _target.find($('#pass')),
 			passLabel = pass.parent('label'),
 			emailLabel = email.parent('label'),
 			passVal = pass.val(),
@@ -619,7 +570,7 @@ const validateEmail = ( email ) => {
 			}
 
 			err++;
-			__error(emptyText)
+			__error.show(emptyText)
 		}
 
 		if( __emeon.d )
@@ -629,7 +580,8 @@ const validateEmail = ( email ) => {
 				result = res;
 			});
 
-		if (err === 0 && result) {
+
+		if ( err === 0 && result ) {
 			passLabel.removeClass('error')
 			emailLabel.removeClass('error');
 			return {
@@ -645,7 +597,7 @@ const validateEmail = ( email ) => {
 		let target = $(event.currentTarget);
 			const validate = __validate(event);
 			validate.then(res => {
-				if (!res) return;
+				if ( ! res ) return;
 				if ( Object.keys(res).length === 0 ) return;
 				const { token, email, pass } = res;
 				let adminUrl = __emeon.ajax_url;
@@ -675,26 +627,15 @@ const validateEmail = ( email ) => {
 							emailLabel = email.parent('label');
 
 						let newData = $.parseJSON( data );
-						if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'success' ) {
-							target.removeClass( 'loading' );
-							target.find( $( 'input[type="email"]' ) ).val( '' );
-							target.find( $( 'input[type="password"]' ) ).val( '' );
-							passLabel.removeClass( 'error' );
-							emailLabel.removeClass( 'error' );
-							console.log(target.data('success'));
-							__error(target.data('success'), 4000, 'success');
-
-						} else if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
+						if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
 							target.removeClass( 'loading' );
 							passLabel.addClass( 'error' );
 							emailLabel.addClass( 'error' );
-							__error(newData[ 'error_text' ])
-						} else {
-							target.removeClass( 'loading' );
-							passLabel.addClass( 'error' );
-							emailLabel.addClass( 'error' );
-							__error('You are bot sorry, we can\'t register you')
+							return __error.show(newData[ 'error_text' ])
 						}
+
+						window.location.reload( true );
+
 					},
 				} );
 
@@ -706,6 +647,7 @@ const validateEmail = ( email ) => {
 
 	const __assign = function() {
 		loginForm.off().on( 'submit', __submitHandler );
+    __error.flush();
 	};
 
 	return {
