@@ -1,81 +1,116 @@
 'use strict';
 
 /*global __emeon*/
+/*global grecaptcha*/
 
 /**
  * Global Error renderer
  */
 const __error = ( $ => {
-  return {
 
-    /**
-     * Show error
-     *
-     * @param msg
-     * @param delay
-     * @param type
-     */
-    show: (msg, delay, type) => {
-      if (!type)
-        type = 'error';
-      let elem = $('#emeon-error-popup');
-      let t;
-      if (!(elem.length))
-        elem = $('<div id="emeon-error-popup"></div>')
-          .prependTo('body')
-          .on('mouseenter', () => {
-            clearTimeout(t);
-          })
-          .on('mouseleave', () => {
-            t = setTimeout(() => {
-              elem.removeClass('visible');
-            }, 1000);
-          })
-          .on(
-            'click',
-            (e) => {
-              $(e.target).removeClass('visible');
-            },
-          );
-      if (type === 'success') {
-        elem.addClass('success')
-      } else {
-        if (elem.hasClass('success')) {
-          elem.removeClass('success');
-        }
-      }
-      setTimeout(() => {
-        elem.html(msg || 'There is an error on this page!').addClass('visible');
-      }, 200);
-      t = setTimeout(() => {
-        elem.removeClass('visible');
-      }, delay || 5000);
-    },
+	return {
 
-    /**
-     * Cleanup errors
-     */
-    flush: () => {
-      $(document).on( // remove "error" icon on elements
-        'mousedown click blur enter focus', '.error-field',
-        (e) => {
-          $(e.target).removeClass('error-field').parents().removeClass('error-field');
-        },
-      );
-      setTimeout(() => {
-        if( 'undefined' === typeof tinymce ) return;
-        tinymce.activeEditor.on(
-          'keydown mousedown paste enter focus',
-          () => {
-            $('#article_content').parents().removeClass('error-field');
-          },
-        );
-      }, 100);
-    }
+		/**
+		 * Schedule cleanup for all errors (on document ready)
+		 */
+		scheduleCleanup: function() {
 
-  }
+			$( document ).ready( setTimeout( this.cleanup, 500 ) );
+			let t;
 
-} )( jQuery.noConflict() );
+			return {
+				/**
+				 * Cleanup all errors on the page in 5 seconds
+				 */
+				cleanup: function( delay ) {
+					let elem = $( '#emeon-error-popup' );
+					if ( !elem.length ) return;
+					elem.on( 'mouseenter', () => {
+						clearTimeout( t );
+					} )
+					  .on( 'mouseleave', () => {
+						  t = setTimeout( () => {
+							  elem.removeClass( 'visible' );
+						  }, 1000 );
+					  } )
+					  .on(
+						'click',
+						( e ) => {
+							$( e.target ).removeClass( 'visible' );
+						},
+					  );
+					t = setTimeout( () => {
+						elem.removeClass( 'visible' );
+					}, delay || 5000 );
+				},
+
+				/**
+				 * Show error
+				 *
+				 * @param msg
+				 * @param delay
+				 * @param type
+				 */
+				show: function( msg, delay, type ) {
+					if( t )
+						clearTimeout( t );
+					if ( !type )
+						type = 'error';
+					let elem = $( '#emeon-error-popup' );
+					if ( !( elem.length ) )
+						elem = $( '<div id="emeon-error-popup"></div>' ).prependTo( 'body' );
+					if ( type === 'success' ) {
+						elem.addClass( 'success' );
+					} else {
+						if ( elem.hasClass( 'success' ) ) {
+							elem.removeClass( 'success' );
+						}
+					}
+					setTimeout( () => {
+						elem.html( msg || 'There was an error on this page!' ).addClass( 'visible' );
+					}, 200 );
+					this.cleanup( delay );
+				},
+
+				/**
+				 * Cleanup error fields
+				 */
+				flush: function() {
+					$( document ).on( // remove "error" icon on elements
+					  'mousedown click blur enter focus', '.error-field',
+					  ( e ) => {
+						  $( e.target ).removeClass( 'error-field' ).parents().removeClass( 'error-field' );
+					  },
+					);
+					setTimeout( () => {
+						if ( 'undefined' === typeof tinymce ) return;
+						tinymce.activeEditor.on(
+						  'keydown mousedown paste enter focus',
+						  () => {
+							  $( '#article_content' ).parents().removeClass( 'error-field' );
+						  },
+						);
+					}, 100 );
+					$( '#emeon-error-popup' );
+				}
+
+			};
+		}
+
+	};
+
+} )( jQuery.noConflict() ).scheduleCleanup();
+
+/**
+ * Google captcha validation
+ */
+const getToken = async function(){
+	let tokenNum = false;
+	await grecaptcha.execute(
+	  __emeon.gc, { action: 'submit' }
+	).then( token => tokenNum = token );
+	return tokenNum;
+};
 
 /**
  * Forms JS
@@ -147,9 +182,9 @@ const __error = ( $ => {
 		$( '.error-field' ).removeClass( 'error-field' );
 		if ( 'undefined' !== typeof tinyMCE ) tinyMCE.get( 'article_content' ).save();
 		$(
-			'form.emeon-form input.invalidate,' +
-			'form.emeon-form textarea.invalidate,' +
-			'form.emeon-form select.invalidate',
+		  'form.emeon-form input.invalidate,' +
+		  'form.emeon-form textarea.invalidate,' +
+		  'form.emeon-form select.invalidate',
 		).each( function() {
 			let current_error = __invalid( this.name, $( this ).val() );
 			if ( current_error ) {
@@ -215,15 +250,15 @@ const __error = ( $ => {
 		let src = URL.createObjectURL( f );
 		if ( !src ) return __reset_photo( e );
 		$( 'img.logo' )
-			.prop( 'src', src )
-			.parent()
-			.addClass( 'added' )
-			.on(
-				'load',
-				() => {
-					URL.revokeObjectURL( src );
-				},
-			);
+		  .prop( 'src', src )
+		  .parent()
+		  .addClass( 'added' )
+		  .on(
+			'load',
+			() => {
+				URL.revokeObjectURL( src );
+			},
+		  );
 	};
 
 	/**
@@ -244,15 +279,15 @@ const __error = ( $ => {
 		}
 		const obj_url = URL.createObjectURL( f );
 		$( '#attachment-preview' )
-			.prop( 'src', obj_url )
-			.parent()
-			.addClass( 'added' )
-			.on(
-				'load',
-				() => {
-					URL.revokeObjectURL( obj_url );
-				},
-			);
+		  .prop( 'src', obj_url )
+		  .parent()
+		  .addClass( 'added' )
+		  .on(
+			'load',
+			() => {
+				URL.revokeObjectURL( obj_url );
+			},
+		  );
 	};
 
 	/**
@@ -317,7 +352,7 @@ const __error = ( $ => {
 	 * @private
 	 */
 	const __switch_partitions = e => {
-		if( e.target.classList.contains( 'logout' ) ) return e;
+		if ( e.target.classList.contains( 'logout' ) ) return e;
 		let l = $( $( e.target ).attr( 'href' ) );
 		if ( !l.length ) return;
 		$( '.account-content' ).removeClass( 'viz' );
@@ -401,11 +436,12 @@ const __error = ( $ => {
 
 	};
 
-} )( jQuery.noConflict() ).init(); /** My account **/
+} )( jQuery.noConflict() ).init();
+/** My account **/
 
 const validateEmail = ( email ) => {
-		const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test( String( email ).toLowerCase() );
+	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test( String( email ).toLowerCase() );
 };
 
 /** Join form */
@@ -415,19 +451,19 @@ const validateEmail = ( email ) => {
 		event.preventDefault();
 		let _target = $( event.target );
 		let errors = 0,
-			tokenNum,
-			value;
+		  tokenNum = 'debug',
+		  value;
 
-		//key "6LezDgkdAAAAACMpL98U5KbwxcPsyUqpL2BTseE7" is site_key for google captcha
-		const getToken = await grecaptcha.execute( '6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx', { action: 'submit' } ).then( ( token ) => tokenNum = token );
+		if( ! __emeon.d )
+			tokenNum = getToken();
 
-		if ( getToken ) {
+		if ( tokenNum ) {
 			let err,
-				label = _target.find( $( 'label[for="join_email"]' ) ),
-				errorElNoValidText = label.data( 'valid' ),
-				errorElEmptyText = label.data( 'empty' ),
-				nonceVal = _target.find( $( 'input[name="__nonce"]' ) ).val(),
-				emailVal = _target.find( $( 'input[type="email"]' ) ).val();
+			  label = _target.find( $( 'label[for="join_email"]' ) ),
+			  errorElNoValidText = label.data( 'valid' ),
+			  errorElEmptyText = label.data( 'empty' ),
+			  nonceVal = _target.find( $( 'input[name="__nonce"]' ) ).val(),
+			  emailVal = _target.find( $( 'input[type="email"]' ) ).val();
 
 			if ( emailVal && !validateEmail( emailVal ) ) {
 				errors++;
@@ -442,12 +478,12 @@ const validateEmail = ( email ) => {
 			value = emailVal;
 
 			if ( err === 'novalid' ) {
-				__error.show(errorElNoValidText)
+				__error.show( errorElNoValidText );
 				label.addClass( 'error' );
 			}
 
 			if ( err === 'empty' ) {
-				__error.show(errorElEmptyText)
+				__error.show( errorElEmptyText );
 				label.addClass( 'error' );
 			}
 
@@ -496,16 +532,16 @@ const validateEmail = ( email ) => {
 							curTarget.removeClass( 'loading' );
 							curTarget.find( $( 'input[type="email"]' ) ).val( '' );
 							label.removeClass( 'error' );
-							__error.show(label.data('success'), 4000, 'success');
+							__error.show( label.data( 'success' ), 4000, 'success' );
 
 						} else if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
 							curTarget.removeClass( 'loading' );
 							label.addClass( 'error' );
-							__error.show(newData[ 'error_text' ])
+							__error.show( newData[ 'error_text' ] );
 						} else {
 							curTarget.removeClass( 'loading' );
 							label.addClass( 'error' );
-							__error.show('You are bot sorry, we can\'t register you')
+							__error.show( 'You are bot sorry, we can\'t register you' );
 						}
 					},
 				} );
@@ -515,7 +551,7 @@ const validateEmail = ( email ) => {
 
 	const __assign = function() {
 		$( '.emeon-form.form-join' ).off().on( 'submit', __submitHandler );
-    __error.flush();
+		__error.flush();
 	};
 
 	return {
@@ -532,122 +568,193 @@ const validateEmail = ( email ) => {
 
 } )( jQuery.noConflict() ).init(); /** Join form **/
 
+
+/** Recover form */
+( $ => {
+
+	const __validate_form = async ( event ) => {
+		event.preventDefault();
+		let
+		  _target = $( event.target ),
+		  tokenNum = 'debug',
+		  email = $( '#email' ),
+		  emailVal = email.val();
+
+		if( 4 > emailVal.length || ! validateEmail( emailVal ) ) {
+			__error.show( email.data( 'invalid' ) );
+			email.parent().addClass( 'error-field' );
+			return false;
+		}
+
+		if( ! __emeon.d )
+			tokenNum = getToken();
+
+		if ( tokenNum ) {
+			return {
+				token: tokenNum,
+				emailVal: emailVal,
+				nonceVal: __emeon.n,
+			};
+		} else {
+			return false;
+		}
+	};
+
+	const __submitHandler = ( event ) => {
+		event.preventDefault();
+		let curTarget = $( event.currentTarget );
+		if ( !__validate_form( event ) ) return;
+		__validate_form( event ).then( res => {
+			if ( !res ) return;
+			const { token, emailVal, nonceVal } = res;
+
+			let adminUrl = __emeon.ajax_url;
+
+			let data = {
+				action: 'ajax_recover_form',
+				email: emailVal,
+				token: token,
+				nonce: nonceVal,
+			};
+			$.ajax( {
+				url: adminUrl,
+				data: data,
+				type: 'POST',
+				beforeSend: function( xhr ) {
+					curTarget.addClass( 'loading' );
+				},
+				success: function( data ) {
+					if( data.error )
+						return __error.show( data.error );
+					curTarget.hide();
+					$( '#email-sent' ).html( emailVal );
+					$( '.recover-success' ).show();
+				},
+			} );
+		}
+		);
+	};
+
+	const __assign = function() {
+		$( '.emeon-form.form-recover' ).off().on( 'submit', __submitHandler );
+		__error.flush();
+	};
+
+	return {
+
+		/**
+		 * Initialize join form handler
+		 */
+		init: function() {
+			if ( $( '.emeon-form.form-recover' ).length === 0 ) return;
+			$( document ).ready( __assign );
+		},
+
+	};
+
+} )( jQuery.noConflict() ).init(); /** Recover form **/
+
 /** Login form */
 
 ( $ => {
 	const loginForm = $( '.emeon-form.form-login' );
 
-	const getToken = async function() {
-		let tokenNum = 0;
-		const getToken = await grecaptcha.execute( '6LfvAwkdAAAAAO7EaIbNO1oQ6ltDXA8zZOC2H1dx', { action: 'submit' } )
-			.then( ( token ) => tokenNum = token )
-			.catch(err => console.error(err));
-
-		if ( getToken ) {
-			return tokenNum;
-		}
-	};
-
-	const __validate = async function(event) {
+	const __validate = async function( event ) {
 		let err = 0,
-			_target = $(event.target),
-			email = _target.find($('#email')),
-			pass = _target.find($('#pass')),
-			passLabel = pass.parent('label'),
-			emailLabel = email.parent('label'),
-			passVal = pass.val(),
-			emailVal = email.val(),
-			emptyText = email.data('empty'),
-			result;
+		  _target = $( event.target ),
+		  email = _target.find( $( '#email' ) ),
+		  pass = _target.find( $( '#pass' ) ),
+		  passLabel = pass.parent( 'label' ),
+		  emailLabel = email.parent( 'label' ),
+		  passVal = pass.val(),
+		  emailVal = email.val(),
+		  emptyText = email.data( 'empty' ),
+		  result;
 
-		if (!passVal || !emailVal) {
-			if (!passVal ) {
-				passLabel.addClass('error');
+		if ( !passVal || !emailVal ) {
+			if ( !passVal ) {
+				passLabel.addClass( 'error' );
 			}
 
-			if (!emailVal) {
-				emailLabel.addClass('error');
+			if ( !emailVal ) {
+				emailLabel.addClass( 'error' );
 			}
 
 			err++;
-			__error.show(emptyText)
+			__error.show( emptyText );
 		}
 
-		if( __emeon.d )
+		if ( __emeon.d )
 			result = true;
 		else
-			await getToken().then(res => {
-				result = res;
-			});
-
+			result = getToken();
 
 		if ( err === 0 && result ) {
-			passLabel.removeClass('error')
-			emailLabel.removeClass('error');
+			passLabel.removeClass( 'error' );
+			emailLabel.removeClass( 'error' );
 			return {
 				token: result,
 				email: emailVal,
-				pass: passVal
-			}
+				pass: passVal,
+			};
 		}
-	}
+	};
 
 	const __submitHandler = function( event ) {
 		event.preventDefault();
-		let target = $(event.currentTarget);
-			const validate = __validate(event);
-			validate.then(res => {
-				if ( ! res ) return;
-				if ( Object.keys(res).length === 0 ) return;
-				const { token, email, pass } = res;
-				let adminUrl = __emeon.ajax_url;
-				let nonceVal = target.find($('input[name="__nonce"]')).val();
-				let remember = target.find($('input[name="remember"]'))[0].checked;
+		let target = $( event.currentTarget );
+		const validate = __validate( event );
+		validate.then( res => {
+			if ( !res ) return;
+			if ( Object.keys( res ).length === 0 ) return;
+			const { token, email, pass } = res;
+			let adminUrl = __emeon.ajax_url;
+			let nonceVal = target.find( $( 'input[name="__nonce"]' ) ).val();
+			let remember = target.find( $( 'input[name="remember"]' ) )[ 0 ].checked;
 
-				let data = {
-					action: 'ajax_login_form',
-					email: email,
-					token: token,
-					pass: pass,
-					nonce: nonceVal,
-					remember: remember
-				};
+			let data = {
+				action: 'ajax_login_form',
+				email: email,
+				token: token,
+				pass: pass,
+				nonce: nonceVal,
+				remember: remember,
+			};
 
-				$.ajax( {
-					url: adminUrl,
-					data: data,
-					type: 'POST',
-					beforeSend: function( xhr ) {
-						target.addClass( 'loading' );
-					},
-					success: function( data ) {
-						let email = target.find($('input[type="email"]')),
-							pass = target.find($('input[type="password"]')),
-							passLabel = pass.parent('label'),
-							emailLabel = email.parent('label');
+			$.ajax( {
+				url: adminUrl,
+				data: data,
+				type: 'POST',
+				beforeSend: function( xhr ) {
+					target.addClass( 'loading' );
+				},
+				success: function( data ) {
+					let email = target.find( $( 'input[type="email"]' ) ),
+					  pass = target.find( $( 'input[type="password"]' ) ),
+					  passLabel = pass.parent( 'label' ),
+					  emailLabel = email.parent( 'label' );
 
-						let newData = $.parseJSON( data );
-						if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
-							target.removeClass( 'loading' );
-							passLabel.addClass( 'error' );
-							emailLabel.addClass( 'error' );
-							return __error.show(newData[ 'error_text' ])
-						}
+					let newData = $.parseJSON( data );
+					if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
+						target.removeClass( 'loading' );
+						passLabel.addClass( 'error' );
+						emailLabel.addClass( 'error' );
+						return __error.show( newData[ 'error_text' ] );
+					}
 
-						window.location.reload( true );
+					window.location.reload( true );
 
-					},
-				} );
+				},
+			} );
 
-			})
-
+		} );
 
 
 	};
 
 	const __assign = function() {
 		loginForm.off().on( 'submit', __submitHandler );
-    __error.flush();
+		__error.flush();
 	};
 
 	return {
@@ -722,9 +829,9 @@ const validateEmail = ( email ) => {
 
 	function __toggle_form( e ) {
 		const checked = e.target.checked,
-			switcher = $( e.target ),
-			form_wrapper = switcher.parents( '.form-check' ),
-			form = switcher.parents( '.form-filters' );
+		  switcher = $( e.target ),
+		  form_wrapper = switcher.parents( '.form-check' ),
+		  form = switcher.parents( '.form-filters' );
 
 		if ( checked ) {
 			form_wrapper.addClass( 'open' );

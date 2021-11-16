@@ -96,6 +96,12 @@
 	}
 }
 
+.recover-success {
+	display: none;
+	a {
+		text-decoration: underline;
+	}
+}
 
 .emeon-form {
 
@@ -117,6 +123,8 @@
 	}
 
 	&__fieldset {
+		position: relative;
+
 		.remove-icon {
 			position: absolute;
 			top: 0;
@@ -280,7 +288,7 @@
 	cursor: pointer;
 	z-index: 992992;
 	position: fixed;
-	top: 100px;
+	top: 118px;
 	background: #fff;
 	right: -450px;
 	width: 100%;
@@ -301,6 +309,11 @@
 
 	&.visible {
 		right: 35px;
+
+		@media screen and ( max-width: 767px ) {
+			max-width: calc( 100% - 50px );
+			left: 25px;
+		}
 	}
 
 	&:hover {
