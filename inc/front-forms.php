@@ -397,16 +397,21 @@ new class {
 
 	/** ------------------------------------------------------------------------------------------------ ACTIONS --- */
 
+	/**
+	 * Process forms via jax call
+	 */
 	static function ajax(){
 		if ( ! check_ajax_referer( EMEON_SLUG, 'nonce' ) ) {
 			wp_send_json( [ 'error' => 'Session expired. Please refresh the page...' ] );
 			die();
 		};
-		switch( $_POST['do'] ){
-			case 'join'     : self::emeon_join(); break;
-			case 'login'    : self::emeon_login(); break;
-			case 'recover'  : self::emeon_recover(); break;
+		$action = $_POST['do'] ?? '';
+		$verb   = __CLASS__ . '::emeon_' . $action;
+		if( ! is_callable( $verb ) ){
+			wp_send_json( [ 'error' => 'Ajax runtime exception: no action [' . $action . '] found!' ] );
+			die();
 		}
+		$verb();
 	}
 
 	/**
@@ -424,6 +429,7 @@ new class {
 		}
 
 		if ( ( $user = get_user_by( 'email', $email ) ) && ! is_wp_error( $user ) ) {
+			if( emeon_mail( 'recover', $user->ID ) )
 			echo json_encode([
 				'error'=> 'User with this email already registered. Please, <a href="/login/">login</a>.'
 			]);

@@ -29,6 +29,12 @@ define( 'EMEON_URL',   get_template_directory_uri() );
 define( 'EMEON_DEBUG', 'https://emeon.io/' !== home_url() );
 
 
+function emeon_mail( $template_name, $object ){
+	$tf = get_stylesheet_directory() . '/templates/emails/' . str_replace( '.php', '', $template_name ) . '.php';
+	if( ! file_exists(  $tf ) ) return false;
+
+}
+
 /**
  * Replace "https://blabla.com" to '<a href="https://blabla.com" target="_blank">https://blabla.com</a>'
  * in the text
