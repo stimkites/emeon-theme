@@ -512,7 +512,8 @@ const validateEmail = ( email ) => {
 				let adminUrl = __emeon.ajax_url;
 
 				let data = {
-					action: 'ajax_join_form',
+					action: 'emeon_ajax',
+					do: 'join',
 					email: emailVal,
 					token: token,
 					nonce: nonceVal,
@@ -528,7 +529,8 @@ const validateEmail = ( email ) => {
 
 						let label = curTarget.find( $( 'label[for="join_email"]' ) );
 						let newData = $.parseJSON( data );
-						if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'success' ) {
+						if ( newData && newData[ 'error' ] ) {
+
 							curTarget.removeClass( 'loading' );
 							curTarget.find( $( 'input[type="email"]' ) ).val( '' );
 							label.removeClass( 'error' );
@@ -611,7 +613,8 @@ const validateEmail = ( email ) => {
 			let adminUrl = __emeon.ajax_url;
 
 			let data = {
-				action: 'ajax_recover_form',
+				action: 'emeon_ajax',
+				do: 'recover',
 				email: emailVal,
 				token: token,
 				nonce: nonceVal,
@@ -713,7 +716,8 @@ const validateEmail = ( email ) => {
 			let remember = target.find( $( 'input[name="remember"]' ) )[ 0 ].checked;
 
 			let data = {
-				action: 'ajax_login_form',
+				action: 'emeon_ajax',
+				do: 'login',
 				email: email,
 				token: token,
 				pass: pass,
@@ -735,11 +739,11 @@ const validateEmail = ( email ) => {
 					  emailLabel = email.parent( 'label' );
 
 					let newData = $.parseJSON( data );
-					if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
+					if ( newData && newData[ 'error' ] ) {
 						target.removeClass( 'loading' );
 						passLabel.addClass( 'error' );
 						emailLabel.addClass( 'error' );
-						return __error.show( newData[ 'error_text' ] );
+						return __error.show( newData[ 'error' ] );
 					}
 
 					window.location.reload( true );

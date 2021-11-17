@@ -8,6 +8,8 @@
  * @global string $content      Email content
  */
 
+ob_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -245,3 +247,8 @@
 
 </center><!--[if !(gte mso 16)]--></body><!--<![endif]--></html>
 
+<?php
+
+$html = ob_get_clean();
+
+wp_mail( $user->user_email, $title, $html, [ "Reply-To: support@emeon.io", "Content-Type: text/html; charset=UTF-8" ] );

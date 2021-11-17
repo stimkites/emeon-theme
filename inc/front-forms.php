@@ -411,6 +411,21 @@ new class {
 			wp_send_json( [ 'error' => 'Ajax runtime exception: no action [' . $action . '] found!' ] );
 			die();
 		}
+
+		$recaptcha = null;
+
+		if( ! EMEON_DEBUG ) {
+			$token            = $_POST['token'] ?? '';
+			$recaptcha_url    = 'https://www.google.com/recaptcha/api/siteverify';
+			$recaptcha_secret = EMEON_CAPTCHA['secret'];
+			$recaptcha        = file_get_contents( $recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token );
+			$recaptcha        = json_decode( $recaptcha );
+			if( $recaptcha->score < 0.5 )
+				die( json_encode( [
+					'error' => 'Seems like you are using unapproved browser... Google thinks you are Bot!'
+				] ) );
+		}
+
 		$verb();
 	}
 
@@ -418,124 +433,65 @@ new class {
 	 * Recover ajax handler
 	 */
 	static function emeon_recover () {
-		$token = $_POST['token'] ?? '';
-
 		if ( ! ( $email = $_POST[ 'email' ] ) ||
-		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-			echo json_encode([
-				'error'=> 'The email you entered is invalid. Please, try again.'
-			]);
-			exit;
-		}
+		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) )
+                die( json_encode( [
+                    'error'=> 'The email you entered is invalid. Please, try again.'
+                ] ) );
 
-		if ( ( $user = get_user_by( 'email', $email ) ) && ! is_wp_error( $user ) ) {
-			if( emeon_mail( 'recover', $user->ID ) )
-			echo json_encode([
-				'error'=> 'User with this email already registered. Please, <a href="/login/">login</a>.'
-			]);
-			exit;
-		}
+		if( ! ( $user = get_user_by( 'email', $email ) ) )
+		    die( json_encode( [
+                'error' => 'Email [' . $email . '] is not registered yet. <a href="/join?email=' . $email . '">Join us!</a>'
+            ] ) );
 
-		$recaptcha = null;
+        if( ! emeon_mail( 'recover', $user ) )
+            die( json_encode( [
+                'error'=> 'We found you, but could not send the reset link to [' . $email . '].. Please, try again.'
+            ] ) );
 
-		if( ! EMEON_DEBUG ) {
-			$recaptcha_url    = 'https://www.google.com/recaptcha/api/siteverify';
-			$recaptcha_secret = EMEON_CAPTCHA['secret'];
-			$recaptcha        = file_get_contents( $recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token );
-			$recaptcha        = json_decode( $recaptcha );
-		}
+        die( json_encode( [ 'status' => 'ok' ] ) );
 
-		// if more than 0.5 then it is human
-		if ( EMEON_DEBUG || $recaptcha->score >= 0.5 ) {
-
-			/**
-			 * register here
-			 */
-
-			$pass = wp_generate_password( 6 );
-			$UID  = wp_create_user( $email, $pass, $email );
-			if ( is_wp_error( $UID ) ) {
-				echo json_encode([
-					'error'=> $UID->get_error_message()
-				]);
-				exit;
-			}
-			wp_send_new_user_notifications( $UID );
-			echo json_encode(['message' => 'success', 'score' => $recaptcha->score]);
-			wp_safe_redirect( '/login?uid=' . $UID );
-			exit;
-
-
-		} else {
-			echo json_encode([
-				'error' => 'Sorry, seems like you are using improper browser...'
-			]);
-			die();
-		}
 	}
 
 	/**
 	 * Join ajax handler
 	 */
-	static function emeon_join () {
-		$token = $_POST['token'] ?? '';
-
+	static function emeon_join(){
 		if ( ! ( $email = $_POST[ 'email' ] ) ||
-		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-			echo json_encode([
-				'message' => 'error',
-				'error_text'=> 'The email you entered is invalid. Please, try again.'
-			]);
-			exit;
-		}
+		     ! filter_var( $email, FILTER_VALIDATE_EMAIL ) )
+                die( json_encode( [
+                    'error'=> 'The email you entered is invalid. Please, try again.'
+                ] ) );
 
-		if ( ( $user = get_user_by( 'email', $email ) ) && ! is_wp_error( $user ) ) {
-			$_POST[ 'emeon_error' ][] = 'User with this email already registered. Please, <a href="/login/">login</a>.';
-			echo json_encode([
-				'message' => 'error',
-				'error_text'=> 'User with this email already registered. Please, <a href="/login/">login</a>.' ]);
-			exit;
-		}
-
-		$recaptcha = null;
-
-		if( ! EMEON_DEBUG ) {
-			$recaptcha_url    = 'https://www.google.com/recaptcha/api/siteverify';
-			$recaptcha_secret = EMEON_CAPTCHA['secret'];
-			$recaptcha        = file_get_contents( $recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token );
-			$recaptcha        = json_decode( $recaptcha );
-		}
-
-		// if more than 0.5 then it is human
-		if ( EMEON_DEBUG || $recaptcha->score >= 0.5 ) {
-
-			/**
-			 * register here
-			 */
-
-			$pass = wp_generate_password( 6 );
-			$UID  = wp_create_user( $email, $pass, $email );
-			if ( is_wp_error( $UID ) ) {
-				$_POST[ 'emeon_error' ][] = $UID->get_error_message() . ' Please, try again.';
-				return;
-			}
-			wp_send_new_user_notifications( $UID );
-			echo json_encode(['message' => 'success', 'score' => $recaptcha->score]);
-			wp_safe_redirect( '/login?uid=' . $UID );
-			exit;
+		if ( ( $user = get_user_by( 'email', $email ) ) && ! is_wp_error( $user ) )
+			die( json_encode( [
+				'error'=> 'User with this email already registered. Please, <a href="/login/">login</a>.'
+            ] ) );
 
 
-		} else {
-			echo json_encode([
-		        'error' => 'Sorry, seems like you are using improper browser...'
-            ]);
-			die();
-		}
+        $pass = wp_generate_password( 6 );
+        $UID  = wp_create_user( $email, $pass, $email );
+
+        if ( is_wp_error( $UID ) )
+            die( json_encode( [ 'error' => $UID->get_error_message() . ' Please, try again.' ] ) );
+
+        wp_send_new_user_notifications( $UID );
+
+        if( ! emeon_mail( 'join', new WP_User( $UID ) ) )
+            die( json_encode( [
+                'error' => 'We could not send your password to [' . $email . ']... Please, try again.'
+            ] ) );
+
+        die( json_encode( [
+            'url' => '/login?joined&email=' . $email
+        ] ) );
+
 	}
 
+	/**
+	 * Login Ajax handler
+	 */
 	static function emeon_login() {
-		$token = $_POST['token'] ?? '';
-
 		$login = sanitize_key( $_POST['email'] );
 		if( ! ( $user = get_user_by( 'login', $login ) ) && ! ( $user = get_user_by( 'email', $login ) ) )
 			die( json_encode( [
@@ -557,38 +513,16 @@ new class {
 		if ( ! $auth || is_wp_error( $auth ) ) {
 			$remains++;
 			update_user_meta( $user->ID, '_login_attempts', $remains );
-			echo json_encode( [
+			die( json_encode( [
 				'error' => 'Invalid password. Remaining attempts: ' . ( EMEON_LOGINS - $remains ) . '. Please, try again.'
-			] );
-			exit;
+			] ) );
 		}
 
-		$recaptcha = null;
-
-		if( ! EMEON_DEBUG ) {
-			$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-			$recaptcha_secret = EMEON_CAPTCHA['secret'];
-			$recaptcha = file_get_contents( $recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $token );
-			$recaptcha = json_decode( $recaptcha );
-		}
-
-		// if more than 0.5 then it is human
-		if ( EMEON_DEBUG || $recaptcha->score >= 0.5 ) {
-
-			/**
-			 * Authorize here
-			 */
-			wp_set_current_user( $auth->ID );
-			wp_set_auth_cookie(  $auth->ID, $_POST[ 'remember' ] ?? false );
-			echo json_encode([ 'message' => 'success', 'score' => $recaptcha->score ]);
-			exit;
-
-		} else {
-			echo json_encode( [
-				'error' => 'Hehe :) You are a bot, according to Google captcha :)'
-			] );
-			die();
-		}
+        wp_set_current_user( $auth->ID );
+        wp_set_auth_cookie(  $auth->ID, $_POST[ 'remember' ] ?? false );
+        die( json_encode( [
+            'status' => 'ok'
+        ] ) );
 	}
 
 	/**
@@ -622,7 +556,7 @@ new class {
 	}
 
 	/**
-	 * Adedit action
+	 * Adedit action (via $_POST request to avoid complex Ajax loaders for file data)
 	 */
 	protected static function adedit() {
 		$notify = false;
