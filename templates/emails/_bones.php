@@ -8,6 +8,8 @@
  * @global string $content      Email content
  */
 
+/** @var WP_User $user */
+
 ob_start();
 
 ?>
@@ -18,7 +20,7 @@ ob_start();
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="initial-scale=1.0">
 	<title>EMEON - employ me online!</title>
-	<style type="text/css">
+	<style>
 		body {
 			margin: 0;
 			padding: 0;
@@ -49,9 +51,10 @@ ob_start();
 			margin-top: 0;
 		}
 	</style>
-	<style type="text/css">
+	<style>
 		/* yahoo, hotmail */
-		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font,
+		.ExternalClass td, .ExternalClass div {
 			line-height: 100%;
 		}
 
@@ -115,14 +118,17 @@ ob_start();
 
 		/* previously used also screen and (max-device-width: 600px) but Yahoo Mail doesn't support multiple queries */
 	</style>
-	<style type="text/css">
+	<style>
 
-		#ko_sideArticleBlock_4 .links-color a, #ko_sideArticleBlock_4 .links-color a:link, #ko_sideArticleBlock_4 .links-color a:visited, #ko_sideArticleBlock_4 .links-color a:hover {
+		#ko_sideArticleBlock_4 .links-color a, #ko_sideArticleBlock_4 .links-color a:link,
+		#ko_sideArticleBlock_4 .links-color a:visited, #ko_sideArticleBlock_4 .links-color a:hover {
 			color: #3f3f3f;
 			text-decoration: underline
 		}
 
-		#ko_footerBlock_2 .links-color a, #ko_footerBlock_2 .links-color a:link, #ko_footerBlock_2 .links-color a:visited, #ko_footerBlock_2 .links-color a:hover {
+		#ko_footerBlock_2 .links-color a, #ko_footerBlock_2 .links-color a:link,
+		#ko_footerBlock_2 .links-color a:visited,
+		#ko_footerBlock_2 .links-color a:hover {
 			color: #cccccc;
 			text-decoration: underline
 		}
@@ -177,7 +183,9 @@ ob_start();
 													<![endif]--><img border="0" hspace="0" align="center" vspace="0"
 													                 width="166"
 													                 style="border: 0px; display: block; vertical-align: top; height: auto; margin: 0 auto; color: #3f3f3f; font-size: 13px; font-family: Arial, Helvetica, sans-serif; width: 100%; max-width: 166px; height: auto;"
-													                 src="<?=site_url( '/wp-content/themes/emeon-theme/img/emeon-logo-2-small.png' )?>">
+													                 src="<?=site_url(
+									                    '/wp-content/themes/emeon-theme/img/emeon-logo-2-small.png'
+													                 )?>">
 													<!--[if (lte ie 8)]></div><![endif]--></td>
 											</tr>
 
@@ -217,7 +225,8 @@ ob_start();
 											</tr>
 
 											<tr>
-												<td class="long-text links-color" width="100%" valign="top" align="right"
+												<td class="long-text links-color" width="100%" valign="top"
+												    align="right"
 												    style="font-weight: normal; color: #3f3f3f; font-size: 10px; font-family: Arial, Helvetica, sans-serif; text-align: right; line-height: normal; padding-top: 20px;">&copy; EMEON, 2016 - <?php echo date( 'Y' ); ?>
 													<span class="sep"> | </span>
 													By Emeon partner, <a href="https://wetail.io">Wetail AB, Sweden</a>
@@ -248,4 +257,6 @@ ob_start();
 
 $html = ob_get_clean();
 
-return wp_mail( $user->user_email, $title, $html, [ "Reply-To: support@emeon.io", "Content-Type: text/html; charset=UTF-8" ] );
+return wp_mail(
+	$user->user_email, $title, $html, [ "Reply-To: support@emeon.io", "Content-Type: text/html; charset=UTF-8" ]
+);

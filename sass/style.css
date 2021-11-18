@@ -323,6 +323,10 @@ body.single-post #primary {
   flex-direction: row;
   width: 100%;
   justify-content: space-between; }
+  .emeon-account .contactus-description {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 13px; }
   .emeon-account .moderation-status {
     display: block;
     margin: 10px 0;
@@ -366,24 +370,7 @@ body.single-post #primary {
       position: relative; }
       .emeon-account-content #my-articles .add-link,
       .emeon-account-content #my-articles .add-link-wrapper {
-        display: flex;
-        align-items: center;
         justify-content: flex-start; }
-      .emeon-account-content #my-articles .add-link-wrapper {
-        margin: 0 0 20px;
-        padding: 0; }
-      .emeon-account-content #my-articles .add-link {
-        font-size: 16px;
-        color: #555;
-        opacity: .4;
-        transition: opacity ease-in-out .2s; }
-        .emeon-account-content #my-articles .add-link:after {
-          content: "\f10f";
-          font-family: Dashicons, sans-serif;
-          font-size: 32px;
-          margin-left: 5px; }
-        .emeon-account-content #my-articles .add-link:hover {
-          opacity: 1; }
     .emeon-account-content .account-content {
       display: none; }
       .emeon-account-content .account-content.viz {
@@ -857,6 +844,32 @@ table {
     justify-content: center; }
     #post-299 .wp-block-image img {
       max-width: 300px; } }
+/*Add new link*/
+.add-link,
+.add-link-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; }
+
+.add-link-wrapper {
+  margin: 0 0 20px;
+  padding: 0; }
+
+.add-link {
+  font-size: 16px;
+  color: #555;
+  opacity: .4;
+  transition: opacity ease-in-out .2s; }
+  .add-link:after {
+    content: "\f10f";
+    font-family: Dashicons, sans-serif;
+    font-size: 32px;
+    margin-left: 5px; }
+  .add-link:hover {
+    opacity: 1; }
+  .add-link.add-task:after {
+    content: "\f227"; }
+
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
@@ -1505,6 +1518,10 @@ body.single-post #primary {
   flex-direction: row;
   width: 100%;
   justify-content: space-between; }
+  .emeon-account .contactus-description {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 13px; }
   .emeon-account .moderation-status {
     display: block;
     margin: 10px 0;
@@ -1548,24 +1565,7 @@ body.single-post #primary {
       position: relative; }
       .emeon-account-content #my-articles .add-link,
       .emeon-account-content #my-articles .add-link-wrapper {
-        display: flex;
-        align-items: center;
         justify-content: flex-start; }
-      .emeon-account-content #my-articles .add-link-wrapper {
-        margin: 0 0 20px;
-        padding: 0; }
-      .emeon-account-content #my-articles .add-link {
-        font-size: 16px;
-        color: #555;
-        opacity: .4;
-        transition: opacity ease-in-out .2s; }
-        .emeon-account-content #my-articles .add-link:after {
-          content: "\f10f";
-          font-family: Dashicons, sans-serif;
-          font-size: 32px;
-          margin-left: 5px; }
-        .emeon-account-content #my-articles .add-link:hover {
-          opacity: 1; }
     .emeon-account-content .account-content {
       display: none; }
       .emeon-account-content .account-content.viz {

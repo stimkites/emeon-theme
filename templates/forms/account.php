@@ -51,7 +51,7 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 		</ul>
 	</div>
 	<div class="emeon-account-content">
-		<div class="account-content viz" id="my-articles">
+		<div class="account-content" id="my-articles">
 			<h2>
 				My ads
 			</h2>

@@ -12,7 +12,10 @@ $email = $_POST[ 'email' ] ?? $_GET[ 'email' ] ?? $user->user_email;
 $nonce = wp_create_nonce( EMEON_SLUG );
 
 ?>
-
+<p class="contactus-description">
+	Describe your issue with all possible (and impossible) details and we will<br/>
+	reply with an estimation and/or solution for you in minutes!!!
+</p>
 <form action=" " method="post" class="emeon-form form-contactus" data-action="contactus"
       enctype="multipart/form-data" name="emeon-form">
 	<fieldset>

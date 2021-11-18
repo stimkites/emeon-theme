@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: JOIN email action body. Contains password and login.
+ * Template Name: PUBLISH email action body. Contains password and login.
  */
 
 $title      =

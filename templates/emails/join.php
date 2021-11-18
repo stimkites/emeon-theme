@@ -9,6 +9,8 @@ $subtitle   =   'Best careers start here! Best online vacancies!';
 
 ob_start();
 
+/** @global WP_User $user */
+
 ?>
 
 <p> We are happy to welcome you onboard! </p>

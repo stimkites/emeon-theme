@@ -1,7 +1,9 @@
 <?php
 /**
- * Template Name: JOIN email action body. Contains password and login.
+ * Template Name: RECOVER email action body.
  */
+
+/** @global WP_User $user */
 
 $title      =
 $subject    =   'EMEON password recover';

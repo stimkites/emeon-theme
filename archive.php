@@ -9,6 +9,8 @@
 
 defined( 'ABSPATH' ) or exit;
 
+$adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
+
 get_header();
 ?>
 
@@ -28,6 +30,29 @@ get_header();
                     // Filters
 				    echo do_shortcode( '[emeon_forms form=filters]' );
 				?>
+
+				<?php if(
+							is_user_logged_in() &&
+							(
+								$_SERVER['REQUEST_URI'] === '/category/vacancies/' ||
+								$_SERVER['REQUEST_URI'] === '/category/candidates/'
+							)
+					) : ?>
+						<div class="add-link-wrapper">
+							<a href="<?= $adedit_url ?>" class="add-link" title="Add new">Add new</a>
+						</div>
+				<?php endif; ?>
+
+				<?php if(
+					is_user_logged_in() &&
+					(
+						$_SERVER['REQUEST_URI'] === '/category/emeon-team/'
+					)
+				) : ?>
+					<div class="add-link-wrapper">
+						<a href="/account/#contacts" class="add-link add-task" title="Deliver a task for us">Add a task</a>
+					</div>
+				<?php endif; ?>
 
 				<div class="d-flex flex-wrap row-cols-1 row-cols-md-2 row-cols-lg-4 align-items-stretch mx-n2">
 					<?php
