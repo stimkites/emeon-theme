@@ -8,9 +8,17 @@
 	.moderation-status {
 		display: block;
 		margin: 10px 0;
-		border-left: 5px solid orangered;
-		font-weight: bolder;
+		font-weight: normal;
 		padding: 5px;
+
+		&.on-moderation {
+			border-left: 5px solid orangered;
+			font-weight: bolder;
+		}
+
+		&.published {
+			border-left: 5px solid limegreen;
+		}
 	}
 
 	h2 {
@@ -58,7 +66,7 @@
 			.add-link-wrapper {
 				display: flex;
 				align-items: center;
-				justify-content: flex-end;
+				justify-content: flex-start;
 			}
 
 			.add-link-wrapper {
@@ -98,8 +106,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			flex-direction: row;
-			justify-content: space-between;
-			align-content: space-between;
+			justify-content: flex-start;
 			margin: 0 -10px;
 		}
 
@@ -107,10 +114,12 @@
 		.account-article {
 			width: 100%;
 			margin: 0 5px 10px;
-			max-width: 200px;
-			border: none;
+			max-width: 215px;
 			padding: 10px;
 			position: relative;
+			border: 2px solid #ddd;
+			overflow: hidden;
+			max-height: 390px;
 
 			&:hover {
 				-webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
@@ -214,6 +223,21 @@
 
 			.post-thumbnail {
 				height: 191px;
+				display: flex;
+				justify-content: space-around;
+				flex-direction: column;
+				img {
+					height: fit-content;
+				}
+			}
+
+			h3 {
+				font-size: 20px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				width: 100%;
+				overflow: hidden;
+				margin: 10px 0;
 			}
 
 		}

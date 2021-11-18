@@ -17,10 +17,10 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 		<div id="step-1" class="emeon-join step-1">
 			<p class="hint">We will send you a password to <a href="/account/">login</a></p>
 			<div class="form-group">
-				<label for="join_email" data-valid="Email is not valid" data-empty="This field couldn't be empty" data-success="Password is sent!">
+				<label for="join_email" data-valid="Email is not valid" data-empty="This field couldn't be empty">
 					<input id="join_email" class="form-control email" name="email" type="email" placeholder="Email"/>
 				</label>
-				<button type="button" id="btn-join" class="button button-cta btn btn-primary block">Join</button>
+				<button type="submit" id="btn-join" class="button button-cta btn btn-primary block">Join</button>
 			</div>
 		</div>
 	</form>

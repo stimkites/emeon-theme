@@ -13,7 +13,11 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 
 <div class="form-login-wrapper bg-white rounded p-5">
 	<h2>Login</h2>
+    <?php if( $_GET['joined'] ?? false ) : ?>
+    <p>We have sent you a password to login, please check your mail.</p>
+    <?php else : ?>
 	<p>Access your posts and account</p>
+    <?php endif; ?>
 	<form action=" "
           method="post"
           class="emeon-form form-login"

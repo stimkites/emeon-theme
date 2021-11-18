@@ -6,12 +6,15 @@
 
 defined( 'ABSPATH' ) or exit;
 
-$email = $_POST[ 'email' ] ?? $_GET[ 'email' ] ?? '';
+$user = new WP_User( get_current_user_id() );
+
+$email = $_POST[ 'email' ] ?? $_GET[ 'email' ] ?? $user->user_email;
 $nonce = wp_create_nonce( EMEON_SLUG );
 
 ?>
 
-<form action=" " method="post" class="emeon-form form-contactus" enctype="multipart/form-data" name="emeon-form">
+<form action=" " method="post" class="emeon-form form-contactus" data-action="contactus"
+      enctype="multipart/form-data" name="emeon-form">
 	<fieldset>
 		<div class="control-wrap">
 			<input id="email" name="email" class="emeon-control" type="email" placeholder="your@email.com"

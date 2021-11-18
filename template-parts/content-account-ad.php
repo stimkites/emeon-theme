@@ -34,7 +34,9 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 				<?php
 				emeon_posted_on();
 				if( 'pending' === get_post_status() )
-					echo '<span class="moderation-status">On moderation!</span>';
+					echo '<span class="moderation-status on-moderation">On moderation!</span>';
+				else
+					echo '<span class="moderation-status published">Published</span>';
 				?>
 			</div><!-- .entry-meta -->
 		<?php endif; ?>

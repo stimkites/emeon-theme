@@ -15,7 +15,10 @@ ob_start();
 <p> Publish your resumes or vacancies in an unlimited way! </p>
 
 <h4> Your credentials to <a href="<?=site_url() . '/account/'?>" target="_blank">login:</a> </h4>
-<p><b>Login:</b></p>
+<p><b style="width:200px; text-align: right; padding-right: 5px;">Login:</b><?=$user->user_login?></p>
+<p><b style="width:200px; text-align: right; padding-right: 5px;">Pass:</b><?=$user->unhashed_pass?></p>
+
+<p>Looking forward to see you online at <a href="<?=site_url()?>" target="_blank">Emeon</a>!</p>
 
 <?php
 

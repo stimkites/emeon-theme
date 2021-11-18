@@ -44,8 +44,11 @@ new class {
 		// Apply filters on search/filter
 		add_filter( 'pre_get_posts', __CLASS__ . '::apply_filters' );
 
-		// Ajax for forms
+		// Ajax for recaptcha (not authorized) forms
 		add_action( 'wp_ajax_nopriv_emeon_ajax', __CLASS__ . '::ajax' );
+
+		// Ajax for account
+        add_action( 'wp_ajax_emeon_account_ajax', __CLASS__ . '::account_ajax' );
 
 	}
 
@@ -353,6 +356,30 @@ new class {
 		update_post_meta( $post_id, 'emeon_experience', $_POST[ 'emeon_experience' ] ?? '' );
 	}
 
+
+	/**
+	 * Validates autologin link
+	 */
+	private static function check_auto_login(){
+        if( isset( $_GET['recover'] ) ){
+            if( ( $email = urldecode    ( $_GET['email'] ?? '' ) ) &&
+                ( $user  = get_user_by  ( 'email', $email )    ) &&
+                ( $hash  = get_user_meta( $user->ID, 'emeon_recovery_pass_hash', true ) ) &&
+                ! empty( $hash ) ) {
+
+	            delete_user_meta( $user->ID, 'emeon_recovery_pass_hash' );
+
+	            if( ( $_GET['checksum'] ?? '' ) === md5( base64_encode( $hash ) ) ){
+		            wp_set_current_user( $user->ID );
+		            wp_set_auth_cookie(  $user->ID );
+		            wp_redirect( '/account/#pass?mode=recover' );
+		            die();
+	            }
+            }
+            die( 'EXPIRED RECOVER LINK! Please, request new one <a href="/recover/">here</a>' );
+        }
+    }
+
 	/**
 	 * Process POST request
 	 */
@@ -370,6 +397,9 @@ new class {
 
 			return;
 		}
+
+		self::check_auto_login();
+
 		self::{$action}();
 	}
 
@@ -475,9 +505,12 @@ new class {
         if ( is_wp_error( $UID ) )
             die( json_encode( [ 'error' => $UID->get_error_message() . ' Please, try again.' ] ) );
 
-        wp_send_new_user_notifications( $UID );
+        $user = new WP_User( $UID );
+        $user->unhashed_pass = $pass;
 
-        if( ! emeon_mail( 'join', new WP_User( $UID ) ) )
+        wp_send_new_user_notifications( $UID, 'admin' );
+
+        if( ! emeon_mail( 'join', $user ) )
             die( json_encode( [
                 'error' => 'We could not send your password to [' . $email . ']... Please, try again.'
             ] ) );
@@ -521,7 +554,8 @@ new class {
         wp_set_current_user( $auth->ID );
         wp_set_auth_cookie(  $auth->ID, $_POST[ 'remember' ] ?? false );
         die( json_encode( [
-            'status' => 'ok'
+            'status' => 'ok',
+            'url'    => ( current_user_can( 'administrator' ) ? admin_url() : '/account/' )
         ] ) );
 	}
 
@@ -687,6 +721,76 @@ new class {
 
 		wp_safe_redirect( '/account/' );
 		exit;
+	}
+
+	/**
+	 * Process forms via jax call for account section
+	 */
+	static function account_ajax(){
+		$action = $_POST['do'] ?? '';
+		$verb   = __CLASS__ . '::emeon_account_' . $action;
+		if( ! is_callable( $verb ) ){
+			wp_send_json( [ 'error' => 'Ajax runtime exception: no action [' . $action . '] found!' ] );
+			die();
+		}
+		$verb();
+	}
+
+	/**
+	 * Ajax contact us action
+	 */
+	static function emeoun_account_contactus(){
+	    if( ! wp_mail(
+            'support@emeon.io',
+            sanitize_text_field( $_POST['subject'] ),
+            $_POST['content'],
+            [
+                "Reply-To:" . $_POST['email'],
+                "Content-Type: text/html; charset=UTF-8"
+            ]
+        ) )
+	        wp_send_json( [
+                'error' =>
+                    'Could not send the email automatically!' .
+                    'Please use <b>support@emeon.io</b> and contact us via regular mail services.'
+            ] );
+	    else
+	        wp_send_json( [
+                'sent' => true
+            ] );
+	    die();
+    }
+
+	/**
+	 * Ajax contact us action
+	 */
+	static function emeoun_account_passchange(){
+	    $current = sanitize_text_field( $_POST['current']   ?? '' );
+	    $new     = sanitize_text_field( $_POST['new']       ?? '' );
+	    $confirm = sanitize_text_field( $_POST['confirm']   ?? '' );
+	    $user    = new WP_User( get_current_user_id() );
+
+	    if( ! $current ||
+            ( ! wp_check_password( $current, $user->user_pass, $user->ID ) &&
+              ! wp_verify_nonce( $current, 'EMEON_RECOVER_PASS' . strtotime( 'today' ) ) ) ){
+
+		    wp_send_json( [ 'error' => 'Current password is invalid!' ] );
+        }
+
+        if( $new !== $confirm )
+            wp_send_json( [ 'error' => 'Confirmation password is not the same as new one.' ] );
+
+	    if( ! emeon_mail( 'newpass', $user ) )
+	        wp_send_json( [
+                'error' => 'We could not send the confirmation email with the new password to ' . $user->user_email . '!<br/>' .
+                           'Please, contact us asap at <a href="mailto:support@emeon.io">support@emeon.io</a>'
+            ] );
+
+        wp_set_password( $new, $user->ID );
+
+	    wp_send_json( [ 'status' => 'ok' ] );
+
+		die();
 	}
 
 };

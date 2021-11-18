@@ -411,6 +411,14 @@ const getToken = async function(){
 		}
 	};
 
+	const __passchange = e => {
+		let _f = e.target;
+
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	};
+
 
 	/**
 	 * Assign all events
@@ -421,6 +429,8 @@ const getToken = async function(){
 		$( '#account-primary-menu li a' ).off().on( 'click', __switch_partitions );
 		$( '.delete-item' ).off().on( 'click', __delete_post );
 		$( '#view-pass' ).off().on( 'change', __toggle_password_visibility );
+		$( 'form.form-contactus' ).off().on( 'submit', __contuctus   );
+		$( 'form.form-password'  ).off().on( 'submit', __passchange  );
 		$( document.body ).on( 'click', __toggle_post_menu );
 	};
 
@@ -513,10 +523,10 @@ const validateEmail = ( email ) => {
 
 				let data = {
 					action: 'emeon_ajax',
-					do: 'join',
-					email: emailVal,
-					token: token,
-					nonce: nonceVal,
+					do		: 'join',
+					email	: emailVal,
+					token	: token,
+					nonce	: nonceVal,
 				};
 				$.ajax( {
 					url: adminUrl,
@@ -526,25 +536,16 @@ const validateEmail = ( email ) => {
 						curTarget.addClass( 'loading' );
 					},
 					success: function( data ) {
-
-						let label = curTarget.find( $( 'label[for="join_email"]' ) );
-						let newData = $.parseJSON( data );
-						if ( newData && newData[ 'error' ] ) {
-
-							curTarget.removeClass( 'loading' );
-							curTarget.find( $( 'input[type="email"]' ) ).val( '' );
-							label.removeClass( 'error' );
-							__error.show( label.data( 'success' ), 4000, 'success' );
-
-						} else if ( newData && newData[ 'message' ] && newData[ 'message' ] === 'error' ) {
-							curTarget.removeClass( 'loading' );
-							label.addClass( 'error' );
-							__error.show( newData[ 'error_text' ] );
-						} else {
-							curTarget.removeClass( 'loading' );
-							label.addClass( 'error' );
-							__error.show( 'You are bot sorry, we can\'t register you' );
-						}
+						data = JSON.parse( data );
+            curTarget.removeClass( 'loading' );
+            let label = curTarget.find( $( 'label[for="join_email"]' ) );
+						if( data.error ) {
+              label.addClass( 'error' );
+              return __error.show(data.error);
+            }
+						if( ! data.url )
+							return __error.show( 'Unknown error! Please, try again...' );
+						window.location = data.url;
 					},
 				} );
 			}
@@ -627,6 +628,8 @@ const validateEmail = ( email ) => {
 					curTarget.addClass( 'loading' );
 				},
 				success: function( data ) {
+          curTarget.removeClass( 'loading' );
+					data = JSON.parse( data );
 					if( data.error )
 						return __error.show( data.error );
 					curTarget.hide();
@@ -733,6 +736,7 @@ const validateEmail = ( email ) => {
 					target.addClass( 'loading' );
 				},
 				success: function( data ) {
+          target.removeClass( 'loading' );
 					let email = target.find( $( 'input[type="email"]' ) ),
 					  pass = target.find( $( 'input[type="password"]' ) ),
 					  passLabel = pass.parent( 'label' ),
@@ -740,13 +744,15 @@ const validateEmail = ( email ) => {
 
 					let newData = $.parseJSON( data );
 					if ( newData && newData[ 'error' ] ) {
-						target.removeClass( 'loading' );
 						passLabel.addClass( 'error' );
 						emailLabel.addClass( 'error' );
 						return __error.show( newData[ 'error' ] );
 					}
 
-					window.location.reload( true );
+					if( newData.url )
+						window.location = newData.url;
+					else
+						window.location.reload( true );
 
 				},
 			} );

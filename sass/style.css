@@ -326,9 +326,13 @@ body.single-post #primary {
   .emeon-account .moderation-status {
     display: block;
     margin: 10px 0;
-    border-left: 5px solid orangered;
-    font-weight: bolder;
+    font-weight: normal;
     padding: 5px; }
+    .emeon-account .moderation-status.on-moderation {
+      border-left: 5px solid orangered;
+      font-weight: bolder; }
+    .emeon-account .moderation-status.published {
+      border-left: 5px solid limegreen; }
   .emeon-account h2 {
     font-size: 18px;
     line-height: 1;
@@ -364,7 +368,7 @@ body.single-post #primary {
       .emeon-account-content #my-articles .add-link-wrapper {
         display: flex;
         align-items: center;
-        justify-content: flex-end; }
+        justify-content: flex-start; }
       .emeon-account-content #my-articles .add-link-wrapper {
         margin: 0 0 20px;
         padding: 0; }
@@ -388,16 +392,17 @@ body.single-post #primary {
       display: flex;
       flex-wrap: wrap;
       flex-direction: row;
-      justify-content: space-between;
-      align-content: space-between;
+      justify-content: flex-start;
       margin: 0 -10px; }
     .emeon-account-content .account-article {
       width: 100%;
       margin: 0 5px 10px;
-      max-width: 200px;
-      border: none;
+      max-width: 215px;
       padding: 10px;
-      position: relative; }
+      position: relative;
+      border: 2px solid #ddd;
+      overflow: hidden;
+      max-height: 390px; }
       .emeon-account-content .account-article:hover {
         -webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
         -moz-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
@@ -470,7 +475,19 @@ body.single-post #primary {
         .emeon-account-content .account-article .actualize-article:hover {
           opacity: 1; }
       .emeon-account-content .account-article .post-thumbnail {
-        height: 191px; }
+        height: 191px;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column; }
+        .emeon-account-content .account-article .post-thumbnail img {
+          height: fit-content; }
+      .emeon-account-content .account-article h3 {
+        font-size: 20px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+        margin: 10px 0; }
     .emeon-account-content #pass form.form-password {
       position: relative;
       padding-top: 40px; }
@@ -1491,9 +1508,13 @@ body.single-post #primary {
   .emeon-account .moderation-status {
     display: block;
     margin: 10px 0;
-    border-left: 5px solid orangered;
-    font-weight: bolder;
+    font-weight: normal;
     padding: 5px; }
+    .emeon-account .moderation-status.on-moderation {
+      border-left: 5px solid orangered;
+      font-weight: bolder; }
+    .emeon-account .moderation-status.published {
+      border-left: 5px solid limegreen; }
   .emeon-account h2 {
     font-size: 18px;
     line-height: 1;
@@ -1529,7 +1550,7 @@ body.single-post #primary {
       .emeon-account-content #my-articles .add-link-wrapper {
         display: flex;
         align-items: center;
-        justify-content: flex-end; }
+        justify-content: flex-start; }
       .emeon-account-content #my-articles .add-link-wrapper {
         margin: 0 0 20px;
         padding: 0; }
@@ -1553,16 +1574,17 @@ body.single-post #primary {
       display: flex;
       flex-wrap: wrap;
       flex-direction: row;
-      justify-content: space-between;
-      align-content: space-between;
+      justify-content: flex-start;
       margin: 0 -10px; }
     .emeon-account-content .account-article {
       width: 100%;
       margin: 0 5px 10px;
-      max-width: 200px;
-      border: none;
+      max-width: 215px;
       padding: 10px;
-      position: relative; }
+      position: relative;
+      border: 2px solid #ddd;
+      overflow: hidden;
+      max-height: 390px; }
       .emeon-account-content .account-article:hover {
         -webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
         -moz-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
@@ -1635,7 +1657,19 @@ body.single-post #primary {
         .emeon-account-content .account-article .actualize-article:hover {
           opacity: 1; }
       .emeon-account-content .account-article .post-thumbnail {
-        height: 191px; }
+        height: 191px;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column; }
+        .emeon-account-content .account-article .post-thumbnail img {
+          height: fit-content; }
+      .emeon-account-content .account-article h3 {
+        font-size: 20px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+        margin: 10px 0; }
     .emeon-account-content #pass form.form-password {
       position: relative;
       padding-top: 40px; }

@@ -17,9 +17,7 @@ ob_start();
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="initial-scale=1.0">
-	<meta name="format-detection" content="telephone=no">
-	<title>EMEON best careers</title>
-
+	<title>EMEON - employ me online!</title>
 	<style type="text/css">
 		body {
 			margin: 0;
@@ -27,12 +25,12 @@ ob_start();
 		}
 
 		img {
-			border: 0px;
+			border: 0;
 			display: block;
 		}
 
 		.socialLinks {
-			font-size: 6px;
+			font-size: 9px;
 		}
 
 		.socialLinks a {
@@ -40,15 +38,15 @@ ob_start();
 		}
 
 		.long-text p {
-			margin: 1em 0px;
+			margin: 1em 0;
 		}
 
 		.long-text p:last-child {
-			margin-bottom: 0px;
+			margin-bottom: 0;
 		}
 
 		.long-text p:first-child {
-			margin-top: 0px;
+			margin-top: 0;
 		}
 	</style>
 	<style type="text/css">
@@ -77,8 +75,8 @@ ob_start();
 
 		/* outlook */
 		table {
-			mso-table-rspace: 0pt;
-			mso-table-lspace: 0pt;
+			mso-table-rspace: 0;
+			mso-table-lspace: 0;
 		}
 
 		#outlook a {
@@ -136,7 +134,6 @@ ob_start();
       style="margin: 0; padding: 0; background-color: #ffffff; color: #919191;"><!--<![endif]-->
 <center>
 
-
 	<table role="presentation" class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0"
 	       bgcolor="#ffffff" style="background-color: #ffffff;" id="ko_sideArticleBlock_4">
 		<tbody>
@@ -180,7 +177,7 @@ ob_start();
 													<![endif]--><img border="0" hspace="0" align="center" vspace="0"
 													                 width="166"
 													                 style="border: 0px; display: block; vertical-align: top; height: auto; margin: 0 auto; color: #3f3f3f; font-size: 13px; font-family: Arial, Helvetica, sans-serif; width: 100%; max-width: 166px; height: auto;"
-													                 src="/wp-content/themes/emeon-theme/img/emeon-logo-2-small.png">
+													                 src="<?=site_url( '/wp-content/themes/emeon-theme/img/emeon-logo-2-small.png' )?>">
 													<!--[if (lte ie 8)]></div><![endif]--></td>
 											</tr>
 
@@ -202,12 +199,12 @@ ob_start();
 											<tr>
 												<td width="100%" valign="top" align="left"
 												    style="font-weight: normal; color: #3f3f3f; font-size: 18px; font-family: Arial, Helvetica, sans-serif; text-align: left;">
-													<span style="font-weight: normal;">
+													<h1 style="font-weight: normal;">
 														<?=$title?>
-													</span>
-													<span style="font-size:80%">
+													</h1>
+													<h3 style="font-size:80%">
 														<?=$subtitle?>
-													</span>
+													</h3>
 												</td>
 											</tr>
 											<tr>
@@ -221,7 +218,7 @@ ob_start();
 
 											<tr>
 												<td class="long-text links-color" width="100%" valign="top" align="right"
-												    style="font-weight: normal; color: #3f3f3f; font-size: 8px; font-family: Arial, Helvetica, sans-serif; text-align: right; line-height: normal; padding-top: 20px;">&copy; EMEON, 2016 - <?php echo date( 'Y' ); ?>
+												    style="font-weight: normal; color: #3f3f3f; font-size: 10px; font-family: Arial, Helvetica, sans-serif; text-align: right; line-height: normal; padding-top: 20px;">&copy; EMEON, 2016 - <?php echo date( 'Y' ); ?>
 													<span class="sep"> | </span>
 													By Emeon partner, <a href="https://wetail.io">Wetail AB, Sweden</a>
 												</td>
@@ -251,4 +248,4 @@ ob_start();
 
 $html = ob_get_clean();
 
-wp_mail( $user->user_email, $title, $html, [ "Reply-To: support@emeon.io", "Content-Type: text/html; charset=UTF-8" ] );
+return wp_mail( $user->user_email, $title, $html, [ "Reply-To: support@emeon.io", "Content-Type: text/html; charset=UTF-8" ] );

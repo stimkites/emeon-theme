@@ -40,7 +40,7 @@ define( 'EMEON_DEBUG', 'https://emeon.io/' !== home_url() );
 function emeon_mail( $template_name, $user ){
 	$tf = get_stylesheet_directory() . '/templates/emails/' . str_replace( '.php', '', $template_name ) . '.php';
 	if( ! file_exists(  $tf ) ) return false;
-	include $tf;
+	return include $tf;
 }
 
 /**
