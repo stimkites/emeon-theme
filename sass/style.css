@@ -436,6 +436,11 @@ body.single-post #primary .post-thumbnail img {
   width: 100%;
   justify-content: space-between;
 }
+.emeon-account .contactus-description {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 13px;
+}
 .emeon-account .moderation-status {
   display: block;
   margin: 10px 0;
@@ -489,28 +494,7 @@ body.single-post #primary .post-thumbnail img {
 }
 .emeon-account-content #my-articles .add-link,
 .emeon-account-content #my-articles .add-link-wrapper {
-  display: flex;
-  align-items: center;
   justify-content: flex-start;
-}
-.emeon-account-content #my-articles .add-link-wrapper {
-  margin: 0 0 20px;
-  padding: 0;
-}
-.emeon-account-content #my-articles .add-link {
-  font-size: 16px;
-  color: #555;
-  opacity: 0.4;
-  transition: opacity ease-in-out 0.2s;
-}
-.emeon-account-content #my-articles .add-link:after {
-  content: "";
-  font-family: Dashicons, sans-serif;
-  font-size: 32px;
-  margin-left: 5px;
-}
-.emeon-account-content #my-articles .add-link:hover {
-  opacity: 1;
 }
 .emeon-account-content .account-content {
   display: none;
@@ -1098,6 +1082,38 @@ table {
     max-width: 300px;
   }
 }
+/*Add new link*/
+.add-link,
+.add-link-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.add-link-wrapper {
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.add-link {
+  font-size: 16px;
+  color: #555;
+  opacity: 0.4;
+  transition: opacity ease-in-out 0.2s;
+}
+.add-link:after {
+  content: "";
+  font-family: Dashicons, sans-serif;
+  font-size: 32px;
+  margin-left: 5px;
+}
+.add-link:hover {
+  opacity: 1;
+}
+.add-link.add-task:after {
+  content: "";
+}
+
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
@@ -1464,7 +1480,7 @@ table {
 
 /* emeon-form */
 /* Emeon form error */
-#emeon-error-popup {
+.emeon-error-popup {
   cursor: pointer;
   z-index: 992992;
   position: fixed;
@@ -1483,19 +1499,19 @@ table {
   -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);
   transition: all ease-in-out 0.3s;
 }
-#emeon-error-popup.success {
+.emeon-error-popup.success {
   border-left-color: #34d831;
 }
-#emeon-error-popup.visible {
+.emeon-error-popup.visible {
   right: 35px;
 }
 @media screen and (max-width: 767px) {
-  #emeon-error-popup.visible {
+  .emeon-error-popup.visible {
     max-width: calc( 100% - 50px );
     left: 25px;
   }
 }
-#emeon-error-popup:hover {
+.emeon-error-popup:hover {
   right: 35px;
 }
 
@@ -1913,6 +1929,11 @@ body.single-post #primary .post-thumbnail img {
   width: 100%;
   justify-content: space-between;
 }
+.emeon-account .contactus-description {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 13px;
+}
 .emeon-account .moderation-status {
   display: block;
   margin: 10px 0;
@@ -1966,28 +1987,7 @@ body.single-post #primary .post-thumbnail img {
 }
 .emeon-account-content #my-articles .add-link,
 .emeon-account-content #my-articles .add-link-wrapper {
-  display: flex;
-  align-items: center;
   justify-content: flex-start;
-}
-.emeon-account-content #my-articles .add-link-wrapper {
-  margin: 0 0 20px;
-  padding: 0;
-}
-.emeon-account-content #my-articles .add-link {
-  font-size: 16px;
-  color: #555;
-  opacity: 0.4;
-  transition: opacity ease-in-out 0.2s;
-}
-.emeon-account-content #my-articles .add-link:after {
-  content: "";
-  font-family: Dashicons, sans-serif;
-  font-size: 32px;
-  margin-left: 5px;
-}
-.emeon-account-content #my-articles .add-link:hover {
-  opacity: 1;
 }
 .emeon-account-content .account-content {
   display: none;
