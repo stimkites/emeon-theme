@@ -12,23 +12,11 @@ const __error = {
 	cleanup: function( delay ) {
 		const elem = document.querySelector( '.emeon-error-popup' );
 		if ( !elem ) return;
-
-		elem.addEventListener( 'click', ( e ) => {
-			  e.target.classList.remove( 'visible' );
-		  },
-		);
-		t = setTimeout( () => {
-			elem.classList.remove( 'visible' );
-		}, delay || 5000 );
+		elem.addEventListener( 'click', ( e ) => e.target.classList.remove( 'visible' ));
+		t = setTimeout( () => elem.classList.remove( 'visible' ), delay || 5000 );
 	},
 	showHelper: function( type, elem, delay, msg ) {
-		if ( type === 'success' ) {
-			elem.classList.add( 'success' );
-		} else {
-			if ( elem.classList.contains( 'success' ) ) {
-				elem.classList.remove( 'success' );
-			}
-		}
+		type === 'success' ? elem.classList.add( 'success' ) : ( elem.classList.contains( 'success' ) ? elem.classList.remove( 'success' ) : '' );
 
 		setTimeout( () => {
 			elem.textContent = msg || 'There was an error on this page!';
@@ -37,14 +25,8 @@ const __error = {
 		this.cleanup( delay );
 	},
 	show: function( msg, delay, type ) {
-		if ( t ) {
-			clearTimeout( t );
-		}
-
-		if ( !type ) {
-			type = 'error';
-		}
-
+		if ( t ) { clearTimeout( t ) }
+		if ( !type ) type = 'error';
 		let elem = document.querySelector( '.emeon-error-popup' );
 
 		if ( !elem ) {
@@ -52,11 +34,7 @@ const __error = {
 			let div = document.createElement( 'div' );
 			div.classList.add( 'emeon-error-popup' );
 			div.id = '#emeon-error-popup';
-
-			if ( page ) {
-				page.parentElement.insertBefore( div, page );
-			}
-
+			page ? page.parentElement.insertBefore( div, page ) : '';
 			elem = document.querySelector( '.emeon-error-popup' );
 			this.showHelper( type, elem, delay, msg );
 		}
