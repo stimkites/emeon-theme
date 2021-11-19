@@ -31,6 +31,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
                        class="form-control"
                        type="text"
                        placeholder="Email/Login"
+				       value="<?=$email?>"
                        data-empty="This field couldn't be empty!"
                        />
 			</label>

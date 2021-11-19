@@ -527,7 +527,7 @@ new class {
             ] ) );
 
         die( json_encode( [
-            'url' => '/login?joined&email=' . $email
+            'url' => '/account/?joined=' . $user->ID . '&email=' . $email
         ] ) );
 
 	}
