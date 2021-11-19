@@ -357,6 +357,7 @@ const getToken = async function(){
 		if ( !l.length ) return;
 		$( '.account-content' ).removeClass( 'viz' );
 		l.addClass( 'viz' );
+		setTimeout( () => { window.scrollTo(0, 0) }, 1 );
 	};
 
 
@@ -403,15 +404,25 @@ const getToken = async function(){
 	 * @private
 	 */
 	const __toggle_post_menu = e => {
-		__close_post_menu();
 		const parent = $( e.target ).parents( '.article-menu' );
-
 		if ( parent.length > 0 && !parent.hasClass( 'open' ) ) {
 			parent.addClass( 'open' );
 		}
 	};
 
 	const __passchange = e => {
+		let _f = e.target;
+		let _d = {};
+		_f.find( '.change-pass' ).each( a => {
+			_d[ a.name ] = a.value
+		} );
+		console.log( _d );
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	};
+
+	const __contactus = e => {
 		let _f = e.target;
 
 		e.preventDefault();
@@ -429,9 +440,11 @@ const getToken = async function(){
 		$( '#account-primary-menu li a' ).off().on( 'click', __switch_partitions );
 		$( '.delete-item' ).off().on( 'click', __delete_post );
 		$( '#view-pass' ).off().on( 'change', __toggle_password_visibility );
-		$( 'form.form-contactus' ).off().on( 'submit', __contuctus   );
+		$( 'form.form-contactus' ).off().on( 'submit', __contactus   );
 		$( 'form.form-password'  ).off().on( 'submit', __passchange  );
 		$( document.body ).on( 'click', __toggle_post_menu );
+		let _h = window.location.hash || '#my-articles';
+		$( 'a[href=' + _h + ']' ).trigger( 'click' );
 	};
 
 	return {
@@ -879,7 +892,7 @@ const validateEmail = ( email ) => {
 	return {
 
 		/**
-		 * Initialize account menus
+		 * Initialize
 		 */
 		init: function() {
 			if ( !document.getElementById( 'emeon-form-filters' ) ) return;
