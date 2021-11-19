@@ -1,5 +1,39 @@
-.comment-content a {
-	word-wrap: break-word;
+.comment {
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+	margin-bottom: 50px;
+
+	&-list {
+		list-style: unset;
+		padding: 0;
+		margin: 0;
+	}
+
+	&-meta {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+
+	&-metadata {
+		display: flex;
+		justify-content: space-between;
+		font-size: 12px;
+		margin-bottom: 6px;
+	}
+
+	&-author {
+		margin-bottom: 12px;
+	}
+
+	&-content {
+		border-top: 1px solid #ccc;
+		padding: 12px 0 0 20px;
+		margin-bottom: 10px;
+
+		a {
+			word-wrap: break-word;
+		}
+	}
 }
 
 .bypostauthor {
@@ -9,4 +43,8 @@
 #comment {
 	display: block;
 	width: 100%;
+}
+
+.reply {
+	text-align: right;
 }
