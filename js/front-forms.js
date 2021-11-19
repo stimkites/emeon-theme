@@ -11,18 +11,18 @@
 let t;
 const __error = {
 	cleanup: function( delay ) {
-		const elem = document.querySelector('.emeon-error-popup');
+		const elem = document.querySelector( '.emeon-error-popup' );
 		if ( !elem ) return;
 
-		elem.addEventListener('click',( e ) => {
-			e.target.classList.remove( 'visible' );
-			},
-		  );
+		elem.addEventListener( 'click', ( e ) => {
+			  e.target.classList.remove( 'visible' );
+		  },
+		);
 		t = setTimeout( () => {
 			elem.classList.remove( 'visible' );
 		}, delay || 5000 );
 	},
-	showHelper: function(type, elem, delay, msg) {
+	showHelper: function( type, elem, delay, msg ) {
 		if ( type === 'success' ) {
 			elem.classList.add( 'success' );
 		} else {
@@ -33,12 +33,12 @@ const __error = {
 
 		setTimeout( () => {
 			elem.textContent = msg || 'There was an error on this page!';
-			elem.classList.add( 'visible' )
+			elem.classList.add( 'visible' );
 		}, 200 );
 		this.cleanup( delay );
 	},
 	show: function( msg, delay, type ) {
-		if( t ) {
+		if ( t ) {
 			clearTimeout( t );
 		}
 
@@ -46,51 +46,50 @@ const __error = {
 			type = 'error';
 		}
 
-		let elem = document.querySelector('.emeon-error-popup');
+		let elem = document.querySelector( '.emeon-error-popup' );
 
 		if ( !elem ) {
-			const page = document.querySelector('#page');
-			let div = document.createElement('div');
-			div.classList.add('emeon-error-popup');
-			div.id ='#emeon-error-popup';
+			const page = document.querySelector( '#page' );
+			let div = document.createElement( 'div' );
+			div.classList.add( 'emeon-error-popup' );
+			div.id = '#emeon-error-popup';
 
-			if (page) {
-				page.parentElement.insertBefore(div, page)
+			if ( page ) {
+				page.parentElement.insertBefore( div, page );
 			}
 
-			elem = document.querySelector('.emeon-error-popup');
-			this.showHelper(type, elem, delay, msg)
+			elem = document.querySelector( '.emeon-error-popup' );
+			this.showHelper( type, elem, delay, msg );
 		}
 
-		this.showHelper(type, elem, delay, msg)
+		this.showHelper( type, elem, delay, msg );
 	},
 	flushHelper: function( e ) {
-		if (!e.target.closest('.error-field')) return;
+		if ( !e.target.closest( '.error-field' ) ) return;
 		e.target.classList.remove( 'error-field' );
-		e.parentElement.classList.remove( 'error-field' )
+		e.parentElement.classList.remove( 'error-field' );
 	},
 	flush: function() {
-			const errorField = document.querySelector('.error-field')
-			this.flushHelper = this.flushHelper.bind(this)
+		const errorField = document.querySelector( '.error-field' );
+		this.flushHelper = this.flushHelper.bind( this );
 
-			if (errorField) {
-				errorField.addEventListener('mousedown', this.flushHelper)
-				errorField.addEventListener('click', this.flushHelper)
-				errorField.addEventListener('blur', this.flushHelper)
-				errorField.addEventListener('enter', this.flushHelper)
-				errorField.addEventListener('focus', this.flushHelper)
-			}
-
-			setTimeout( () => {
-				if ( typeof tinymce == "undefined" ) return;
-				tinymce.activeEditor.on(
-				  'keydown mousedown paste enter focus',
-				  () => {
-					  document.querySelector( '#article_content' ).parentElement.classList.remove( 'error-field' );
-				  },
-				);
-			}, 100 );
+		if ( errorField ) {
+			errorField.addEventListener( 'mousedown', this.flushHelper );
+			errorField.addEventListener( 'click', this.flushHelper );
+			errorField.addEventListener( 'blur', this.flushHelper );
+			errorField.addEventListener( 'enter', this.flushHelper );
+			errorField.addEventListener( 'focus', this.flushHelper );
 		}
+
+		setTimeout( () => {
+			if ( typeof tinymce == 'undefined' ) return;
+			this.removingErrorFieldFromTinymce = this.removingErrorFieldFromTinymce.bind( this );
+			tinymce.activeEditor.on( 'keydown mousedown paste enter focus', this.removingErrorFieldFromTinymce );
+		}, 100 );
+	},
+	removingErrorFieldFromTinymce: function() {
+		document.querySelector( '#article_content' ).parentElement.classList.remove( 'error-field' );
+	},
 }
 
 /**
