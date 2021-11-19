@@ -23,11 +23,7 @@ defined( 'ABSPATH' ) or exit;
 </head>
 
 <?php
-$logo = '';
-if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
-     ( $_logo = wp_get_attachment_image_src( $custom_logo_id, 'full' ) ) ) {
-	$logo = '<img class="logo-image" src="' . esc_url( $_logo[ 0 ] ) . '" alt="emeon" />';
-}
+$theme_uri = get_template_directory_uri();
 ?>
 
 <body <?php body_class(); ?>>
@@ -38,14 +34,15 @@ if ( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
 			<div class="site-branding">
 				<a class="home-link" href="<?= get_home_url() ?>">
 					<span class="logo-wrap">
-						<?= $logo ?>
+						<img class="logo-image"
+						     src="<?php echo $theme_uri . '/img/emeon-logo-2.svg' ?>" alt="emeon"/>
 					</span>
 					<span class="slogan">
 						<?= get_bloginfo( 'description' ) ?>
 					</span>
 					<span class="logo-scrolled">
 						<img class="logo-image"
-						     src="<?php echo get_template_directory_uri() . '/img/emeon-logo-2-cr.png' ?>" alt="emeon"/>
+						     src="<?php echo $theme_uri . '/img/emeon-logo-2-cr.svg' ?>" alt="emeon"/>
 					</span>
 				</a>
 			</div><!-- .site-branding -->
