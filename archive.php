@@ -24,6 +24,16 @@ get_header();
 					the_archive_title( '<h1 class="page-title display-1 h1">', '</h1>' );
 					the_archive_description( '<div class="archive-description lead">', '</div>' );
 					?>
+					<?php if( $_SERVER['REQUEST_URI'] === '/category/emeon-team/' ) : ?>
+						<div class="emeon-team-desciption">
+							<h5>We are ready to provide best services in web-development!</h5>
+							<p>Have a thing to do about your site or web-shop? Feel free to add us a task!<br/>We will
+								estimate it for you and provide exact info on what and how! Simply describe it!</p>
+							<p>If you want to join us and be the part of the team - just add your CV
+								<a href="/add-edit/">here</a>!
+							</p>
+						</div>
+					<?php endif; ?>
 				</header><!-- .page-header -->
 
                 <?php
@@ -31,26 +41,17 @@ get_header();
 				    echo do_shortcode( '[emeon_forms form=filters]' );
 				?>
 
-				<?php if(
-							is_user_logged_in() &&
-							(
-								$_SERVER['REQUEST_URI'] === '/category/vacancies/' ||
-								$_SERVER['REQUEST_URI'] === '/category/candidates/'
-							)
-					) : ?>
+				<?php if( $_SERVER['REQUEST_URI'] === '/category/vacancies/' ||
+						  $_SERVER['REQUEST_URI'] === '/category/candidates/' ) : ?>
 						<div class="add-link-wrapper">
-							<a href="<?= $adedit_url ?>" class="add-link" title="Add new">Add new</a>
+							<a href="<?=$adedit_url?>" class="add-link">Add new</a>
 						</div>
 				<?php endif; ?>
 
-				<?php if(
-					is_user_logged_in() &&
-					(
-						$_SERVER['REQUEST_URI'] === '/category/emeon-team/'
-					)
-				) : ?>
+				<?php if( $_SERVER['REQUEST_URI'] === '/category/emeon-team/' ) : ?>
 					<div class="add-link-wrapper">
-						<a href="/account/#contacts" class="add-link add-task" title="Deliver a task for us">Add a task</a>
+						<a href="/account/#contacts"
+						   class="add-link add-task">Add a task</a>
 					</div>
 				<?php endif; ?>
 

@@ -16,6 +16,7 @@ const
 	EMEON_SLUG     = 'emeon-theme',
 	EMEON_STATUSES = [ 'active', 'moderation', 'archive' ],
 	EMEON_TYPES    = [ 'vacancies', 'candidates', 'emeon-team', 'want-join', 'user-stories' ],
+	EMEON_AUTHEPS  = [ '/add-edit/', ],
 	EMEON_CURRENCY = 'EUR',
 	EMEON_LOGINS   = 5, // Login attempts limit
 	EMEON_CUR_SYMB = '€',

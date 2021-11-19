@@ -17,13 +17,6 @@ $candidates_cat_id = get_term_by( 'slug', 'candidates', 'category' )->term_id ??
  */
 $article = [ 'type' => 'candidates' ];
 
-/**
- * Prevent unauthorized access
- */
-if ( ! is_user_logged_in() ) {
-	return $_POST[ 'emeon_error' ][] = 'Unauthorized access is prohibited!';
-}
-
 if ( isset( $_POST[ 'article' ] ) ) { // we already posted data, but something went wrong and we were not redirected
 	$article = $_POST[ 'article' ];
 } elseif ( $pid ) { // we start editing existing post

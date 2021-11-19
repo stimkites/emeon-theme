@@ -381,9 +381,23 @@ new class {
     }
 
 	/**
+	 * Prevent unauthorized access to our protected end-points
+	 */
+    private static function check_protected_endpoints(){
+	    if( ! is_user_logged_in() )
+		    foreach( EMEON_AUTHEPS as $ep )
+			    if( false !== strpos( $_SERVER['REQUEST_URI'], $ep  ) ){
+				    wp_redirect( '/join/' );
+				    die();
+			    }
+    }
+
+	/**
 	 * Process POST request
 	 */
 	static function process() {
+		self::check_auto_login();
+		self::check_protected_endpoints();
 		if ( ! ( $action = ( $_POST[ 'emeon_form_action' ] ?? false ) ) ) {
 			return;
 		}
@@ -397,9 +411,6 @@ new class {
 
 			return;
 		}
-
-		self::check_auto_login();
-
 		self::{$action}();
 	}
 
