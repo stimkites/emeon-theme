@@ -7,7 +7,6 @@
  * Global Error renderer
  */
 
-
 let t;
 const __error = {
 	cleanup: function( delay ) {
