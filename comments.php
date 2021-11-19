@@ -23,7 +23,7 @@ if ( post_password_required() ) {
 	// You can start editing here -- including this comment!
 	if ( have_comments() ) :
 		?>
-		<h2 class="comments-title">
+		<h2 class="comments-title h2 my-4">
 			<?php
 			$emeon_comment_count = get_comments_number();
 			if ( '1' === $emeon_comment_count ) {
@@ -45,7 +45,7 @@ if ( post_password_required() ) {
 
 		<?php the_comments_navigation(); ?>
 
-		<ol class="comment-list">
+		<ol class="comment-list mb-4">
 			<?php
 			wp_list_comments( array(
 				'style'      => 'ol',
