@@ -28,6 +28,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
                    type="hidden"
                    autocomplete="false"
                    value="<?=wp_create_nonce( 'EMEON_RECOVER_PASS' . strtotime( 'today' ) )?>" />
+        <p class="pass-warning">For your account to be well-secured, please, setup new strong password</p>
         <?php else : ?>
 		<input id="current-pass"
                class="change-pass view-toggle"
@@ -37,6 +38,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 		       placeholder="Current"
                value="" />
         <?php endif; ?>
+
 		<input id="new-pass"
                class="change-pass view-toggle"
                name="new"

@@ -1,5 +1,5 @@
 /**
- * Admin JS for metaboxes controls
+ * My account JS
  */
 
 'use strict';

@@ -40,6 +40,7 @@ const __error = {
 		}
 
 		this.showHelper( type, elem, delay, msg );
+		return false;
 	},
 	flushHelper: function( e ) {
 		if ( !e.target.closest( '.error-field' ) ) return;
@@ -67,7 +68,9 @@ const __error = {
 	removingErrorFieldFromTinymce: function() {
 		document.querySelector( '#article_content' ).parentElement.classList.remove( 'error-field' );
 	},
-}
+};
+
+jQuery( document ).ready( () => { __error.cleanup() } ); // Clean up on load
 
 /**
  * Google captcha validation
@@ -373,29 +376,85 @@ const getToken = async function(){
 	 */
 	const __toggle_post_menu = e => {
 		const parent = $( e.target ).parents( '.article-menu' );
+		$( '.article-menu.open' ).removeClass( 'open' );
 		if ( parent.length > 0 && !parent.hasClass( 'open' ) ) {
 			parent.addClass( 'open' );
 		}
 	};
 
-	const __passchange = e => {
-		let _f = e.target;
-		let _d = {};
-		_f.find( '.change-pass' ).each( a => {
-			_d[ a.name ] = a.value
+  /**
+	 * Password change form
+	 *
+   * @param e
+   * @return {*}
+   * @private
+   */
+	const __passchange = ( e )  => {
+    e.preventDefault();
+    e.stopPropagation();
+		let _f = $( e.target );
+		let _d = {}, _e = false;
+		_d.do 		= _f.data( 'action' );
+		_d.nonce  = __emeon.n;
+		_d.action = 'emeon_account_ajax';
+		_f.find( '.change-pass' ).each( function(){
+			if( ! this.value ) {
+        __error.show( 'Empty values not allowed!' );
+        _e = true;
+      }
+      _d[ this.name ] = this.value;
 		} );
-		console.log( _d );
-		e.preventDefault();
-		e.stopPropagation();
+		if( _e ) return false;
+		if( _d.new !== _d.confirm ) return __error.show( 'Password confirmation and new one do not match' );
+		if( _d.new.length < 6 ) return __error.show( 'Minimum password length is 6' );
+    _f.addClass( 'loading' );
+		$.post( __emeon.ajax_url, _d, ( response ) => {
+      _f.removeClass( 'loading' );
+			if( response.error )
+				return __error.show( response.error );
+			__error.show( 'Success!', 2000, 'success' );
+			setTimeout( () => { window.location.reload( true ) }, 2500 );
+		} );
 		return false;
 	};
 
-	const __contactus = e => {
-		let _f = e.target;
-
-		e.preventDefault();
-		e.stopPropagation();
-		return false;
+  /**
+	 * Contact us
+	 *
+   * @param e
+   * @return {*}
+   * @private
+   */
+	const __contactus = ( e ) => {
+    let _f = $( e.target );
+    if ( 'undefined' !== typeof tinyMCE )
+    	tinyMCE.get( 'contactus_content' ).save();
+    let _d = {
+    	do: _f.data( 'action' ),
+			nonce: __emeon.n,
+			action: 'emeon_account_ajax',
+			email: $( '#email' ).val(),
+			subject: $( '#subject' ).val(),
+			content: $( '#contactus_content' ).val()
+		};
+    if( _d.email.length < 4 || ! validateEmail( _d.email ) )
+      return __error.show('Email is invalid!');
+    if( _d.subject.length < 3 )
+      return __error.show('Subject seems empty!');
+    if( _d.content.length < 3 )
+      return __error.show( 'Content has to be there!' );
+    _f.addClass( 'loading' );
+    $.post( __emeon.ajax_url, _d, ( response ) => {
+      _f.removeClass( 'loading' );
+      if( response.error )
+        return __error.show( response.error );
+      $(' #email-sent' ).html( _d.email );
+      __error.show( 'Success!', 2000, 'success' );
+      _f.hide();
+      $( '#contactus-success' ).show();
+      $( '#send-more-action' ).off().on( 'click', () => { window.location.reload() } );
+    } );
+    return false;
 	};
 
 
@@ -411,8 +470,11 @@ const getToken = async function(){
 		$( 'form.form-contactus' ).off().on( 'submit', __contactus   );
 		$( 'form.form-password'  ).off().on( 'submit', __passchange  );
 		$( document.body ).on( 'click', __toggle_post_menu );
-		let _h = window.location.hash || '#my-articles';
-		$( 'a[href=' + _h + ']' ).trigger( 'click' );
+		let _h = window.location.hash || '#my-articles', _hl;
+		if( _h && ( _hl = $( 'a[href=' + _h + ']' ) ) && _hl.length )
+			_hl.trigger( 'click' );
+		else
+			$( '#my-articles' ).addClass( 'viz' );
 	};
 
 	return {
@@ -428,6 +490,8 @@ const getToken = async function(){
 	};
 
 } )( jQuery.noConflict() ).init();
+
+
 /** My account **/
 
 const validateEmail = ( email ) => {

@@ -429,10 +429,13 @@ new class {
 		ob_start();
 		include $path;
 		if ( $errors = ( $_POST[ 'emeon_error' ] ?? [] ) ) : ?>
-			<div id="emeon-error-popup" class="visible">
+			<div class="emeon-error-popup visible" id="emeon-error-popup">
 				<?= implode( "<br/>", $errors ) ?>
 			</div>
-		<?php emeon_log( implode( PHP_EOL, $errors ) ); endif;
+		<?php
+        unset( $_POST[ 'emeon_error' ] );
+        emeon_log( implode( PHP_EOL, $errors ) );
+		endif;
 		return ob_get_clean();
 	}
 
@@ -536,10 +539,10 @@ new class {
 	 * Login Ajax handler
 	 */
 	static function emeon_login() {
-		$login = sanitize_key( $_POST['email'] );
+		$login = sanitize_text_field( $_POST['email'] );
 		if( ! ( $user = get_user_by( 'login', $login ) ) && ! ( $user = get_user_by( 'email', $login ) ) )
 			die( json_encode( [
-				'error' => 'User with email/login "' . $login . '" is not found... <a href="/join/"><i>Join us!</i></a>'
+				'error' => 'User with email/login "' . $login . '" is not found...'
             ] ) );
 
 		if( ! ( $remains = get_user_meta( $user->ID, '_login_attempts', true ) ) )
@@ -667,6 +670,11 @@ new class {
 			update_post_meta( $post_id, 'emeon_salary', $salary );
 			update_post_meta( $post_id, 'emeon_experience', $experience );
 
+			// Yoast meta
+            update_post_meta( $post_id, '_yoast_wpseo_primary_category', $p_cat->term_id ?? 0 );
+            update_post_meta( $post_id, '_yoast_wpseo_metadesc', $post_data['post_excerpt'] );
+            update_post_meta( $post_id, '_yoast_wpseo_focuskw', implode( ",", $tags ) );
+
 			// Image and attachment
 			foreach ( [ 'article_image', 'article_attachment' ] as $file_id ) {
 				if ( isset( $_FILES[ $file_id ] ) && is_uploaded_file( $_FILES[ $file_id ][ 'tmp_name' ] ) ) {
@@ -750,13 +758,17 @@ new class {
 	/**
 	 * Ajax contact us action
 	 */
-	static function emeoun_account_contactus(){
+	static function emeon_account_contactus(){
+	    $email = filter_var( sanitize_text_field( $_POST['email'] ), FILTER_SANITIZE_EMAIL );
+	    $uid   = get_current_user_id();
+	    if( empty( $email ) )
+	        wp_send_json( ['error' => 'Email [' . $_POST['email'] . '] is invalid'] );
 	    if( ! wp_mail(
             'support@emeon.io',
             sanitize_text_field( $_POST['subject'] ),
-            $_POST['content'],
+            $_POST['content'] . "<h5>$email</h5><h6>UID: $uid</h6>",
             [
-                "Reply-To:" . $_POST['email'],
+                "Reply-To:" . $email,
                 "Content-Type: text/html; charset=UTF-8"
             ]
         ) )
@@ -775,7 +787,7 @@ new class {
 	/**
 	 * Ajax contact us action
 	 */
-	static function emeoun_account_passchange(){
+	static function emeon_account_passchange(){
 	    $current = sanitize_text_field( $_POST['current']   ?? '' );
 	    $new     = sanitize_text_field( $_POST['new']       ?? '' );
 	    $confirm = sanitize_text_field( $_POST['confirm']   ?? '' );
@@ -790,6 +802,8 @@ new class {
 
         if( $new !== $confirm )
             wp_send_json( [ 'error' => 'Confirmation password is not the same as new one.' ] );
+
+	    $user->unhashed_pass = $new;
 
 	    if( ! emeon_mail( 'newpass', $user ) )
 	        wp_send_json( [

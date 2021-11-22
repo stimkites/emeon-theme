@@ -70,8 +70,8 @@
     min-width: 68px; }
   .site-header .logo-wrap {
     display: block;
-    height: 100px;
-    width: 100px;
+    height: auto;
+    width: auto;
     overflow: hidden; }
   .site-header .logo-scrolled {
     display: none;
@@ -872,6 +872,14 @@ table {
     justify-content: center; }
     #post-299 .wp-block-image img {
       max-width: 300px; } }
+.pass-warning {
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-left: 5px solid orange;
+  -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.1); }
+
 /*Add new link*/
 .add-link,
 .add-link-wrapper {
@@ -897,6 +905,9 @@ table {
     opacity: 1; }
   .add-link.add-task:after {
     content: "\f227"; }
+
+.emeon-team-desciption a {
+  text-decoration: underline; }
 
 /*--------------------------------------------------------------
 # Forms
@@ -1198,7 +1209,7 @@ table {
 
 /* emeon-form */
 /* Emeon form error */
-#emeon-error-popup {
+.emeon-error-popup {
   cursor: pointer;
   z-index: 992992;
   position: fixed;
@@ -1216,15 +1227,15 @@ table {
   -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);
   transition: all ease-in-out .3s; }
-  #emeon-error-popup.success {
+  .emeon-error-popup.success {
     border-left-color: #34d831; }
-  #emeon-error-popup.visible {
+  .emeon-error-popup.visible {
     right: 35px; }
     @media screen and (max-width: 767px) {
-      #emeon-error-popup.visible {
+      .emeon-error-popup.visible {
         max-width: calc( 100% - 50px );
         left: 25px; } }
-  #emeon-error-popup:hover {
+  .emeon-error-popup:hover {
     right: 35px; }
 
 /* loading spinner */

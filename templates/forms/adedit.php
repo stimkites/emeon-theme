@@ -15,7 +15,7 @@ $candidates_cat_id = get_term_by( 'slug', 'candidates', 'category' )->term_id ??
 /**
  * Advertisement data to fulfill
  */
-$article = [ 'type' => 'candidates' ];
+$article = [ 'type' => $_GET['type'] ?? 'candidates' ];
 
 if ( isset( $_POST[ 'article' ] ) ) { // we already posted data, but something went wrong and we were not redirected
 	$article = $_POST[ 'article' ];

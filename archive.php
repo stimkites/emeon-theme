@@ -26,12 +26,9 @@ get_header();
 					?>
 					<?php if( $_SERVER['REQUEST_URI'] === '/category/emeon-team/' ) : ?>
 						<div class="emeon-team-desciption">
-							<h5>We are ready to provide best services in web-development!</h5>
-							<p>Have a thing to do about your site or web-shop? Feel free to add us a task!<br/>We will
-								estimate it for you and provide exact info on what and how! Simply describe it!</p>
-							<p>If you want to join us and be the part of the team - just add your CV
-								<a href="/add-edit/">here</a>!
-							</p>
+							<h5>We are ready to provide best services in web-development!</h5><br/>
+                            <p>Have a thing to do about your site or web-shop? Feel free to <a href="/account/#contacts">share it with us!</a><br/></p>
+                            <p>If you want to join us and be the part of the team - simply <a href="/add-edit/">add your CV</a></p>
 						</div>
 					<?php endif; ?>
 				</header><!-- .page-header -->
@@ -41,17 +38,22 @@ get_header();
 				    echo do_shortcode( '[emeon_forms form=filters]' );
 				?>
 
-				<?php if( $_SERVER['REQUEST_URI'] === '/category/vacancies/' ||
-						  $_SERVER['REQUEST_URI'] === '/category/candidates/' ) : ?>
-						<div class="add-link-wrapper">
-							<a href="<?=$adedit_url?>" class="add-link">Add new</a>
-						</div>
+				<?php if( $_SERVER['REQUEST_URI'] === '/category/vacancies/' ) : ?>
+                    <div class="add-link-wrapper">
+                        <a href="<?=$adedit_url . '?type=vacancies' ?>" class="add-link">Add new</a>
+                    </div>
+				<?php endif; ?>
+
+                <?php if( $_SERVER['REQUEST_URI'] === '/category/candidates/' ) : ?>
+                    <div class="add-link-wrapper">
+                        <a href="<?=$adedit_url?>" class="add-link">Add new</a>
+                    </div>
 				<?php endif; ?>
 
 				<?php if( $_SERVER['REQUEST_URI'] === '/category/emeon-team/' ) : ?>
 					<div class="add-link-wrapper">
 						<a href="/account/#contacts"
-						   class="add-link add-task">Add a task</a>
+						   class="add-link add-task">Share task</a>
 					</div>
 				<?php endif; ?>
 

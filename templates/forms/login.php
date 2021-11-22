@@ -44,7 +44,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 					Remember
 				</label> |
 				<a href="/recover/">Recover</a> |
-                <a href="/join/">Register</a>
+                <a href="/join/">Join us</a>
 			</div>
 			<button class="button button-cta btn btn-primary">Login</button>
 			<input type="hidden" name="__nonce" value="<?= $nonce ?>"/>

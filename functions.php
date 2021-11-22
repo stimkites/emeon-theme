@@ -29,6 +29,18 @@ const
 define( 'EMEON_URL',   get_template_directory_uri() );
 define( 'EMEON_DEBUG', 'https://emeon.io/' !== home_url() );
 
+/**
+ * Disable wp-admin for subscribers
+ */
+add_filter( 'show_admin_bar', '__return_false' );
+add_action( 'admin_init', function(){
+	if( wp_doing_ajax() ) return;
+	if( ! current_user_can( 'administrator' ) ){
+		wp_redirect( site_url( '/account/' ) );
+		die();
+	}
+} );
+
 
 /**
  * Send email to a user
