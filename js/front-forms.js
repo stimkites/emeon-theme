@@ -6,100 +6,68 @@
 /**
  * Global Error renderer
  */
-const __error = ( $ => {
 
-	return {
+let t;
+const __error = {
+	cleanup: function( delay ) {
+		const elem = document.querySelector( '.emeon-error-popup' );
+		if ( !elem ) return;
+		elem.addEventListener( 'click', ( e ) => e.target.classList.remove( 'visible' ));
+		t = setTimeout( () => elem.classList.remove( 'visible' ), delay || 5000 );
+	},
+	showHelper: function( type, elem, delay, msg ) {
+		type === 'success' ? elem.classList.add( 'success' ) : ( elem.classList.contains( 'success' ) ? elem.classList.remove( 'success' ) : '' );
 
-		/**
-		 * Schedule cleanup for all errors (on document ready)
-		 */
-		scheduleCleanup: function() {
+		setTimeout( () => {
+			elem.textContent = msg || 'There was an error on this page!';
+			elem.classList.add( 'visible' );
+		}, 200 );
+		this.cleanup( delay );
+	},
+	show: function( msg, delay, type ) {
+		if ( t ) { clearTimeout( t ) }
+		if ( !type ) type = 'error';
+		let elem = document.querySelector( '.emeon-error-popup' );
 
-			$( document ).ready( setTimeout( this.cleanup, 500 ) );
-			let t;
-
-			return {
-				/**
-				 * Cleanup all errors on the page in 5 seconds
-				 */
-				cleanup: function( delay ) {
-					let elem = $( '#emeon-error-popup' );
-					if ( !elem.length ) return;
-					elem.on( 'mouseenter', () => {
-						clearTimeout( t );
-					} )
-					  .on( 'mouseleave', () => {
-						  t = setTimeout( () => {
-							  elem.removeClass( 'visible' );
-						  }, 1000 );
-					  } )
-					  .on(
-						'click',
-						( e ) => {
-							$( e.target ).removeClass( 'visible' );
-						},
-					  );
-					t = setTimeout( () => {
-						elem.removeClass( 'visible' );
-					}, delay || 5000 );
-				},
-
-				/**
-				 * Show error
-				 *
-				 * @param msg
-				 * @param delay
-				 * @param type
-				 */
-				show: function( msg, delay, type ) {
-					if( t )
-						clearTimeout( t );
-					if ( !type )
-						type = 'error';
-					let elem = $( '#emeon-error-popup' );
-					if ( !( elem.length ) )
-						elem = $( '<div id="emeon-error-popup"></div>' ).prependTo( 'body' );
-					if ( type === 'success' ) {
-						elem.addClass( 'success' );
-					} else {
-						if ( elem.hasClass( 'success' ) ) {
-							elem.removeClass( 'success' );
-						}
-					}
-					setTimeout( () => {
-						elem.html( msg || 'There was an error on this page!' ).addClass( 'visible' );
-					}, 200 );
-					this.cleanup( delay );
-				},
-
-				/**
-				 * Cleanup error fields
-				 */
-				flush: function() {
-					$( document ).on( // remove "error" icon on elements
-					  'mousedown click blur enter focus', '.error-field',
-					  ( e ) => {
-						  $( e.target ).removeClass( 'error-field' ).parents().removeClass( 'error-field' );
-					  },
-					);
-					setTimeout( () => {
-						if ( 'undefined' === typeof tinymce ) return;
-						tinymce.activeEditor.on(
-						  'keydown mousedown paste enter focus',
-						  () => {
-							  $( '#article_content' ).parents().removeClass( 'error-field' );
-						  },
-						);
-					}, 100 );
-					$( '#emeon-error-popup' );
-				}
-
-			};
+		if ( !elem ) {
+			const page = document.querySelector( '#page' );
+			let div = document.createElement( 'div' );
+			div.classList.add( 'emeon-error-popup' );
+			div.id = '#emeon-error-popup';
+			page ? page.parentElement.insertBefore( div, page ) : '';
+			elem = document.querySelector( '.emeon-error-popup' );
+			this.showHelper( type, elem, delay, msg );
 		}
 
-	};
+		this.showHelper( type, elem, delay, msg );
+	},
+	flushHelper: function( e ) {
+		if ( !e.target.closest( '.error-field' ) ) return;
+		e.target.classList.remove( 'error-field' );
+		e.parentElement.classList.remove( 'error-field' );
+	},
+	flush: function() {
+		const errorField = document.querySelector( '.error-field' );
+		this.flushHelper = this.flushHelper.bind( this );
 
-} )( jQuery.noConflict() ).scheduleCleanup();
+		if ( errorField ) {
+			errorField.addEventListener( 'mousedown', this.flushHelper );
+			errorField.addEventListener( 'click', this.flushHelper );
+			errorField.addEventListener( 'blur', this.flushHelper );
+			errorField.addEventListener( 'enter', this.flushHelper );
+			errorField.addEventListener( 'focus', this.flushHelper );
+		}
+
+		setTimeout( () => {
+			if ( typeof tinymce == 'undefined' ) return;
+			this.removingErrorFieldFromTinymce = this.removingErrorFieldFromTinymce.bind( this );
+			tinymce.activeEditor.on( 'keydown mousedown paste enter focus', this.removingErrorFieldFromTinymce );
+		}, 100 );
+	},
+	removingErrorFieldFromTinymce: function() {
+		document.querySelector( '#article_content' ).parentElement.classList.remove( 'error-field' );
+	},
+}
 
 /**
  * Google captcha validation
@@ -480,6 +448,7 @@ const validateEmail = ( email ) => {
 		if( ! __emeon.d )
 			tokenNum = getToken();
 
+
 		if ( tokenNum ) {
 			let err,
 			  label = _target.find( $( 'label[for="join_email"]' ) ),
@@ -506,6 +475,7 @@ const validateEmail = ( email ) => {
 			}
 
 			if ( err === 'empty' ) {
+				console.log('err');
 				__error.show( errorElEmptyText );
 				label.addClass( 'error' );
 			}
@@ -527,7 +497,6 @@ const validateEmail = ( email ) => {
 	const __submitHandler = ( event ) => {
 		event.preventDefault();
 		let curTarget = $( event.currentTarget );
-		if ( !__validate_form( event ) ) return;
 		__validate_form( event ).then( res => {
 			if ( !res ) return;
 			const { token, errors, emailVal, nonceVal } = res;
@@ -550,14 +519,17 @@ const validateEmail = ( email ) => {
 					},
 					success: function( data ) {
 						data = JSON.parse( data );
-            curTarget.removeClass( 'loading' );
-            let label = curTarget.find( $( 'label[for="join_email"]' ) );
-						if( data.error ) {
-              label.addClass( 'error' );
-              return __error.show(data.error);
-            }
-						if( ! data.url )
+						curTarget.removeClass( 'loading' );
+						let label = curTarget.find( $( 'label[for="join_email"]' ) );
+						if ( data.error ) {
+							label.addClass( 'error' );
+							return __error.show( data.error );
+						}
+
+						if ( !data.url ) {
 							return __error.show( 'Unknown error! Please, try again...' );
+						}
+
 						window.location = data.url;
 					},
 				} );
@@ -566,7 +538,9 @@ const validateEmail = ( email ) => {
 	};
 
 	const __assign = function() {
-		$( '.emeon-form.form-join' ).off().on( 'submit', __submitHandler );
+		const joinForm = $( '.emeon-form.form-join' );
+
+		joinForm.off().on( 'submit', __submitHandler );
 		__error.flush();
 	};
 
