@@ -908,6 +908,36 @@ table {
 .emeon-team-desciption a {
   text-decoration: underline; }
 
+/* user-stories */
+.stories--swiper .swiper-wrapper .story-subtitle {
+  margin: 4px auto;
+  font-size: 16px;
+  color: #777;
+  text-align: center; }
+.stories--swiper .swiper-wrapper .story-content {
+  text-align: center;
+  width: 100%;
+  padding: 5px;
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 13px; }
+
+/* user-stories */
+.swiper-intro .entry-content {
+  max-width: 500px;
+  font-size: 15px; }
+  .swiper-intro .entry-content a {
+    text-decoration: underline; }
+  .swiper-intro .entry-content .intro-title {
+    font-size: 17px;
+    text-align: center; }
+  .swiper-intro .entry-content .intro-subtitle {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    margin: 10px auto; }
+
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/

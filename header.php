@@ -37,9 +37,7 @@ $theme_uri = get_template_directory_uri();
 						<img class="logo-image"
 						     src="<?php echo $theme_uri . '/img/logo-100-100.png' ?>" alt="emeon"/>
 					</span>
-					<span class="slogan">
-						<?= get_bloginfo( 'description' ) ?>
-					</span>
+					<span class="slogan">Where the best careers begin...</span>
 					<span class="logo-scrolled">
 						<img class="logo-image"
 						     src="<?php echo $theme_uri . '/img/emeon-logo-2-cr.svg' ?>" alt="emeon"/>

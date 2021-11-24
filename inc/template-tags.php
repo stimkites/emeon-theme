@@ -117,8 +117,10 @@ if ( ! function_exists( 'emeon_post_thumbnail' ) ) :
 	 *
 	 * Wraps the post thumbnail in an anchor element on index views, or a div
 	 * element when on single views.
+	 *
+	 * @param bool $no_url
 	 */
-	function emeon_post_thumbnail() {
+	function emeon_post_thumbnail( $no_url = false ) {
 		if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
 			return;
 		}
@@ -134,7 +136,9 @@ if ( ! function_exists( 'emeon_post_thumbnail' ) ) :
 
 		<?php else : ?>
 
-			<a class="post-thumbnail card-img" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
+			<a class="post-thumbnail card-img"
+			   <?=( $no_url ? '' : 'href="' . the_permalink() . '"' )?>
+			   aria-hidden="true" tabindex="-1">
 				<?php
 				the_post_thumbnail( 'post-thumbnail', array(
 					'alt' => the_title_attribute( array(

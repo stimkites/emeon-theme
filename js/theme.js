@@ -94,11 +94,12 @@ window.onload = ( function( $ ) {
 	function __swiper_init() {
 		const about_swiper = new Swiper( '.about--swiper', {
 			loop: true,
-			slidesPerView: 1,
 			autoHeight: true,
-			// autoplay: {
-			// 	disableOnInteraction: false,
-			// },
+			slidesPerView: 1,
+			autoplay: {
+				delay: 18000,
+				pauseOnMouseEnter: true,
+			},
 			pagination: {
 				el: '.swiper-pagination--about',
 				clickable: true,
@@ -164,10 +165,11 @@ window.onload = ( function( $ ) {
 		const stories_swiper = new Swiper( '.stories--swiper', {
 			loop: true,
 			slidesPerView: 1,
-			autoHeight: true,
-			// autoplay: {
-			// 	disableOnInteraction: false,
-			// },
+			autoHeight: false,
+			height: '584px',
+			autoplay: {
+				delay: 12000,
+			},
 			pagination: {
 				el: '.swiper-pagination--stories',
 				clickable: true,

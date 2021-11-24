@@ -20,17 +20,18 @@ get_header();
 						global $post;
 
 						$vacancies = get_posts( [
-							'numberposts'   => 8,
-							'category_name' => 'vacancies',
-							'orderby'       => 'modified',
-							'post_status'   => 'publish'
+							'numberposts'   => -1,
+							'category_name' => 'who-we-are',
+							'orderby'       => 'id',
+							'order'         => 'asc',
+							'post_status'   => 'private'
 						] );
 
 						if ( ! empty( $vacancies ) ) :
 
 							foreach ( $vacancies as $post ) {
 								setup_postdata( $post );
-								get_template_part( 'template-parts/content', 'swiper-slide-full-width' );
+								get_template_part( 'template-parts/content', 'swiper-slide-intro' );
 							}
 
 							wp_reset_postdata();
@@ -55,7 +56,7 @@ get_header();
 						global $post;
 
 						$vacancies = get_posts( [
-							'numberposts'   => 8,
+							'numberposts'   => 24,
 							'category_name' => 'vacancies',
 							'orderby'       => 'modified',
 							'post_status'   => 'publish'
@@ -99,7 +100,7 @@ get_header();
 						];
 
 						$candidates = get_posts( [
-							'numberposts' => 8,
+							'numberposts' => 24,
 							'category'    => emeon_get_categories_ids( $candidates_categories ),
 							'orderby'     => 'modified',
 							'post_status' => 'publish'
@@ -138,17 +139,17 @@ get_header();
 						global $post;
 
 						$stories = get_posts( [
-							'numberposts' => 8,
-							'category'    => 'user-stories',
-							'orderby'     => 'modified',
-							'post_status' => 'publish'
+							'numberposts'   => 8,
+							'category_name' => 'user-stories',
+							'orderby'       => 'modified',
+							'post_status'   => 'private'
 						] );
 
 						if ( ! empty( $stories ) ) :
 
 							foreach ( $stories as $post ) {
 								setup_postdata( $post );
-								get_template_part( 'template-parts/content', 'swiper-slide-full-width' );
+								get_template_part( 'template-parts/content', 'swiper-slide-story' );
 							}
 
 							wp_reset_postdata();
