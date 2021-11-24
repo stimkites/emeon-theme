@@ -23,7 +23,7 @@
 			?>
 		</span>
 
-		<?php the_title( '<h3 class="entry-title mt-4 mb-1 "><span class="fs-4"', '</span></h3>' ); ?>
+		<?php the_title( '<h3 class="entry-title mt-4 mb-1 "><span class="fs-4">', '</span></h3>' ); ?>
 
 		<span class="entry-content text-sm-start">
 			<?php the_excerpt(); ?>

@@ -451,13 +451,13 @@ add_filter( 'pre_get_posts', function ( $query ) {
 /**
  * Login always via front-end form only (no wp-admin login!)
  */
-//add_action( 'init', function(){
-//	if( wp_doing_ajax() ) return;
-//	if ( ! is_user_logged_in() &&
-//	     (  strpos( $_SERVER['REQUEST_URI'], 'wp-admin' ) !== false ||
-//	        strpos( $_SERVER['REQUEST_URI'], 'wp-login' ) !== false ) ) {
-//		wp_redirect( site_url( '/account/' ) );
-//		exit;
-//	}
-//}, -999 );
+add_action( 'init', function(){
+	if( wp_doing_ajax() ) return;
+	if ( ! is_user_logged_in() &&
+	     (  strpos( $_SERVER['REQUEST_URI'], 'wp-admin' ) !== false ||
+	        strpos( $_SERVER['REQUEST_URI'], 'wp-login' ) !== false ) ) {
+		wp_redirect( site_url( '/account/' ) );
+		exit;
+	}
+}, -999 );
 

@@ -673,7 +673,7 @@ new class {
 			// Yoast meta
             update_post_meta( $post_id, '_yoast_wpseo_primary_category', $p_cat->term_id ?? 0 );
             update_post_meta( $post_id, '_yoast_wpseo_metadesc', $post_data['post_excerpt'] );
-            update_post_meta( $post_id, '_yoast_wpseo_focuskw', implode( ",", $tags ) );
+            update_post_meta( $post_id, '_yoast_wpseo_focuskw', implode( " ", $tags ) );
 
 			// Image and attachment
 			foreach ( [ 'article_image', 'article_attachment' ] as $file_id ) {

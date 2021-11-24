@@ -126,12 +126,12 @@ if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 					</p>
 				<?php endif ?>
 
-				<?php if( $exp = get_post_meta( $post_id, 'emeon_experience', true ) ) : ?>
+				<?php if( '' !== ( $exp = get_post_meta( $post_id, 'emeon_experience', true ) ) ) : ?>
 					<p class="experience">
 					<span class="info-label">
 						Experience
 					</span>
-						<?=EMEON_EXP_LVL[ $exp ]?>
+						<?=EMEON_EXP_LVL[ $exp ]??'No info'?>
 					</p>
 				<?php endif ?>
 

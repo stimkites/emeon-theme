@@ -339,7 +339,7 @@ const getToken = async function(){
 	 * @returns {boolean}
 	 * @private
 	 */
-	const __delete_post = e => {
+	const __delete_post = function() {
 		if ( !confirm( 'Proceed to delete "' + $( this ).data( 'title' ) + '"?' ) ) {
 			e.stopPropagation();
 			e.preventDefault();

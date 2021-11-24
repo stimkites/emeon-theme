@@ -416,8 +416,7 @@ body.single-post #primary {
       padding: 10px;
       position: relative;
       border: 2px solid #ddd;
-      overflow: hidden;
-      max-height: 390px; }
+      overflow: hidden; }
       .emeon-account-content .account-article:hover {
         -webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
         -moz-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
@@ -1647,8 +1646,7 @@ body.single-post #primary {
       padding: 10px;
       position: relative;
       border: 2px solid #ddd;
-      overflow: hidden;
-      max-height: 390px; }
+      overflow: hidden; }
       .emeon-account-content .account-article:hover {
         -webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
         -moz-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
