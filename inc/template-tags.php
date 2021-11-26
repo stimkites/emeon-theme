@@ -125,6 +125,8 @@ if ( ! function_exists( 'emeon_post_thumbnail' ) ) :
 			return;
 		}
 
+		global $post;
+
 		if ( is_singular() ) :
 			?>
 
@@ -135,9 +137,8 @@ if ( ! function_exists( 'emeon_post_thumbnail' ) ) :
 			</div><!-- .post-thumbnail -->
 
 		<?php else : ?>
-
 			<a class="post-thumbnail card-img"
-			   <?=( $no_url ? '' : 'href="' . the_permalink() . '"' )?>
+			   <?=( $no_url ? '' : 'href="' . get_permalink( $post ) . '"' )?>
 			   aria-hidden="true" tabindex="-1">
 				<?php
 				the_post_thumbnail( 'post-thumbnail', array(

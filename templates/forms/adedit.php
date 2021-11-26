@@ -124,7 +124,7 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
 
 			<h3 class="text-center">Categories, tags, salary and experience</h3>
 			<p class="text-center description">
-				Select/add categories, tags and set the minimum salary level and experience.
+				Search basics: select/add categories, tags, salary  and experience.
 			</p>
 			<div class="list-group">
 
@@ -186,7 +186,9 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
 			<p class="text-center description">
 				Official language communication, please. Violations would cause moderation check.
 			</p>
-
+            <p class="text-center description">
+                Add as much info, as possible here. Describing details has the best value!
+            </p>
 			<div class="control-wrap">
 				<?php
 				wp_editor(
@@ -242,7 +244,7 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
 		<div class="attachment-area mb-4 w-100">
 
 			<label for="attachment-file" id="attachment-info"
-			       class="mx-auto my-3 p-0 text-center border-secondary rounded-3 <?= ( isset( $article[ 'attachment' ] ) ? 'added' : '' ) ?>">
+			       class="mx-auto my-3 p-0 text-center border-secondary rounded-3 <?= ( ! empty( $article[ 'attachment' ] ) ? 'added' : '' ) ?>">
 				<span class="remove-icon attachment-remove"></span>
 				<iframe id="attachment-preview" src="<?= $article[ 'attachment' ] ?? '' ?>"></iframe>
 				<span id="no-attachment">Click to add PDF with more details. Max size is 5 mb.</span>

@@ -494,7 +494,11 @@ body.single-post #primary {
         justify-content: space-around;
         flex-direction: column; }
         .emeon-account-content .account-article .post-thumbnail img {
-          height: fit-content; }
+          height: auto;
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          margin: 0 auto; }
       .emeon-account-content .account-article h3 {
         font-size: 20px;
         white-space: nowrap;
@@ -1754,7 +1758,11 @@ body.single-post #primary {
         justify-content: space-around;
         flex-direction: column; }
         .emeon-account-content .account-article .post-thumbnail img {
-          height: fit-content; }
+          height: auto;
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          margin: 0 auto; }
       .emeon-account-content .account-article h3 {
         font-size: 20px;
         white-space: nowrap;

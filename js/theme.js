@@ -94,7 +94,8 @@ window.onload = ( function( $ ) {
 	function __swiper_init() {
 		const about_swiper = new Swiper( '.about--swiper', {
 			loop: true,
-			autoHeight: true,
+      autoHeight: false,
+      height: '584px',
 			slidesPerView: 1,
 			autoplay: {
 				delay: 18000,
