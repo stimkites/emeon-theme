@@ -510,7 +510,7 @@ const validateEmail = ( email ) => {
 		  value;
 
 		if( ! __emeon.d )
-			tokenNum = getToken();
+			tokenNum = await getToken();
 
 
 		if ( tokenNum ) {
@@ -641,7 +641,7 @@ const validateEmail = ( email ) => {
 		}
 
 		if( ! __emeon.d )
-			tokenNum = getToken();
+			tokenNum = await getToken();
 
 		if ( tokenNum ) {
 			return {
@@ -744,7 +744,7 @@ const validateEmail = ( email ) => {
 		if ( __emeon.d )
 			result = true;
 		else
-			result = getToken();
+			result = await getToken();
 
 		if ( err === 0 && result ) {
 			passLabel.removeClass( 'error' );
