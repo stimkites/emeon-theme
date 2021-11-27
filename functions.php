@@ -27,7 +27,7 @@ const
 	];
 
 define( 'EMEON_URL',   get_template_directory_uri() );
-define( 'EMEON_DEBUG', 'https://emeon.io/' !== home_url() );
+define( 'EMEON_DEBUG', false === strpos( home_url(), 'https://emeon.io' ) );
 
 /**
  * Disable wp-admin for subscribers
