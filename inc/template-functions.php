@@ -9,6 +9,7 @@
  * Adds custom classes to the array of body classes.
  *
  * @param array $classes Classes for the body element.
+ *
  * @return array
  */
 function emeon_body_classes( $classes ) {
@@ -24,6 +25,7 @@ function emeon_body_classes( $classes ) {
 
 	return $classes;
 }
+
 add_filter( 'body_class', 'emeon_body_classes' );
 
 /**
@@ -34,4 +36,5 @@ function emeon_pingback_header() {
 		printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
 	}
 }
+
 add_action( 'wp_head', 'emeon_pingback_header' );

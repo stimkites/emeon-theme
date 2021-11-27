@@ -1,0 +1,51 @@
+.swiper-slider {
+	overflow: hidden;
+}
+
+.swiper-slide.post {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+	bottom: -40px;
+}
+
+.swiper-button{
+	&-prev {
+		&--candidates,
+		&--vacancies {
+			left: -50px;
+		}
+	}
+
+	&-next {
+		&--candidates,
+		&--vacancies {
+			right: -50px;
+		}
+	}
+}
+
+@media (max-width: 767px) {
+	.swiper-button{
+		&-prev {
+			&--candidates,
+			&--vacancies {
+				left: 10px;
+			}
+		}
+
+		&-next {
+			&--candidates,
+			&--vacancies {
+				right: 10px;
+			}
+		}
+	}
+	.swiper-pagination-bullets.swiper-pagination-horizontal {
+		bottom: -10px;
+	}
+
+}

@@ -1,0 +1,75 @@
+.form-join {
+
+	&-wrapper {
+		margin: 0 auto;
+		max-width: 600px;
+		width: 100%;
+
+		.privacy-policy-link {
+			margin: 20px 0;
+			font-size: 80%;
+		}
+		a {
+			text-decoration: underline;
+			color: #137dc5;
+		}
+	}
+
+	.button-cta{
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+	}
+
+	.email {
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+		border-right: 0;
+	}
+
+	.form-group {
+		position: relative;
+		display: flex;
+	}
+
+	label.error {
+		position: relative;
+		&:after {
+			position: absolute;
+			content: "\f534";
+			font-family: "dashicons", sans-serif;
+			font-size: 19px;
+			font-kerning: revert;
+			color: red;
+			border-radius: 100%;
+			margin: 0;
+			border: none;
+			padding: 0;
+			line-height: 1;
+			-webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+			-moz-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+			box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+			display: block;
+			top: 50%;
+			transform: translateY(-50%);
+			right: 10px;
+		}
+	}
+
+	span.error {
+		display: none;
+		position: absolute;
+		left: 0;
+		top: 100%;
+		font-size: 12px;
+		color: red;
+	}
+
+	.success {
+		display: none;
+		position: absolute;
+		left: 0;
+		top: 100%;
+		font-size: 12px;
+		color: green;
+	}
+}

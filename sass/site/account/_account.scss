@@ -1,0 +1,331 @@
+.emeon-account {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-between;
+
+	.contactus-description {
+		margin: 20px 0;
+		text-align: center;
+		font-size: 13px;
+	}
+
+	.moderation-status {
+		display: block;
+		margin: 10px 0;
+		font-weight: normal;
+		padding: 5px;
+
+		&.on-moderation {
+			border-left: 5px solid orangered;
+			font-weight: bolder;
+		}
+
+		&.published {
+			border-left: 5px solid limegreen;
+		}
+	}
+
+	h2 {
+		font-size: 18px;
+		line-height: 1;
+		text-align: center;
+		padding: 0;
+		margin: 0 0 10px;
+	}
+
+	&-menu {
+		flex: 0 0 200px;
+
+		> ul {
+			list-style: none;
+			text-align: left;
+			margin: 0;
+			padding: 0;
+
+			li a {
+				display: block;
+				border-bottom: 1px solid #ccc;
+				cursor: pointer;
+				padding: 12px;
+
+				&:hover {
+					background: #eee;
+				}
+			}
+		}
+	}
+
+	&-content {
+		flex: 1 1 auto;
+		margin-left: 30px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		position: relative;
+
+		#my-articles {
+			position: relative;
+
+			.add-link,
+			.add-link-wrapper {
+				justify-content: flex-start;
+			}
+		}
+
+		.account-content {
+			display: none;
+
+			&.viz {
+				display: block;
+			}
+		}
+
+		/* Cards grid */
+		.my-articles {
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			justify-content: flex-start;
+			margin: 0 -10px;
+		}
+
+		/* Single card */
+		.account-article {
+			width: 100%;
+			margin: 0 5px 10px;
+			max-width: 215px;
+			padding: 10px;
+			position: relative;
+			border: 2px solid #ddd;
+			overflow: hidden;
+
+			&:hover {
+				-webkit-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
+				-moz-box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
+				box-shadow: 0 0 9px 0 rgba(34, 60, 80, 0.21);
+			}
+
+			.article-menu {
+				&__button {
+					position: absolute;
+					top: 4px;
+					right: 4px;
+					width: 30px;
+					height: 30px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border: none;
+					background-color: transparent;
+					z-index: 1;
+					opacity: .8;
+					cursor: pointer;
+					transition: all .4s;
+
+					&:before {
+						content: "\f329";
+						font-family: Dashicons, sans-serif;
+						font-size: 18px;
+						color: #999;
+						background: #fff;
+						display: block;
+						border-radius: 100%;
+						line-height: 18px;
+						padding: 0;
+					}
+				}
+
+
+				&__menu {
+					position: absolute;
+					display: block;
+					visibility: hidden;
+					opacity: 0;
+					transition: all .4s;
+					top: 30px;
+					right: 5px;
+					width: calc( 100% - 10px );
+					padding: 0;
+					margin: 0;
+
+					@media (max-width: 991px) {
+						visibility: hidden;
+						opacity: 0;
+
+						&.active {
+							visibility: visible;
+							opacity: 1;
+						}
+					}
+				}
+
+				&__item {
+					cursor: pointer;
+				}
+
+				&.open {
+					opacity: 1;
+
+
+
+					.article-menu {
+						&__menu {
+							visibility: visible;
+							opacity: 1;
+						}
+					}
+				}
+
+				@media (max-width: 991px) {
+					opacity: 1;
+				}
+			}
+
+			.actualize-article {
+				display: none; // no need for now
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				border: none;
+				border-radius: 0;
+				padding: 12px;
+				position: absolute;
+				cursor: pointer;
+				opacity: .8;
+				transition: opacity .3s ease-in-out;
+
+				&:hover {
+					opacity: 1;
+				}
+			}
+
+			.post-thumbnail {
+				height: 191px;
+				display: flex;
+				justify-content: space-around;
+				flex-direction: column;
+				img {
+					height: auto;
+					max-width: 100%;
+					max-height: 100%;
+					width: auto;
+					margin: 0 auto;
+				}
+			}
+
+			h3 {
+				font-size: 20px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				width: 100%;
+				overflow: hidden;
+				margin: 10px 0;
+			}
+
+		}
+
+		#pass {
+
+			form.form-password {
+				position: relative;
+				padding-top: 40px;
+
+				input, button {
+					width: 100%;
+					padding: 9px;
+					font-size: 12px;
+					border-radius: 0;
+					border: 1px solid #ccc;
+					margin: -1px 0 0 0;
+					cursor: pointer;
+					box-sizing: border-box;
+					display: block;
+				}
+
+				// Toggle view
+				label[for=view-pass] {
+					position: relative;
+					font-family: Dashicons, sans-serif;
+					font-size: 28px;
+					color: #999;
+					display: block;
+
+					&:before {
+						content: "\f530";
+						position: absolute;
+						cursor: pointer;
+						right: 0;
+						top: -45px;
+					}
+				}
+
+				#view-pass {
+					display: none;
+
+					&:checked + label[for=view-pass]:before {
+						content: "\f177"
+					}
+				}
+
+
+			}
+		}
+
+		#contacts {
+
+			form.form-contactus {
+				position: relative;
+
+				fieldset {
+					flex-direction: column;
+
+					.control-wrap {
+						padding: 0;
+						margin: -1px 0 0 0;
+
+
+						input.emeon-control, button.button-cta {
+							width: 100%;
+							padding: 9px;
+							font-size: 12px;
+							border-radius: 0;
+							border: 1px solid #ccc;
+							margin: 0;
+							cursor: pointer;
+							box-sizing: border-box;
+							display: block;
+						}
+					}
+				}
+
+				.description {
+					text-align: right;
+					margin-top: 10px;
+				}
+
+			}
+		}
+	}
+}
+
+@media (max-width: 767px) {
+    .emeon-account {
+		flex-direction: column;
+
+		&-menu,
+		&-content {
+			flex: 0 1 auto;
+		}
+
+		&-content {
+			margin-left: 0;
+			margin-top: 20px;
+
+			.my-articles {
+				justify-content: space-evenly;
+			}
+		}
+	}
+}

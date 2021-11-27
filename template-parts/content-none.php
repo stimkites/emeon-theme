@@ -20,7 +20,7 @@
 
 			printf(
 				'<p>' . wp_kses(
-					/* translators: 1: link to WP admin new post page. */
+				/* translators: 1: link to WP admin new post page. */
 					__( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'emeon' ),
 					array(
 						'a' => array(

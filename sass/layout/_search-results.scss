@@ -1,0 +1,160 @@
+.search {
+
+	&-mobile-bar {
+		display: none;
+	}
+
+	&-content {
+		display: flex;
+		justify-content: space-between;
+
+		.btn-close {
+			display: none;
+		}
+
+		ul {
+			padding: 0;
+			margin: 0;
+		}
+
+		.irs {
+			margin: 10px 0;
+			cursor: pointer;
+
+			&-handle.single {
+				cursor: pointer;
+			}
+		}
+
+		.emeon-form {
+			position: sticky;
+			top: 60px;
+			width: calc(30% - 20px);
+			background: #ffffff;
+			align-self: flex-start;
+			padding: 20px;
+			border-radius: 5px;
+
+			.form-select {
+				background: none;
+			}
+
+			label {
+				width: 100%;
+			}
+
+			.select2-container--default .select2-selection--multiple {
+				margin-top: 10px;
+				padding: 0;
+
+				&.select2-selection--clearable {
+					padding: 0;
+				}
+
+				.select2-selection__clear {
+					font-size: 33px;
+					font-weight: 100;
+					line-height: 1;
+					right: -30px;
+					height: unset;
+					max-height: unset;
+					min-height: unset;
+					margin-top: -10px;
+				}
+
+				.select2-selection__choice__remove {
+					height: 100%;
+				}
+
+				.select2-selection__choice {
+					margin: 0 10px 10px 0;
+					background: #f2f2f2;
+				}
+
+				.select2-search.select2-search--inline {
+					position: relative;
+					display: block;
+					min-height: 40px;
+					max-height: 40px;
+
+					&:before {
+						content: "";
+						position: absolute;
+						top: 50%;
+						right: 15px;
+						border: solid black;
+						border-width: 0 2px 2px 0;
+						display: inline-block;
+						margin-top: -3px;
+						padding: 3px;
+						transform: rotate(45deg) translateY(-50%);
+						-webkit-transform: rotate(45deg) translateY(-50%);
+					}
+				}
+
+				textarea {
+					width: 100% !important;
+					border: 1px solid #aaaaaa;
+					padding: 10px 10px 0;
+					height: 40px;
+					border-radius: 5px;
+					margin: 0;
+				}
+			}
+		}
+	}
+
+	&-posts {
+		width: calc(70% - 20px);
+	}
+}
+
+@media (max-width: 991px) {
+	.search {
+		&-mobile-bar {
+			display: block;
+			width: 100%;
+		}
+
+		&-content {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+
+			.btn-close {
+				display: block;
+				position: absolute;
+				right: 10px;
+				top: 20px;
+			}
+
+			ul {
+				padding: 0;
+				margin: 0;
+			}
+
+			.emeon-form {
+				position: fixed;
+				left: -100%;
+				top: 0;
+				width: 100%;
+				background: #ffffff;
+				align-self: stretch;
+				height: 100%;
+				z-index: 999;
+				box-shadow: 0 3px 20px rgba(0,0,0,0.04);
+				transition: left .2s;
+
+				&.open {
+					left: 0;
+					transition: left .2s;
+				}
+			}
+		}
+
+		&-posts {
+			width: 100%;
+		}
+	}
+
+}

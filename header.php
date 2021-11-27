@@ -9,6 +9,8 @@
  * @package emeon
  */
 
+defined( 'ABSPATH' ) or exit;
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -21,61 +23,58 @@
 </head>
 
 <?php
-$logo = '';
-if( ( $custom_logo_id = get_theme_mod( 'custom_logo' ) ) &&
-    ( $_logo = wp_get_attachment_image_src( $custom_logo_id , 'full' ) ) )
-        $logo = '<a href="'. get_home_url() .'"><img src="'. esc_url( $_logo[0] ) .'"></a>';
+$theme_uri = get_template_directory_uri();
 ?>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
+<div id="page" class="site bg-light">
 	<header id="masthead" class="site-header">
-        <div class="site-branding">
-            <div class="logo-wrap">
-				<?=$logo?>
-            </div>
-        </div><!-- .site-branding -->
-		<div class="site-content">
-            <div class="inline-branding">
-                <div class="slogan">
-                    <?=get_bloginfo( 'description' )?>
-                </div>
-                <div class="logo-wrap">
-		            <?=$logo?>
-                </div>
-            </div>
-			<nav id="site-navigation" class="main-navigation">
-				<div class="mobile nav">
-					<button class="toggle-mobile-menu"></button>
-					<i class="far fa-search toggle-search mobile"></i>
-				</div>
+		<div class="site-content site-header__content container">
+
+			<div class="site-branding">
+				<a class="home-link" href="<?= get_home_url() ?>">
+					<span class="logo-wrap">
+						<img class="logo-image"
+						     src="<?php echo $theme_uri . '/img/emeon-logo-2.svg' ?>" alt="emeon"/>
+					</span>
+					<span class="slogan">Where the best careers begin...</span>
+					<span class="logo-scrolled">
+						<img class="logo-image"
+						     src="<?php echo $theme_uri . '/img/emeon-logo-2-cr.svg' ?>" alt="emeon"/>
+					</span>
+				</a>
+			</div><!-- .site-branding -->
+
+			<nav id="site-navigation" class="main-navigation <?= ( ! is_user_logged_in() ? 'show-join' : '' ) ?>">
+				<button class="toggle-mobile-menu"></button>
 				<?php
-				wp_nav_menu( array(
+				wp_nav_menu( [
 					'theme_location' => 'menu-1',
 					'menu_id'        => 'primary-menu',
-				) );
+				] );
 				?>
 			</nav><!-- #site-navigation -->
-			<div class="nav-shop">
-				<ul>
-					<li class="menu-item search desktop">
-						<a href="#">
-                            <i class="far fa-search toggle-search"></i>
-                        </a>
+
+			<nav class="nav-shop">
+				<ul class="menu">
+					<li class="menu-item search">
+						<a href="#" id="toggle-search">
+							<i class="far fa-search toggle-search"></i>
+							<button class="close-btn"></button>
+						</a>
 					</li>
 					<li class="menu-item account">
 						<a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>">
-						<i class="far fa-user"></i>
+							<i class="far fa-user"></i>
 						</a>
 					</li>
 				</ul>
-			</div>
+			</nav>
+
+            <?php get_search_form(); ?>
+
 		</div><!-- #content -->
-		<div class="main-search">
-			<div id="content">
-				<?php get_search_form(); ?>
-			</div>
-		</div>
+
 	</header><!-- #masthead -->
 
-	<div id="content" class="site-content page">
+	<div id="content" class="site-content page container">

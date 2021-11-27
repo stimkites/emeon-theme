@@ -9,17 +9,19 @@
  * @package emeon
  */
 
+defined( 'ABSPATH' ) or exit;
+
 ?>
 
-	</div><!-- #content -->
+</div><!-- #content -->
 
-	<footer id="colophon" class="site-footer">
-		<div class="site-info">
-			&copy; <?php echo get_bloginfo(); ?>, 2016 - <?php echo date('Y'); ?>
-			<span class="sep"> | </span>
-			By Emeon partner, <a href="https://wetail.io">Wetail AB, Sweden</a>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
+<footer id="colophon" class="site-footer">
+	<div class="site-info">
+		&copy; <?php echo get_bloginfo(); ?>, 2016 - <?php echo date( 'Y' ); ?>
+		<span class="sep"> | </span>
+		By Emeon partner, <a href="https://wetail.io">Wetail AB, Sweden</a>
+	</div><!-- .site-info -->
+</footer><!-- #colophon -->
 </div><!-- #page -->
 
 <?php wp_footer(); ?>

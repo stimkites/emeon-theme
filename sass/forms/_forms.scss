@@ -1,16 +1,376 @@
-@import "buttons";
+//@import "buttons";
 
-@import "fields";
+//@import "fields";
+
+@import "searchform";
+@import "join_form";
+@import "login_form";
+
+/*Filters toggle*/
+.filters-toggling {
+	position: relative;
+	transition-property: z-index;
+	transition-delay: 0.2s;
+	z-index: 0;
+
+	.form-check-label,
+	.form-check-input {
+		cursor: pointer;
+		position: relative;
+		z-index: 2;
+	}
+
+	.form-check-label {
+		width: auto !important;
+	}
+
+	.form-filters {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+		max-width: 600px;
+		background-color: transparent;
+		transition: background-color 0.2s, box-shadow 0.2s;
+
+		input, select, textarea {
+			cursor: pointer;
+			padding: 0;
+			margin: 0;
+			font-size: 15px !important;
+		}
+
+		.cur-symbol {
+			display: none;
+		}
+
+		.select2-selection__rendered {
+			margin:0;
+		}
+
+		.select2-search--inline {
+			.select2-search__field {
+				margin: 0 0 5px 5px;
+			}
+		}
+
+		.form-select {
+			background-image: unset;
+			padding: 0;
+		}
+
+		.filters-cta {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: center;
+
+			label {
+				display: block;
+				font-size: unset;
+				position: relative;
+				width: 100px;
+			}
+		}
+	}
+
+	.fieldset {
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.2s, visibility 0.2s;
+	}
+
+	&.open {
+		transition-delay: 0s;
+		z-index: 1;
+
+		.form-filters {
+			background-color: #fff;
+		}
+
+		.fieldset {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}
+
+.recover-success {
+	display: none;
+	a {
+		text-decoration: underline;
+	}
+}
 
 .emeon-form {
-  margin: 20px auto;
-  padding: 10px;
-  width: 100%;
-  border: none;
 
-  fieldset {
-    border: none;
-    padding: 0;
-    margin: 5px auto;
-  }
+	/*ad-edit form*/
+	&.form-article-edit {
+
+		.form-select {
+			background-image: none !important;
+			cursor: pointer;
+		}
+
+		input, textarea {
+			cursor: pointer;
+		}
+
+		.article-excerpt {
+			min-height: 236px;
+		}
+	}
+
+	&__fieldset {
+		position: relative;
+
+		.remove-icon {
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: 99;
+			width: 30px;
+			height: 30px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			display: none;
+
+			&::before,
+			&::after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				display: block;
+				height: 1px;
+				width: 50%;
+				background-color: #000;
+			}
+
+			&::before {
+				transform: translate(-50%, -50%) rotate(45deg);
+			}
+
+			&::after {
+				transform: translate(-50%, -50%) rotate(-45deg);
+			}
+		}
+
+		.logo-wrap {
+			flex: 1 1 330px;
+			height: auto;
+			margin-bottom: 20px;
+			text-align: center;
+
+			.logo-area {
+				height: 256px;
+				width: 256px;
+				border: none;
+				cursor: pointer;
+				position: relative;
+				margin: 0 auto;
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: contain;
+				}
+
+				&.added {
+					.remove-icon {
+						display: block;
+					}
+				}
+			}
+		}
+
+		.select2 {
+			&-selection {
+
+				ul, ol {
+					margin: 0;
+				}
+			}
+
+			&-selection__choice {
+				margin: 0 5px 0 0 !important;
+				border: none !important;
+
+				&__remove {
+					border-right: none !important;
+				}
+			}
+
+			&-search__field {
+				margin: 0 !important;
+				height: 23px !important;
+			}
+		}
+
+		.error-field {
+			&:after {
+				position: absolute;
+				content: "\f534";
+				font-family: "dashicons", sans-serif;
+				font-size: 19px;
+				font-kerning: revert;
+				color: red;
+				border-radius: 100%;
+				margin: 0;
+				border: none;
+				padding: 0;
+				line-height: 1;
+				-webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+				-moz-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+				box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.41);
+				display: block;
+				top: 5px;
+				right: -27px;
+			}
+		}
+
+		.attachment-area {
+			#attachment-info {
+				border: 3px dotted #ccc;
+				cursor: pointer;
+				display: flex;
+				justify-content: center;
+				position: relative;
+
+				&.added {
+					border: 1px solid #000;
+
+					.remove-icon, #attachment-preview {
+						display: block;
+					}
+
+					#no-attachment {
+						display: none;
+					}
+
+				}
+
+				.remove-icon {
+					top: -30px;
+				}
+
+				#no-attachment {
+					padding: 20px;
+					display: block;
+					font-size: 21px;
+				}
+			}
+
+			#attachment-preview {
+				border: none;
+				width: 100%;
+				height: 500px;
+				cursor: pointer;
+				display: none;
+				margin: 0;
+				padding: 0;
+			}
+
+		}
+	}
+
+	/* fieldset */
+
+}
+
+/* emeon-form */
+
+
+/* Emeon form error */
+.emeon-error-popup {
+	cursor: pointer;
+	z-index: 992992;
+	position: fixed;
+	top: 118px;
+	background: #fff;
+	right: -450px;
+	width: 100%;
+	max-width: 400px;
+	padding: 20px 20px 20px 30px;
+	font-size: 14px;
+	text-align: left;
+	border: 1px solid #ccc;
+	border-left: 5px solid orangered;
+	box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);
+	transition: all ease-in-out .3s;
+
+	&.success {
+		border-left-color: #34d831;
+	}
+
+	&.visible {
+		right: 35px;
+
+		@media screen and ( max-width: 767px ) {
+			max-width: calc( 100% - 50px );
+			left: 25px;
+		}
+	}
+
+	&:hover {
+		right: 35px;
+	}
+}
+
+/* loading spinner */
+.loading {
+	&:before {
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		display: block;
+		content: " ";
+		background: #fff;
+		opacity: 0.4;
+		cursor: progress;
+		z-index: 99999991;
+	}
+
+	&:after {
+		position: fixed;
+		content: "\f463";
+		font: normal normal 50px/50px dashicons, sans-serif;
+		-webkit-animation: spin .8s linear infinite;
+		-moz-animation: spin .8s linear infinite;
+		animation: spin .8s linear infinite;
+		width: 50px;
+		height: 50px;
+		display: block;
+		z-index: 999999992;
+		color: #ccc;
+		top: calc(50% - 25px);
+		left: calc(50% - 25px);
+	}
+}
+
+@-moz-keyframes spin {
+	100% {
+		-moz-transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
 }
