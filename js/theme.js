@@ -94,11 +94,11 @@ window.onload = ( function( $ ) {
 	function __swiper_init() {
 		const about_swiper = new Swiper( '.about--swiper', {
 			loop: true,
-      autoHeight: false,
-      height: '584px',
+			autoHeight: false,
+			height: '550px',
 			slidesPerView: 1,
 			autoplay: {
-				delay: 18000,
+				delay: 4000,
 				pauseOnMouseEnter: true,
 			},
 			pagination: {

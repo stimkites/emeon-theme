@@ -51,7 +51,7 @@ get_header();
 			<section class="section section--slider section--vacancies">
 				<h2 class="section__header text-center h1 mb-5 pt-5">VACANCIES</h2>
 				<div class="vacancies vacancies--swiper swiper-slider" width="600" height="300">
-					<div class="swiper-wrapper">
+					<div class="swiper-wrapper align-items-stretch">
 						<?php
 						global $post;
 
