@@ -230,10 +230,6 @@ window.onload = ( function( $ ) {
 			localStorage.setItem( 'emeon-cookie', 'accept' );
 		}
 
-		if ( type === 'deny' ) {
-			localStorage.setItem( 'emeon-cookie', 'deny' );
-		}
-
 		$( '.emeon-cookies' ).addClass( 'done' );
 	}
 

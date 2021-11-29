@@ -476,8 +476,7 @@ function emeon_adding_cookie_concern() { ?>
 			Learn more about cookies and why we use them, visit our <a href="/cookie-policy" class="emeon-cookies__link">Cookie Policy page</a>
 		</p>
 		<div class="emeon-cookies__btn-wrapper">
-			<button data-type="accept" class="btn btn-primary">Accept</button>
-			<button data-type="deny" class="btn btn-outline-secondary">Deny</button>
+			<button class="btn btn-primary">Accept</button>
 		</div>
 	</div>
 <?php }
