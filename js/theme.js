@@ -224,12 +224,7 @@ window.onload = ( function( $ ) {
 	 */
 
 	function __cookieConcernHandler(event) {
-		const type = $( event.target ).data( 'type' );
-
-		if ( type === 'accept' ) {
-			localStorage.setItem( 'emeon-cookie', 'accept' );
-		}
-
+		localStorage.setItem( 'emeon-cookie', 'accept' );
 		$( '.emeon-cookies' ).addClass( 'done' );
 	}
 
