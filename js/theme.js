@@ -7,7 +7,8 @@ window.onload = ( function( $ ) {
 		_header_elem = $( '.site-header' ),
 		_sandwich_button_elem = $( '.toggle-mobile-menu' ),
 		_searchBtnFilter = $('.search-mobile-bar .btn'),
-		_closeFilterBtn = $('.search-content .emeon-form .btn-close');
+		_closeFilterBtn = $('.search-content .emeon-form .btn-close'),
+		_emeonCookieButtons = $('.emeon-cookies .emeon-cookies__btn-wrapper .btn');
 
 
 	/**
@@ -216,6 +217,32 @@ window.onload = ( function( $ ) {
 		$('.search-content .emeon-form').removeClass('open')
 	}
 
+	/**
+	 * Cookie concern handler
+	 * @param event
+	 * @private
+	 */
+
+	function __cookieConcernHandler(event) {
+		const type = $( event.target ).data( 'type' );
+
+		if ( type === 'accept' ) {
+			localStorage.setItem( 'emeon-cookie', 'accept' );
+		}
+
+		if ( type === 'deny' ) {
+			localStorage.setItem( 'emeon-cookie', 'deny' );
+		}
+
+		$( '.emeon-cookies' ).addClass( 'done' );
+	}
+
+	function __checkCookieConcern() {
+		if (!localStorage.getItem( 'emeon-cookie')) {
+			$( '.emeon-cookies' ).removeClass('done');
+		}
+	}
+
 
 	/**
 	 * Assign events handlers
@@ -228,6 +255,7 @@ window.onload = ( function( $ ) {
 		_sandwich_button_elem.on( 'click', __click_sandwich_button_handler );
 		_searchBtnFilter.on( 'click', __clickSearchFilterHandler );
 		_closeFilterBtn.on('click', __closeFiltersMobile);
+		_emeonCookieButtons.on('click', __cookieConcernHandler);
 
 		window.onbeforeunload = function() {
 			_window.off( 'scroll', __page_scroll_handler );
@@ -244,6 +272,8 @@ window.onload = ( function( $ ) {
 	 */
 	function __init() {
 		console.info( '[theme] Theme JS initiated!' );
+
+		__checkCookieConcern();
 		__page_scroll_handler();
 		__swiper_init();
 		__rangeSlider_init();
