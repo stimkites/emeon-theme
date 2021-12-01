@@ -17,6 +17,7 @@ defined( 'ABSPATH' ) or exit;
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="remote job, online job, online work, emeon job, vacancies, free vacancies, web-development, web-design, web-master, php developer, get job" />
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
 	<!-- Google Tag Manager -->
@@ -44,6 +45,18 @@ defined( 'ABSPATH' ) or exit;
 	<!-- /Yandex.Metrika counter -->
 
 	<?php wp_head(); ?>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-213968658-1">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-213968658-1');
+    </script>
+
 </head>
 
 <?php
