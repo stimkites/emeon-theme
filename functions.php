@@ -470,14 +470,13 @@ add_action('get_footer', 'emeon_adding_cookie_concern');
 function emeon_adding_cookie_concern() { ?>
 	<div class="emeon-cookies done">
 		<h4 class="emeon-cookies__title">We are using cookies</h4>
-		<p class="emeon-cookies__content">
-			We use cookies to customise and improve the content shown to you, making sure you will get the best online experience.
-			<p>By clicking "Accept", you consent to the use of all cookies and we can continue to deliver personalised inspiration, and information.</p>
-			Learn more about cookies and why we use them, visit our <a href="/cookie-policy" class="emeon-cookies__link">Cookie Policy page</a>
-		</p>
-		<div class="emeon-cookies__btn-wrapper">
-			<button class="btn btn-primary">Accept</button>
-		</div>
+		<div class="emeon-cookies__content">
+            <p>To customise and improve the content shown, this web-site is constantly using cookies and collecting browser-relevant information.</p>
+            <p>Viewing and using the content of this web-site means accepting and agreement to <a href="/cookie-policy/" class="emeon-cookies__link">Cookie Policy page</a></p>
+            <div class="emeon-cookies__btn-wrapper">
+                <button class="btn btn-primary">Got it!</button>
+            </div>
+        </div>
 	</div>
 <?php }
 
