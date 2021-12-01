@@ -567,6 +567,34 @@ body.single-post #primary {
       .emeon-account-content .my-articles {
         justify-content: space-evenly; } }
 /*--------------------------------------------------------------
+## Cookie styles
+--------------------------------------------------------------*/
+.emeon-cookies {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  background: #ffffff;
+  border-radius: 5px;
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.04);
+  z-index: 35;
+  opacity: 1;
+  visibility: visible;
+  transition: all .4s ease-in; }
+  .emeon-cookies.done {
+    opacity: 0;
+    transition: all .2s ease-in-out;
+    visibility: hidden;
+    z-index: -1; }
+
+@media (max-width: 767px) {
+  .emeon-cookies {
+    right: unset;
+    left: 50%;
+    transform: translateX(-50%); } }
+/*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
 footer#colophon {
@@ -980,10 +1008,17 @@ table {
   .site-header .search-filters.visible {
     width: calc( 100% - 192px );
     padding: 0 10px; }
-    @media screen and (max-width: 768px) {
+  @media screen and (max-width: 768px) {
+    .site-header .search-filters {
+      top: 100%;
+      right: auto;
+      left: 0;
+      width: 100%;
+      height: 0;
+      padding: 0 10px; }
       .site-header .search-filters.visible {
-        width: calc(100% - 265px);
-        right: 148px; } }
+        width: 100%;
+        height: 40px; } }
 
 .form-join-wrapper {
   margin: 0 auto;
@@ -1831,6 +1866,34 @@ body.single-post #primary {
       margin-top: 20px; }
       .emeon-account-content .my-articles {
         justify-content: space-evenly; } }
+/*--------------------------------------------------------------
+## Cookie styles
+--------------------------------------------------------------*/
+.emeon-cookies {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  background: #ffffff;
+  border-radius: 5px;
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.04);
+  z-index: 35;
+  opacity: 1;
+  visibility: visible;
+  transition: all .4s ease-in; }
+  .emeon-cookies.done {
+    opacity: 0;
+    transition: all .2s ease-in-out;
+    visibility: hidden;
+    z-index: -1; }
+
+@media (max-width: 767px) {
+  .emeon-cookies {
+    right: unset;
+    left: 50%;
+    transform: translateX(-50%); } }
 /*--------------------------------------------------------------
 # Infinite scroll
 --------------------------------------------------------------*/

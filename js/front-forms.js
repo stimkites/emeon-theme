@@ -605,7 +605,13 @@ const validateEmail = ( email ) => {
 		const joinForm = $( '.emeon-form.form-join' );
 
 		joinForm.off().on( 'submit', __submitHandler );
+
 		__error.flush();
+
+		$( '#accept-policy' ).off().on( 'change', function(){
+			$( '#btn-join' ).prop( 'disabled', ! $( this ).prop( 'checked' ) );
+		} );
+
 	};
 
 	return {
