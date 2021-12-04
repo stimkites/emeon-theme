@@ -602,7 +602,7 @@ footer#colophon {
   position: fixed;
   bottom: 0;
   width: 100%;
-  z-index: 1; }
+  z-index: 9999991; }
   footer#colophon ul {
     margin: 0;
     padding: 0;
@@ -974,6 +974,9 @@ table {
 /* Cookie-text */
 .cookie-policy-text {
   max-width: 800px; }
+
+.about-us-content a {
+  text-decoration: underline; }
 
 /*--------------------------------------------------------------
 # Forms
