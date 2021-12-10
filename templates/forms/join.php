@@ -28,7 +28,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
         <label>
             <input type="checkbox" name="accept_policy" id="accept-policy" value="yes" />
 		    By joining us you accept and agree to our
-            <a href="/privacy-policy/" target="_blank" title="Privacy policy">privacy policy rules.</a>
+            <a href="/privacy-policy/" title="Privacy policy">privacy policy rules.</a>
         </label>
 	</p>
 </div>
