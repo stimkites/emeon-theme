@@ -321,9 +321,28 @@ new class {
             'ajax_url'  => admin_url( 'admin-ajax.php' ),
             'n'         => wp_create_nonce( EMEON_SLUG ),
             'd'         => EMEON_DEBUG,
-			'gc'        => EMEON_CAPTCHA['key']
+			'gc'        => EMEON_CAPTCHA['key'],
+			'pf'        => [
+				'vacancies'  => self::get_prefilled( 'vacancy'   ),
+				'candidates' => self::get_prefilled( 'candidate' )
+			]
         ] );
 		wp_enqueue_script( $slug );
+	}
+
+	/**
+	 * Get prefilled content from post with title "prefilled-[]"
+	 *
+	 * @param string $type
+	 *
+	 * @return array
+	 */
+	private static function get_prefilled( $type = 'vacancy' ){
+		$post = get_page_by_title( 'prefilled-' . $type, OBJECT, 'post' );
+		return [
+			'excerpt' => $post->post_excerpt ?? '',
+			'content' => $post->post_content ?? ''
+		];
 	}
 
 	/**

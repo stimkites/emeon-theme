@@ -62,20 +62,21 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
       id="form-article-edit"
       enctype="multipart/form-data"
       name="emeon-form">
+
 	<fieldset class="emeon-form__fieldset">
 
 		<div class="article-type mb-4">
 			<div class="btn-group w-100">
 
 				<input id="type-cv"
-				       class="btn-check"
+				       class="btn-check article-type-ctrl"
 				       type="radio" <?= ( $article[ 'type' ] === 'candidates' ? 'checked' : '' ) ?>
 				       name="article[type]"
 				       value="candidates"/>
 				<label class="btn btn-outline-secondary" for="type-cv">Candidate</label>
 
 				<input id="type-vc"
-				       class="btn-check"
+				       class="btn-check article-type-ctrl"
 				       type="radio" <?= ( $article[ 'type' ] === 'vacancies' ? 'checked' : '' ) ?>
 				       name="article[type]"
 				       value="vacancies"/>
@@ -111,7 +112,8 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
 
 					<label class="control-wrap list-group-item p-0">
 					<textarea name="article[excerpt]"
-					          class="form-control border-0 article-excerpt invalidate"
+					          id="article_excerpt"
+					          class="form-control border-0 article-excerpt invalidate change-check"
 					          rows="5"
 					          placeholder="A few lines (shown in search results)"
 						><?= $article[ 'excerpt' ] ?? '' ?></textarea>
@@ -189,14 +191,14 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
             <p class="text-center description">
                 Add as much info, as possible here. Describing details has the best value!
             </p>
-			<div class="control-wrap">
+			<div class="control-wrap wrap-content-editor">
 				<?php
 				wp_editor(
 					$article[ 'content' ] ?? '',
 					"article_content",
 					[
 						'textarea_name' => "article[content]",
-						'editor_class'  => 'invalidate',
+						'editor_class'  => 'invalidate change-check',
 						'media_buttons' => false,
 						'quicktags'     => false
 					]

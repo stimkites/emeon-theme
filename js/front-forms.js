@@ -282,6 +282,30 @@ const getToken = async function(){
 		// } );
 	};
 
+	let __changed = false;
+
+	const __set_changed = function(){
+		__changed = true;
+	};
+
+	/**
+	 * Prefill form with an example
+	 *
+	 * @param e
+	 * @private
+	 */
+	const __prefill = function( e ){
+		let
+		  _e = $( e.target ),
+		  _v = _e.val(),
+		  _d = __emeon.pf[ _v ] || false,
+		  _a = $( '#article_excerpt' ),
+		  _b = $( '#article_content' );
+		if( ! _d || __changed ) return;
+		_a.val( _d.excerpt );
+		_b.val( _d.content ).trigger( 'change' );
+	};
+
 	/**
 	 * Assign all events
 	 *
@@ -293,6 +317,9 @@ const getToken = async function(){
 		$( '#attachment-file' ).off().change( __set_attachment_info );
 		$( '.attachment-remove' ).off().click( __reset_attachment );
 		$( 'form.emeon-form' ).off().submit( __validate_form );
+		$( '.article-type-ctrl' ).off().on( 'change', __prefill );
+		$( '.change-check' ).parents( '.control-wrap' ).on( 'click', __set_changed );
+		$( '.article-type-ctrl:checked' ).trigger( 'change' );
 		__error.flush();
 		__init_selects();
 	};

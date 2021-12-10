@@ -1177,6 +1177,8 @@ table {
 .emeon-form {
   /*ad-edit form*/
   /* fieldset */ }
+  .emeon-form.form-article-edit .control-wrap {
+    position: relative; }
   .emeon-form.form-article-edit .form-select {
     background-image: none !important;
     cursor: pointer; }
