@@ -62,7 +62,16 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
       id="form-article-edit"
       enctype="multipart/form-data"
       name="emeon-form">
-
+	<div class="form-check form-switch mb-5">
+		<input id="use_example"
+		       class="form-check-input border-secondary bg-secondary btn-secondary text-secondary"
+		       type="checkbox"
+		       checked
+			   value="yes"/>
+		<label for="use_example" class="form-check-label">
+			Use example text
+		</label>
+	</div>
 	<fieldset class="emeon-form__fieldset">
 
 		<div class="article-type mb-4">

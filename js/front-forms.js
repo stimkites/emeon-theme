@@ -295,15 +295,34 @@ const getToken = async function(){
 	 * @private
 	 */
 	const __prefill = function( e ){
+		if( ! $( '#use_example').prop( 'checked' ) ) return;
 		let
-		  _e = $( e.target ),
+		  _e = $( e ? e.target : '.article-type-ctrl:checked' ),
 		  _v = _e.val(),
 		  _d = __emeon.pf[ _v ] || false,
 		  _a = $( '#article_excerpt' ),
-		  _b = $( '#article_content' );
+		  _b = tinyMCE.get( 'article_content' );
 		if( ! _d || __changed ) return;
 		_a.val( _d.excerpt );
-		_b.val( _d.content ).trigger( 'change' );
+		_b.setContent( _d.content );
+	};
+
+	/**
+	 * Clean the example text
+	 *
+	 * @private
+	 */
+	const __clean_prefilled = function(){
+		if( __changed ) return;
+		if( $( this ).prop( 'checked' ) )
+			__prefill();
+		else {
+			let
+			  _a = $( '#article_excerpt' ),
+			  _b = tinyMCE.get( 'article_content' );
+			_a.val( '' );
+			_b.setContent( '' );
+		}
 	};
 
 	/**
@@ -319,7 +338,8 @@ const getToken = async function(){
 		$( 'form.emeon-form' ).off().submit( __validate_form );
 		$( '.article-type-ctrl' ).off().on( 'change', __prefill );
 		$( '.change-check' ).parents( '.control-wrap' ).on( 'click', __set_changed );
-		$( '.article-type-ctrl:checked' ).trigger( 'change' );
+		setTimeout( () => { $( '.article-type-ctrl:checked' ).trigger( 'change' ); }, 1000 );
+		$( '#use_example' ).on( 'change', __clean_prefilled );
 		__error.flush();
 		__init_selects();
 	};
