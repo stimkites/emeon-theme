@@ -17,9 +17,13 @@ defined( 'ABSPATH' ) or exit;
 
 <footer id="colophon" class="site-footer">
 	<div class="site-info">
-		&copy; <?php echo get_bloginfo(); ?>, 2016 - <?php echo date( 'Y' ); ?>
+		<a href="https://emeon.io">
+			&copy; <?php echo get_bloginfo(); ?> 2020 - <?php echo date( 'Y' ); ?>
+		</a>
 		<span class="sep"> | </span>
-		By Emeon partner, <a href="https://wetail.io">Wetail AB, Sweden</a>
+		<a href="https://www.facebook.com/people/Emeon-Webdev/100075559053781/" target="_blank">
+			Facebook
+		</a>
 	</div><!-- .site-info -->
 </footer><!-- #colophon -->
 </div><!-- #page -->

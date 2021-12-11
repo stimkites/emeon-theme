@@ -602,7 +602,7 @@ footer#colophon {
   position: fixed;
   bottom: 0;
   width: 100%;
-  z-index: 1; }
+  z-index: 9999991; }
   footer#colophon ul {
     margin: 0;
     padding: 0;
@@ -975,6 +975,9 @@ table {
 .cookie-policy-text {
   max-width: 800px; }
 
+.about-us-content a {
+  text-decoration: underline; }
+
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
@@ -1174,6 +1177,8 @@ table {
 .emeon-form {
   /*ad-edit form*/
   /* fieldset */ }
+  .emeon-form.form-article-edit .control-wrap {
+    position: relative; }
   .emeon-form.form-article-edit .form-select {
     background-image: none !important;
     cursor: pointer; }

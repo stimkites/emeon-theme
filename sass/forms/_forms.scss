@@ -108,6 +108,10 @@
 	/*ad-edit form*/
 	&.form-article-edit {
 
+		.control-wrap {
+			position: relative;
+		}
+
 		.form-select {
 			background-image: none !important;
 			cursor: pointer;

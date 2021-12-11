@@ -282,6 +282,49 @@ const getToken = async function(){
 		// } );
 	};
 
+	let __changed = false;
+
+	const __set_changed = function(){
+		__changed = true;
+	};
+
+	/**
+	 * Prefill form with an example
+	 *
+	 * @param e
+	 * @private
+	 */
+	const __prefill = function( e ){
+		if( ! $( '#use_example').prop( 'checked' ) ) return;
+		let
+		  _e = $( e ? e.target : '.article-type-ctrl:checked' ),
+		  _v = _e.val(),
+		  _d = __emeon.pf[ _v ] || false,
+		  _a = $( '#article_excerpt' ),
+		  _b = tinyMCE.get( 'article_content' );
+		if( ! _d || __changed ) return;
+		_a.val( _d.excerpt );
+		_b.setContent( _d.content );
+	};
+
+	/**
+	 * Clean the example text
+	 *
+	 * @private
+	 */
+	const __clean_prefilled = function(){
+		if( __changed ) return;
+		if( $( this ).prop( 'checked' ) )
+			__prefill();
+		else {
+			let
+			  _a = $( '#article_excerpt' ),
+			  _b = tinyMCE.get( 'article_content' );
+			_a.val( '' );
+			_b.setContent( '' );
+		}
+	};
+
 	/**
 	 * Assign all events
 	 *
@@ -293,6 +336,10 @@ const getToken = async function(){
 		$( '#attachment-file' ).off().change( __set_attachment_info );
 		$( '.attachment-remove' ).off().click( __reset_attachment );
 		$( 'form.emeon-form' ).off().submit( __validate_form );
+		$( '.article-type-ctrl' ).off().on( 'change', __prefill );
+		$( '.change-check' ).parents( '.control-wrap' ).on( 'click', __set_changed );
+		setTimeout( () => { $( '.article-type-ctrl:checked' ).trigger( 'change' ); }, 1000 );
+		$( '#use_example' ).on( 'change', __clean_prefilled );
 		__error.flush();
 		__init_selects();
 	};
