@@ -71,6 +71,9 @@ $theme_uri = get_template_directory_uri();
 <!-- End Google Tag Manager (noscript) -->
 
 <div id="page" class="site bg-light">
+
+	<?php if( ! EMEON_PRINTABLE ) : ?>
+
 	<header id="masthead" class="site-header">
 		<div class="site-content site-header__content container">
 
@@ -120,4 +123,6 @@ $theme_uri = get_template_directory_uri();
 
 	</header><!-- #masthead -->
 
-	<div id="content" class="site-content page container">
+	<?php endif ?>
+
+	<div id="content" class="site-content page container<?=( EMEON_PRINTABLE ? ' printable' : '')?>">

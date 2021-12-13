@@ -30,8 +30,12 @@
 		padding-bottom: 100px;
 		flex-grow: 1;
 
-		&.page {
+		&.page:not(&.printable) {
 			padding-top: 160px;
+		}
+		&.page.printable {
+			padding-top: 20px;
+			background: #fff;
 		}
 	}
 }
