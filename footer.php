@@ -15,6 +15,8 @@ defined( 'ABSPATH' ) or exit;
 
 </div><!-- #content -->
 
+<?php if( ! EMEON_PRINTABLE ) :?>
+
 <footer id="colophon" class="site-footer">
 	<div class="site-info">
 		<a href="https://emeon.io">
@@ -26,6 +28,9 @@ defined( 'ABSPATH' ) or exit;
 		</a>
 	</div><!-- .site-info -->
 </footer><!-- #colophon -->
+
+<?php endif ?>
+
 </div><!-- #page -->
 
 <?php wp_footer(); ?>

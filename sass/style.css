@@ -237,8 +237,11 @@
   .site-content {
     padding-bottom: 100px;
     flex-grow: 1; }
-    .site-content.page {
+    .site-content.page:not(.site-content.printable) {
       padding-top: 160px; }
+    .site-content.page.printable {
+      padding-top: 20px;
+      background: #fff; }
 
 body.page-template-default.fl-builder div#content.page {
   min-width: 100%;
@@ -764,6 +767,19 @@ html {
 .grecaptcha-badge {
   display: none !important; }
 
+.emeon-printable-post-link {
+  float: right;
+  font-size: 11px; }
+  .emeon-printable-post-link:before {
+    font-family: Dashicons, sans-serif;
+    content: "\f193";
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0 3px; }
+
 .emeon-cats-tags {
   list-style: none;
   display: flex;
@@ -789,7 +805,8 @@ html {
     background: #eee;
     padding: 2px 5px; }
   .additional-info h4 {
-    font-size: 18px; }
+    font-size: 18px;
+    margin: 20px 0; }
   .additional-info .attachment {
     float: right; }
     .additional-info .attachment img {
@@ -1546,8 +1563,11 @@ a {
   .site-content {
     padding-bottom: 100px;
     flex-grow: 1; }
-    .site-content.page {
+    .site-content.page:not(.site-content.printable) {
       padding-top: 160px; }
+    .site-content.page.printable {
+      padding-top: 20px;
+      background: #fff; }
 
 body.page-template-default.fl-builder div#content.page {
   min-width: 100%;

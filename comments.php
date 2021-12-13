@@ -12,7 +12,7 @@
 
 defined( 'ABSPATH' ) or exit;
 
-if ( post_password_required() ) {
+if ( post_password_required() || EMEON_PRINTABLE ) {
 	return;
 }
 ?>

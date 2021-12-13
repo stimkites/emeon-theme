@@ -65,9 +65,15 @@ if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-	<?php if( $post->post_author == get_current_user_id() ): ?>
+	<?php if( $post->post_author == get_current_user_id() && ! EMEON_PRINTABLE ): ?>
 	<span class="emeon-edit-post-link">
 		<a href="<?=apply_filters( 'emeon_adedit_url', '/add-edit/' )?>?ad=<?=$post_id?>">Edit</a>
+	</span>
+	<?php endif ?>
+
+	<?php if( is_user_logged_in() && ! EMEON_PRINTABLE ): ?>
+	<span class="emeon-printable-post-link">
+		<a href="?printable=<?=wp_create_nonce( EMEON_SLUG )?>" target="_blank">Print/Save</a>
 	</span>
 	<?php endif ?>
 
@@ -84,9 +90,10 @@ if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 		if ( 'post' === get_post_type() ) :
 			?>
 			<div class="entry-meta">
-				<?php
-				emeon_posted_on();
-				emeon_posted_by();
+				<?php if( ! EMEON_PRINTABLE ) {
+					emeon_posted_on();
+					emeon_posted_by();
+				}
 				?>
 			</div><!-- .entry-meta -->
 			<div class="categories-tags">
@@ -139,12 +146,12 @@ if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 			<?=$contact_info?>
 		</div>
 		<?php
-
-		wp_link_pages( array(
-			'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'emeon' ),
-			'after'  => '</div>',
-		) );
+		if( ! EMEON_PRINTABLE )
+			wp_link_pages( array(
+				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'emeon' ),
+				'after'  => '</div>',
+			) );
 		?>
 	</div><!-- .entry-content -->
-
+	
 </article><!-- #post-<?php the_ID(); ?> -->

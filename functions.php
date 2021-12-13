@@ -26,8 +26,9 @@ const
 		'secret'    => '6LfvAwkdAAAAAK5OA8_ZcQ1K-UG8IELZiK1cd1CY'
 	];
 
-define( 'EMEON_URL',   get_template_directory_uri() );
-define( 'EMEON_DEBUG', false === strpos( home_url(), 'https://emeon.io' ) );
+define( 'EMEON_URL',        get_template_directory_uri() );
+define( 'EMEON_DEBUG',      false === strpos( home_url(), 'https://emeon.io' ) );
+define( 'EMEON_PRINTABLE',  wp_verify_nonce( $_GET['printable'], EMEON_SLUG ) );
 
 /**
  * Disable wp-admin for subscribers
