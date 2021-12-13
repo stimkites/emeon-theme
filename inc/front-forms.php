@@ -623,6 +623,27 @@ new class {
 	}
 
 	/**
+	 * Create categories
+	 *
+	 * @param $categories
+	 *
+	 * @return mixed
+	 */
+	private static function check_insert_cats( $categories ){
+		if( ! function_exists( 'wp_insert_category' ) )
+			require_once( ABSPATH . '/wp-admin/includes/taxonomy.php');
+		foreach( $categories as &$cat ){
+			if( (int)( $cat ) || term_exists( $cat, 'category' ) ) continue;
+			if( ! self::bad_words( $cat ) ){
+				$new_cat = wp_insert_category( [ 'cat_name' => $cat ] );
+				if( ! is_wp_error( $new_cat ) && $new_cat )
+					$cat = $new_cat;
+			}
+		}
+		return $categories;
+	}
+
+	/**
 	 * Adedit action (via $_POST request to avoid complex Ajax loaders for file data)
 	 */
 	protected static function adedit() {
@@ -674,7 +695,7 @@ new class {
 			// Cats and tags
 			$_POST[ 'ID' ] = $post_id;
 			wp_set_post_tags( $post_id, $tags, 'post_tag' );
-			wp_set_post_categories( $post_id, $cats );
+			wp_set_post_categories( $post_id, self::check_insert_cats( $cats ) );
 
 			// Contacts
 			$contacts = [];
