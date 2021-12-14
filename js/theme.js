@@ -93,21 +93,6 @@ window.onload = ( function( $ ) {
 	 * @private
 	 */
 	function __swiper_init() {
-		const about_swiper = new Swiper( '.about--swiper', {
-			loop: true,
-			autoHeight: false,
-			height: '550px',
-			slidesPerView: 1,
-			autoplay: {
-				delay: 4000,
-				pauseOnMouseEnter: true,
-			},
-			pagination: {
-				el: '.swiper-pagination--about',
-				clickable: true,
-			},
-		} );
-
 		const vacancies_swiper = new Swiper( '.vacancies--swiper', {
 			loop: true,
 			spaceBetween: 20,

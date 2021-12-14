@@ -12,41 +12,31 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
-			<section class="section section--slider section--about">
-
-				<div class="about about--swiper swiper-slider" width="600" height="300">
-					<div class="swiper-wrapper">
-						<?php
-						global $post;
-
-						$vacancies = get_posts( [
-							'numberposts'   => -1,
-							'category_name' => 'who-we-are',
-							'orderby'       => 'id',
-							'order'         => 'asc',
-							'post_status'   => 'private'
-						] );
-
-						if ( ! empty( $vacancies ) ) :
-
-							foreach ( $vacancies as $post ) {
-								setup_postdata( $post );
-								get_template_part( 'template-parts/content', 'swiper-slide-intro' );
-							}
-
-							wp_reset_postdata();
-
-						else :
-
-							get_template_part( 'template-parts/content', 'none' );
-
-						endif;
-						?>
-					</div>
+			<div class="section hero">
+				<div class="row row-cols-1 row-cols-md-3">
+					<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>" class="col d-flex flex-column justify-content-between mb-5 mb-md-0">
+						<h2 class="h3 text-uppercase text-center">looking for a lob?</h2>
+						<div class="d-flex align-items-center justify-content-center flex-grow-1 mb-4">
+							<img class="rounded mx-auto d-block" src="<?php echo get_template_directory_uri() . '/img/cropped-emeon-logo-2-1.png'?>" alt="emeon job offers">
+						</div>
+						<button class="btn btn-primary btn-lg d-block mx-auto text-uppercase rounded-pill py-3 w-100">get a job</button>
+					</a>
+					<a href="<?php echo get_bloginfo( 'url' ) . '/join>'; ?>" class="col d-flex flex-column justify-content-between mb-5 mb-md-0">
+						<h2 class="h3 text-uppercase text-center">want to publish a vacancy?</h2>
+						<div class="d-flex align-items-center justify-content-center flex-grow-1 mb-4">
+							<img class="rounded mx-auto d-block" src="<?php echo get_template_directory_uri() . '/img/work_together.jpg'?>" alt="emeon vacancies">
+						</div>
+						<button class="btn btn-primary btn-lg d-block mx-auto text-uppercase rounded-pill py-3 w-100">publish vacancy</button>
+					</a>
+					<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>" class="col d-flex flex-column justify-content-between mb-5 mb-md-0">
+						<h2 class="h3 text-uppercase text-center">need help on website?</h2>
+						<div class="d-flex align-items-center justify-content-center flex-grow-1 mb-4">
+							<img class="rounded mx-auto d-block" src="<?php echo get_template_directory_uri() . '/img/remote-support.png'?>" alt="emeon support">
+						</div>
+						<button class="btn btn-primary btn-lg d-block mx-auto text-uppercase rounded-pill py-3 w-100">get help</button>
+					</a>
 				</div>
-				<!-- If we need pagination -->
-				<div class="swiper-pagination swiper-pagination--about"></div>
-			</section>
+			</div>
 
 			<section class="section section--slider section--vacancies">
 				<h2 class="section__header text-center h1 mb-5 pt-5">VACANCIES</h2>
