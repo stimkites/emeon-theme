@@ -8,4 +8,10 @@
 			object-fit: contain;
 		}
 	}
+
+	&.hero {
+		.col {
+			opacity: 0;
+		}
+	}
 }

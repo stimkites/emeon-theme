@@ -292,6 +292,9 @@ function emeon_scripts() {
 	wp_enqueue_style( 'bootstrap', EMEON_URL . '/css/bootstrap.min.css', [], '5.3.1' );
 	wp_enqueue_script( 'bootstrap', EMEON_URL . '/js/libs/bootstrap.bundle.min.js', [], '5.3.1', true );
 
+	// GreenSock
+	wp_enqueue_script( 'gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js', [], '3.8.1', true );
+
 	wp_enqueue_style( 'theme-style', EMEON_URL . '/sass/style.css', [ 'bootstrap', 'swiper' ], filemtime( EMEON_PATH . '/sass/style.css' ) );
 
 	wp_enqueue_style( 'emeon-font-awesome', EMEON_URL . '/fonts/fontawesome-pro/css/all.min.css' );
@@ -301,7 +304,8 @@ function emeon_scripts() {
 	wp_enqueue_script( 'emeon-theme', EMEON_URL . '/js/theme.js', [
 		'jquery',
 		'bootstrap',
-		'swiper'
+		'swiper',
+		'gsap'
 	], filemtime( EMEON_PATH . '/js/theme.js' ), true );
 
 	wp_enqueue_script( 'emeon-account', EMEON_URL . '/js/account.js', array(), filemtime( EMEON_PATH . '/js/account.js' ), true  );

@@ -6,9 +6,9 @@ window.onload = ( function( $ ) {
 		_window = $( window ),
 		_header_elem = $( '.site-header' ),
 		_sandwich_button_elem = $( '.toggle-mobile-menu' ),
-		_searchBtnFilter = $('.search-mobile-bar .btn'),
-		_closeFilterBtn = $('.search-content .emeon-form .btn-close'),
-		_emeonCookieButtons = $('.emeon-cookies .emeon-cookies__btn-wrapper .btn');
+		_searchBtnFilter = $( '.search-mobile-bar .btn' ),
+		_closeFilterBtn = $( '.search-content .emeon-form .btn-close' ),
+		_emeonCookieButtons = $( '.emeon-cookies .emeon-cookies__btn-wrapper .btn' );
 
 
 	/**
@@ -30,7 +30,7 @@ window.onload = ( function( $ ) {
 	 */
 	function __enable_scroll() {
 		_body.removeClass( 'disable-scroll' ).removeAttr( 'style' );
-		_header_elem.removeAttr( 'style' );
+		_header_elem.css( 'padding-right', 0 );
 	}
 
 
@@ -168,38 +168,35 @@ window.onload = ( function( $ ) {
 	 * Range slider in search results
 	 * @private
 	 */
-
-	function  __rangeSlider_init() {
-		const salary = $(".emeon-form .emeon-salary");
-		const curSymb = salary.siblings('.cur-symbol').text();
-		const minSalary = +salary.attr('min');
-		const stepSalary = +salary.attr('step');
-		salary.ionRangeSlider({
-			skin: "round",
+	function __rangeSlider_init() {
+		const salary = $( '.emeon-form .emeon-salary' );
+		const curSymb = salary.siblings( '.cur-symbol' ).text();
+		const minSalary = +salary.attr( 'min' );
+		const stepSalary = +salary.attr( 'step' );
+		salary.ionRangeSlider( {
+			skin: 'round',
 			min: minSalary,
 			step: stepSalary,
 			max: 20000,
-			postfix: ` ${curSymb}`,
-			from: salary.val()
-		});
+			postfix: ` ${ curSymb }`,
+			from: salary.val(),
+		} );
 	}
 
 	/**
 	 * Toggle class for mobile filtering
 	 * @private
 	 */
-
 	function __clickSearchFilterHandler() {
-		$('.search-content .emeon-form').toggleClass('open')
+		$( '.search-content .emeon-form' ).toggleClass( 'open' );
 	}
 
 	/**
 	 * Close filters
 	 * @private
 	 */
-
 	function __closeFiltersMobile() {
-		$('.search-content .emeon-form').removeClass('open')
+		$( '.search-content .emeon-form' ).removeClass( 'open' );
 	}
 
 	/**
@@ -207,16 +204,54 @@ window.onload = ( function( $ ) {
 	 * @param event
 	 * @private
 	 */
-
-	function __cookieConcernHandler(event) {
+	function __cookieConcernHandler( event ) {
 		localStorage.setItem( 'emeon-cookie', 'accept' );
 		$( '.emeon-cookies' ).addClass( 'done' );
 	}
 
 	function __checkCookieConcern() {
-		if (!localStorage.getItem( 'emeon-cookie')) {
-			$( '.emeon-cookies' ).removeClass('done');
+		if ( !localStorage.getItem( 'emeon-cookie' ) ) {
+			$( '.emeon-cookies' ).removeClass( 'done' );
 		}
+	}
+
+
+	function __animations_init() {
+		/* global gsap */
+
+		const timeline = gsap.timeline( {
+			defaults: {
+				duration: 0.5,
+				stagger: 0.2
+			},
+		} );
+
+		timeline
+			.fromTo( '#masthead', {
+				y: -20,
+			}, {
+				opacity: 1,
+				y: 0,
+			} )
+			.from( '#masthead .menu-item', {
+				scale: 0.5,
+				opacity: 0,
+				stagger: 0.1,
+				ease: 'back',
+				force3D: true,
+			} )
+			.addLabel( 'header' )
+			.to( '.hero .col', {
+				opacity: 1,
+			}, 'header' )
+			.from( '.hero .col .h3', {
+				opacity: 0,
+				y: -30,
+			}, 'header' )
+			.from( '.hero .col .btn', {
+				opacity: 0,
+				scale: 0.5,
+			}, 'header' );
 	}
 
 
@@ -230,8 +265,8 @@ window.onload = ( function( $ ) {
 		_window.on( 'resize', __window_resize_handler );
 		_sandwich_button_elem.on( 'click', __click_sandwich_button_handler );
 		_searchBtnFilter.on( 'click', __clickSearchFilterHandler );
-		_closeFilterBtn.on('click', __closeFiltersMobile);
-		_emeonCookieButtons.on('click', __cookieConcernHandler);
+		_closeFilterBtn.on( 'click', __closeFiltersMobile );
+		_emeonCookieButtons.on( 'click', __cookieConcernHandler );
 
 		window.onbeforeunload = function() {
 			_window.off( 'scroll', __page_scroll_handler );
@@ -254,6 +289,7 @@ window.onload = ( function( $ ) {
 		__swiper_init();
 		__rangeSlider_init();
 		__assign();
+		__animations_init();
 	}
 
 

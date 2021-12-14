@@ -9,6 +9,7 @@
 	width: 100%;
 	z-index: 100;
 	transition: box-shadow 0.2s;
+	opacity: 0;
 
 	&__content.site-content {
 		display: flex;

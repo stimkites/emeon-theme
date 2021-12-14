@@ -15,7 +15,7 @@ get_header();
 			<div class="section hero">
 				<div class="row row-cols-1 row-cols-md-3">
 					<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>" class="col d-flex flex-column justify-content-between mb-5 mb-md-0">
-						<h2 class="h3 text-uppercase text-center">looking for a lob?</h2>
+						<h2 class="h3 text-uppercase text-center">looking for a job?</h2>
 						<div class="d-flex align-items-center justify-content-center flex-grow-1 mb-4">
 							<img class="rounded mx-auto d-block" src="<?php echo get_template_directory_uri() . '/img/cropped-emeon-logo-2-1.png'?>" alt="emeon job offers">
 						</div>
