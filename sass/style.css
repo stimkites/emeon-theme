@@ -386,6 +386,51 @@ body.single-post #primary .post-thumbnail img {
   object-fit: contain;
 }
 
+.hero__button:visited.btn-primary {
+  color: white;
+}
+.hero__button:visited.btn-outline-primary {
+  color: #0a58ca;
+}
+.hero__button:visited.btn-outline-primary:hover {
+  color: white;
+}
+.hero__image {
+  height: 100%;
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+}
+.hero__image.hidden {
+  transform: translateY(-20px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (max-width: 991px) {
+  .hero .col--text {
+    position: relative;
+    z-index: 1;
+  }
+  .hero .col--text::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/hero.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: 0.05;
+  }
+  .hero .col--image {
+    display: none;
+  }
+}
 /*--------------------------------------------------------------
 ## Comments
 --------------------------------------------------------------*/
@@ -2004,6 +2049,51 @@ body.single-post #primary .post-thumbnail img {
   object-fit: contain;
 }
 
+.hero__button:visited.btn-primary {
+  color: white;
+}
+.hero__button:visited.btn-outline-primary {
+  color: #0a58ca;
+}
+.hero__button:visited.btn-outline-primary:hover {
+  color: white;
+}
+.hero__image {
+  height: 100%;
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+}
+.hero__image.hidden {
+  transform: translateY(-20px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (max-width: 991px) {
+  .hero .col--text {
+    position: relative;
+    z-index: 1;
+  }
+  .hero .col--text::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/hero.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: 0.05;
+  }
+  .hero .col--image {
+    display: none;
+  }
+}
 /*--------------------------------------------------------------
 ## Comments
 --------------------------------------------------------------*/

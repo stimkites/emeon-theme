@@ -12,29 +12,49 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
+
 			<div class="section hero">
-				<div class="row row-cols-1 row-cols-md-3">
-					<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>" class="col d-flex flex-column justify-content-between mb-5 mb-md-0">
-						<h2 class="h3 text-uppercase text-center">looking for a lob?</h2>
-						<div class="d-flex align-items-center justify-content-center flex-grow-1 mb-4">
-							<img class="rounded mx-auto d-block" src="<?php echo get_template_directory_uri() . '/img/cropped-emeon-logo-2-1.png'?>" alt="emeon job offers">
+				<div class="row">
+					<div class="col col--text">
+						<h1 class="h1 my-4">Lorem ipsum dolor sit amet, consectetur adipisicing.</h1>
+						<ul class="list-group list-group-flush mb-4 p-0 ms-0">
+							<li class="list-group-item bg-transparent border-0 p-0">Looking for a job?</li>
+							<li class="list-group-item bg-transparent border-0 p-0">Looking for a specialist?</li>
+							<li class="list-group-item bg-transparent border-0 p-0">Need help on your site?</li>
+						</ul>
+						<p class="text fw-bold mb-4">We can help you with that!</p>
+						<div class="hero__buttons">
+							<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>"
+							   type="button"
+							   data-action="job"
+							   class="hero__button shadow-sm btn btn-primary rounded-pill text-uppercase px-5 me-3 mb-3">find a job</a>
+							<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>"
+							   type="button"
+							   data-action="vacancy"
+							   class="hero__button shadow-sm btn btn-outline-primary rounded-pill text-uppercase px-5 mb-3">find a
+								specialist</a>
 						</div>
-						<button class="btn btn-primary btn-lg d-block mx-auto text-uppercase rounded-pill py-3 w-100">get a job</button>
-					</a>
-					<a href="<?php echo get_bloginfo( 'url' ) . '/join>'; ?>" class="col d-flex flex-column justify-content-between mb-5 mb-md-0">
-						<h2 class="h3 text-uppercase text-center">want to publish a vacancy?</h2>
-						<div class="d-flex align-items-center justify-content-center flex-grow-1 mb-4">
-							<img class="rounded mx-auto d-block" src="<?php echo get_template_directory_uri() . '/img/work_together.jpg'?>" alt="emeon vacancies">
+						<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>"
+						   type="button"
+						   data-action="help"
+						   class="hero__button btn btn-link p-0 text-primary">get help on your site</a>
+					</div>
+					<div class="col col--image">
+						<div class="image-wrapper position-relative h-100 w-100">
+							<img class="hero__image position-absolute w-100"
+								 src="<?php echo get_template_directory_uri() . '/img/hero.svg' ?>"
+								 data-action="vacancy"
+								 alt="vacancy">
+							<img class="hero__image position-absolute w-100 hidden"
+								 src="<?php echo get_template_directory_uri() . '/img/hire.svg' ?>"
+								 data-action="job"
+								 alt="job">
+							<img class="hero__image position-absolute w-100 hidden"
+								 src="<?php echo get_template_directory_uri() . '/img/help.svg' ?>"
+								 data-action="help"
+								 alt="help">
 						</div>
-						<button class="btn btn-primary btn-lg d-block mx-auto text-uppercase rounded-pill py-3 w-100">publish vacancy</button>
-					</a>
-					<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>" class="col d-flex flex-column justify-content-between mb-5 mb-md-0">
-						<h2 class="h3 text-uppercase text-center">need help on website?</h2>
-						<div class="d-flex align-items-center justify-content-center flex-grow-1 mb-4">
-							<img class="rounded mx-auto d-block" src="<?php echo get_template_directory_uri() . '/img/remote-support.png'?>" alt="emeon support">
-						</div>
-						<button class="btn btn-primary btn-lg d-block mx-auto text-uppercase rounded-pill py-3 w-100">get help</button>
-					</a>
+					</div>
 				</div>
 			</div>
 
