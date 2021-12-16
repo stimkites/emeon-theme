@@ -26,6 +26,10 @@ defined( 'ABSPATH' ) or exit;
 		<a href="https://www.facebook.com/people/Emeon-Webdev/100075559053781/" target="_blank">
 			Facebook
 		</a>
+		<span class="sep"> | </span>
+		<a href="https://www.youtube.com/playlist?list=PLGispirKjL_ZsLtR-Fmz7BmrNw9RiloyT" target="_blank">
+			YouTube
+		</a>
 	</div><!-- .site-info -->
 </footer><!-- #colophon -->
 

@@ -16,28 +16,29 @@ get_header();
 			<div class="section hero">
 				<div class="row">
 					<div class="col col--text">
-						<h1 class="h1 my-4">Lorem ipsum dolor sit amet, consectetur adipisicing.</h1>
+						<h1 class="h1 my-4">Employ Me Online!</h1>
+						<h3 class="h3 my-4">Vacancies, support, startups</h3>
 						<ul class="list-group list-group-flush mb-4 p-0 ms-0">
-							<li class="list-group-item bg-transparent border-0 p-0">Looking for a job?</li>
-							<li class="list-group-item bg-transparent border-0 p-0">Looking for a specialist?</li>
-							<li class="list-group-item bg-transparent border-0 p-0">Need help on your site?</li>
+							<li class="list-group-item bg-transparent border-0 p-0">Job in IT?</li>
+							<li class="list-group-item bg-transparent border-0 p-0">Publish vacancy?</li>
+							<li class="list-group-item bg-transparent border-0 p-0">Help about web-site?</li>
+							<li class="list-group-item bg-transparent border-0 p-0">Start new IT business?</li>
 						</ul>
-						<p class="text fw-bold mb-4">We can help you with that!</p>
+						<p class="text fw-bold mb-4">What you want - today in minutes!</p>
 						<div class="hero__buttons">
-							<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>"
+							<a href="/category/vacancies/"
 							   type="button"
 							   data-action="job"
-							   class="hero__button shadow-sm btn btn-primary rounded-pill text-uppercase px-5 me-3 mb-3">find a job</a>
-							<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>"
+							   class="hero__button shadow-sm btn btn-primary rounded-pill text-uppercase px-5 me-3 mb-3">Find a job</a>
+							<a href="/category/candidates/"
 							   type="button"
 							   data-action="vacancy"
-							   class="hero__button shadow-sm btn btn-outline-primary rounded-pill text-uppercase px-5 mb-3">find a
-								specialist</a>
+							   class="hero__button shadow-sm btn btn-outline-primary rounded-pill text-uppercase px-5 mb-3">Find a specialist</a>
 						</div>
-						<a href="<?php echo get_bloginfo( 'url' ) . '/join'; ?>"
+						<a href="/account/#contacts"
 						   type="button"
 						   data-action="help"
-						   class="hero__button btn btn-link p-0 text-primary">get help on your site</a>
+						   class="hero__button btn btn-link p-0 text-primary">Get help about a web-site</a>
 					</div>
 					<div class="col col--image">
 						<div class="image-wrapper position-relative h-100 w-100">

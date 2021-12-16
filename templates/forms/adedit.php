@@ -195,7 +195,7 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
 				Content
 			</h3>
 			<p class="text-center description">
-				Official language communication, please. Violations would cause moderation check.
+				Official language communication, please. Violation leads to moderation.
 			</p>
             <p class="text-center description">
                 Add as much info, as possible here. Describing details has the best value!
@@ -209,7 +209,8 @@ if( $join_cat = get_term_by( 'slug', 'want-join', 'category' ) )
 						'textarea_name' => "article[content]",
 						'editor_class'  => 'invalidate change-check',
 						'media_buttons' => false,
-						'quicktags'     => false
+						'quicktags'     => false,
+						'editor_height' => 600,
 					]
 				);
 				?>
