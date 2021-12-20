@@ -24,13 +24,9 @@ get_header();
 					the_archive_title( '<h1 class="page-title display-1 h1">', '</h1>' );
 					the_archive_description( '<div class="archive-description lead">', '</div>' );
 					?>
-					<?php if( $_SERVER['REQUEST_URI'] === '/category/emeon-team/' ) : ?>
-						<div class="emeon-team-desciption">
-							<h5>We are ready to provide best services in web-development!</h5><br/>
-                            <p>Have a thing to do about your site or web-shop? Feel free to <a href="/account/#contacts">share it with us!</a><br/></p>
-                            <p>If you want to join us and be the part of the team - simply <a href="/add-edit/">add your CV</a></p>
-						</div>
-					<?php endif; ?>
+					<?php if( $_SERVER['REQUEST_URI'] === '/category/emeon-team/' )
+						get_template_part( 'template-parts/content', 'emeon-team' );
+					?>
 				</header><!-- .page-header -->
 
                 <?php

@@ -123,6 +123,32 @@ window.onload = ( function( $ ) {
 			},
 		} );
 
+		const projects = new Swiper( '.projects--swiper', {
+			loop: true,
+			spaceBetween: 15,
+			autoHeight: true,
+			autoplay: {
+			 	disableOnInteraction: false,
+			},
+			pagination: {
+				el: '.swiper-pagination--projects',
+				clickable: true,
+			},
+			breakpoints: {
+				320: {
+					slidesPerView: 2,
+				},
+				575: {
+					slidesPerView: 4,
+				},
+				991: {
+					slidesPerView: 6,
+				},
+			},
+		} );
+
+
+
 		const candidates_swiper = new Swiper( '.candidates--swiper', {
 			loop: true,
 			spaceBetween: 20,

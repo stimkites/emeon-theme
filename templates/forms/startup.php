@@ -14,10 +14,23 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 <form action=" " method="post" class="emeon-form form-startup" data-action="startup"
       enctype="multipart/form-data" name="emeon-form">
 
-	<h4>Start your online business today!</h4>
+	<h4>Start your online business today for FREE!</h4>
 
-	<p class="description">
-		To help you starting an IT business we only need a few lines about it.
+	<p class="description image-hero">
+		<img src="<?=get_template_directory_uri()?>/img/help.svg" alt="New Business with Emeon"/>
+		To help you starting an IT business we only need a few lines about it. And yes, we will setup a brand new
+		web-shop for you completely for free! Just describe it to us!
+	</p>
+
+	<p class="description image-hero-right">
+		<img src="<?=get_template_directory_uri()?>/img/wp-themes.png" alt="Word Press Themes"/>
+		Wondering how it will look like? - We are using <a href="https://wordpress.org/" target="_blank">WordPress</a>
+		and <a href="https://woocommerce.com/" target="_blank">WooCommerce</a> as a platform for your future web-shop!
+		It means you will have the freedom to choose
+		<a href="https://wordpress.org/themes/search/storefront/" target="_blank">any of themes</a>
+		all around the world! Check out our partner's
+		<a href="https://wetail.io/e-handelsteman/" target="_blank">featured themes</a>
+		explicitly customized for e-Commerce!
 	</p>
 
 	<fieldset class="emeon-form__fieldset">
