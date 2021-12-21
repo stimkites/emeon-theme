@@ -129,7 +129,7 @@ window.onload = ( function( $ ) {
 			autoHeight: true,
 			autoplay: {
 			 	disableOnInteraction: false,
-        delay: 600,
+        delay: 1500,
 			},
       navigation: {
         nextEl: '.swiper-button-next--projects',
@@ -154,7 +154,7 @@ window.onload = ( function( $ ) {
       autoHeight: true,
       autoplay: {
         disableOnInteraction: false,
-        delay: 3000,
+        delay: 4000,
       },
       pagination: {
         el: '.swiper-pagination--themes',
