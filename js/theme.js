@@ -129,23 +129,49 @@ window.onload = ( function( $ ) {
 			autoHeight: true,
 			autoplay: {
 			 	disableOnInteraction: false,
+        delay: 600,
 			},
-			pagination: {
-				el: '.swiper-pagination--projects',
-				clickable: true,
-			},
+      navigation: {
+        nextEl: '.swiper-button-next--projects',
+        prevEl: '.swiper-button-prev--projects',
+      },
 			breakpoints: {
 				320: {
 					slidesPerView: 2,
 				},
 				575: {
-					slidesPerView: 4,
+					slidesPerView: 3,
 				},
 				991: {
-					slidesPerView: 6,
+					slidesPerView: 5,
 				},
 			},
 		} );
+
+    const themes = new Swiper( '.themes--swiper', {
+      loop: true,
+      spaceBetween: 20,
+      autoHeight: true,
+      autoplay: {
+        disableOnInteraction: false,
+        delay: 3000,
+      },
+      pagination: {
+        el: '.swiper-pagination--themes',
+        clickable: true,
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+        },
+        575: {
+          slidesPerView: 2,
+        },
+        991: {
+          slidesPerView: 4,
+        },
+      },
+    } );
 
 
 
