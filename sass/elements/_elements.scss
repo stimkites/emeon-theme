@@ -272,3 +272,78 @@ a:focus, button, input, select, password, textarea {
 .about-us-content a {
 	text-decoration: underline;
 }
+
+
+.image-hero-text {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+	img {
+		display: block;
+		max-height: 255px;
+		margin: 20px;
+	}
+
+	.hero-text {
+		display: block;
+		width: 100%;
+		max-width: 500px;
+		text-align: left;
+		font-size: 18px;
+		line-height: 2em;
+		padding: 20px;
+
+		a:not(.btn) {
+			font-style: italic;
+			text-decoration: underline;
+		}
+
+		a.btn-primary {
+			color: #fff;
+		}
+
+		a.btn {
+			margin: 12px auto;
+			text-decoration: none !important;
+			clear: both;
+			display: block;
+		}
+	}
+
+	.text-right {
+		text-align: right;
+	}
+}
+
+
+.emeon-team-desciption {
+	h5 {
+		margin: 20px auto 30px auto;
+	}
+
+	h4 {
+		font-size: 25px;
+		margin: 34px auto 10px;
+		font-weight: normal;
+	}
+}
+
+html .section--projects {
+
+	a.fs-4 {
+		font-size: 16px !important;
+		font-weight: normal !important;
+		text-decoration: none !important;
+	}
+
+}
+
+html .section--themes {
+
+	img.img-contain{
+		object-fit: scale-down;
+	}
+
+}

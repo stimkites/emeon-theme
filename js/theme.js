@@ -6,9 +6,11 @@ window.onload = ( function( $ ) {
 		_window = $( window ),
 		_header_elem = $( '.site-header' ),
 		_sandwich_button_elem = $( '.toggle-mobile-menu' ),
-		_searchBtnFilter = $('.search-mobile-bar .btn'),
-		_closeFilterBtn = $('.search-content .emeon-form .btn-close'),
-		_emeonCookieButtons = $('.emeon-cookies .emeon-cookies__btn-wrapper .btn');
+		_searchBtnFilter = $( '.search-mobile-bar .btn' ),
+		_closeFilterBtn = $( '.search-content .emeon-form .btn-close' ),
+		_emeonCookieButtons = $( '.emeon-cookies .emeon-cookies__btn-wrapper .btn' ),
+		_hero_button = $( '.hero__button' ),
+		_hero_images = $( '.hero__image' );
 
 
 	/**
@@ -93,21 +95,6 @@ window.onload = ( function( $ ) {
 	 * @private
 	 */
 	function __swiper_init() {
-		const about_swiper = new Swiper( '.about--swiper', {
-			loop: true,
-			autoHeight: false,
-			height: '550px',
-			slidesPerView: 1,
-			autoplay: {
-				delay: 4000,
-				pauseOnMouseEnter: true,
-			},
-			pagination: {
-				el: '.swiper-pagination--about',
-				clickable: true,
-			},
-		} );
-
 		const vacancies_swiper = new Swiper( '.vacancies--swiper', {
 			loop: true,
 			spaceBetween: 20,
@@ -135,6 +122,58 @@ window.onload = ( function( $ ) {
 				},
 			},
 		} );
+
+		const projects = new Swiper( '.projects--swiper', {
+			loop: true,
+			spaceBetween: 15,
+			autoHeight: true,
+			autoplay: {
+			 	disableOnInteraction: false,
+        delay: 1500,
+			},
+      navigation: {
+        nextEl: '.swiper-button-next--projects',
+        prevEl: '.swiper-button-prev--projects',
+      },
+			breakpoints: {
+				320: {
+					slidesPerView: 2,
+				},
+				575: {
+					slidesPerView: 3,
+				},
+				991: {
+					slidesPerView: 5,
+				},
+			},
+		} );
+
+    const themes = new Swiper( '.themes--swiper', {
+      loop: true,
+      spaceBetween: 20,
+      autoHeight: true,
+      autoplay: {
+        disableOnInteraction: false,
+        delay: 4000,
+      },
+      pagination: {
+        el: '.swiper-pagination--themes',
+        clickable: true,
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+        },
+        575: {
+          slidesPerView: 2,
+        },
+        991: {
+          slidesPerView: 4,
+        },
+      },
+    } );
+
+
 
 		const candidates_swiper = new Swiper( '.candidates--swiper', {
 			loop: true,
@@ -184,19 +223,19 @@ window.onload = ( function( $ ) {
 	 * @private
 	 */
 
-	function  __rangeSlider_init() {
-		const salary = $(".emeon-form .emeon-salary");
-		const curSymb = salary.siblings('.cur-symbol').text();
-		const minSalary = +salary.attr('min');
-		const stepSalary = +salary.attr('step');
-		salary.ionRangeSlider({
-			skin: "round",
+	function __rangeSlider_init() {
+		const salary = $( '.emeon-form .emeon-salary' );
+		const curSymb = salary.siblings( '.cur-symbol' ).text();
+		const minSalary = +salary.attr( 'min' );
+		const stepSalary = +salary.attr( 'step' );
+		salary.ionRangeSlider( {
+			skin: 'round',
 			min: minSalary,
 			step: stepSalary,
 			max: 20000,
-			postfix: ` ${curSymb}`,
-			from: salary.val()
-		});
+			postfix: ` ${ curSymb }`,
+			from: salary.val(),
+		} );
 	}
 
 	/**
@@ -205,7 +244,7 @@ window.onload = ( function( $ ) {
 	 */
 
 	function __clickSearchFilterHandler() {
-		$('.search-content .emeon-form').toggleClass('open')
+		$( '.search-content .emeon-form' ).toggleClass( 'open' );
 	}
 
 	/**
@@ -214,7 +253,7 @@ window.onload = ( function( $ ) {
 	 */
 
 	function __closeFiltersMobile() {
-		$('.search-content .emeon-form').removeClass('open')
+		$( '.search-content .emeon-form' ).removeClass( 'open' );
 	}
 
 	/**
@@ -223,15 +262,24 @@ window.onload = ( function( $ ) {
 	 * @private
 	 */
 
-	function __cookieConcernHandler(event) {
+	function __cookieConcernHandler( event ) {
 		localStorage.setItem( 'emeon-cookie', 'accept' );
 		$( '.emeon-cookies' ).addClass( 'done' );
 	}
 
 	function __checkCookieConcern() {
-		if (!localStorage.getItem( 'emeon-cookie')) {
-			$( '.emeon-cookies' ).removeClass('done');
+		if ( !localStorage.getItem( 'emeon-cookie' ) ) {
+			$( '.emeon-cookies' ).removeClass( 'done' );
 		}
+	}
+
+
+
+	function __change_image( e ) {
+		const _action = e.currentTarget.dataset.action;
+		console.log(_action);
+		_hero_images.addClass( 'hidden' );
+		$( '.hero__image[data-action="' + _action + '"]' ).removeClass( 'hidden' );
 	}
 
 
@@ -245,8 +293,9 @@ window.onload = ( function( $ ) {
 		_window.on( 'resize', __window_resize_handler );
 		_sandwich_button_elem.on( 'click', __click_sandwich_button_handler );
 		_searchBtnFilter.on( 'click', __clickSearchFilterHandler );
-		_closeFilterBtn.on('click', __closeFiltersMobile);
-		_emeonCookieButtons.on('click', __cookieConcernHandler);
+		_closeFilterBtn.on( 'click', __closeFiltersMobile );
+		_emeonCookieButtons.on( 'click', __cookieConcernHandler );
+		_hero_button.on( 'mouseenter', __change_image )
 
 		window.onbeforeunload = function() {
 			_window.off( 'scroll', __page_scroll_handler );

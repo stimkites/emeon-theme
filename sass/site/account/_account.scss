@@ -28,7 +28,7 @@
 	}
 
 	h2 {
-		font-size: 18px;
+		font-size: 22px;
 		line-height: 1;
 		text-align: center;
 		padding: 0;
@@ -273,9 +273,9 @@
 			}
 		}
 
-		#contacts {
+		#contacts, #coverletter, #startup {
 
-			form.form-contactus {
+			form {
 				position: relative;
 
 				fieldset {
@@ -289,7 +289,7 @@
 						input.emeon-control, button.button-cta {
 							width: 100%;
 							padding: 9px;
-							font-size: 12px;
+							font-size: 14px;
 							border-radius: 0;
 							border: 1px solid #ccc;
 							margin: 0;
@@ -301,12 +301,50 @@
 				}
 
 				.description {
-					text-align: right;
-					margin-top: 10px;
+					text-align: center;
+					margin-top: 5px;
+					font-size: 13px;
+
+					&.email-us {
+						margin-top: 20px;
+						text-align: right;
+					}
+				}
+
+				h4 {
+					font-size: 18px;
+					font-weight: normal;
+					line-height: 2em;
+					margin-top: 20px;
+					text-align: center;
+				}
+
+				.choose-free-plan {
+					margin-top: 20px;
+					font-size: 15px;
+					line-height: 20px;
+					margin-bottom: 5px !important;
+				}
+
+				.control-wrap.startup-cta {
+					margin: 10px 0;
 				}
 
 			}
 		}
+
+		.success-result {
+			padding: 40px;
+			font-size: 14px !important;
+			border-left: 5px solid lime;
+			background: #fff;
+			margin: 30px auto;
+
+			#project-name, #email-sent {
+				font-weight: bold;
+			}
+		}
+
 	}
 }
 
@@ -328,4 +366,8 @@
 			}
 		}
 	}
+}
+
+.form-startup h4 {
+	margin-bottom: 40px;
 }

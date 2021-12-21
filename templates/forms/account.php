@@ -45,6 +45,8 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 	<div class="emeon-account-menu">
 		<ul id="account-primary-menu">
 			<li><a href="#my-articles" class="my-pass">My ads</a></li>
+			<li><a href="#coverletter" class="my-cover-le">My cover letter</a></li>
+			<li><a href="#startup" class="my-pass">My startup</a></li>
 			<li><a href="#pass" class="my-pass">My password</a></li>
 			<li><a href="#contacts" class="contacts">Contact us</a></li>
 			<li><a href="<?= wp_logout_url( home_url() ) ?>" class="logout">Log out</a></li>
@@ -52,9 +54,7 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 	</div>
 	<div class="emeon-account-content">
 		<div class="account-content" id="my-articles">
-			<h2>
-				My ads
-			</h2>
+			<h2>My ads</h2>
 			<div class="add-link-wrapper">
                 <a href="<?= $adedit_url ?>" class="add-link" title="Add new">Add new</a>
             </div>
@@ -68,6 +68,14 @@ $adedit_url = apply_filters( 'emeon_adedit_url', '/add-edit/' );
 				$post = $a;
 				?>
 			</div>
+		</div>
+		<div class="emeon-cover-letter account-content" id="coverletter">
+			<h2>My cover letter</h2>
+			<?= do_shortcode( '[emeon_forms form=coverletter]' ) ?>
+		</div>
+		<div class="emeon-startup account-content" id="startup">
+			<h2>My startup</h2>
+			<?= do_shortcode( '[emeon_forms form=startup]' ) ?>
 		</div>
 		<div class="emeon-pass-change account-content" id="pass">
 			<h2>Password change</h2>

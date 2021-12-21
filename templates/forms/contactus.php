@@ -35,7 +35,8 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 				[
 					'textarea_name' => "content",
 					'media_buttons' => false,
-					'quicktags'     => false
+					'quicktags'     => false,
+					'editor_height' => 425
 				]
 			);
 			?>
@@ -44,7 +45,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 			<button type="submit" class="button emeon-control button-cta">Send</button>
 		</div>
 
-		<p class="description">
+		<p class="description email-us">
 			Or just send us message to <a class="link-info" href="mailto:support@emeon.io">support@emeon.io</a>
 		</p>
 
@@ -52,7 +53,7 @@ $nonce = wp_create_nonce( EMEON_SLUG );
 		<input type="hidden" name="__nonce" value="<?= $nonce ?>"/>
 	</fieldset>
 </form>
-<div id="contactus-success" style="display: none">
+<div id="contactus-success" class="success-result" style="display: none">
     <h3>Email is sent successfully!</h3>
     <p>We will get in touch via email <span id="email-sent"></span> as soon as possible!</p>
     <p>Thank you for contacting us!</p>

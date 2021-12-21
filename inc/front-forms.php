@@ -825,6 +825,51 @@ new class {
     }
 
 	/**
+	 * Ajax startup action
+	 */
+	static function emeon_account_startup(){
+		$uid   = get_current_user_id();
+		$user  = new WP_User( $uid );
+		$email = $user->user_email;
+		$text  =
+			'<h1>' . sanitize_text_field( $_POST['project'] ) . '</h1>' .
+			'<h2>' . sanitize_text_field( $_POST['domain'] ) . '</h2>' .
+			$_POST['content'] .
+			'<hr/>' .
+			'<h5>Plan: ' . sanitize_text_field( $_POST['plan'] ) . '</h5>' .
+			'<h5>User: ' . $uid . '|' . $user->user_email . '</h5>';
+		if( ! wp_mail(
+			'business@emeon.io',
+			'STARTUP - ' . sanitize_text_field( $_POST['project'] ),
+			$text,
+			[
+				"Reply-To:" . $email,
+				"Content-Type: text/html; charset=UTF-8"
+			]
+		) )
+			wp_send_json( [
+				'error' =>
+					'Could not send the email automatically!' .
+					'Please use <b>business@emeon.io</b> and contact us via regular mail services.'
+			] );
+		else
+			wp_send_json( [
+				'sent' => true
+			] );
+		die();
+	}
+
+    /**
+	 * Ajax coverletter save
+	 */
+	static function emeon_account_coverletter(){
+        wp_send_json( [
+            'saved' => update_user_meta( get_current_user_id(), '_cover_letter', $_POST['content'] )
+        ] );
+	    die();
+    }
+
+	/**
 	 * Ajax contact us action
 	 */
 	static function emeon_account_passchange(){

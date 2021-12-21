@@ -12,7 +12,7 @@ const __error = {
 	cleanup: function( delay ) {
 		const elem = document.querySelector( '.emeon-error-popup' );
 		if ( !elem ) return;
-		elem.addEventListener( 'click', ( e ) => e.target.classList.remove( 'visible' ));
+		elem.addEventListener( 'click', ( e ) => e.target.classList.remove( 'visible' ) );
 		t = setTimeout( () => elem.classList.remove( 'visible' ), delay || 5000 );
 	},
 	showHelper: function( type, elem, delay, msg ) {
@@ -25,7 +25,9 @@ const __error = {
 		this.cleanup( delay );
 	},
 	show: function( msg, delay, type ) {
-		if ( t ) { clearTimeout( t ) }
+		if ( t ) {
+			clearTimeout( t );
+		}
 		if ( !type ) type = 'error';
 		let elem = document.querySelector( '.emeon-error-popup' );
 
@@ -70,15 +72,17 @@ const __error = {
 	},
 };
 
-jQuery( document ).ready( () => { __error.cleanup() } ); // Clean up on load
+jQuery( document ).ready( () => {
+	__error.cleanup();
+} ); // Clean up on load
 
 /**
  * Google captcha validation
  */
-const getToken = async function(){
+const getToken = async function() {
 	let tokenNum = false;
 	await grecaptcha.execute(
-	  __emeon.gc, { action: 'submit' }
+	  __emeon.gc, { action: 'submit' },
 	).then( token => tokenNum = token );
 	return tokenNum;
 };
@@ -284,7 +288,7 @@ const getToken = async function(){
 
 	let __changed = false;
 
-	const __set_changed = function(){
+	const __set_changed = function() {
 		__changed = true;
 	};
 
@@ -294,15 +298,15 @@ const getToken = async function(){
 	 * @param e
 	 * @private
 	 */
-	const __prefill = function( e ){
-		if( ! $( '#use_example').prop( 'checked' ) ) return;
+	const __prefill = function( e ) {
+		if ( !$( '#use_example' ).prop( 'checked' ) ) return;
 		let
 		  _e = $( e ? e.target : '.article-type-ctrl:checked' ),
 		  _v = _e.val(),
 		  _d = __emeon.pf[ _v ] || false,
 		  _a = $( '#article_excerpt' ),
 		  _b = tinyMCE.get( 'article_content' );
-		if( ! _d || __changed ) return;
+		if ( !_d || __changed ) return;
 		_a.val( _d.excerpt );
 		_b.setContent( _d.content );
 	};
@@ -312,9 +316,9 @@ const getToken = async function(){
 	 *
 	 * @private
 	 */
-	const __clean_prefilled = function(){
-		if( __changed ) return;
-		if( $( this ).prop( 'checked' ) )
+	const __clean_prefilled = function() {
+		if ( __changed ) return;
+		if ( $( this ).prop( 'checked' ) )
 			__prefill();
 		else {
 			let
@@ -338,7 +342,9 @@ const getToken = async function(){
 		$( 'form.emeon-form' ).off().submit( __validate_form );
 		$( '.article-type-ctrl' ).off().on( 'change', __prefill );
 		$( '.change-check' ).parents( '.control-wrap' ).on( 'click', __set_changed );
-		setTimeout( () => { $( '.article-type-ctrl:checked' ).trigger( 'change' ); }, 1000 );
+		setTimeout( () => {
+			$( '.article-type-ctrl:checked' ).trigger( 'change' );
+		}, 1000 );
 		$( '#use_example' ).on( 'change', __clean_prefilled );
 		__error.flush();
 		__init_selects();
@@ -359,7 +365,7 @@ const getToken = async function(){
 } )( jQuery.noConflict() ).init(); /** Ad edit form **/
 
 /**
- * My account
+ * My account *********************************************************************************************************
  */
 ( $ => {
 
@@ -375,7 +381,9 @@ const getToken = async function(){
 		if ( !l.length ) return;
 		$( '.account-content' ).removeClass( 'viz' );
 		l.addClass( 'viz' );
-		setTimeout( () => { window.scrollTo(0, 0) }, 1 );
+		setTimeout( () => {
+			window.scrollTo( 0, 0 );
+		}, 1 );
 	};
 
 
@@ -429,79 +437,143 @@ const getToken = async function(){
 		}
 	};
 
-  /**
+	/**
 	 * Password change form
 	 *
-   * @param e
-   * @return {*}
-   * @private
-   */
-	const __passchange = ( e )  => {
-    e.preventDefault();
-    e.stopPropagation();
+	 * @param e
+	 * @return {*}
+	 * @private
+	 */
+	const __passchange = ( e ) => {
+		e.preventDefault();
+		e.stopPropagation();
 		let _f = $( e.target );
 		let _d = {}, _e = false;
-		_d.do 		= _f.data( 'action' );
-		_d.nonce  = __emeon.n;
+		_d.do = _f.data( 'action' );
+		_d.nonce = __emeon.n;
 		_d.action = 'emeon_account_ajax';
-		_f.find( '.change-pass' ).each( function(){
-			if( ! this.value ) {
-        __error.show( 'Empty values not allowed!' );
-        _e = true;
-      }
-      _d[ this.name ] = this.value;
+		_f.find( '.change-pass' ).each( function() {
+			if ( !this.value ) {
+				__error.show( 'Empty values not allowed!' );
+				_e = true;
+			}
+			_d[ this.name ] = this.value;
 		} );
-		if( _e ) return false;
-		if( _d.new !== _d.confirm ) return __error.show( 'Password confirmation and new one do not match' );
-		if( _d.new.length < 6 ) return __error.show( 'Minimum password length is 6' );
-    _f.addClass( 'loading' );
+		if ( _e ) return false;
+		if ( _d.new !== _d.confirm ) return __error.show( 'Password confirmation and new one do not match' );
+		if ( _d.new.length < 6 ) return __error.show( 'Minimum password length is 6' );
+		_f.addClass( 'loading' );
 		$.post( __emeon.ajax_url, _d, ( response ) => {
-      _f.removeClass( 'loading' );
-			if( response.error )
+			_f.removeClass( 'loading' );
+			if ( response.error )
 				return __error.show( response.error );
 			__error.show( 'Success!', 2000, 'success' );
-			setTimeout( () => { window.location.reload( true ) }, 2500 );
+			setTimeout( () => {
+				window.location.reload( true );
+			}, 2500 );
 		} );
 		return false;
 	};
 
-  /**
+	/**
 	 * Contact us
 	 *
-   * @param e
-   * @return {*}
-   * @private
-   */
+	 * @param e
+	 * @return {*}
+	 * @private
+	 */
 	const __contactus = ( e ) => {
-    let _f = $( e.target );
-    if ( 'undefined' !== typeof tinyMCE )
-    	tinyMCE.get( 'contactus_content' ).save();
-    let _d = {
-    	do: _f.data( 'action' ),
+		let _f = $( e.target );
+		if ( 'undefined' !== typeof tinyMCE )
+			tinyMCE.get( 'contactus_content' ).save();
+		let _d = {
+			do: _f.data( 'action' ),
 			nonce: __emeon.n,
 			action: 'emeon_account_ajax',
 			email: $( '#email' ).val(),
 			subject: $( '#subject' ).val(),
-			content: $( '#contactus_content' ).val()
+			content: $( '#contactus_content' ).val(),
 		};
-    if( _d.email.length < 4 || ! validateEmail( _d.email ) )
-      return __error.show('Email is invalid!');
-    if( _d.subject.length < 3 )
-      return __error.show('Subject seems empty!');
-    if( _d.content.length < 3 )
-      return __error.show( 'Content has to be there!' );
-    _f.addClass( 'loading' );
-    $.post( __emeon.ajax_url, _d, ( response ) => {
-      _f.removeClass( 'loading' );
-      if( response.error )
-        return __error.show( response.error );
-      $(' #email-sent' ).html( _d.email );
-      __error.show( 'Success!', 2000, 'success' );
-      _f.hide();
-      $( '#contactus-success' ).show();
-      $( '#send-more-action' ).off().on( 'click', () => { window.location.reload() } );
-    } );
-    return false;
+		if ( _d.email.length < 4 || !validateEmail( _d.email ) )
+			return __error.show( 'Email is invalid!' );
+		if ( _d.subject.length < 3 )
+			return __error.show( 'Subject seems empty!' );
+		if ( _d.content.length < 3 )
+			return __error.show( 'Content has to be there!' );
+		_f.addClass( 'loading' );
+		$.post( __emeon.ajax_url, _d, ( response ) => {
+			_f.removeClass( 'loading' );
+			if ( response.error )
+				return __error.show( response.error );
+			$( ' #email-sent' ).html( _d.email );
+			__error.show( 'Success!', 2000, 'success' );
+			_f.hide();
+			$( '#contactus-success' ).show();
+			$( '#send-more-action' ).off().on( 'click', () => {
+				window.location.reload();
+			} );
+		} );
+		return false;
+	};
+
+	/**
+	 * Startup email
+	 *
+	 * @param e
+	 * @return {*}
+	 * @private
+	 */
+	const __startup = ( e ) => {
+		let _f = $( e.target );
+		if ( 'undefined' !== typeof tinyMCE )
+			tinyMCE.get( 'startup_content' ).save();
+		let _d = {
+			do: _f.data( 'action' ),
+			nonce: __emeon.n,
+			action: 'emeon_account_ajax',
+			domain	: $( '#domain' ).val(),
+			project	: $( '#project-name' ).val(),
+			content	: $( '#startup_content' ).val(),
+			plan	: $( '#free-plan' ).prop( 'checked' ) ? 'free' : 'regular',
+		};
+		if ( _d.project.length < 4 || _d.content.length < 10 )
+			return __error.show( 'Add a few more details, please..' );
+		_f.addClass( 'loading' );
+		$.post( __emeon.ajax_url, _d, ( response ) => {
+			_f.removeClass( 'loading' );
+			if ( response.error )
+				return __error.show( response.error );
+			$( ' #project-name' ).html( _d.project );
+			__error.show( 'Success!', 2000, 'success' );
+			_f.hide();
+			$( '#startup-success' ).show();
+		} );
+		return false;
+	};
+
+	/**
+	 * Save coverletter on the fly
+	 *
+	 * @private
+	 */
+	const __coverletter = function(){
+		setTimeout( () => {
+			if ( 'undefined' === typeof tinyMCE ) return;
+			tinyMCE.get( 'coverletter_content' ).on( 'change', () => {
+				tinyMCE.get( 'coverletter_content' ).save();
+				let _d = {
+					do: 'coverletter',
+					nonce: __emeon.n,
+					action: 'emeon_account_ajax',
+					content: $( '#coverletter_content' ).val(),
+				};
+				console.log( _d.content );
+				$.post( __emeon.ajax_url, _d, ( response ) => {
+					if ( response.error )
+						return __error.show( response.error );
+				} );
+			} );
+		}, 1000 );
 	};
 
 
@@ -514,11 +586,13 @@ const getToken = async function(){
 		$( '#account-primary-menu li a' ).off().on( 'click', __switch_partitions );
 		$( '.delete-item' ).off().on( 'click', __delete_post );
 		$( '#view-pass' ).off().on( 'change', __toggle_password_visibility );
-		$( 'form.form-contactus' ).off().on( 'submit', __contactus   );
-		$( 'form.form-password'  ).off().on( 'submit', __passchange  );
+		$( 'form.form-contactus' ).off().on( 'submit', __contactus );
+		$( 'form.form-startup' ).off().on( 'submit', __startup );
+		__coverletter();
+		$( 'form.form-password' ).off().on( 'submit', __passchange );
 		$( document.body ).on( 'click', __toggle_post_menu );
 		let _h = window.location.hash || '#my-articles', _hl;
-		if( _h && ( _hl = $( 'a[href=' + _h + ']' ) ) && _hl.length )
+		if ( _h && ( _hl = $( 'a[href=' + _h + ']' ) ) && _hl.length )
 			_hl.trigger( 'click' );
 		else
 			$( '#my-articles' ).addClass( 'viz' );
@@ -556,7 +630,7 @@ const validateEmail = ( email ) => {
 		  tokenNum = 'debug',
 		  value;
 
-		if( ! __emeon.d )
+		if ( !__emeon.d )
 			tokenNum = await getToken();
 
 
@@ -586,7 +660,7 @@ const validateEmail = ( email ) => {
 			}
 
 			if ( err === 'empty' ) {
-				console.log('err');
+				console.log( 'err' );
 				__error.show( errorElEmptyText );
 				label.addClass( 'error' );
 			}
@@ -616,10 +690,10 @@ const validateEmail = ( email ) => {
 
 				let data = {
 					action: 'emeon_ajax',
-					do		: 'join',
-					email	: emailVal,
-					token	: token,
-					nonce	: nonceVal,
+					do: 'join',
+					email: emailVal,
+					token: token,
+					nonce: nonceVal,
 				};
 				$.ajax( {
 					url: adminUrl,
@@ -655,8 +729,8 @@ const validateEmail = ( email ) => {
 
 		__error.flush();
 
-		$( '#accept-policy' ).off().on( 'change', function(){
-			$( '#btn-join' ).prop( 'disabled', ! $( this ).prop( 'checked' ) );
+		$( '#accept-policy' ).off().on( 'change', function() {
+			$( '#btn-join' ).prop( 'disabled', !$( this ).prop( 'checked' ) );
 		} );
 
 	};
@@ -687,13 +761,13 @@ const validateEmail = ( email ) => {
 		  email = $( '#email' ),
 		  emailVal = email.val();
 
-		if( 4 > emailVal.length || ! validateEmail( emailVal ) ) {
+		if ( 4 > emailVal.length || !validateEmail( emailVal ) ) {
 			__error.show( email.data( 'invalid' ) );
 			email.parent().addClass( 'error-field' );
 			return false;
 		}
 
-		if( ! __emeon.d )
+		if ( !__emeon.d )
 			tokenNum = await getToken();
 
 		if ( tokenNum ) {
@@ -712,36 +786,36 @@ const validateEmail = ( email ) => {
 		let curTarget = $( event.currentTarget );
 		if ( !__validate_form( event ) ) return;
 		__validate_form( event ).then( res => {
-			if ( !res ) return;
-			const { token, emailVal, nonceVal } = res;
+			  if ( !res ) return;
+			  const { token, emailVal, nonceVal } = res;
 
-			let adminUrl = __emeon.ajax_url;
+			  let adminUrl = __emeon.ajax_url;
 
-			let data = {
-				action: 'emeon_ajax',
-				do: 'recover',
-				email: emailVal,
-				token: token,
-				nonce: nonceVal,
-			};
-			$.ajax( {
-				url: adminUrl,
-				data: data,
-				type: 'POST',
-				beforeSend: function( xhr ) {
-					curTarget.addClass( 'loading' );
-				},
-				success: function( data ) {
-          curTarget.removeClass( 'loading' );
-					data = JSON.parse( data );
-					if( data.error )
-						return __error.show( data.error );
-					curTarget.hide();
-					$( '#email-sent' ).html( emailVal );
-					$( '.recover-success' ).show();
-				},
-			} );
-		}
+			  let data = {
+				  action: 'emeon_ajax',
+				  do: 'recover',
+				  email: emailVal,
+				  token: token,
+				  nonce: nonceVal,
+			  };
+			  $.ajax( {
+				  url: adminUrl,
+				  data: data,
+				  type: 'POST',
+				  beforeSend: function( xhr ) {
+					  curTarget.addClass( 'loading' );
+				  },
+				  success: function( data ) {
+					  curTarget.removeClass( 'loading' );
+					  data = JSON.parse( data );
+					  if ( data.error )
+						  return __error.show( data.error );
+					  curTarget.hide();
+					  $( '#email-sent' ).html( emailVal );
+					  $( '.recover-success' ).show();
+				  },
+			  } );
+		  },
 		);
 	};
 
@@ -840,7 +914,7 @@ const validateEmail = ( email ) => {
 					target.addClass( 'loading' );
 				},
 				success: function( data ) {
-          target.removeClass( 'loading' );
+					target.removeClass( 'loading' );
 					let email = target.find( $( 'input[type="email"]' ) ),
 					  pass = target.find( $( 'input[type="password"]' ) ),
 					  passLabel = pass.parent( 'label' ),
@@ -853,7 +927,7 @@ const validateEmail = ( email ) => {
 						return __error.show( newData[ 'error' ] );
 					}
 
-					if( newData.url )
+					if ( newData.url )
 						window.location = newData.url;
 					else
 						window.location.reload( true );

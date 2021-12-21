@@ -307,6 +307,42 @@ body.single-post #primary {
     height: 100%;
     object-fit: contain; }
 
+.hero__button:visited.btn-primary {
+  color: white; }
+.hero__button:visited.btn-outline-primary {
+  color: #0a58ca; }
+  .hero__button:visited.btn-outline-primary:hover {
+    color: white; }
+.hero__image {
+  height: 100%;
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s; }
+  .hero__image.hidden {
+    transform: translateY(-20px);
+    opacity: 0;
+    visibility: hidden; }
+
+@media (max-width: 991px) {
+  .hero .col--text {
+    position: relative;
+    z-index: 1; }
+    .hero .col--text::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      background-image: url("../img/hero.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      opacity: 0.05; }
+  .hero .col--image {
+    display: none; } }
 /*--------------------------------------------------------------
 ## Comments
 --------------------------------------------------------------*/
@@ -369,7 +405,7 @@ body.single-post #primary {
     .emeon-account .moderation-status.published {
       border-left: 5px solid limegreen; }
   .emeon-account h2 {
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1;
     text-align: center;
     padding: 0;
@@ -538,26 +574,51 @@ body.single-post #primary {
         display: none; }
         .emeon-account-content #pass form.form-password #view-pass:checked + label[for=view-pass]:before {
           content: ""; }
-    .emeon-account-content #contacts form.form-contactus {
+    .emeon-account-content #contacts form, .emeon-account-content #coverletter form, .emeon-account-content #startup form {
       position: relative; }
-      .emeon-account-content #contacts form.form-contactus fieldset {
+      .emeon-account-content #contacts form fieldset, .emeon-account-content #coverletter form fieldset, .emeon-account-content #startup form fieldset {
         flex-direction: column; }
-        .emeon-account-content #contacts form.form-contactus fieldset .control-wrap {
+        .emeon-account-content #contacts form fieldset .control-wrap, .emeon-account-content #coverletter form fieldset .control-wrap, .emeon-account-content #startup form fieldset .control-wrap {
           padding: 0;
           margin: -1px 0 0 0; }
-          .emeon-account-content #contacts form.form-contactus fieldset .control-wrap input.emeon-control, .emeon-account-content #contacts form.form-contactus fieldset .control-wrap button.button-cta {
+          .emeon-account-content #contacts form fieldset .control-wrap input.emeon-control, .emeon-account-content #contacts form fieldset .control-wrap button.button-cta, .emeon-account-content #coverletter form fieldset .control-wrap input.emeon-control, .emeon-account-content #coverletter form fieldset .control-wrap button.button-cta, .emeon-account-content #startup form fieldset .control-wrap input.emeon-control, .emeon-account-content #startup form fieldset .control-wrap button.button-cta {
             width: 100%;
             padding: 9px;
-            font-size: 12px;
+            font-size: 14px;
             border-radius: 0;
             border: 1px solid #ccc;
             margin: 0;
             cursor: pointer;
             box-sizing: border-box;
             display: block; }
-      .emeon-account-content #contacts form.form-contactus .description {
-        text-align: right;
-        margin-top: 10px; }
+      .emeon-account-content #contacts form .description, .emeon-account-content #coverletter form .description, .emeon-account-content #startup form .description {
+        text-align: center;
+        margin-top: 5px;
+        font-size: 13px; }
+        .emeon-account-content #contacts form .description.email-us, .emeon-account-content #coverletter form .description.email-us, .emeon-account-content #startup form .description.email-us {
+          margin-top: 20px;
+          text-align: right; }
+      .emeon-account-content #contacts form h4, .emeon-account-content #coverletter form h4, .emeon-account-content #startup form h4 {
+        font-size: 18px;
+        font-weight: normal;
+        line-height: 2em;
+        margin-top: 20px;
+        text-align: center; }
+      .emeon-account-content #contacts form .choose-free-plan, .emeon-account-content #coverletter form .choose-free-plan, .emeon-account-content #startup form .choose-free-plan {
+        margin-top: 20px;
+        font-size: 15px;
+        line-height: 20px;
+        margin-bottom: 5px !important; }
+      .emeon-account-content #contacts form .control-wrap.startup-cta, .emeon-account-content #coverletter form .control-wrap.startup-cta, .emeon-account-content #startup form .control-wrap.startup-cta {
+        margin: 10px 0; }
+    .emeon-account-content .success-result {
+      padding: 40px;
+      font-size: 14px !important;
+      border-left: 5px solid lime;
+      background: #fff;
+      margin: 30px auto; }
+      .emeon-account-content .success-result #project-name, .emeon-account-content .success-result #email-sent {
+        font-weight: bold; }
 
 @media (max-width: 767px) {
   .emeon-account {
@@ -569,6 +630,9 @@ body.single-post #primary {
       margin-top: 20px; }
       .emeon-account-content .my-articles {
         justify-content: space-evenly; } }
+.form-startup h4 {
+  margin-bottom: 40px; }
+
 /*--------------------------------------------------------------
 ## Cookie styles
 --------------------------------------------------------------*/
@@ -994,6 +1058,51 @@ table {
 
 .about-us-content a {
   text-decoration: underline; }
+
+.image-hero-text {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around; }
+  .image-hero-text img {
+    display: block;
+    max-height: 255px;
+    margin: 20px; }
+  .image-hero-text .hero-text {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    font-size: 18px;
+    line-height: 2em;
+    padding: 20px; }
+    .image-hero-text .hero-text a:not(.btn) {
+      font-style: italic;
+      text-decoration: underline; }
+    .image-hero-text .hero-text a.btn-primary {
+      color: #fff; }
+    .image-hero-text .hero-text a.btn {
+      margin: 12px auto;
+      text-decoration: none !important;
+      clear: both;
+      display: block; }
+  .image-hero-text .text-right {
+    text-align: right; }
+
+.emeon-team-desciption h5 {
+  margin: 20px auto 30px auto; }
+.emeon-team-desciption h4 {
+  font-size: 25px;
+  margin: 34px auto 10px;
+  font-weight: normal; }
+
+html .section--projects a.fs-4 {
+  font-size: 16px !important;
+  font-weight: normal !important;
+  text-decoration: none !important; }
+
+html .section--themes img.img-contain {
+  object-fit: scale-down; }
 
 /*--------------------------------------------------------------
 # Forms
@@ -1633,6 +1742,42 @@ body.single-post #primary {
     height: 100%;
     object-fit: contain; }
 
+.hero__button:visited.btn-primary {
+  color: white; }
+.hero__button:visited.btn-outline-primary {
+  color: #0a58ca; }
+  .hero__button:visited.btn-outline-primary:hover {
+    color: white; }
+.hero__image {
+  height: 100%;
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s; }
+  .hero__image.hidden {
+    transform: translateY(-20px);
+    opacity: 0;
+    visibility: hidden; }
+
+@media (max-width: 991px) {
+  .hero .col--text {
+    position: relative;
+    z-index: 1; }
+    .hero .col--text::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      background-image: url("../img/hero.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      opacity: 0.05; }
+  .hero .col--image {
+    display: none; } }
 /*--------------------------------------------------------------
 ## Comments
 --------------------------------------------------------------*/
@@ -1695,7 +1840,7 @@ body.single-post #primary {
     .emeon-account .moderation-status.published {
       border-left: 5px solid limegreen; }
   .emeon-account h2 {
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1;
     text-align: center;
     padding: 0;
@@ -1864,26 +2009,51 @@ body.single-post #primary {
         display: none; }
         .emeon-account-content #pass form.form-password #view-pass:checked + label[for=view-pass]:before {
           content: ""; }
-    .emeon-account-content #contacts form.form-contactus {
+    .emeon-account-content #contacts form, .emeon-account-content #coverletter form, .emeon-account-content #startup form {
       position: relative; }
-      .emeon-account-content #contacts form.form-contactus fieldset {
+      .emeon-account-content #contacts form fieldset, .emeon-account-content #coverletter form fieldset, .emeon-account-content #startup form fieldset {
         flex-direction: column; }
-        .emeon-account-content #contacts form.form-contactus fieldset .control-wrap {
+        .emeon-account-content #contacts form fieldset .control-wrap, .emeon-account-content #coverletter form fieldset .control-wrap, .emeon-account-content #startup form fieldset .control-wrap {
           padding: 0;
           margin: -1px 0 0 0; }
-          .emeon-account-content #contacts form.form-contactus fieldset .control-wrap input.emeon-control, .emeon-account-content #contacts form.form-contactus fieldset .control-wrap button.button-cta {
+          .emeon-account-content #contacts form fieldset .control-wrap input.emeon-control, .emeon-account-content #contacts form fieldset .control-wrap button.button-cta, .emeon-account-content #coverletter form fieldset .control-wrap input.emeon-control, .emeon-account-content #coverletter form fieldset .control-wrap button.button-cta, .emeon-account-content #startup form fieldset .control-wrap input.emeon-control, .emeon-account-content #startup form fieldset .control-wrap button.button-cta {
             width: 100%;
             padding: 9px;
-            font-size: 12px;
+            font-size: 14px;
             border-radius: 0;
             border: 1px solid #ccc;
             margin: 0;
             cursor: pointer;
             box-sizing: border-box;
             display: block; }
-      .emeon-account-content #contacts form.form-contactus .description {
-        text-align: right;
-        margin-top: 10px; }
+      .emeon-account-content #contacts form .description, .emeon-account-content #coverletter form .description, .emeon-account-content #startup form .description {
+        text-align: center;
+        margin-top: 5px;
+        font-size: 13px; }
+        .emeon-account-content #contacts form .description.email-us, .emeon-account-content #coverletter form .description.email-us, .emeon-account-content #startup form .description.email-us {
+          margin-top: 20px;
+          text-align: right; }
+      .emeon-account-content #contacts form h4, .emeon-account-content #coverletter form h4, .emeon-account-content #startup form h4 {
+        font-size: 18px;
+        font-weight: normal;
+        line-height: 2em;
+        margin-top: 20px;
+        text-align: center; }
+      .emeon-account-content #contacts form .choose-free-plan, .emeon-account-content #coverletter form .choose-free-plan, .emeon-account-content #startup form .choose-free-plan {
+        margin-top: 20px;
+        font-size: 15px;
+        line-height: 20px;
+        margin-bottom: 5px !important; }
+      .emeon-account-content #contacts form .control-wrap.startup-cta, .emeon-account-content #coverletter form .control-wrap.startup-cta, .emeon-account-content #startup form .control-wrap.startup-cta {
+        margin: 10px 0; }
+    .emeon-account-content .success-result {
+      padding: 40px;
+      font-size: 14px !important;
+      border-left: 5px solid lime;
+      background: #fff;
+      margin: 30px auto; }
+      .emeon-account-content .success-result #project-name, .emeon-account-content .success-result #email-sent {
+        font-weight: bold; }
 
 @media (max-width: 767px) {
   .emeon-account {
@@ -1895,6 +2065,9 @@ body.single-post #primary {
       margin-top: 20px; }
       .emeon-account-content .my-articles {
         justify-content: space-evenly; } }
+.form-startup h4 {
+  margin-bottom: 40px; }
+
 /*--------------------------------------------------------------
 ## Cookie styles
 --------------------------------------------------------------*/
