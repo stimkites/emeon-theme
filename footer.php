@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) or exit;
 			<img src="<?=get_template_directory_uri()?>/img/emeon-logo-2-cr.png" alt="EMEON" />
 		</a>
 		<a class="emeon-info" href="https://emeon.io">
-			&copy; <?php echo get_bloginfo(); ?> 2020 - <?php echo date( 'Y' ); ?>
+			&copy; <?php echo get_bloginfo(); ?> <?php echo date( 'Y' ); ?>
 		</a>
 	</div>
 	<div class="f-part site-info">
