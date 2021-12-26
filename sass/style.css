@@ -675,7 +675,7 @@ footer#colophon {
   justify-content: center;
   align-items: center; }
   footer#colophon .f-part {
-    margin: 50px 30px; }
+    margin: 50px; }
   footer#colophon .f-logo-main {
     display: flex;
     flex-direction: column; }
@@ -716,14 +716,16 @@ footer#colophon {
       footer#colophon .footer-logos .f-logo img {
         max-width: 117px;
         max-height: 117px; }
-  @media screen and (max-width: 991px) {
-    footer#colophon {
-      flex-direction: column; }
-      footer#colophon .f-part {
-        margin: 0 auto 30px auto; }
-        footer#colophon .f-part img {
-          max-height: 75px; } }
 
+@media screen and (max-width: 1320px) {
+  footer#colophon .f-part {
+    margin: 50px 20px; } }
+@media screen and (max-width: 1100px) {
+  footer#colophon .footer-register {
+    display: none; } }
+@media screen and (max-width: 768px) {
+  footer#colophon .footer-logos {
+    display: none; } }
 /*--------------------------------------------------------------
 # Search results
 --------------------------------------------------------------*/

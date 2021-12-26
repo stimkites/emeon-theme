@@ -640,7 +640,7 @@ const validateEmail = ( email ) => {
 			  errorElNoValidText = label.data( 'valid' ),
 			  errorElEmptyText = label.data( 'empty' ),
 			  nonceVal = _target.find( $( 'input[name="__nonce"]' ) ).val(),
-			  emailVal = _target.find( $( 'input[type="email"]' ) ).val();
+			  emailVal = _target.find( $( 'input[name="email"]' ) ).val();
 
 			if ( emailVal && !validateEmail( emailVal ) ) {
 				errors++;

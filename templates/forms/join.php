@@ -10,6 +10,11 @@ $email = $_POST[ 'email' ] ?? '';
 $nonce = wp_create_nonce( EMEON_SLUG );
 
 ?>
+<style>
+	.site-footer .footer-register {
+		display: none !important;
+	}
+</style>
 <div class="form-join-wrapper bg-white rounded p-5">
 	<h2>Join us</h2>
 	<form method="post" class="emeon-form form-join d-flex justify-content-between"

@@ -46,6 +46,7 @@ new class {
 
 		// Ajax for recaptcha (not authorized) forms
 		add_action( 'wp_ajax_nopriv_emeon_ajax', __CLASS__ . '::ajax' );
+		add_action( 'wp_ajax_emeon_ajax',        __CLASS__ . '::ajax' );
 
 		// Ajax for account
         add_action( 'wp_ajax_emeon_account_ajax', __CLASS__ . '::account_ajax' );
@@ -528,7 +529,7 @@ new class {
 
 		if ( ( $user = get_user_by( 'email', $email ) ) && ! is_wp_error( $user ) )
 			die( json_encode( [
-				'error'=> 'User with this email already registered. Please, <a href="/login/">login</a>.'
+				'error'=> 'User with this email already registered. Please, login.'
             ] ) );
 
 
