@@ -338,6 +338,14 @@ html .section--projects {
 		text-decoration: none !important;
 	}
 
+	.swiper-button-next--projects,
+	.swiper-button-prev--projects {
+		color: #999;
+		&:hover {
+			color: #000;
+		}
+	}
+
 }
 
 html .section--themes {

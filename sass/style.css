@@ -666,10 +666,7 @@ body.single-post #primary {
 --------------------------------------------------------------*/
 footer#colophon {
   padding: 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 9999991; }
+  position: relative; }
   footer#colophon ul {
     margin: 0;
     padding: 0;
@@ -1100,6 +1097,12 @@ html .section--projects a.fs-4 {
   font-size: 16px !important;
   font-weight: normal !important;
   text-decoration: none !important; }
+html .section--projects .swiper-button-next--projects,
+html .section--projects .swiper-button-prev--projects {
+  color: #999; }
+  html .section--projects .swiper-button-next--projects:hover,
+  html .section--projects .swiper-button-prev--projects:hover {
+    color: #000; }
 
 html .section--themes img.img-contain {
   object-fit: scale-down; }
