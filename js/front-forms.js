@@ -729,9 +729,9 @@ const validateEmail = ( email ) => {
 
 		__error.flush();
 
-		$( '#accept-policy' ).off().on( 'change', function() {
+		$( 'input.accept-policy' ).off().on( 'change', function() {
 			$( '#btn-join' ).prop( 'disabled', !$( this ).prop( 'checked' ) );
-		} );
+		} ).trigger( 'change' );
 
 	};
 

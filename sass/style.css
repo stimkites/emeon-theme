@@ -665,51 +665,65 @@ body.single-post #primary {
 # Footer
 --------------------------------------------------------------*/
 footer#colophon {
-  padding: 0;
-  position: relative; }
-  footer#colophon ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  position: relative;
+  background: #eee;
+  border-top: 8px solid #ccc;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; }
+  footer#colophon .f-part {
+    margin: 50px 30px; }
+  footer#colophon .f-logo-main {
+    display: flex;
+    flex-direction: column; }
+    footer#colophon .f-logo-main .emeon-info {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      color: #555555;
+      line-height: 30px;
+      text-align: center; }
+    footer#colophon .f-logo-main img {
+      max-width: 200px; }
+  footer#colophon .site-info {
+    font-size: 13px;
+    font-weight: bold;
+    color: #999;
     display: flex;
     flex-direction: column;
-    justify-content: center; }
-  footer#colophon .columns {
+    flex-wrap: wrap; }
+    footer#colophon .site-info .footer-socials img {
+      max-width: 75px;
+      max-height: 75px; }
+  footer#colophon .footer-register {
+    font-size: 13px; }
+    footer#colophon .footer-register a {
+      text-decoration: underline; }
+  footer#colophon .footer-logos {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 15px;
-    padding-bottom: 15px; }
-    footer#colophon .columns .column {
-      padding: 0px 10px 0px 0; }
-      footer#colophon .columns .column:last-child {
-        padding-right: 0; }
-    footer#colophon .columns .column.col-2 {
-      width: 16.6%; }
-    footer#colophon .columns .column.col-6 {
-      width: 50%; }
-    footer#colophon .columns.payments-logo .column {
+    justify-content: flex-end; }
+    footer#colophon .footer-logos .f-logo {
       display: flex;
-      flex-direction: row; }
-      footer#colophon .columns.payments-logo .column .widget_media_image {
-        margin: 0 20px 0 0; }
-        footer#colophon .columns.payments-logo .column .widget_media_image img {
-          max-height: 15px;
-          width: auto; }
-  footer#colophon .site-info {
-    font-size: 12px;
-    padding: 4px 20px;
-    text-align: right;
-    line-height: 1;
-    background: white;
-    width: 100%; }
+      flex-direction: column;
+      margin: 0 5px;
+      justify-content: center;
+      font-size: 13px;
+      color: #999; }
+      footer#colophon .footer-logos .f-logo img {
+        max-width: 117px;
+        max-height: 117px; }
+  @media screen and (max-width: 991px) {
+    footer#colophon {
+      flex-direction: column; }
+      footer#colophon .f-part {
+        margin: 0 auto 30px auto; }
+        footer#colophon .f-part img {
+          max-height: 75px; } }
 
-@media screen and (max-width: 767px) {
-  footer#colophon .columns {
-    flex-direction: column; }
-    footer#colophon .columns .column.col-2, footer#colophon .columns .column.col-6 {
-      width: 100%; } }
 /*--------------------------------------------------------------
 # Search results
 --------------------------------------------------------------*/
