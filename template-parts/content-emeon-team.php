@@ -63,9 +63,11 @@
 					foreach( glob( EMEON_PATH . '/img/themes-gallery/*' ) as $file )
 						if( is_file( $file ) ){
 							$fn    = basename( $file );
+							$parts = explode( "=", $fn );
+							$url   = 'https://' . str_replace( '_', '/', substr( $parts[1],0, strlen( $parts[1] ) - 4 ) );
 							$src   = get_template_directory_uri() . '/img/themes-gallery/' . $fn;
 							get_template_part( 'template-parts/content', 'emeon-project-card', [
-								'url' => 'https://wetail.io/e-handelsteman/',
+								'url' => $url,
 								'src' => $src
 							] );
 						}

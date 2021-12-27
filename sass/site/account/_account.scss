@@ -368,6 +368,17 @@
 	}
 }
 
-.form-startup h4 {
-	margin-bottom: 40px;
+.form-startup {
+	position: relative;
+	width: 100%;
+	.section--themes{
+		max-width: 800px;
+		margin-left: auto;
+		margin-right: auto;
+		display: grid; /* For some reason only this helped to show the carousel normally on mobiles */
+	}
+
+	h4 {
+		margin-bottom: 40px;
+	}
 }

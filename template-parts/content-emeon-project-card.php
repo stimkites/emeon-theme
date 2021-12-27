@@ -8,7 +8,7 @@
 
 ?>
 
-<article class="swiper-slide card border-0 rounded hover-shadow"
+<div class="swiper-slide card border-0 rounded hover-shadow"
          style="box-sizing: content-box">
 	<div class="card-body p-4">
 		<a class="post-thumbnail card-img"
@@ -17,7 +17,7 @@
 			     height="125"
 			     src="<?=$args['src']?>"
 			     class="h-100 w-100 img-contain wp-post-image"
-			     alt="<?=$args['title']??''?>" loading="lazy">
+			     alt="<?=$args['title']??''?>" loading="lazy" />
 		</a>
 
         <?php if( ! empty( $args['title'] ) ) : ?>
@@ -27,4 +27,4 @@
         <?php endif; ?>
 
 	</div>
-</article>
+</div>

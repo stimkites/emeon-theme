@@ -131,10 +131,10 @@ window.onload = ( function( $ ) {
 			 	disableOnInteraction: false,
         		delay: 3500,
 			},
-      navigation: {
-        nextEl: '.swiper-button-next--projects',
-        prevEl: '.swiper-button-prev--projects',
-      },
+			  navigation: {
+				nextEl: '.swiper-button-next--projects',
+				prevEl: '.swiper-button-prev--projects',
+			  },
 			breakpoints: {
 				320: {
 					slidesPerView: 2,

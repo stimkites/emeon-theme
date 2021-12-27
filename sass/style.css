@@ -630,8 +630,17 @@ body.single-post #primary {
       margin-top: 20px; }
       .emeon-account-content .my-articles {
         justify-content: space-evenly; } }
-.form-startup h4 {
-  margin-bottom: 40px; }
+.form-startup {
+  position: relative;
+  width: 100%; }
+  .form-startup .section--themes {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    /* For some reason only this helped to show the carousel normally on mobiles */ }
+  .form-startup h4 {
+    margin-bottom: 40px; }
 
 /*--------------------------------------------------------------
 ## Cookie styles
@@ -2084,8 +2093,17 @@ body.single-post #primary {
       margin-top: 20px; }
       .emeon-account-content .my-articles {
         justify-content: space-evenly; } }
-.form-startup h4 {
-  margin-bottom: 40px; }
+.form-startup {
+  position: relative;
+  width: 100%; }
+  .form-startup .section--themes {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    /* For some reason only this helped to show the carousel normally on mobiles */ }
+  .form-startup h4 {
+    margin-bottom: 40px; }
 
 /*--------------------------------------------------------------
 ## Cookie styles

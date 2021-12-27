@@ -37,6 +37,33 @@ $nonce = wp_create_nonce( EMEON_SLUG );
         <img src="<?=get_template_directory_uri()?>/img/wp-themes.png" alt="Word Press Themes"/>
 	</p>
 
+	<h4>Check out our featured themes for your future web-shop/web-site</h4>
+	<div class="section section--slider section--themes">
+		<div class="projects themes--swiper swiper-slider">
+			<div class="swiper-wrapper align-items-stretch">
+				<?php
+				foreach( glob( EMEON_PATH . '/img/themes-gallery/*' ) as $file )
+					if( is_file( $file ) ){
+						$fn    = basename( $file );
+						$parts = explode( "=", $fn );
+						$url   = 'https://' . str_replace( '_', '/', substr( $parts[1],0, strlen( $parts[1] ) - 4 ) );
+						$src   = get_template_directory_uri() . '/img/themes-gallery/' . $fn;
+						get_template_part( 'template-parts/content', 'emeon-project-card', [
+							'url' => $url,
+							'src' => $src
+						] );
+					}
+				?>
+			</div>
+		</div>
+		<div class="swiper-pagination swiper-pagination--themes"></div>
+	</div>
+	<p class="description">
+		You can easily change themes later in admin panel!
+	</p>
+
+	<hr/>
+
 	<fieldset class="emeon-form__fieldset">
 		<div class="control-wrap email">
 			<input id="domain" name="domain" class="emeon-control"
