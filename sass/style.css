@@ -1545,6 +1545,18 @@ a {
   .post-navigation .nav-next:after {
     font-size: 2em; }
 
+.posts-navigation {
+  display: block;
+  clear: both;
+  width: 100%;
+  padding: 7px;
+  font-size: 13px;
+  text-align: center; }
+  .posts-navigation .nav-previous {
+    float: right; }
+  .posts-navigation .nav-next {
+    float: left; }
+
 /*--------------------------------------------------------------
 # Accessibility
 --------------------------------------------------------------*/

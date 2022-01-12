@@ -34,3 +34,20 @@
 		font-size: 2em;
 	}
 }
+
+.posts-navigation {
+	display: block;
+	clear: both;
+	width: 100%;
+	padding: 7px;
+	font-size: 13px;
+	text-align: center;
+
+	.nav-previous {
+		float: right;
+	}
+
+	.nav-next {
+		float: left;
+	}
+}

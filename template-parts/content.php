@@ -56,7 +56,8 @@ if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 	} else {
 		$contact_info =
 			'<div class="emeon-contact-info no-login">' .
-				'<a href="/join/">Join us</a> to see the contacts and additional information!</div>';
+				'<a class="text-decoration-underline fw-bold" href="/join/">Join us</a> to see the contacts and additional information!' .
+            '</div>';
 	}
 
 }
@@ -153,5 +154,5 @@ if ( $contacts = get_post_meta( $post_id, 'emeon_contacts', true ) ) {
 			) );
 		?>
 	</div><!-- .entry-content -->
-	
+
 </article><!-- #post-<?php the_ID(); ?> -->
